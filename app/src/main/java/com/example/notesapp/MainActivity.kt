@@ -34,6 +34,10 @@ class MainActivity : AppCompatActivity() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 bottomNavigation.menu.getItem(position).isChecked = true
+                when (position) {
+                    0 -> bottomNavigation.menu.findItem(R.id.home).isChecked = true
+                    1 -> bottomNavigation.menu.findItem(R.id.calendar).isChecked = true
+                }
             }
         })
 

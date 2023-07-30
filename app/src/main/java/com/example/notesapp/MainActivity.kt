@@ -1,7 +1,9 @@
 package com.example.notesapp
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
@@ -49,6 +51,10 @@ class MainActivity : AppCompatActivity() {
         viewPager.currentItem = 0
 
 
+    }
+    fun CreateNoteButton(view : View){
+        val intent= Intent(this,CreateNoteActivity::class.java)
+        startActivity(intent)
     }
 
 

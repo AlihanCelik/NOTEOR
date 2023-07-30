@@ -28,6 +28,7 @@
         android:layout_height="match_parent"
         android:layout_weight="1" />
         <ImageView
+            android:id="@+id/saveButton"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:src="@drawable/save"
@@ -63,6 +64,8 @@
         android:textColorHint="@color/grey"
         android:textColor="@color/black"
         android:ellipsize="end"
+        android:background="@null"
+        android:inputType="text"
         android:hint="@string/NoteTitle"
         app:layout_constraintBottom_toTopOf="@+id/notesSubTitleLayout"
         app:layout_constraintEnd_toEndOf="parent"
@@ -91,6 +94,8 @@
             android:padding="10dp"
             android:maxLines="1"
             android:textSize="15dp"
+            android:inputType="text"
+            android:background="@null"
             android:textColorHint="@color/grey"
             android:textColor="@color/black"
             android:ellipsize="end"
@@ -111,6 +116,7 @@
         android:textColorHint="@color/grey"
         android:textColor="@color/black"
         android:hint="@string/NoteTitle"
+        android:background="@null"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/notesSubTitleLayout"

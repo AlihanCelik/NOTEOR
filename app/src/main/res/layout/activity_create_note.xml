@@ -35,6 +35,23 @@
 
         </ImageView>
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvDateTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="date"
+        android:textColor="@color/grey"
+        android:layout_marginTop="5dp"
+        android:gravity="center"
+        app:layout_constraintBottom_toTopOf="@+id/notes_title"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+    </TextView>
+
+
     <EditText
         android:id="@+id/notes_title"
         android:layout_width="match_parent"
@@ -50,7 +67,7 @@
         app:layout_constraintBottom_toTopOf="@+id/notesSubTitleLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+        app:layout_constraintTop_toBottomOf="@+id/tvDateTime">
 
     </EditText>
 

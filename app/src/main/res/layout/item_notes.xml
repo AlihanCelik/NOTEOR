@@ -31,12 +31,13 @@
                     android:text="Title"
                     android:textColor="@color/black"
                     android:textStyle="bold"
+                    android:layout_marginTop="3dp"
                     android:textSize="20dp">
 
                 </TextView>
                 <TextView
                     android:id="@+id/item_desc"
-
+                    android:layout_margin="7dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"

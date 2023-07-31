@@ -55,6 +55,7 @@ class MainActivity : AppCompatActivity() {
     fun CreateNoteButton(view : View){
         val intent= Intent(this,CreateNoteActivity::class.java)
         startActivity(intent)
+        finish()
     }
 
 

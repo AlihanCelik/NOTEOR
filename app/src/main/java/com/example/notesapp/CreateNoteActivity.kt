@@ -24,6 +24,7 @@ class CreateNoteActivity : AppCompatActivity() {
             val intent=Intent(this,MainActivity::class.java)
             startActivity(intent)
             finish()
+
         }
         saveButton.setOnClickListener {
             saveNote()

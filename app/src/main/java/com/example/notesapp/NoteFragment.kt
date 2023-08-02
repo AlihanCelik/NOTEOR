@@ -10,6 +10,7 @@ import com.example.notesapp.Adapter.NotesAdapter
 import com.example.notesapp.database.NotesDatabase
 import com.example.notesapp.entities.Notes
 import kotlinx.android.synthetic.main.fragment_note.*
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -35,7 +36,7 @@ class NoteFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         recycler_view.setHasFixedSize(true)
         recycler_view.layoutManager=StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL)
-        GlobalScope.launch{
+        GlobalScope.launch(Dispatchers.Main){
             context?.let {
                 var notes = NotesDatabase.getDatabase(it).noteDao().getAllNotes()
                 notesAdapter!!.setData(notes)

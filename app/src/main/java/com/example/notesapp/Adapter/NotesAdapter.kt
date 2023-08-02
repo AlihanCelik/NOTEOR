@@ -1,7 +1,5 @@
 package com.example.notesapp.Adapter
 
-import android.graphics.BitmapFactory
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +9,7 @@ import com.example.notesapp.R
 import com.example.notesapp.entities.Notes
 import kotlinx.android.synthetic.main.item_notes.view.*
 
-class NotesAdapter() :
+class NotesAdapter :
     RecyclerView.Adapter<NotesAdapter.NotesViewHolder>() {
 
     var arrList = ArrayList<Notes>()

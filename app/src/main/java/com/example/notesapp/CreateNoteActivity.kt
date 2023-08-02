@@ -18,14 +18,15 @@ import kotlinx.coroutines.*
 
 class CreateNoteActivity : AppCompatActivity() {
     var currentDate:String? = null
-    val moonBlue = resources.getColor(R.color.moonBlue)
-    val moonPink = resources.getColor(R.color.moonPink)
-    val moonPurple = resources.getColor(R.color.moonPurple)
-    val moonGreen = resources.getColor(R.color.moonGreen)
-    val moonRed=resources.getColor(R.color.moonRed)
-    val moonYellow=resources.getColor(R.color.moonYellow)
+
     var color="blue"
     override fun onCreate(savedInstanceState: Bundle?) {
+        val moonBlue = resources.getColor(R.color.moonBlue)
+        val moonPink = resources.getColor(R.color.moonPink)
+        val moonPurple = resources.getColor(R.color.moonPurple)
+        val moonGreen = resources.getColor(R.color.moonGreen)
+        val moonRed=resources.getColor(R.color.moonRed)
+        val moonYellow=resources.getColor(R.color.moonYellow)
         val sdf =SimpleDateFormat("dd/M/yyyy hh:mm:ss")
         currentDate=sdf.format(Date())
         super.onCreate(savedInstanceState)

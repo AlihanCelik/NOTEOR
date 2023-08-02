@@ -8,4 +8,10 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="grey">#a5a5a5</color>
+    <color name="moonBlue">#447aff</color>
+    <color name="moonPink">#c630c9</color>
+    <color name="moonPurple">#6930c9</color>
+    <color name="moonGreen">#34c930</color>
+    <color name="moonRed">#ff4444</color>
+    <color name="moonYellow">#ffda44</color>
 </resources>

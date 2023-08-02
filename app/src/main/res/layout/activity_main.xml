@@ -26,8 +26,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        app:backgroundTint="#000000"
         app:fabCradleMargin="7dp"
+        android:backgroundTint="@color/white"
         app:fabCradleRoundedCornerRadius="50dp">
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
@@ -46,7 +46,7 @@
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/purple_200"
+        android:backgroundTint="@color/black"
         android:src="@drawable/baseline_add_24"
         android:onClick="CreateNoteButton"
         app:layout_anchor="@id/bottomAppBar"

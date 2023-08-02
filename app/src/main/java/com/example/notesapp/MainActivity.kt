@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
     private lateinit var viewPager: ViewPager2
@@ -14,6 +15,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        bottomNav.background=null
         viewPager = findViewById(R.id.viewpager)
         bottomNavigation = findViewById(R.id.bottomNav)
         viewPagerAdapter = VpAdapter(supportFragmentManager, lifecycle)
@@ -55,7 +57,7 @@ class MainActivity : AppCompatActivity() {
     fun CreateNoteButton(view : View){
         val intent= Intent(this,CreateNoteActivity::class.java)
         startActivity(intent)
-        finish()
+
     }
 
 

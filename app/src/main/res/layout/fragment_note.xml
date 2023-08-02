@@ -33,7 +33,9 @@
         app:layout_constraintStart_toStartOf="parent"
         android:queryHint="@string/search"
         android:iconifiedByDefault="false"
-        android:backgroundTint="@color/black"
+        android:searchIcon="@drawable/baseline_search_24"
+        app:queryBackground="@android:color/transparent"
+        app:layout_constraintBottom_toTopOf="@+id/recycler_view"
         android:theme="@style/ThemeOverlay.search"
         android:background="@drawable/searchview_background"
         app:layout_constraintTop_toBottomOf="@+id/appname"/>

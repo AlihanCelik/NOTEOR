@@ -11,7 +11,6 @@ import com.example.notesapp.database.NotesDatabase
 import com.example.notesapp.entities.Notes
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.android.synthetic.main.activity_create_note.*
-import kotlinx.android.synthetic.main.bottom_sheet_note.*
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlinx.coroutines.*
@@ -97,7 +96,8 @@ class CreateNoteActivity : AppCompatActivity() {
 
         }
         else{
-            GlobalScope.launch{
+            val coroutineScope = CoroutineScope(Dispatchers.Main) // Create a CoroutineScope
+            coroutineScope.launch{
                 var notes = Notes()
                 notes.title=notes_title.text.toString()
                 notes.subTitle=notes_sub_title.text.toString()

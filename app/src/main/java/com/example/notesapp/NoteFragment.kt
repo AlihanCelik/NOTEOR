@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.notesapp.Adapter.NotesAdapter
 import com.example.notesapp.database.NotesDatabase
@@ -13,6 +14,8 @@ import kotlinx.android.synthetic.main.fragment_note.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class NoteFragment : Fragment() {
@@ -45,6 +48,27 @@ class NoteFragment : Fragment() {
             }
 
         }
+        search.setOnQueryTextListener( object : SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(p0: String?): Boolean {
+                return true
+            }
+
+            override fun onQueryTextChange(p0: String?): Boolean {
+
+                var tempArr = ArrayList<Notes>()
+
+                for (arr in arrNotes){
+                    if (arr.title!!.toLowerCase(Locale.getDefault()).contains(p0.toString())){
+                        tempArr.add(arr)
+                    }
+                }
+
+                notesAdapter.setData(tempArr)
+                notesAdapter.notifyDataSetChanged()
+                return true
+            }
+
+        })
     }
 
 

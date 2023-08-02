@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.notesapp.R
 import com.example.notesapp.entities.Notes
@@ -31,9 +32,20 @@ class NotesAdapter() :
 
     override fun onBindViewHolder(holder: NotesViewHolder, position: Int) {
 
+        val context = holder.itemView.context
+
+        when (arrList[position].color) {
+            "blue" -> holder.itemView.item_color.setBackgroundColor(ContextCompat.getColor(context, R.color.moonBlue))
+            "pink" -> holder.itemView.item_color.setBackgroundColor(ContextCompat.getColor(context, R.color.moonPink))
+            "purple" -> holder.itemView.item_color.setBackgroundColor(ContextCompat.getColor(context, R.color.moonPurple))
+            "yellow" -> holder.itemView.item_color.setBackgroundColor(ContextCompat.getColor(context, R.color.moonYellow))
+            "green" -> holder.itemView.item_color.setBackgroundColor(ContextCompat.getColor(context, R.color.moonGreen))
+            "red" -> holder.itemView.item_color.setBackgroundColor(ContextCompat.getColor(context, R.color.moonRed))
+        }
         holder.itemView.item_title.text = arrList[position].title
         holder.itemView.item_desc.text = arrList[position].noteText
         holder.itemView.item_date.text = arrList[position].dateTime
+
 
 
 

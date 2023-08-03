@@ -30,6 +30,7 @@
         app:layout_constraintTop_toBottomOf="@+id/remo_image">
 
         <ImageView
+            android:id="@+id/image"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginLeft="20dp"

@@ -1,5 +1,6 @@
 package com.example.notesapp.Adapter
 
+import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,6 +32,13 @@ class NotesAdapter :
     override fun onBindViewHolder(holder: NotesViewHolder, position: Int) {
 
         val context = holder.itemView.context
+
+        if(arrList[position].imgPath==null){
+            holder.itemView.item_layout_img.visibility=View.GONE
+        }else{
+            holder.itemView.item_layout_img.visibility=View.VISIBLE
+            holder.itemView.item_img.setImageBitmap(BitmapFactory.decodeFile(arrList[position].imgPath))
+        }
 
         when (arrList[position].color) {
             "blue" -> holder.itemView.item_color.setBackgroundColor(ContextCompat.getColor(context, R.color.moonBlue))

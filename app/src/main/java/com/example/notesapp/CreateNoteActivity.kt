@@ -100,6 +100,7 @@ class CreateNoteActivity : AppCompatActivity() {
             }
             bottomSheetView.findViewById<View>(R.id.image).setOnClickListener {
                 startGallery()
+                bottomSheet.dismiss()
 
             }
 

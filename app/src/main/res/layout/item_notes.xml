@@ -38,6 +38,36 @@
                     android:textStyle="bold">
 
                 </TextView>
+                <FrameLayout
+                    android:id="@+id/item_layout_img"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:visibility="gone">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        >
+
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:id="@+id/item_img"
+                            android:layout_width="match_parent"
+                            android:layout_height="200dp"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/img_sample"
+                            app:shapeAppearance="@style/circleImageView"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </FrameLayout>
 
                 <TextView
                     android:id="@+id/item_desc"
@@ -46,6 +76,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="Title"
+                    android:maxLines="5"
                     android:textColor="@color/grey"
                     android:textSize="12dp">
 

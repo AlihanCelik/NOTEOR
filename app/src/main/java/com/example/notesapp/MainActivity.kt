@@ -16,6 +16,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         bottomNav.background=null
+        bottomNav.menu.getItem(1).isEnabled = false
         viewPager = findViewById(R.id.viewpager)
         bottomNavigation = findViewById(R.id.bottomNav)
         viewPagerAdapter = VpAdapter(supportFragmentManager, lifecycle)

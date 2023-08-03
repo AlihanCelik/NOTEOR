@@ -5,7 +5,7 @@
     <item
         android:id="@+id/home"
         android:title="@string/notes"
-        android:icon="@drawable/writing"/>
+        android:icon="@drawable/notes"/>
 
 
 
@@ -16,6 +16,6 @@
     <item
         android:id="@+id/calendar"
         android:title="@string/calender"
-        android:icon="@drawable/calendar" />
+        android:icon="@drawable/calendar1" />
 
 </menu>

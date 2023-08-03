@@ -51,6 +51,7 @@ class CreateNoteActivity : AppCompatActivity() {
             bottomSheetView.findViewById<View>(R.id.blue).setOnClickListener {
                 color="blue"
                 colorView.setBackgroundColor(moonBlue)
+
             }
             bottomSheetView.findViewById<View>(R.id.pink).setOnClickListener {
                 color="pink"

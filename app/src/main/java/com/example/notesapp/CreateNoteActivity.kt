@@ -27,7 +27,7 @@ import java.io.IOException
 
 class CreateNoteActivity : AppCompatActivity() {
     var currentDate:String? = null
-    private var getFile: File? = null
+    var getFile: File? = null
     var color="blue"
     companion object {
         private val READ_STORAGE_PERMISSION = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
@@ -163,6 +163,7 @@ class CreateNoteActivity : AppCompatActivity() {
         }
     }
     private fun saveNote(){
+        val image=getFile.toString()
         if(notes_title.text.toString().isNullOrEmpty()){
             Toast.makeText(this,"Note Title is Required", Toast.LENGTH_SHORT).show()
         }
@@ -175,15 +176,16 @@ class CreateNoteActivity : AppCompatActivity() {
 
         }
         else{
-            val coroutineScope = CoroutineScope(Dispatchers.Main) // Create a CoroutineScope
+            val coroutineScope = CoroutineScope(Dispatchers.Main)
             coroutineScope.launch{
+
                 var notes = Notes()
                 notes.title=notes_title.text.toString()
                 notes.subTitle=notes_sub_title.text.toString()
                 notes.noteText=notes_desc.text.toString()
                 notes.dateTime=currentDate
                 notes.color=color
-                notes.imgPath=getFile.toString()
+                notes.imgPath=image
                 applicationContext?.let {
                     NotesDatabase.getDatabase(it).noteDao().insertNotes(notes)
                     notes_title.setText("")
@@ -191,6 +193,7 @@ class CreateNoteActivity : AppCompatActivity() {
                     notes_desc.setText("")
                 }
             }
+            Toast.makeText(this, "Note is added", Toast.LENGTH_SHORT).show()
         }
 
     }

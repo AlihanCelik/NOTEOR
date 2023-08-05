@@ -33,11 +33,11 @@ class NotesAdapter :
 
         val context = holder.itemView.context
 
-        if(arrList[position].imgPath==null){
+        if(arrList[position].imgPath.isNullOrEmpty()){
             holder.itemView.item_layout_img.visibility=View.GONE
         }else{
-            holder.itemView.item_layout_img.visibility=View.VISIBLE
             holder.itemView.item_img.setImageBitmap(BitmapFactory.decodeFile(arrList[position].imgPath))
+            holder.itemView.item_layout_img.visibility=View.VISIBLE
         }
 
         when (arrList[position].color) {

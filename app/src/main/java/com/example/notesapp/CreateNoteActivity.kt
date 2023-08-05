@@ -22,6 +22,8 @@ import java.io.File
 import android.Manifest
 import android.content.Context
 import android.net.Uri
+import com.example.notesapp.Adapter.NotesAdapter
+import com.example.notesapp.dao.NoteDao
 import java.io.FileOutputStream
 import java.io.IOException
 
@@ -109,17 +111,23 @@ class CreateNoteActivity : AppCompatActivity() {
         }
 
     }
-    fun uriToFile(uri: Uri, context: Context): File? {
-        val file = File(context.cacheDir, "temp_file")
-        try {
+    private fun uriToFile(uri: Uri?, context: Context): File? {
+        uri?.let {
             val inputStream = context.contentResolver.openInputStream(uri)
-            val outputStream = FileOutputStream(file)
-            inputStream?.copyTo(outputStream)
-            inputStream?.close()
-            outputStream.close()
-            return file
-        } catch (e: IOException) {
-            e.printStackTrace()
+            val tempFile = File(context.externalCacheDir, "temp_image.jpg")
+            tempFile.createNewFile()
+            inputStream?.use { input ->
+                FileOutputStream(tempFile).use { output ->
+                    val buffer = ByteArray(4 * 1024)
+                    while (true) {
+                        val bytesRead = input.read(buffer)
+                        if (bytesRead == -1) break
+                        output.write(buffer, 0, bytesRead)
+                    }
+                    output.flush()
+                }
+            }
+            return tempFile
         }
         return null
     }
@@ -163,7 +171,7 @@ class CreateNoteActivity : AppCompatActivity() {
         }
     }
     private fun saveNote(){
-        val image=getFile.toString()
+        val image = getFile?.toString() ?: ""
         if(notes_title.text.toString().isNullOrEmpty()){
             Toast.makeText(this,"Note Title is Required", Toast.LENGTH_SHORT).show()
         }
@@ -191,9 +199,13 @@ class CreateNoteActivity : AppCompatActivity() {
                     notes_title.setText("")
                     notes_sub_title.setText("")
                     notes_desc.setText("")
+                    getFile=null
+                    layout_img_preview.visibility=View.GONE
                 }
             }
             Toast.makeText(this, "Note is added", Toast.LENGTH_SHORT).show()
+
+
         }
 
     }

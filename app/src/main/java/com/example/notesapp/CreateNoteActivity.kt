@@ -49,6 +49,11 @@ class CreateNoteActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_note)
         tvDateTime.text=currentDate
+        getFile?.let { file ->
+            val bitmap = BitmapFactory.decodeFile(file.absolutePath)
+            layout_img_preview.visibility = View.VISIBLE
+            img_preview.setImageBitmap(bitmap)
+        }
 
         backButton.setOnClickListener {
             val intent=Intent(this,MainActivity::class.java)
@@ -62,6 +67,7 @@ class CreateNoteActivity : AppCompatActivity() {
         btn_clear_added_img.setOnClickListener {
             getFile = null
             layout_img_preview.visibility = View.GONE
+            img_preview.setImageDrawable(null)
         }
         more.setOnClickListener {
             val bottomSheet =
@@ -162,12 +168,18 @@ class CreateNoteActivity : AppCompatActivity() {
     ) { result ->
         if (result.resultCode == RESULT_OK) {
             val selectedImg = result.data?.data
-            val inputStream = this.contentResolver.openInputStream(selectedImg!!)
-            val bitmap = BitmapFactory.decodeStream(inputStream)
-            val myFile = uriToFile(selectedImg, this)
-            getFile = myFile
-            layout_img_preview.visibility = View.VISIBLE
-            img_preview.setImageBitmap(bitmap)
+            if (selectedImg != null) {
+                val inputStream = this.contentResolver.openInputStream(selectedImg)
+                val bitmap = BitmapFactory.decodeStream(inputStream)
+                val myFile = uriToFile(selectedImg, this)
+                getFile = myFile
+                layout_img_preview.visibility = View.VISIBLE
+                img_preview.setImageBitmap(bitmap)
+            } else {
+                getFile = null
+                layout_img_preview.visibility = View.GONE
+                img_preview.setImageDrawable(null)
+            }
         }
     }
     private fun saveNote(){
@@ -201,6 +213,7 @@ class CreateNoteActivity : AppCompatActivity() {
                     notes_desc.setText("")
                     getFile=null
                     layout_img_preview.visibility=View.GONE
+                    img_preview.setImageDrawable(null)
                 }
             }
             Toast.makeText(this, "Note is added", Toast.LENGTH_SHORT).show()

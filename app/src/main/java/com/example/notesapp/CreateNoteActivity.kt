@@ -46,6 +46,7 @@ class CreateNoteActivity : AppCompatActivity() {
         val moonYellow=resources.getColor(R.color.moonYellow)
         val sdf =SimpleDateFormat("dd/M/yyyy hh:mm:ss")
         currentDate=sdf.format(Date())
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_note)
         tvDateTime.text=currentDate

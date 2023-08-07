@@ -7,4 +7,5 @@
     <string name="notes">Notes</string>
     <string name="NoteTitle">Notes Title</string>
     <string name="NotesSubTitle"> Notes Sub Title</string>
+    <string name="web_url">Enter Web Url</string>
 </resources>

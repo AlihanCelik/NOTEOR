@@ -22,6 +22,7 @@ import java.io.File
 import android.Manifest
 import android.content.Context
 import android.net.Uri
+import android.opengl.Visibility
 import com.example.notesapp.Adapter.NotesAdapter
 import com.example.notesapp.dao.NoteDao
 import java.io.FileOutputStream
@@ -31,6 +32,7 @@ class CreateNoteActivity : AppCompatActivity() {
     var currentDate:String? = null
     var getFile: File? = null
     var color="blue"
+    var webLink = ""
     companion object {
         private val READ_STORAGE_PERMISSION = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
         private val WRITE_STORAGE_PERMISSION = arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE)
@@ -69,6 +71,12 @@ class CreateNoteActivity : AppCompatActivity() {
             getFile = null
             layout_img_preview.visibility = View.GONE
             img_preview.setImageDrawable(null)
+        }
+        imgUrlDelete.setOnClickListener {
+            webLink=""
+            tvWebLink.visibility = View.GONE
+            imgUrlDelete.visibility = View.GONE
+            layoutWebUrl.visibility = View.GONE
         }
         more.setOnClickListener {
             val bottomSheet =
@@ -110,6 +118,10 @@ class CreateNoteActivity : AppCompatActivity() {
             bottomSheetView.findViewById<View>(R.id.image).setOnClickListener {
                 startGallery()
                 bottomSheet.dismiss()
+
+            }
+            bottomSheetView.findViewById<View>(R.id.link).setOnClickListener {
+                layoutWebUrl.visibility=View.VISIBLE
 
             }
 

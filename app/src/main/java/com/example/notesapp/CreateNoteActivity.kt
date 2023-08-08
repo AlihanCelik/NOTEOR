@@ -22,11 +22,10 @@ import java.io.File
 import android.Manifest
 import android.content.Context
 import android.net.Uri
-import android.opengl.Visibility
-import com.example.notesapp.Adapter.NotesAdapter
-import com.example.notesapp.dao.NoteDao
+import androidx.appcompat.app.AlertDialog
+import kotlinx.android.synthetic.main.dialog_url.*
+import kotlinx.android.synthetic.main.dialog_url.view.*
 import java.io.FileOutputStream
-import java.io.IOException
 
 class CreateNoteActivity : AppCompatActivity() {
     var currentDate:String? = null
@@ -72,12 +71,11 @@ class CreateNoteActivity : AppCompatActivity() {
             layout_img_preview.visibility = View.GONE
             img_preview.setImageDrawable(null)
         }
-        imgUrlDelete.setOnClickListener {
+        btnDelete.setOnClickListener {
             webLink=""
-            tvWebLink.visibility = View.GONE
-            imgUrlDelete.visibility = View.GONE
-            layoutWebUrl.visibility = View.GONE
+            layoutWebUrl.visibility=View.GONE
         }
+
         more.setOnClickListener {
             val bottomSheet =
                 BottomSheetDialog(this@CreateNoteActivity, R.style.BottomSheetDialogTheme)
@@ -121,12 +119,27 @@ class CreateNoteActivity : AppCompatActivity() {
 
             }
             bottomSheetView.findViewById<View>(R.id.link).setOnClickListener {
-                layoutWebUrl.visibility=View.VISIBLE
+                val view = View.inflate(this, R.layout.dialog_url, null)
+                val builder = AlertDialog.Builder(this)
+                builder.setView(view)
+                val dialog = builder.create()
+                dialog.show()
+                dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+                view.okey.setOnClickListener {
+                    webLink=etWebLink.text.toString()
+                    layoutWebUrl.visibility=View.VISIBLE
+                    tvWebLink.text=webLink
+                    dialog.dismiss()
+                }
 
             }
 
             bottomSheet.setContentView(bottomSheetView)
             bottomSheet.show()
+        }
+        tvWebLink.setOnClickListener {
+            var intent = Intent(Intent.ACTION_VIEW,Uri.parse(etWebLink.text.toString()))
+            startActivity(intent)
         }
 
     }
@@ -219,6 +232,7 @@ class CreateNoteActivity : AppCompatActivity() {
                 notes.dateTime=currentDate
                 notes.color=color
                 notes.imgPath=image
+                notes.webLink=webLink
                 applicationContext?.let {
                     NotesDatabase.getDatabase(it).noteDao().insertNotes(notes)
                     notes_title.setText("")

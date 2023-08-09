@@ -131,6 +131,7 @@ class CreateNoteActivity : AppCompatActivity() {
                     tvWebLink.text=webLink
                     dialog.dismiss()
                 }
+                bottomSheet.dismiss()
 
             }
 

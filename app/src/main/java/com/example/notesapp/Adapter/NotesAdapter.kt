@@ -33,6 +33,13 @@ class NotesAdapter :
 
         val context = holder.itemView.context
 
+        if(arrList[position].webLink==""){
+            holder.itemView.itemLinkLayout.visibility=View.GONE
+        }else{
+            holder.itemView.itemWebLink.text= arrList[position].webLink
+            holder.itemView.itemLinkLayout.visibility=View.VISIBLE
+        }
+
         if(arrList[position].imgPath.isNullOrEmpty()){
             holder.itemView.item_layout_img.visibility=View.GONE
         }else{

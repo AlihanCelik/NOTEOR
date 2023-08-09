@@ -33,7 +33,7 @@ class NotesAdapter :
 
         val context = holder.itemView.context
 
-        if(arrList[position].webLink==""){
+        if(arrList[position].webLink.isNullOrEmpty()){
             holder.itemView.itemLinkLayout.visibility=View.GONE
         }else{
             holder.itemView.itemWebLink.text= arrList[position].webLink

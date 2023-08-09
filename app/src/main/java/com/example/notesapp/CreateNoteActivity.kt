@@ -126,7 +126,7 @@ class CreateNoteActivity : AppCompatActivity() {
                 dialog.show()
                 dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
                 view.okey.setOnClickListener {
-                    webLink=etWebLink.text.toString()
+                    webLink=view.etWebLink.text.toString()
                     layoutWebUrl.visibility=View.VISIBLE
                     tvWebLink.text=webLink
                     dialog.dismiss()
@@ -138,7 +138,7 @@ class CreateNoteActivity : AppCompatActivity() {
             bottomSheet.show()
         }
         tvWebLink.setOnClickListener {
-            var intent = Intent(Intent.ACTION_VIEW,Uri.parse(etWebLink.text.toString()))
+            var intent = Intent(Intent.ACTION_VIEW,Uri.parse(tvWebLink.text.toString()))
             startActivity(intent)
         }
 

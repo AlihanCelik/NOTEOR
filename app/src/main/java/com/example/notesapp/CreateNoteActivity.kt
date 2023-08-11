@@ -47,7 +47,6 @@ class CreateNoteActivity : AppCompatActivity() {
         val moonRed=resources.getColor(R.color.moonRed)
         val moonYellow=resources.getColor(R.color.moonYellow)
         val moonOrange=resources.getColor(R.color.moonOrange)
-        val moonGrey=resources.getColor(R.color.moonGrey)
         val sdf =SimpleDateFormat("dd/M/yyyy hh:mm:ss")
 
         val backgroundYellow=resources.getColor(R.color.background_yellow)
@@ -57,7 +56,6 @@ class CreateNoteActivity : AppCompatActivity() {
         val backgroundPink=resources.getColor(R.color.background_pink)
         val backgroundPurple=resources.getColor(R.color.background_purple)
         val backgroundOrange=resources.getColor(R.color.background_orange)
-        val backgroundGrey=resources.getColor(R.color.background_grey)
         currentDate=sdf.format(Date())
 
         super.onCreate(savedInstanceState)
@@ -146,12 +144,7 @@ class CreateNoteActivity : AppCompatActivity() {
                 createNote.setBackgroundColor(backgroundOrange)
 
             }
-            bottomSheetView.findViewById<View>(R.id.grey).setOnClickListener {
-                color="grey"
-                colorView.setBackgroundColor(moonGrey)
-                createNote.setBackgroundColor(backgroundGrey)
 
-            }
             bottomSheetView.findViewById<View>(R.id.image).setOnClickListener {
                 startGallery()
                 bottomSheet.dismiss()

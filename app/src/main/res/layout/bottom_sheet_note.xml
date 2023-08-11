@@ -57,6 +57,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ll1"
         app:layout_constraintStart_toStartOf="parent">
@@ -119,15 +120,6 @@
             android:layout_height="30dp"
             android:layout_margin="10dp"
             android:src="@drawable/moonorange">
-
-        </ImageView>
-
-        <ImageView
-            android:id="@+id/grey"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_margin="10dp"
-            android:src="@drawable/moongrey">
 
         </ImageView>
 

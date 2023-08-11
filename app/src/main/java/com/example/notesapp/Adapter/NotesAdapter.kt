@@ -57,7 +57,7 @@ class NotesAdapter :
             "green" -> holder.itemView.item_color.setBackgroundColor(ContextCompat.getColor(context, R.color.moonGreen))
             "red" -> holder.itemView.item_color.setBackgroundColor(ContextCompat.getColor(context, R.color.moonRed))
             "orange" -> holder.itemView.item_color.setBackgroundColor(ContextCompat.getColor(context, R.color.moonOrange))
-            "grey" -> holder.itemView.item_color.setBackgroundColor(ContextCompat.getColor(context, R.color.moonGrey))
+
         }
         holder.itemView.item_title.text = arrList[position].title
         holder.itemView.item_desc.text = arrList[position].noteText

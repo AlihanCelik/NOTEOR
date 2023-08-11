@@ -113,6 +113,24 @@
 
         </ImageView>
 
+        <ImageView
+            android:id="@+id/orange"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_margin="10dp"
+            android:src="@drawable/moonorange">
+
+        </ImageView>
+
+        <ImageView
+            android:id="@+id/grey"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_margin="10dp"
+            android:src="@drawable/moongrey">
+
+        </ImageView>
+
     </LinearLayout>
 
 

@@ -14,6 +14,8 @@
     <color name="moonGreen">#34c930</color>
     <color name="moonRed">#ff4444</color>
     <color name="moonYellow">#ffda44</color>
+    <color name="moonOrange">#ff8837</color>
+    <color name="moonGrey">#7a7f83</color>
     <color name="light_grey">#F5F5F5</color>
     <color name="background_yellow">#fff6dd</color>
     <color name="background_green">#e9fbef</color>
@@ -21,4 +23,6 @@
     <color name="background_purple">#efecff</color>
     <color name="background_pink">#FEEBF8</color>
     <color name="background_blue">#ebf3fe</color>
+    <color name="background_orange">#ffecde</color>
+    <color name="background_grey">#eef3f9</color>
 </resources>

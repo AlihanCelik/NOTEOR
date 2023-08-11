@@ -67,7 +67,6 @@ class CreateNoteActivity : AppCompatActivity() {
             saveNote()
         }
         btn_clear_added_img.setOnClickListener {
-
             getFile = null
             layout_img_preview.visibility = View.GONE
             img_preview.setImageDrawable(null)

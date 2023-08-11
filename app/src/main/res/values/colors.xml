@@ -16,4 +16,9 @@
     <color name="moonYellow">#ffda44</color>
     <color name="light_grey">#F5F5F5</color>
     <color name="background_yellow">#fff6dd</color>
+    <color name="background_green">#e9fbef</color>
+    <color name="background_red">#ffeded</color>
+    <color name="background_purple">#efecff</color>
+    <color name="background_pink">#FEEBF8</color>
+    <color name="background_blue">#ebf3fe</color>
 </resources>

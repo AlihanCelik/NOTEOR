@@ -48,7 +48,9 @@ class NotesAdapter :
         }
 
         when (arrList[position].color) {
-            "blue" -> holder.itemView.item_color.setBackgroundColor(ContextCompat.getColor(context, R.color.moonBlue))
+            "blue" -> {
+                holder.itemView.item_color.setBackgroundColor(ContextCompat.getColor(context, R.color.moonBlue))
+            }
             "pink" -> holder.itemView.item_color.setBackgroundColor(ContextCompat.getColor(context, R.color.moonPink))
             "purple" -> holder.itemView.item_color.setBackgroundColor(ContextCompat.getColor(context, R.color.moonPurple))
             "yellow" -> holder.itemView.item_color.setBackgroundColor(ContextCompat.getColor(context, R.color.moonYellow))

@@ -48,6 +48,11 @@ class CreateNoteActivity : AppCompatActivity() {
         val sdf =SimpleDateFormat("dd/M/yyyy hh:mm:ss")
 
         val backgroundYellow=resources.getColor(R.color.background_yellow)
+        val backgroundRed=resources.getColor(R.color.background_red)
+        val backgroundBlue=resources.getColor(R.color.background_blue)
+        val backgroundGreen=resources.getColor(R.color.background_green)
+        val backgroundPink=resources.getColor(R.color.background_pink)
+        val backgroundPurple=resources.getColor(R.color.background_purple)
         currentDate=sdf.format(Date())
 
         super.onCreate(savedInstanceState)
@@ -88,21 +93,25 @@ class CreateNoteActivity : AppCompatActivity() {
             bottomSheetView.findViewById<View>(R.id.blue).setOnClickListener {
                 color="blue"
                 colorView.setBackgroundColor(moonBlue)
+                createNote.setBackgroundColor(backgroundBlue)
 
             }
             bottomSheetView.findViewById<View>(R.id.pink).setOnClickListener {
                 color="pink"
                 colorView.setBackgroundColor(moonPink)
+                createNote.setBackgroundColor(backgroundPink)
 
             }
             bottomSheetView.findViewById<View>(R.id.purple).setOnClickListener {
                 color="purple"
                 colorView.setBackgroundColor(moonPurple)
+                createNote.setBackgroundColor(backgroundPurple)
 
             }
             bottomSheetView.findViewById<View>(R.id.green).setOnClickListener {
                 color="green"
                 colorView.setBackgroundColor(moonGreen)
+                createNote.setBackgroundColor(backgroundGreen)
 
             }
             bottomSheetView.findViewById<View>(R.id.yellow).setOnClickListener {
@@ -114,6 +123,7 @@ class CreateNoteActivity : AppCompatActivity() {
             bottomSheetView.findViewById<View>(R.id.red).setOnClickListener {
                 color="red"
                 colorView.setBackgroundColor(moonRed)
+                createNote.setBackgroundColor(backgroundRed)
 
             }
             bottomSheetView.findViewById<View>(R.id.image).setOnClickListener {

@@ -46,6 +46,8 @@ class CreateNoteActivity : AppCompatActivity() {
         val moonRed=resources.getColor(R.color.moonRed)
         val moonYellow=resources.getColor(R.color.moonYellow)
         val sdf =SimpleDateFormat("dd/M/yyyy hh:mm:ss")
+
+        val backgroundYellow=resources.getColor(R.color.background_yellow)
         currentDate=sdf.format(Date())
 
         super.onCreate(savedInstanceState)
@@ -106,6 +108,7 @@ class CreateNoteActivity : AppCompatActivity() {
             bottomSheetView.findViewById<View>(R.id.yellow).setOnClickListener {
                 color="yellow"
                 colorView.setBackgroundColor(moonYellow)
+                createNote.setBackgroundColor(backgroundYellow)
 
             }
             bottomSheetView.findViewById<View>(R.id.red).setOnClickListener {

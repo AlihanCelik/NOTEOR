@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".CreateNoteActivity"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:id="@+id/createNote">
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -246,7 +247,7 @@
                 android:padding="10dp"
                 android:textColorHint="@color/grey"
                 android:textColor="@color/black"
-                android:hint="@string/NoteTitle"
+                android:hint="@string/enter_note_here"
                 android:background="@null"
                 >
 

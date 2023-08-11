@@ -34,18 +34,39 @@
         android:layout_height="match_parent"
         android:layout_weight="1" />
         <ImageView
-            android:id="@+id/saveButton"
+            android:id="@+id/favButton"
             android:layout_width="30dp"
             android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:layout_marginRight="20dp"
+            android:src="@drawable/heartoff">
+
+        </ImageView>
+        <ImageView
+            android:id="@+id/saveButton"
+            android:layout_width="27dp"
+            android:layout_height="27dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:src="@drawable/save"
             android:layout_marginRight="20dp">
 
         </ImageView>
+
     </LinearLayout>
 
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#2794959A"
+        app:layout_constraintBottom_toTopOf="@+id/scroll"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/linearLayout"/>
+
     <ScrollView
+        android:id="@+id/scroll"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/more"
@@ -56,24 +77,36 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-            <TextView
-                android:id="@+id/tvDateTime"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="date"
-                android:textColor="@color/grey"
-                android:layout_marginTop="10dp"
-                android:gravity="center"
-                android:layout_gravity="center"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center"
                 android:background="@drawable/date_background"
-                app:layout_constraintBottom_toTopOf="@+id/notes_title"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent">
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:src="@drawable/date"
+                    android:layout_gravity="center"
+                    app:tint="@color/black"></ImageView>
+                <TextView
+                    android:id="@+id/tvDateTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="date"
+                    android:textColor="@color/grey"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
+                    >
 
-            </TextView>
+                </TextView>
+            </LinearLayout>
+
+
 
 
             <EditText
@@ -106,8 +139,9 @@
                 app:layout_constraintTop_toBottomOf="@+id/notes_title">
                 <View
                     android:id="@+id/colorView"
-                    android:layout_width="5dp"
+                    android:layout_width="6dp"
                     android:layout_height="match_parent"
+
                     android:background="@color/moonBlue"></View>
                 <EditText
                     android:id="@+id/notes_sub_title"

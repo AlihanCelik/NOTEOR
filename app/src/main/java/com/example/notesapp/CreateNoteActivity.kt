@@ -32,6 +32,7 @@ class CreateNoteActivity : AppCompatActivity() {
     var getFile: File? = null
     var color="blue"
     var webLink = ""
+    var fav=false
     companion object {
         private val READ_STORAGE_PERMISSION = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
         private val WRITE_STORAGE_PERMISSION = arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE)
@@ -81,6 +82,15 @@ class CreateNoteActivity : AppCompatActivity() {
         btnDelete.setOnClickListener {
             webLink=""
             layoutWebUrl.visibility=View.GONE
+        }
+        favButton.setOnClickListener {
+            if(!fav){
+                fav=true
+                favButton.setImageResource(R.drawable.hearton)
+            }else{
+                fav=false
+                favButton.setImageResource(R.drawable.heartoff)
+            }
         }
 
         more.setOnClickListener {

@@ -82,6 +82,8 @@
                 android:layout_height="wrap_content"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
+                android:paddingTop="1dp"
+                android:paddingBottom="1dp"
                 android:layout_marginTop="10dp"
                 android:layout_gravity="center"
                 android:background="@drawable/date_background"
@@ -91,7 +93,7 @@
                     android:layout_height="15dp"
                     android:src="@drawable/date"
                     android:layout_gravity="center"
-                    app:tint="@color/black"></ImageView>
+                    app:tint="@color/grey"></ImageView>
                 <TextView
                     android:id="@+id/tvDateTime"
                     android:layout_width="wrap_content"

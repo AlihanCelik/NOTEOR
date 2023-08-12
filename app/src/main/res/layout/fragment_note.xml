@@ -28,19 +28,31 @@
         android:id="@+id/search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
         android:layout_marginLeft="25dp"
+        android:layout_marginTop="25dp"
         android:layout_marginRight="25dp"
+        android:background="@drawable/searchview_background"
+        android:iconifiedByDefault="false"
+        android:queryHint="@string/search"
+        android:searchIcon="@drawable/baseline_search_24"
+        android:theme="@style/ThemeOverlay.search"
+        app:layout_constraintBottom_toTopOf="@+id/recycler_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:queryHint="@string/search"
-        android:iconifiedByDefault="false"
-        android:searchIcon="@drawable/baseline_search_24"
-        app:queryBackground="@android:color/transparent"
+        app:layout_constraintTop_toBottomOf="@+id/appname"
+        app:queryBackground="@android:color/transparent" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="57dp"
+        android:background="#2794959A"
         app:layout_constraintBottom_toTopOf="@+id/recycler_view"
-        android:theme="@style/ThemeOverlay.search"
-        android:background="@drawable/searchview_background"
-        app:layout_constraintTop_toBottomOf="@+id/appname"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/search"
+        app:layout_constraintTop_toTopOf="@+id/search" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"

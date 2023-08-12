@@ -8,6 +8,8 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="grey">#a5a5a5</color>
+    <color name="darkGrey">#333333</color>
+    <color name="AdvGrey">#212121</color>
     <color name="moonBlue">#447aff</color>
     <color name="moonPink">#c630c9</color>
     <color name="moonPurple">#6930c9</color>

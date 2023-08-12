@@ -76,8 +76,8 @@
                     android:layout_marginRight="7dp"
                     android:layout_marginLeft="7dp">
                     <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
                         android:src="@drawable/link"
                         android:layout_marginLeft="10dp">
 

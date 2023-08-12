@@ -8,29 +8,13 @@
     android:background="@color/white"
     >
 
-    <TextView
-        android:id="@+id/appname"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/scarlet"
-        android:gravity="center"
-        android:text="@string/appName"
-        android:textSize="23dp"
-        android:layout_marginTop="20dp"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/search"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <SearchView
         android:id="@+id/search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="25dp"
-        android:layout_marginTop="25dp"
         android:layout_marginRight="25dp"
+        android:layout_marginTop="15dp"
         android:background="@drawable/searchview_background"
         android:iconifiedByDefault="false"
         android:queryHint="@string/search"
@@ -39,7 +23,7 @@
         app:layout_constraintBottom_toTopOf="@+id/recycler_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appname"
+        app:layout_constraintTop_toTopOf="parent"
         app:queryBackground="@android:color/transparent" />
 
     <View

@@ -45,7 +45,6 @@ class MainActivity : AppCompatActivity() {
             )
         }
 
-        // BottomNavigationView'daki öğeleri dinlemek için Listener ekleyin
         bottomNavigation.setOnNavigationItemSelectedListener { menuItem ->
             val index = when (menuItem.itemId) {
                 R.id.home -> 0

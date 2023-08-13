@@ -10,13 +10,14 @@ import android.view.WindowInsetsController
 class LoginActivty : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         val backgroundBlue=resources.getColor(R.color.blue)
+        val backgroundPurple=resources.getColor(R.color.purple)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login_activty)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             window.statusBarColor = backgroundBlue
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            window.navigationBarColor = backgroundBlue
+            window.navigationBarColor = backgroundPurple
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             val controller = window.insetsController

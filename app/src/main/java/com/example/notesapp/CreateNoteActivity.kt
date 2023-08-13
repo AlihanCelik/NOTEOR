@@ -22,6 +22,8 @@ import java.io.File
 import android.Manifest
 import android.content.Context
 import android.net.Uri
+import android.os.Build
+import android.view.WindowInsetsController
 import androidx.appcompat.app.AlertDialog
 import kotlinx.android.synthetic.main.dialog_url.*
 import kotlinx.android.synthetic.main.dialog_url.view.*
@@ -66,6 +68,19 @@ class CreateNoteActivity : AppCompatActivity() {
             layout_img_preview.visibility = View.VISIBLE
             img_preview.setImageBitmap(bitmap)
         }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.statusBarColor = backgroundBlue
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            window.navigationBarColor = backgroundBlue
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            val controller = window.insetsController
+            controller?.setSystemBarsAppearance(
+                WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS,
+                WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS
+            )
+        }
 
         backButton.setOnClickListener {
             val intent=Intent(this,MainActivity::class.java)
@@ -107,11 +122,39 @@ class CreateNoteActivity : AppCompatActivity() {
                 colorView.setBackgroundColor(moonBlue)
                 createNote.setBackgroundColor(backgroundBlue)
 
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    window.statusBarColor = backgroundBlue
+                }
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    window.navigationBarColor = backgroundBlue
+                }
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                    val controller = window.insetsController
+                    controller?.setSystemBarsAppearance(
+                        WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS,
+                        WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS
+                    )
+                }
+
             }
             bottomSheetView.findViewById<View>(R.id.pink).setOnClickListener {
                 color="pink"
                 colorView.setBackgroundColor(moonPink)
                 createNote.setBackgroundColor(backgroundPink)
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    window.statusBarColor = backgroundPink
+                }
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    window.navigationBarColor = backgroundPink
+                }
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                    val controller = window.insetsController
+                    controller?.setSystemBarsAppearance(
+                        WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS,
+                        WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS
+                    )
+                }
 
             }
             bottomSheetView.findViewById<View>(R.id.purple).setOnClickListener {
@@ -119,11 +162,39 @@ class CreateNoteActivity : AppCompatActivity() {
                 colorView.setBackgroundColor(moonPurple)
                 createNote.setBackgroundColor(backgroundPurple)
 
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    window.statusBarColor = backgroundPurple
+                }
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    window.navigationBarColor = backgroundPurple
+                }
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                    val controller = window.insetsController
+                    controller?.setSystemBarsAppearance(
+                        WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS,
+                        WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS
+                    )
+                }
+
             }
             bottomSheetView.findViewById<View>(R.id.green).setOnClickListener {
                 color="green"
                 colorView.setBackgroundColor(moonGreen)
                 createNote.setBackgroundColor(backgroundGreen)
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    window.statusBarColor = backgroundGreen
+                }
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    window.navigationBarColor = backgroundGreen
+                }
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                    val controller = window.insetsController
+                    controller?.setSystemBarsAppearance(
+                        WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS,
+                        WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS
+                    )
+                }
 
             }
             bottomSheetView.findViewById<View>(R.id.yellow).setOnClickListener {
@@ -131,17 +202,59 @@ class CreateNoteActivity : AppCompatActivity() {
                 colorView.setBackgroundColor(moonYellow)
                 createNote.setBackgroundColor(backgroundYellow)
 
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    window.statusBarColor = backgroundYellow
+                }
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    window.navigationBarColor = backgroundYellow
+                }
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                    val controller = window.insetsController
+                    controller?.setSystemBarsAppearance(
+                        WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS,
+                        WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS
+                    )
+                }
+
             }
             bottomSheetView.findViewById<View>(R.id.red).setOnClickListener {
                 color="red"
                 colorView.setBackgroundColor(moonRed)
                 createNote.setBackgroundColor(backgroundRed)
 
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    window.statusBarColor = backgroundRed
+                }
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    window.navigationBarColor = backgroundRed
+                }
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                    val controller = window.insetsController
+                    controller?.setSystemBarsAppearance(
+                        WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS,
+                        WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS
+                    )
+                }
+
             }
             bottomSheetView.findViewById<View>(R.id.orange).setOnClickListener {
                 color="orange"
                 colorView.setBackgroundColor(moonOrange)
                 createNote.setBackgroundColor(backgroundOrange)
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    window.statusBarColor = backgroundOrange
+                }
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    window.navigationBarColor = backgroundOrange
+                }
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                    val controller = window.insetsController
+                    controller?.setSystemBarsAppearance(
+                        WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS,
+                        WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS
+                    )
+                }
 
             }
 

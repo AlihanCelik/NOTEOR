@@ -1,9 +1,11 @@
 package com.example.notesapp
 
 import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.view.WindowInsetsController
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
@@ -13,6 +15,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var bottomNavigation: BottomNavigationView
     private lateinit var viewPagerAdapter: VpAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
+        val backgroundWhite=resources.getColor(R.color.white)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         bottomNav.background=null
@@ -21,6 +24,20 @@ class MainActivity : AppCompatActivity() {
         bottomNavigation = findViewById(R.id.bottomNav)
         viewPagerAdapter = VpAdapter(supportFragmentManager, lifecycle)
         viewPager.adapter = viewPagerAdapter
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.statusBarColor = backgroundWhite
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            window.navigationBarColor = backgroundWhite
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            val controller = window.insetsController
+            controller?.setSystemBarsAppearance(
+                WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS,
+                WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS
+            )
+        }
 
         // BottomNavigationView'daki öğeleri dinlemek için Listener ekleyin
         bottomNavigation.setOnNavigationItemSelectedListener { menuItem ->

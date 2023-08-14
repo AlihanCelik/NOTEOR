@@ -5,6 +5,7 @@ import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.WindowInsetsController
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
@@ -43,6 +44,19 @@ class MainActivity : AppCompatActivity() {
                 WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS,
                 WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS
             )
+        }
+
+        val navigationView: NavigationView = findViewById(R.id.nav_view)
+
+        navigationView.setNavigationItemSelectedListener {
+            when (it.itemId) {
+                R.id.nav_add -> {
+                    Toast.makeText(this, "Add Note Clicked", Toast.LENGTH_SHORT).show()
+                    it.isChecked = true
+                    true
+                }
+                else -> false
+            }
         }
 
         bottomNavigation.setOnNavigationItemSelectedListener { menuItem ->

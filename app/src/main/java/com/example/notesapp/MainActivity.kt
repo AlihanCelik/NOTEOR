@@ -3,9 +3,11 @@ package com.example.notesapp
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
 import android.view.WindowInsetsController
 import android.widget.Toast
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
@@ -17,15 +19,17 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
+    lateinit var toggle: ActionBarDrawerToggle
+
     private lateinit var viewPager: ViewPager2
     private lateinit var bottomNavigation: BottomNavigationView
     private lateinit var viewPagerAdapter: VpAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
-        val backgroundWhite=resources.getColor(R.color.white)
+        val backgroundWhite = resources.getColor(R.color.white)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        bottomNav.background=null
+        bottomNav.background = null
         bottomNav.menu.getItem(1).isEnabled = false
         viewPager = findViewById(R.id.viewpager)
         bottomNavigation = findViewById(R.id.bottomNav)
@@ -46,17 +50,43 @@ class MainActivity : AppCompatActivity() {
             )
         }
 
+        val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navigationView: NavigationView = findViewById(R.id.nav_view)
 
-        navigationView.setNavigationItemSelectedListener {
+        toggle = ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close)
+        drawerLayout.addDrawerListener(toggle)
+        toggle.syncState()
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        navigationView.setNavigationItemSelectedListener { it ->
             when (it.itemId) {
-                R.id.nav_add -> {
-                    Toast.makeText(this, "Add Note Clicked", Toast.LENGTH_SHORT).show()
-                    it.isChecked = true
-                    true
-                }
-                else -> false
+                R.id.nav_add -> Toast.makeText(
+                    applicationContext,
+                    "Add Note Clicked",
+                    Toast.LENGTH_SHORT
+                ).show()
+                R.id.nav_note -> Toast.makeText(
+                    applicationContext,
+                    "Home Note Clicked",
+                    Toast.LENGTH_SHORT
+                ).show()
+                R.id.nav_favorites -> Toast.makeText(
+                    applicationContext,
+                    "Favorites Note Clicked",
+                    Toast.LENGTH_SHORT
+                ).show()
+                R.id.nav_yellow -> Toast.makeText(
+                    applicationContext,
+                    "yellow Note Clicked",
+                    Toast.LENGTH_SHORT
+                ).show()
+                R.id.nav_calendar -> Toast.makeText(
+                    applicationContext,
+                    "Calendar Note Clicked",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
+            true
         }
 
         bottomNavigation.setOnNavigationItemSelectedListener { menuItem ->
@@ -91,15 +121,25 @@ class MainActivity : AppCompatActivity() {
 
 
     }
-    fun CreateNoteButton(view : View){
-        val intent= Intent(this,CreateNoteActivity::class.java)
+
+    fun CreateNoteButton(view: View) {
+        val intent = Intent(this, CreateNoteActivity::class.java)
         startActivity(intent)
 
     }
+
     fun onMenuBarClick(view: View?) {
         val drawerLayout = findViewById<DrawerLayout>(R.id.drawer_layout)
         drawerLayout.openDrawer(GravityCompat.START)
     }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (toggle.onOptionsItemSelected(item)) {
+            return true
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
 
 
 

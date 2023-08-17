@@ -59,7 +59,6 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         navigationView.setNavigationItemSelectedListener { it ->
-
             when (it.itemId) {
                 R.id.nav_add -> Toast.makeText(
                     applicationContext,

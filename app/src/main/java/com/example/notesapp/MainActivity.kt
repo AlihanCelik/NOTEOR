@@ -52,41 +52,53 @@ class MainActivity : AppCompatActivity() {
 
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navigationView: NavigationView = findViewById(R.id.nav_view)
+        findViewById<NavigationView>(R.id.nav_view).bringToFront()
 
         toggle = ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close)
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        navigationView.setCheckedItem(R.id.nav_note)
 
-        navigationView.setNavigationItemSelectedListener { it ->
-            when (it.itemId) {
-                R.id.nav_add -> Toast.makeText(
-                    applicationContext,
-                    "Add Note Clicked",
-                    Toast.LENGTH_SHORT
-                ).show()
-                R.id.nav_note -> Toast.makeText(
-                    applicationContext,
-                    "Home Note Clicked",
-                    Toast.LENGTH_SHORT
-                ).show()
-                R.id.nav_favorites -> Toast.makeText(
-                    applicationContext,
-                    "Favorites Note Clicked",
-                    Toast.LENGTH_SHORT
-                ).show()
-                R.id.nav_yellow -> Toast.makeText(
-                    applicationContext,
-                    "yellow Note Clicked",
-                    Toast.LENGTH_SHORT
-                ).show()
-                R.id.nav_calendar -> Toast.makeText(
-                    applicationContext,
-                    "Calendar Note Clicked",
-                    Toast.LENGTH_SHORT
-                ).show()
+        navigationView.setNavigationItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.nav_add -> {
+                    val intent=Intent(applicationContext,CreateNoteActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                    drawerLayout.closeDrawer(GravityCompat.START)
+                    true
+                }
+                R.id.nav_note -> {
+                    viewPager.currentItem = 0
+                    drawerLayout.closeDrawer(GravityCompat.START)
+                    true
+                }
+                R.id.nav_favorites -> {
+                    Toast.makeText(
+                        applicationContext,
+                        "Favorites Note Clicked",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    drawerLayout.closeDrawer(GravityCompat.START)
+                    true
+                }
+                R.id.nav_yellow -> {
+                    Toast.makeText(
+                        applicationContext,
+                        "Yellow Note Clicked",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    drawerLayout.closeDrawer(GravityCompat.START)
+                    true
+                }
+                R.id.nav_calendar -> {
+                    viewPager.currentItem = 1
+                    drawerLayout.closeDrawer(GravityCompat.START)
+                    true
+                }
+                else -> false
             }
-            true
         }
 
         bottomNavigation.setOnNavigationItemSelectedListener { menuItem ->

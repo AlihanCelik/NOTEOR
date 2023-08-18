@@ -25,7 +25,6 @@ import android.net.Uri
 import android.os.Build
 import android.view.WindowInsetsController
 import androidx.appcompat.app.AlertDialog
-import kotlinx.android.synthetic.main.dialog_url.*
 import kotlinx.android.synthetic.main.dialog_url.view.*
 import java.io.FileOutputStream
 
@@ -103,10 +102,10 @@ class CreateNoteActivity : AppCompatActivity() {
         favButton.setOnClickListener {
             if(!fav){
                 fav=true
-                favButton.setImageResource(R.drawable.hearton)
+                favButton.setImageResource(R.drawable.favoriteon)
             }else{
                 fav=false
-                favButton.setImageResource(R.drawable.heartoff)
+                favButton.setImageResource(R.drawable.favoriteoff)
             }
         }
 

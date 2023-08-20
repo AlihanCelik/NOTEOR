@@ -71,14 +71,14 @@
             android:layout_height="200dp"
             android:src="@drawable/emptynote"
             android:layout_gravity="center"
-            app:tint="@color/darkGrey">
+            app:tint="@color/AdvGrey">
 
         </ImageView>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="No Tasks"
-            android:textColor="@color/darkGrey"
+            android:textColor="@color/AdvGrey"
             android:gravity="center"
             android:textSize="20dp"
             android:fontFamily="@font/blackerthin"

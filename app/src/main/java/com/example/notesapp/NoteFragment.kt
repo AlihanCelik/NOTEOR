@@ -32,7 +32,6 @@ class NoteFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_note, container, false)
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -48,6 +47,7 @@ class NoteFragment : Fragment() {
             }
 
         }
+
         search.setOnQueryTextListener( object : SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(p0: String?): Boolean {
                 return true

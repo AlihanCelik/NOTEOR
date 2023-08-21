@@ -73,6 +73,7 @@ class MainActivity : AppCompatActivity() {
                     viewPager.currentItem = 0
                     drawerLayout.closeDrawer(GravityCompat.START)
                     true
+
                 }
                 R.id.nav_favorites -> {
                     Toast.makeText(

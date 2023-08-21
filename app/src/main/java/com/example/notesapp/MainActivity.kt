@@ -119,8 +119,13 @@ class MainActivity : AppCompatActivity() {
                 super.onPageSelected(position)
                 bottomNavigation.menu.getItem(position).isChecked = true
                 when (position) {
-                    0 -> bottomNavigation.menu.findItem(R.id.home).isChecked = true
-                    1 -> bottomNavigation.menu.findItem(R.id.calendar).isChecked = true
+                    0 -> {
+                        bottomNavigation.menu.findItem(R.id.home).isChecked = true
+                        navigationView.setCheckedItem(R.id.nav_note)
+                    }
+                    1 -> {bottomNavigation.menu.findItem(R.id.calendar).isChecked = true
+                        navigationView.setCheckedItem(R.id.nav_calendar)
+                    }
                 }
             }
         })

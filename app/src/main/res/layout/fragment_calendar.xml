@@ -85,6 +85,30 @@
             android:layout_marginTop="15dp">
 
         </TextView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:text="a"
+            android:id="@+id/selectedDate">
+
+        </TextView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:text="b"
+            android:id="@+id/selectedDD">
+
+        </TextView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:text="c"
+            android:id="@+id/selectedDay">
+
+        </TextView>
 
 
     </LinearLayout>

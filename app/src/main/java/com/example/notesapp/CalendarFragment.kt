@@ -11,12 +11,13 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SnapHelper
+import kotlinx.android.synthetic.main.fragment_calendar.*
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
 
-class CalendarFragment : Fragment() {
+class CalendarFragment : Fragment() ,CalendarAdapter.onItemClickListener{
     private lateinit var recyclerView: RecyclerView
     private lateinit var tvDateMonth: TextView
     private lateinit var ivCalendarNext: ImageView
@@ -68,7 +69,9 @@ class CalendarFragment : Fragment() {
             override fun onRequestDisallowInterceptTouchEvent(disallowIntercept: Boolean) {}
         })
 
+
     }
+
 
 
     private fun setUpClickListener() {
@@ -95,6 +98,7 @@ class CalendarFragment : Fragment() {
                 calendarModel.isSelected = index == position
             }
             adapter.setData(calendarList2)
+            adapter.setOnItemClickListener(this)
         }
         recyclerView.adapter = adapter
     }
@@ -114,7 +118,14 @@ class CalendarFragment : Fragment() {
         }
         calendarList2.clear()
         calendarList2.addAll(calendarList)
+        adapter.setOnItemClickListener(this)
         adapter.setData(calendarList)
+    }
+
+    override fun onItemClick(text: String, date: String, day: String) {
+        view?.findViewById<TextView>(R.id.selectedDate)?.text = "Selected date: $text"
+        view?.findViewById<TextView>(R.id.selectedDD)?.text = "Selected DD: $date"
+        view?.findViewById<TextView>(R.id.selectedDay)?.text = "Selected day: $day"
     }
 
 }

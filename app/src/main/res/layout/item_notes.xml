@@ -34,6 +34,7 @@
                     android:fontFamily="@font/newyork"
                     android:gravity="center"
                     android:text="Title"
+                    android:maxLines="1"
                     android:textColor="@color/black"
                     android:textSize="20dp"
                     android:textStyle="bold">

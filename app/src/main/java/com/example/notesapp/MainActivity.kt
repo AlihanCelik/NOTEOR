@@ -76,11 +76,8 @@ class MainActivity : AppCompatActivity() {
 
                 }
                 R.id.nav_favorites -> {
-                    Toast.makeText(
-                        applicationContext,
-                        "Favorites Note Clicked",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    val intent=Intent(applicationContext,FavoritesActivtity::class.java)
+                    startActivity(intent)
                     drawerLayout.closeDrawer(GravityCompat.START)
                     true
                 }

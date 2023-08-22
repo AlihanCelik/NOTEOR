@@ -379,11 +379,14 @@ class CreateNoteActivity : AppCompatActivity() {
                 notes.color=color
                 notes.imgPath=image
                 notes.webLink=webLink
+                notes.favorite=fav
                 applicationContext?.let {
                     NotesDatabase.getDatabase(it).noteDao().insertNotes(notes)
                     notes_title.setText("")
                     notes_sub_title.setText("")
                     notes_desc.setText("")
+                    favButton.setImageResource(R.drawable.favoriteoff)
+                    fav=false
                     getFile=null
                     layout_img_preview.visibility=View.GONE
                     img_preview.setImageDrawable(null)

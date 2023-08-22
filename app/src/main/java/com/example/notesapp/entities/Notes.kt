@@ -29,8 +29,13 @@ data class Notes(
     @ColumnInfo(name = "web_link")
     var webLink: String? = null,
 
+    @ColumnInfo(name = "favorite")
+    var favorite: Boolean? = false,
+
     @ColumnInfo(name = "color")
     var color: String? = null
+
+
 ) : Serializable {
     override fun toString(): String {
         return "$title : $dateTime"

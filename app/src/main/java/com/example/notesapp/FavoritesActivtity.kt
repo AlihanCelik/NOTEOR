@@ -2,6 +2,7 @@ package com.example.notesapp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_create_note.*
 
 class FavoritesActivtity : AppCompatActivity() {

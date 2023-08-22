@@ -25,21 +25,48 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/item_title"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="3dp"
-                    android:fontFamily="@font/newyork"
                     android:gravity="center"
-                    android:text="Title"
-                    android:maxLines="1"
-                    android:textColor="@color/black"
-                    android:textSize="20dp"
-                    android:textStyle="bold">
+                    android:layout_gravity="center"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginRight="3dp"
+                    android:orientation="horizontal">
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
+                    <TextView
+                        android:id="@+id/item_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/newyork"
+                        android:gravity="center"
+                        android:text="Title"
+                        android:maxLines="1"
+                        android:textColor="@color/black"
+                        android:textSize="20dp"
+                        android:textStyle="bold">
 
-                </TextView>
+                    </TextView>
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
+
+                    <ImageView
+                        android:id="@+id/item_fav"
+                        android:layout_width="17dp"
+                        android:layout_height="17dp"
+                        android:gravity="center"
+                        android:src="@drawable/favoriteon">
+
+                    </ImageView>
+
+                </LinearLayout>
+
+
                 <FrameLayout
                     android:id="@+id/item_layout_img"
                     android:layout_width="match_parent"

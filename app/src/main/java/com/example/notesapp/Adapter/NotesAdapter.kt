@@ -46,6 +46,11 @@ class NotesAdapter :
             holder.itemView.item_img.setImageBitmap(BitmapFactory.decodeFile(arrList[position].imgPath))
             holder.itemView.item_layout_img.visibility=View.VISIBLE
         }
+        if(arrList[position].favorite==true){
+            holder.itemView.item_fav.visibility=View.VISIBLE
+        }else{
+            holder.itemView.item_fav.visibility=View.GONE
+        }
 
         when (arrList[position].color) {
             "blue" -> {

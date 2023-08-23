@@ -9,7 +9,7 @@ data class  CalendarDateModel(var data: Date, var isSelected: Boolean = true) {
         get() = SimpleDateFormat("EE", Locale.getDefault()).format(data)
 
     val calendarYear: String
-        get() = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault()).format(data)
+        get() = SimpleDateFormat("dd/M/yyyy", Locale.getDefault()).format(data)
 
     val calendarDate: String
         get() {

@@ -7,11 +7,15 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.recyclerview.widget.LinearSnapHelper
-import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.SnapHelper
-import kotlinx.android.synthetic.main.fragment_calendar.*
+import androidx.recyclerview.widget.*
+import com.example.notesapp.Adapter.CalendarNoteAdapter
+import com.example.notesapp.database.NotesDatabase
+import com.example.notesapp.entities.Notes
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -22,6 +26,13 @@ class CalendarFragment : Fragment() ,CalendarAdapter.onItemClickListener{
     private lateinit var tvDateMonth: TextView
     private lateinit var ivCalendarNext: ImageView
     private lateinit var ivCalendarPrevious: ImageView
+    private lateinit var recyclerViewNote: RecyclerView
+
+    var arrNotes = ArrayList<Notes>()
+    var notesAdapter: CalendarNoteAdapter= CalendarNoteAdapter()
+
+    val s = SimpleDateFormat("dd/M/yyyy", Locale.getDefault())
+    var date_time=""
 
     private val sdf = SimpleDateFormat("MMMM yyyy", Locale.ENGLISH)
     private val cal = Calendar.getInstance(Locale.ENGLISH)
@@ -49,6 +60,11 @@ class CalendarFragment : Fragment() ,CalendarAdapter.onItemClickListener{
         recyclerView = view.findViewById(R.id.recyclerView)
         ivCalendarNext = view.findViewById(R.id.iv_calendar_next)
         ivCalendarPrevious = view.findViewById(R.id.iv_calendar_previous)
+
+        recyclerViewNote=view.findViewById(R.id.recycler_view)
+        recyclerViewNote.setHasFixedSize(true)
+        recyclerViewNote.layoutManager=LinearLayoutManager(requireContext(),RecyclerView.VERTICAL,false)
+
         setUpAdapter()
         setUpClickListener()
         setUpCalendar()
@@ -123,9 +139,42 @@ class CalendarFragment : Fragment() ,CalendarAdapter.onItemClickListener{
     }
 
     override fun onItemClick(text: String, date: String, day: String) {
+
         view?.findViewById<TextView>(R.id.selectedDate)?.text = "Selected date: $text"
         view?.findViewById<TextView>(R.id.selectedDD)?.text = "Selected DD: $date"
         view?.findViewById<TextView>(R.id.selectedDay)?.text = "Selected day: $day"
+
+        view?.findViewById<TextView>(R.id.date)?.text=text
+
+        GlobalScope.launch(Dispatchers.Main){
+            context?.let {
+                var notes = NotesDatabase.getDatabase(it).noteDao().getAllNotes()
+                notesAdapter!!.setData(notes)
+                arrNotes = notes as ArrayList<Notes>
+                var CArr = ArrayList<Notes>()
+                for (arr in arrNotes){
+                    date_time=arr.dateTime.toString().split(" ")[0]
+                    if(text==date_time){
+
+                        CArr.add(arr)
+                    }
+
+                }
+                if (CArr.isEmpty()){
+                    view?.findViewById<LinearLayout>(R.id.notasks_layout)?.visibility = View.VISIBLE
+                    view?.findViewById<LinearLayout>(R.id.tasks_layout)?.visibility = View.GONE
+                }else{
+                    view?.findViewById<LinearLayout>(R.id.notasks_layout)?.visibility = View.GONE
+                    view?.findViewById<LinearLayout>(R.id.tasks_layout)?.visibility = View.VISIBLE
+                }
+
+                notesAdapter.setData(CArr)
+                notesAdapter.notifyDataSetChanged()
+                view?.findViewById<RecyclerView>(R.id.recycler_view)?.adapter =notesAdapter
+            }
+
+        }
+
     }
 
 }

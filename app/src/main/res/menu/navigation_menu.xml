@@ -25,9 +25,23 @@
     </item>
 
     <item
+        android:id="@+id/nav_trash"
+        android:title="Trash"
+        android:icon="@drawable/trash">
+
+    </item>
+
+    <item
         android:id="@+id/nav_add"
         android:title="Add Notes"
         android:icon="@drawable/addnotes">
+
+    </item>
+
+    <item
+        android:id="@+id/nav_reminders"
+        android:title="Reminders"
+        android:icon="@drawable/reminder">
 
     </item>
 

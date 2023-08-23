@@ -23,6 +23,19 @@ class CalendarNoteAdapter :
     override fun onBindViewHolder(holder: NotesViewHolder, position: Int) {
         val context = holder.itemView.context
 
+        if(arrList[position].webLink.isNullOrEmpty()){
+            holder.itemView.itemLinkLayout.visibility=View.GONE
+        }else{
+            holder.itemView.itemWebLink.text= arrList[position].webLink
+            holder.itemView.itemLinkLayout.visibility=View.VISIBLE
+        }
+
+        if(arrList[position].imgPath.isNullOrEmpty()){
+            holder.itemView.item_layout_img.visibility=View.GONE
+        }else{
+            holder.itemView.item_img.setImageBitmap(BitmapFactory.decodeFile(arrList[position].imgPath))
+            holder.itemView.item_layout_img.visibility=View.VISIBLE
+        }
         if(arrList[position].favorite==true){
             holder.itemView.item_fav.visibility=View.VISIBLE
         }else{
@@ -54,6 +67,10 @@ class CalendarNoteAdapter :
     override fun getItemCount(): Int {
         return arrList.size
     }
+
+
+
+
 
     class NotesViewHolder(view:View) : RecyclerView.ViewHolder(view){
 

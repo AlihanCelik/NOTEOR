@@ -63,7 +63,7 @@ class CalendarFragment : Fragment() ,CalendarAdapter.onItemClickListener{
 
         recyclerViewNote=view.findViewById(R.id.recycler_view)
         recyclerViewNote.setHasFixedSize(true)
-        recyclerViewNote.layoutManager=LinearLayoutManager(requireContext(),RecyclerView.VERTICAL,false)
+        recyclerViewNote.layoutManager=StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL)
 
         setUpAdapter()
         setUpClickListener()

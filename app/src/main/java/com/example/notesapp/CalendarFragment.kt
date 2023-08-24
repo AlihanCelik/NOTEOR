@@ -161,6 +161,7 @@ class CalendarFragment : Fragment() ,CalendarAdapter.onItemClickListener{
                     view?.findViewById<LinearLayout>(R.id.notasks_layout)?.visibility = View.VISIBLE
                     view?.findViewById<LinearLayout>(R.id.tasks_layout)?.visibility = View.GONE
                     view?.findViewById<TextView>(R.id.no_tasks_text)?.visibility = View.VISIBLE
+                    view?.findViewById<TextView>(R.id.date_text)?.visibility = View.VISIBLE
                 }else{
                     view?.findViewById<LinearLayout>(R.id.notasks_layout)?.visibility = View.GONE
                     view?.findViewById<LinearLayout>(R.id.tasks_layout)?.visibility = View.VISIBLE

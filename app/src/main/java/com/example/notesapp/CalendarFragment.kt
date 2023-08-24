@@ -140,7 +140,7 @@ class CalendarFragment : Fragment() ,CalendarAdapter.onItemClickListener{
     }
 
     override fun onItemClick(text: String, date: String, day: String) {
-
+        view?.findViewById<TextView>(R.id.date_text)?.text=text
         view?.findViewById<TextView>(R.id.date)?.text=text
 
         GlobalScope.launch(Dispatchers.Main){

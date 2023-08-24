@@ -130,9 +130,19 @@
             android:textColor="@color/AdvGrey2"
             android:gravity="center"
             android:textSize="20dp"
+            android:textStyle="bold"
             android:fontFamily="@font/blackerthin"
             android:layout_marginTop="15dp">
 
+        </TextView>
+        <TextView
+            android:id="@+id/date_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="10/8/2003"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/grey"
+            android:gravity="center">
         </TextView>
 
 

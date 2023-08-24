@@ -133,7 +133,7 @@
             android:gravity="center"
             android:textSize="20dp"
             android:textStyle="bold"
-            android:fontFamily="@font/blackerthin"
+            android:fontFamily="@font/ralewaymedium"
             android:layout_marginTop="15dp">
 
         </TextView>

@@ -68,6 +68,7 @@ class CalendarFragment : Fragment() ,CalendarAdapter.onItemClickListener{
         setUpAdapter()
         setUpClickListener()
         setUpCalendar()
+        view.findViewById<LinearLayout>(R.id.no_tasks_text).visibility = View.GONE
 
         val recyclerView: RecyclerView = view.findViewById(R.id.recyclerView)
         recyclerView.addOnItemTouchListener(object : RecyclerView.OnItemTouchListener {
@@ -140,10 +141,6 @@ class CalendarFragment : Fragment() ,CalendarAdapter.onItemClickListener{
 
     override fun onItemClick(text: String, date: String, day: String) {
 
-        view?.findViewById<TextView>(R.id.selectedDate)?.text = "Selected date: $text"
-        view?.findViewById<TextView>(R.id.selectedDD)?.text = "Selected DD: $date"
-        view?.findViewById<TextView>(R.id.selectedDay)?.text = "Selected day: $day"
-
         view?.findViewById<TextView>(R.id.date)?.text=text
 
         GlobalScope.launch(Dispatchers.Main){
@@ -163,6 +160,7 @@ class CalendarFragment : Fragment() ,CalendarAdapter.onItemClickListener{
                 if (CArr.isEmpty()){
                     view?.findViewById<LinearLayout>(R.id.notasks_layout)?.visibility = View.VISIBLE
                     view?.findViewById<LinearLayout>(R.id.tasks_layout)?.visibility = View.GONE
+                    view?.findViewById<LinearLayout>(R.id.no_tasks_text)?.visibility = View.VISIBLE
                 }else{
                     view?.findViewById<LinearLayout>(R.id.notasks_layout)?.visibility = View.GONE
                     view?.findViewById<LinearLayout>(R.id.tasks_layout)?.visibility = View.VISIBLE

@@ -60,7 +60,7 @@
             android:layout_height="0dp"
             android:orientation="vertical"
             android:layout_marginTop="20dp"
-
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -106,7 +106,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:visibility="gone"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -124,6 +123,7 @@
 
         </ImageView>
         <TextView
+            android:id="@+id/no_tasks_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="No Tasks"
@@ -134,30 +134,7 @@
             android:layout_marginTop="15dp">
 
         </TextView>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:text="a"
-            android:id="@+id/selectedDate">
 
-        </TextView>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:text="b"
-            android:id="@+id/selectedDD">
-
-        </TextView>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:text="c"
-            android:id="@+id/selectedDay">
-
-        </TextView>
 
 
     </LinearLayout>

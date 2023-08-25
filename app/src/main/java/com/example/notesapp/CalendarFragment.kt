@@ -152,7 +152,6 @@ class CalendarFragment : Fragment() ,CalendarAdapter.onItemClickListener{
                 for (arr in arrNotes){
                     date_time=arr.dateTime.toString().split(" ")[0]
                     if(text==date_time){
-
                         CArr.add(arr)
                     }
 

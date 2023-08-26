@@ -285,6 +285,19 @@ class CreateNoteActivity : AppCompatActivity() {
                 bottomSheet.dismiss()
 
             }
+            bottomSheetView.findViewById<View>(R.id.mic).setOnClickListener {
+                val view = View.inflate(this, R.layout.record_voice_dialog, null)
+                val builder = AlertDialog.Builder(this)
+                builder.setView(view)
+                val dialog = builder.create()
+                dialog.show()
+                dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+                view.okey.setOnClickListener {
+
+                }
+                bottomSheet.dismiss()
+
+            }
 
 
             bottomSheet.setContentView(bottomSheetView)

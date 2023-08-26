@@ -28,4 +28,6 @@
     <color name="background_orange">#ffecde</color>
     <color name="blue">#122259</color>
     <color name="purple">#9561a1</color>
+
+    <color name="red">#A10B0B</color>
 </resources>

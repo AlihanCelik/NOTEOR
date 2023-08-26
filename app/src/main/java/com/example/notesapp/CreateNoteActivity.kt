@@ -21,11 +21,15 @@ import kotlinx.coroutines.*
 import java.io.File
 import android.Manifest
 import android.content.Context
+import android.media.MediaPlayer
+import android.media.MediaRecorder
 import android.net.Uri
 import android.os.Build
+import android.os.Handler
 import android.view.WindowInsetsController
 import androidx.appcompat.app.AlertDialog
 import kotlinx.android.synthetic.main.dialog_url.view.*
+import kotlinx.android.synthetic.main.dialog_url.view.okey
 import java.io.FileOutputStream
 
 class CreateNoteActivity : AppCompatActivity() {
@@ -34,6 +38,7 @@ class CreateNoteActivity : AppCompatActivity() {
     var color="blue"
     var webLink = ""
     var fav=false
+
     companion object {
         private val READ_STORAGE_PERMISSION = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
         private val WRITE_STORAGE_PERMISSION = arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE)
@@ -67,6 +72,7 @@ class CreateNoteActivity : AppCompatActivity() {
             layout_img_preview.visibility = View.VISIBLE
             img_preview.setImageBitmap(bitmap)
         }
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             window.statusBarColor = backgroundBlue
         }
@@ -279,19 +285,7 @@ class CreateNoteActivity : AppCompatActivity() {
                 bottomSheet.dismiss()
 
             }
-            bottomSheetView.findViewById<View>(R.id.mic).setOnClickListener {
-                val view = View.inflate(this, R.layout.record_voice_dialog, null)
-                val builder = AlertDialog.Builder(this)
-                builder.setView(view)
-                val dialog = builder.create()
-                dialog.show()
-                dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-                view.okey.setOnClickListener {
-                    dialog.dismiss()
-                }
-                bottomSheet.dismiss()
 
-            }
 
             bottomSheet.setContentView(bottomSheetView)
             bottomSheet.show()
@@ -322,6 +316,7 @@ class CreateNoteActivity : AppCompatActivity() {
         }
         return null
     }
+
     private fun startGallery() {
         val intent = Intent()
         intent.action = Intent.ACTION_GET_CONTENT
@@ -411,4 +406,8 @@ class CreateNoteActivity : AppCompatActivity() {
         }
 
     }
+
+
+
+
 }

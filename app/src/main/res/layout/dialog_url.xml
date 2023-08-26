@@ -43,8 +43,8 @@
                     android:inputType="textMultiLine"
                     android:padding="10dp"
                     android:text="http://"
-                    android:textColor="@color/white"
-                    android:textColorHint="@color/grey"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/darkGrey"
                     android:textSize="17dp" />
 
             </LinearLayout>

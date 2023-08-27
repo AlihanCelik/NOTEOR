@@ -21,11 +21,8 @@ import kotlinx.coroutines.*
 import java.io.File
 import android.Manifest
 import android.content.Context
-import android.media.MediaPlayer
-import android.media.MediaRecorder
 import android.net.Uri
 import android.os.Build
-import android.os.Handler
 import android.view.WindowInsetsController
 import androidx.appcompat.app.AlertDialog
 import kotlinx.android.synthetic.main.dialog_url.view.*

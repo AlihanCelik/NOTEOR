@@ -19,15 +19,17 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlinx.coroutines.*
 import java.io.File
-import android.Manifest
-import android.content.Context
 import android.net.Uri
 import android.os.Build
 import android.view.WindowInsetsController
 import androidx.appcompat.app.AlertDialog
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.example.notesapp.Adapter.ImageAdapter
 import kotlinx.android.synthetic.main.dialog_url.view.*
 import kotlinx.android.synthetic.main.dialog_url.view.okey
-import java.io.FileOutputStream
+import kotlinx.android.synthetic.main.fragment_note.*
 
 class CreateNoteActivity : AppCompatActivity() {
     var currentDate:String? = null
@@ -36,12 +38,10 @@ class CreateNoteActivity : AppCompatActivity() {
     var webLink = ""
     var fav=false
 
-    companion object {
-        private val READ_STORAGE_PERMISSION = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
-        private val WRITE_STORAGE_PERMISSION = arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-        const val REQUEST_CODE_READ_STORAGE_PERMISSION = 10
-        const val REQUEST_CODE_WRITE_STORAGE_PERMISSION = 20
-    }
+    var PICK_IMAGES_CODE = 1
+    lateinit var items: MutableList<Uri>
+    lateinit var recyclerView: RecyclerView
+    lateinit var imageAdapter: ImageAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         val moonBlue = resources.getColor(R.color.moonBlue)
         val moonPink = resources.getColor(R.color.moonPink)
@@ -64,11 +64,10 @@ class CreateNoteActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_note)
         tvDateTime.text=currentDate
-        getFile?.let { file ->
-            val bitmap = BitmapFactory.decodeFile(file.absolutePath)
-            layout_img_preview.visibility = View.VISIBLE
-            img_preview.setImageBitmap(bitmap)
-        }
+        items = arrayListOf()
+        recyclerView = findViewById(R.id.rv_recyclerView)
+        recyclerView.setHasFixedSize(true)
+        recyclerView.layoutManager= StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             window.statusBarColor = backgroundBlue
@@ -93,11 +92,7 @@ class CreateNoteActivity : AppCompatActivity() {
         saveButton.setOnClickListener {
             saveNote()
         }
-        btn_clear_added_img.setOnClickListener {
-            getFile = null
-            layout_img_preview.visibility = View.GONE
-            img_preview.setImageDrawable(null)
-        }
+
         btnDelete.setOnClickListener {
             webLink=""
             layoutWebUrl.visibility=View.GONE
@@ -262,7 +257,14 @@ class CreateNoteActivity : AppCompatActivity() {
             }
 
             bottomSheetView.findViewById<View>(R.id.image).setOnClickListener {
-                startGallery()
+                val intent = Intent()
+                intent.type = "image/*"
+                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+                intent.action = Intent.ACTION_GET_CONTENT
+                startActivityForResult(
+                    Intent.createChooser(intent, "Select Image(s)"),
+                    PICK_IMAGES_CODE
+                )
                 bottomSheet.dismiss()
 
             }
@@ -305,73 +307,11 @@ class CreateNoteActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-    }
-    private fun uriToFile(uri: Uri?, context: Context): File? {
-        uri?.let {
-            val inputStream = context.contentResolver.openInputStream(uri)
-            val tempFile = File(context.externalCacheDir, "temp_image.jpg")
-            tempFile.createNewFile()
-            inputStream?.use { input ->
-                FileOutputStream(tempFile).use { output ->
-                    val buffer = ByteArray(4 * 1024)
-                    while (true) {
-                        val bytesRead = input.read(buffer)
-                        if (bytesRead == -1) break
-                        output.write(buffer, 0, bytesRead)
-                    }
-                    output.flush()
-                }
-            }
-            return tempFile
-        }
-        return null
+
+        initAdapter()
+
     }
 
-    private fun startGallery() {
-        val intent = Intent()
-        intent.action = Intent.ACTION_GET_CONTENT
-        intent.type = "image/*"
-        val chooser = Intent.createChooser(intent, "Choose a Picture")
-        launcherIntentGallery.launch(chooser)
-    }
-
-    private val permReqLauncher =
-        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
-            val granted = permissions.entries.all {
-                it.value
-            }
-            if (granted) {
-                startGallery()
-            }
-        }
-
-    private fun readExternalStorageGranted() = READ_STORAGE_PERMISSION.all {
-        ContextCompat.checkSelfPermission(baseContext, it) == PackageManager.PERMISSION_GRANTED
-    }
-
-    private fun writeExternalStorageGranted() = WRITE_STORAGE_PERMISSION.all {
-        ContextCompat.checkSelfPermission(baseContext, it) == PackageManager.PERMISSION_GRANTED
-    }
-
-    private val launcherIntentGallery = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
-    ) { result ->
-        if (result.resultCode == RESULT_OK) {
-            val selectedImg = result.data?.data
-            if (selectedImg != null) {
-                val inputStream = this.contentResolver.openInputStream(selectedImg)
-                val bitmap = BitmapFactory.decodeStream(inputStream)
-                val myFile = uriToFile(selectedImg, this)
-                getFile = myFile
-                layout_img_preview.visibility = View.VISIBLE
-                img_preview.setImageBitmap(bitmap)
-            } else {
-                getFile = null
-                layout_img_preview.visibility = View.GONE
-                img_preview.setImageDrawable(null)
-            }
-        }
-    }
     private fun saveNote(){
         val image = getFile?.toString() ?: ""
         if(notes_title.text.toString().isNullOrEmpty()){
@@ -395,7 +335,7 @@ class CreateNoteActivity : AppCompatActivity() {
                 notes.noteText=notes_desc.text.toString()
                 notes.dateTime=currentDate
                 notes.color=color
-                notes.imgPath=image
+                notes.imgPath=items
                 notes.webLink=webLink
                 notes.favorite=fav
                 applicationContext?.let {
@@ -407,13 +347,38 @@ class CreateNoteActivity : AppCompatActivity() {
                     fav=false
                     getFile=null
                     layout_img_preview.visibility=View.GONE
-                    img_preview.setImageDrawable(null)
+                    items.clear()
                 }
             }
             Toast.makeText(this, "Note is added", Toast.LENGTH_SHORT).show()
 
 
         }
+
+    }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (data != null && data.clipData != null) {
+
+            val count = data.clipData!!.itemCount
+            for (i in 0 until count) {
+                val imageUri = data.clipData!!.getItemAt(i).uri
+                items.add(imageUri)
+                imageAdapter.notifyDataSetChanged()
+                layout_img_preview.visibility = View.VISIBLE
+            }
+
+        }
+
+
+    }
+
+    private fun initAdapter() {
+        imageAdapter = ImageAdapter(this, items,layout_img_preview)
+        val ll = GridLayoutManager(this, 2)
+        recyclerView.layoutManager = ll
+        recyclerView.adapter = imageAdapter
 
     }
 

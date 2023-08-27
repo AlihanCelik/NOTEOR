@@ -1,5 +1,6 @@
 package com.example.notesapp.entities
 
+import android.net.Uri
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -24,7 +25,7 @@ data class Notes(
     var noteText: String? = null,
 
     @ColumnInfo(name = "img_path")
-    var imgPath: String? = null,
+    var imgPath: List<Uri>? = null,
 
     @ColumnInfo(name = "web_link")
     var webLink: String? = null,

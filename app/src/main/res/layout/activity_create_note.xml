@@ -241,38 +241,24 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
+                android:layout_gravity="center"
                 android:visibility="gone"
                 android:layout_marginEnd="16dp">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:text="Image"
+                    android:textColor="@color/blue"></TextView>
 
-                    <com.google.android.material.imageview.ShapeableImageView
-                        android:id="@+id/img_preview"
-                        android:layout_width="match_parent"
-                        android:layout_height="200dp"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/img_sample"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:shapeAppearance="@style/circleImageView" />
-
-                    <ImageView
-                        android:id="@+id/btn_clear_added_img"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="end"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:background="@android:color/transparent"
-                        android:src="@drawable/baseline_cancel_24"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:tint="@color/white" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_recyclerView"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginBottom="10dp"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/item_images"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
 
             </FrameLayout>
 

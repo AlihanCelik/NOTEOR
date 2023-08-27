@@ -293,9 +293,9 @@ class CreateNoteActivity : AppCompatActivity() {
                 dialog.show()
                 dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
                 view.okey.setOnClickListener {
-
+                    bottomSheet.dismiss()
                 }
-                bottomSheet.dismiss()
+
 
             }
 

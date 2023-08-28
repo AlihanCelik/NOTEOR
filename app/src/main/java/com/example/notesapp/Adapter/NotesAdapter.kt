@@ -28,7 +28,11 @@ class NotesAdapter :
     override fun getItemCount(): Int {
         return arrList.size
     }
-
+    fun updateData(newNotesList: List<Notes>) {
+        arrList.clear()
+        arrList.addAll(newNotesList)
+        notifyDataSetChanged()
+    }
 
 
     override fun onBindViewHolder(holder: NotesViewHolder, position: Int) {

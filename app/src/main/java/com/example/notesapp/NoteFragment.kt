@@ -22,6 +22,12 @@ class NoteFragment : Fragment() {
     var arrNotes = ArrayList<Notes>()
     var notesAdapter: NotesAdapter = NotesAdapter()
 
+    companion object {
+        fun newInstance(): NoteFragment {
+            return NoteFragment()
+        }
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,6 +75,16 @@ class NoteFragment : Fragment() {
             }
 
         })
+    }
+
+    fun updateRecyclerView() {
+        // Güncellenmiş verileri getirip adaptörü güncelleyin
+        GlobalScope.launch(Dispatchers.Main) {
+            context?.let {
+                val notes = NotesDatabase.getDatabase(it).noteDao().getAllNotes()
+                notesAdapter.updateData(notes)
+            }
+        }
     }
 
 

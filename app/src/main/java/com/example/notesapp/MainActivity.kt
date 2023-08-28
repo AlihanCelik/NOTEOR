@@ -1,5 +1,6 @@
 package com.example.notesapp
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -19,7 +20,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : AppCompatActivity() {
-
+    private val CREATE_NOTE_REQUEST = 1
     lateinit var toggle: ActionBarDrawerToggle
 
     private lateinit var viewPager: ViewPager2
@@ -129,8 +130,8 @@ class MainActivity : AppCompatActivity() {
         })
 
         // ViewPager'a fragment ekleyin
-        viewPagerAdapter.addFragment(NoteFragment(), "Home")
-        viewPagerAdapter.addFragment(CalendarFragment(), "Calender")
+        viewPagerAdapter.addFragment(NoteFragment.newInstance(), "Home")
+        viewPagerAdapter.addFragment(CalendarFragment.newInstance(), "Calender")
 
         // İlk olarak seçili fragment'i belirtin
         viewPager.currentItem = 0
@@ -140,7 +141,7 @@ class MainActivity : AppCompatActivity() {
 
     fun CreateNoteButton(view: View) {
         val intent = Intent(this, CreateNoteActivity::class.java)
-        startActivity(intent)
+        startActivityForResult(intent, CREATE_NOTE_REQUEST)
 
     }
 
@@ -155,7 +156,15 @@ class MainActivity : AppCompatActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
-
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == CREATE_NOTE_REQUEST && resultCode == Activity.RESULT_OK) {
+            val noteFragment = viewPagerAdapter.fragmentList[0] as? NoteFragment
+            noteFragment?.updateRecyclerView()
+            val calendarFragment=viewPagerAdapter.fragmentList[1]as? CalendarFragment
+            calendarFragment?.updateRecyclerView()
+        }
+    }
 
 
 

@@ -1,5 +1,6 @@
 package com.example.notesapp
 
+import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
@@ -86,12 +87,12 @@ class CreateNoteActivity : AppCompatActivity() {
         }
 
         backButton.setOnClickListener {
-            val intent=Intent(this,MainActivity::class.java)
-            startActivity(intent)
+            setResult(Activity.RESULT_OK)
             finish()
 
         }
         saveButton.setOnClickListener {
+
             saveNote()
         }
 
@@ -362,6 +363,7 @@ class CreateNoteActivity : AppCompatActivity() {
                     getFile=null
                     layout_img_preview.visibility=View.GONE
                     items.clear()
+                    setResult(Activity.RESULT_OK)
                 }
             }
             Toast.makeText(this, "Note is added", Toast.LENGTH_SHORT).show()

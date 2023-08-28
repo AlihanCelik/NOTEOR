@@ -29,6 +29,12 @@ class CalendarFragment : Fragment() , CalendarAdapter.onItemClickListener{
     private lateinit var ivCalendarPrevious: ImageView
     private lateinit var recyclerViewNote: RecyclerView
 
+    companion object {
+        fun newInstance(): CalendarFragment {
+            return CalendarFragment()
+        }
+    }
+
     var arrNotes = ArrayList<Notes>()
     var notesAdapter: CalendarNoteAdapter= CalendarNoteAdapter()
 
@@ -174,6 +180,15 @@ class CalendarFragment : Fragment() , CalendarAdapter.onItemClickListener{
 
         }
 
+    }
+    fun updateRecyclerView() {
+        // Güncellenmiş verileri getirip adaptörü güncelleyin
+        GlobalScope.launch(Dispatchers.Main) {
+            context?.let {
+                val notes = NotesDatabase.getDatabase(it).noteDao().getAllNotes()
+                notesAdapter.updateData(notes)
+            }
+        }
     }
 
 }

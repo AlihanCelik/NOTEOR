@@ -6,7 +6,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
 
 class VpAdapter(fa: FragmentManager, lifecycle: Lifecycle): FragmentStateAdapter(fa,lifecycle) {
-    private val fragmentList = mutableListOf<Fragment>()
+    val fragmentList = mutableListOf<Fragment>()
     private val fragmenttitle = mutableListOf<String>()
 
 

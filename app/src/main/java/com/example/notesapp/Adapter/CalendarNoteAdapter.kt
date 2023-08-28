@@ -87,6 +87,12 @@ class CalendarNoteAdapter :
         return arrList.size
     }
 
+    fun updateData(newNotesList: List<Notes>) {
+        arrList.clear()
+        arrList.addAll(newNotesList)
+        notifyDataSetChanged()
+    }
+
 
 
 

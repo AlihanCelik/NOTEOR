@@ -10,6 +10,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.*
+import com.example.notesapp.Adapter.CalendarAdapter
 import com.example.notesapp.Adapter.CalendarNoteAdapter
 import com.example.notesapp.database.NotesDatabase
 import com.example.notesapp.entities.Notes
@@ -21,7 +22,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
-class CalendarFragment : Fragment() ,CalendarAdapter.onItemClickListener{
+class CalendarFragment : Fragment() , CalendarAdapter.onItemClickListener{
     private lateinit var recyclerView: RecyclerView
     private lateinit var tvDateMonth: TextView
     private lateinit var ivCalendarNext: ImageView

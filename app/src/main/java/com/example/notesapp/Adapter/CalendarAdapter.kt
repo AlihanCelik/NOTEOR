@@ -1,4 +1,4 @@
-package com.example.notesapp
+package com.example.notesapp.Adapter
 
 import android.os.Build
 import android.view.LayoutInflater
@@ -8,8 +8,9 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.example.notesapp.CalendarDateModel
+import com.example.notesapp.R
 
 class CalendarAdapter(private val listener: (calendarDateModel: CalendarDateModel, position: Int) -> Unit):
     RecyclerView.Adapter<CalendarAdapter.CalendarViewHolder>(){
@@ -51,12 +52,20 @@ class CalendarAdapter(private val listener: (calendarDateModel: CalendarDateMode
             mListener?.onItemClick(text,date,day)
         }
         if (position == adapterPosition){
-            holder.calendarDay.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.white))
-            holder.calendarDate.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.white))
+            holder.calendarDay.setTextColor(ContextCompat.getColor(holder.itemView.context,
+                R.color.white
+            ))
+            holder.calendarDate.setTextColor(ContextCompat.getColor(holder.itemView.context,
+                R.color.white
+            ))
             holder.linear.background = holder.itemView.context.getDrawable(R.drawable.rectangle_fill)
         }else {
-            holder.calendarDay.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.black))
-            holder.calendarDate.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.black))
+            holder.calendarDay.setTextColor(ContextCompat.getColor(holder.itemView.context,
+                R.color.black
+            ))
+            holder.calendarDate.setTextColor(ContextCompat.getColor(holder.itemView.context,
+                R.color.black
+            ))
             holder.linear.background = holder.itemView.context.getDrawable(R.drawable.rectangle_outline)
         }
 

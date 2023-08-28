@@ -17,6 +17,9 @@
         android:theme="@style/Theme.NotesApp"
         tools:targetApi="31">
         <activity
+            android:name=".PicturesActivty"
+            android:exported="false" />
+        <activity
             android:name=".FavoritesActivtity"
             android:exported="false" />
         <activity

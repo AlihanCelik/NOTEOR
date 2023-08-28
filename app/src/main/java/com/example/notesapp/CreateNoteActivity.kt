@@ -38,6 +38,8 @@ class CreateNoteActivity : AppCompatActivity() {
     var webLink = ""
     var fav=false
 
+    var picLay=true
+
     var PICK_IMAGES_CODE = 1
     lateinit var items: MutableList<Uri>
     lateinit var recyclerView: RecyclerView
@@ -305,6 +307,18 @@ class CreateNoteActivity : AppCompatActivity() {
         tvWebLink.setOnClickListener {
             var intent = Intent(Intent.ACTION_VIEW,Uri.parse(tvWebLink.text.toString()))
             startActivity(intent)
+        }
+        pictures_layout.setOnClickListener {
+            if(picLay==true){
+                picLay=false
+                rv_recyclerView.visibility=View.GONE
+                pictures_updown.setImageResource(R.drawable.arrowdown)
+            }else{
+                picLay=true
+                rv_recyclerView.visibility=View.VISIBLE
+                pictures_updown.setImageResource(R.drawable.uparrow)
+            }
+
         }
 
 

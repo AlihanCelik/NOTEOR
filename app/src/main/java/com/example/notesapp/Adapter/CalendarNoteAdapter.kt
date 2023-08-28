@@ -19,16 +19,16 @@ import kotlinx.android.synthetic.main.item_calendar_notes.view.item_layout_img
 import kotlinx.android.synthetic.main.item_calendar_notes.view.item_title
 
 class CalendarNoteAdapter :
-    RecyclerView.Adapter<CalendarNoteAdapter.NotesViewHolder>() {
+    RecyclerView.Adapter<CalendarNoteAdapter.CalendarNotesViewHolder>() {
 
     var arrList = ArrayList<Notes>()
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NotesViewHolder {
-        return NotesViewHolder(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CalendarNotesViewHolder {
+        return CalendarNotesViewHolder(
             LayoutInflater.from(parent.context).inflate(R.layout.item_calendar_notes,parent,false)
         )
     }
 
-    override fun onBindViewHolder(holder: NotesViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: CalendarNotesViewHolder, position: Int) {
         val context = holder.itemView.context
 
         if(arrList[position].webLink.isNullOrEmpty()){
@@ -91,7 +91,7 @@ class CalendarNoteAdapter :
 
 
 
-    class NotesViewHolder(view:View) : RecyclerView.ViewHolder(view){
+    class CalendarNotesViewHolder(view:View) : RecyclerView.ViewHolder(view){
         var image: ImageView = itemView.findViewById(R.id.item_img)
 
     }

@@ -1,6 +1,7 @@
 package com.example.notesapp.Adapter
 
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.notesapp.PicturesActivty
 import com.example.notesapp.R
 import kotlinx.android.synthetic.main.item_images.view.*
 
@@ -48,6 +50,11 @@ class ImageAdapter constructor(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val model = items[position]
         Glide.with(context).load(model).into(holder.image)
+        holder.itemView.setOnClickListener{
+            val intent= Intent(context,PicturesActivty::class.java)
+            intent.putExtra("image",model.toString())
+            context.startActivity(intent)
+        }
 
 
 

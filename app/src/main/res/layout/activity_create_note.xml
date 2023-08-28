@@ -12,7 +12,7 @@
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="8dp"
         android:layout_marginLeft="4dp"
         android:layout_marginRight="4dp"
         android:layout_marginBottom="3dp"
@@ -22,8 +22,8 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="27dp"
+            android:layout_height="27dp"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginBottom="10dp"
@@ -36,8 +36,8 @@
         android:layout_weight="1" />
         <ImageView
             android:id="@+id/favButton"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="27dp"
+            android:layout_height="27dp"
             android:layout_gravity="center"
             android:layout_marginRight="20dp"
             android:src="@drawable/favoriteoff">
@@ -45,8 +45,8 @@
         </ImageView>
         <ImageView
             android:id="@+id/saveButton"
-            android:layout_width="27dp"
-            android:layout_height="27dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:src="@drawable/save"

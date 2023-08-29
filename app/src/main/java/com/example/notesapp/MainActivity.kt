@@ -67,7 +67,6 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_add -> {
                     val intent=Intent(applicationContext,CreateNoteActivity::class.java)
                     startActivity(intent)
-                    finish()
                     drawerLayout.closeDrawer(GravityCompat.START)
                     true
                 }

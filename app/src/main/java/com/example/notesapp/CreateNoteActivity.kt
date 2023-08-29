@@ -28,6 +28,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.notesapp.Adapter.ImageAdapter
+import com.example.notesapp.Adapter.LinksAdapter
 import kotlinx.android.synthetic.main.dialog_url.view.*
 import kotlinx.android.synthetic.main.dialog_url.view.okey
 import kotlinx.android.synthetic.main.fragment_note.*
@@ -40,11 +41,16 @@ class CreateNoteActivity : AppCompatActivity() {
     var fav=false
 
     var picLay=true
+    var linkLay=true
 
     var PICK_IMAGES_CODE = 1
     lateinit var items: MutableList<Uri>
     lateinit var recyclerView: RecyclerView
     lateinit var imageAdapter: ImageAdapter
+    lateinit var linksAdapter: LinksAdapter
+    lateinit var items_link:MutableList<String>
+
+    lateinit var recyclerViewLink: RecyclerView
     override fun onCreate(savedInstanceState: Bundle?) {
         val moonBlue = resources.getColor(R.color.moonBlue)
         val moonPink = resources.getColor(R.color.moonPink)
@@ -68,9 +74,13 @@ class CreateNoteActivity : AppCompatActivity() {
         setContentView(R.layout.activity_create_note)
         tvDateTime.text=currentDate
         items = arrayListOf()
+        items_link= arrayListOf()
         recyclerView = findViewById(R.id.rv_recyclerView)
+        recyclerViewLink=findViewById(R.id.links_recyclerView)
         recyclerView.setHasFixedSize(true)
+        recyclerViewLink.setHasFixedSize(true)
         recyclerView.layoutManager= StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        recyclerViewLink.layoutManager= StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             window.statusBarColor = backgroundBlue
@@ -92,14 +102,10 @@ class CreateNoteActivity : AppCompatActivity() {
 
         }
         saveButton.setOnClickListener {
-
             saveNote()
         }
 
-        btnDelete.setOnClickListener {
-            webLink=""
-            layoutWebUrl.visibility=View.GONE
-        }
+
         favButton.setOnClickListener {
             if(!fav){
                 fav=true
@@ -279,9 +285,13 @@ class CreateNoteActivity : AppCompatActivity() {
                 dialog.show()
                 dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
                 view.okey.setOnClickListener {
-                    webLink=view.etWebLink.text.toString()
-                    layoutWebUrl.visibility=View.VISIBLE
-                    tvWebLink.text=webLink
+                    if(view.etWebLink.text.toString()!=""){
+                        webLink=view.etWebLink.text.toString()
+                        items_link.add(webLink)
+                        linksAdapter.notifyDataSetChanged()
+                        layout_link_preview.visibility = View.VISIBLE
+                    }
+
                     dialog.dismiss()
                 }
                 bottomSheet.dismiss()
@@ -305,10 +315,7 @@ class CreateNoteActivity : AppCompatActivity() {
             bottomSheet.setContentView(bottomSheetView)
             bottomSheet.show()
         }
-        tvWebLink.setOnClickListener {
-            var intent = Intent(Intent.ACTION_VIEW,Uri.parse(tvWebLink.text.toString()))
-            startActivity(intent)
-        }
+
         pictures_layout.setOnClickListener {
             if(picLay==true){
                 picLay=false
@@ -322,13 +329,25 @@ class CreateNoteActivity : AppCompatActivity() {
 
         }
 
+        link_layout.setOnClickListener {
+            if(linkLay==true){
+                linkLay=false
+                links_recyclerView.visibility=View.GONE
+                link_updown.setImageResource(R.drawable.arrowdown)
+            }else{
+                linkLay=true
+                links_recyclerView.visibility=View.VISIBLE
+                link_updown.setImageResource(R.drawable.uparrow)
+            }
+
+        }
+
 
         initAdapter()
 
     }
 
     private fun saveNote(){
-        val image = getFile?.toString() ?: ""
         if(notes_title.text.toString().isNullOrEmpty()){
             Toast.makeText(this,"Note Title is Required", Toast.LENGTH_SHORT).show()
         }
@@ -351,7 +370,7 @@ class CreateNoteActivity : AppCompatActivity() {
                 notes.dateTime=currentDate
                 notes.color=color
                 notes.imgPath=items
-                notes.webLink=webLink
+                notes.webLink=items_link
                 notes.favorite=fav
                 applicationContext?.let {
                     NotesDatabase.getDatabase(it).noteDao().insertNotes(notes)
@@ -362,7 +381,9 @@ class CreateNoteActivity : AppCompatActivity() {
                     fav=false
                     getFile=null
                     layout_img_preview.visibility=View.GONE
+                    layout_link_preview.visibility=View.GONE
                     items.clear()
+                    items_link.clear()
                     setResult(Activity.RESULT_OK)
                 }
             }
@@ -383,9 +404,11 @@ class CreateNoteActivity : AppCompatActivity() {
                 items.add(imageUri)
                 imageAdapter.notifyDataSetChanged()
                 layout_img_preview.visibility = View.VISIBLE
+
             }
 
         }
+
 
 
     }
@@ -395,6 +418,11 @@ class CreateNoteActivity : AppCompatActivity() {
         val ll = GridLayoutManager(this, 2)
         recyclerView.layoutManager = ll
         recyclerView.adapter = imageAdapter
+
+        linksAdapter= LinksAdapter(this,items_link,layout_link_preview)
+        recyclerViewLink.adapter=linksAdapter
+
+
 
     }
 

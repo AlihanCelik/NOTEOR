@@ -28,7 +28,7 @@ data class Notes(
     var imgPath: List<Uri>? = null,
 
     @ColumnInfo(name = "web_link")
-    var webLink: String? = null,
+    var webLink: List<String>? = null,
 
     @ColumnInfo(name = "favorite")
     var favorite: Boolean? = false,

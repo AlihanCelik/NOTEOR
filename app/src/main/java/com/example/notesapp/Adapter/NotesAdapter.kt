@@ -42,7 +42,7 @@ class NotesAdapter :
         if(arrList[position].webLink.isNullOrEmpty()){
             holder.itemView.itemLinkLayout.visibility=View.GONE
         }else{
-            holder.itemView.itemWebLink.text= arrList[position].webLink
+            holder.itemView.itemWebLink.text= arrList[position].webLink?.get(0)
             holder.itemView.itemLinkLayout.visibility=View.VISIBLE
         }
         if(arrList[position].imgPath.isNullOrEmpty()){

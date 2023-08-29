@@ -240,14 +240,16 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="12dp"
-                android:visibility="gone"
                 android:layout_gravity="center"
+                android:visibility="gone"
                 android:background="@drawable/bg_background_frame"
                 android:layout_marginEnd="16dp">
                 <LinearLayout
                     android:id="@+id/pictures_layout"
-                    android:layout_margin="25dp"
-
+                    android:layout_marginRight="25dp"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">

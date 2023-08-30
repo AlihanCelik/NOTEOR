@@ -47,16 +47,5 @@
 
 
 </group>
-    <group android:checkableBehavior="single">
-        <item android:title="Category">
-            <menu>
-                <item
-                    android:id="@+id/nav_yellow"
-                    android:icon="@drawable/moonyellow"
-                    android:title="Yellow">
-                </item>
 
-            </menu>
-        </item>
-    </group>
 </menu>

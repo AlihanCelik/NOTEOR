@@ -82,15 +82,6 @@ class MainActivity : AppCompatActivity() {
                     drawerLayout.closeDrawer(GravityCompat.START)
                     true
                 }
-                R.id.nav_yellow -> {
-                    Toast.makeText(
-                        applicationContext,
-                        "Yellow Note Clicked",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    drawerLayout.closeDrawer(GravityCompat.START)
-                    true
-                }
                 R.id.nav_calendar -> {
                     viewPager.currentItem = 1
                     drawerLayout.closeDrawer(GravityCompat.START)

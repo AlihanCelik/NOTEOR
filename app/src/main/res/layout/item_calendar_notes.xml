@@ -42,13 +42,12 @@
                         android:id="@+id/item_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/newyork"
+                        android:fontFamily="@font/arcuata"
                         android:gravity="center"
                         android:text="Title"
                         android:maxLines="1"
-                        android:textColor="@color/black"
-                        android:textSize="20dp"
-                        android:textStyle="bold">
+                        android:textColor="@color/darkGrey"
+                        android:textSize="20dp">
 
                     </TextView>
                     <Space

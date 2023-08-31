@@ -2,16 +2,12 @@ package com.example.notesapp
 
 import android.app.Activity
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.graphics.BitmapFactory
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContextCompat
 import com.example.notesapp.database.NotesDatabase
 import com.example.notesapp.entities.Notes
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -30,8 +26,8 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.notesapp.Adapter.ImageAdapter
 import com.example.notesapp.Adapter.LinksAdapter
 import kotlinx.android.synthetic.main.dialog_url.view.*
-import kotlinx.android.synthetic.main.dialog_url.view.okey
-import kotlinx.android.synthetic.main.fragment_note.*
+import kotlinx.android.synthetic.main.font_dialog.view.*
+import kotlinx.android.synthetic.main.record_voice_dialog.view.*
 
 class CreateNoteActivity : AppCompatActivity() {
     var currentDate:String? = null
@@ -284,7 +280,7 @@ class CreateNoteActivity : AppCompatActivity() {
                 val dialog = builder.create()
                 dialog.show()
                 dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-                view.okey.setOnClickListener {
+                view.okeyUrl.setOnClickListener {
                     if(view.etWebLink.text.toString()!=""){
                         webLink=view.etWebLink.text.toString()
                         items_link.add(webLink)
@@ -304,8 +300,8 @@ class CreateNoteActivity : AppCompatActivity() {
                 val dialog = builder.create()
                 dialog.show()
                 dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-                view.okey.setOnClickListener {
-                    bottomSheet.dismiss()
+                view.okeyMic.setOnClickListener {
+                    dialog.dismiss()
                 }
 
 
@@ -318,9 +314,10 @@ class CreateNoteActivity : AppCompatActivity() {
                 val dialog = builder.create()
                 dialog.show()
                 dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-                view.okey.setOnClickListener {
-                    bottomSheet.dismiss()
+                view.okeyFont.setOnClickListener {
+                    dialog.dismiss()
                 }
+
 
 
             }

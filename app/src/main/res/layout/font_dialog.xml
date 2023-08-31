@@ -11,7 +11,7 @@
     <LinearLayout
         android:id="@+id/ll"
         android:layout_width="match_parent"
-        android:layout_height="218dp"
+        android:layout_height="280dp"
         android:layout_marginTop="50dp"
         android:layout_marginBottom="50dp"
         android:background="@drawable/bg_linear_layout"
@@ -31,8 +31,8 @@
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="140dp"
-            android:layout_marginTop="1dp">
+            android:layout_height="196dp"
+            android:layout_marginTop="3dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -208,11 +208,11 @@
                             android:layout_weight="1"
                             android:fontFamily="@font/font7"
                             android:gravity="center"
-                            android:textSize="18dp"
                             android:paddingLeft="24dp"
                             android:paddingRight="24dp"
                             android:text="@string/appName"
                             android:textColor="@color/darkGrey"
+                            android:textSize="18dp"
                             android:textStyle="bold">
 
                         </TextView>
@@ -267,8 +267,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:gravity="center"
                     android:layout_marginTop="10dp"
+                    android:gravity="center"
                     android:orientation="horizontal">
 
                     <LinearLayout
@@ -364,7 +364,7 @@
         app:tint="@color/white" />
 
     <LinearLayout
-        android:id="@+id/okey"
+        android:id="@+id/okeyFont"
         android:layout_width="216dp"
         android:layout_height="30dp"
         android:layout_marginTop="24dp"

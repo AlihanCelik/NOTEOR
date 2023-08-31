@@ -10,7 +10,7 @@
 
     <LinearLayout
         android:id="@+id/ll"
-        android:layout_width="312dp"
+        android:layout_width="match_parent"
         android:layout_height="218dp"
         android:layout_marginTop="50dp"
         android:layout_marginBottom="50dp"
@@ -21,10 +21,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+            android:layout_marginTop="45dp"
+        android:background="#2794959A">
+        </View>
+
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="133dp"
-            android:layout_marginTop="45dp">
+            android:layout_height="140dp"
+            android:layout_marginTop="1dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -37,60 +45,71 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:gravity="center"
                     android:orientation="horizontal">
 
                     <LinearLayout
+
+                        android:id="@+id/font1_btn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@drawable/bg_background_frame">
 
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingLeft="15dp"
-                            android:paddingTop="5dp"
-                            android:paddingRight="15dp"
-                            android:paddingBottom="5dp"
+                            android:layout_width="0dp"
+                            android:layout_height="40dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/ralewaymedium"
+                            android:gravity="center"
+                            android:paddingLeft="18dp"
+                            android:paddingRight="18dp"
                             android:text="@string/appName"
-                            android:textColor="@color/darkGrey">
+                            android:textColor="@color/darkGrey"
+                            android:textStyle="bold">
 
                         </TextView>
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/font2_btn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:background="@drawable/bg_background_frame">
 
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingLeft="15dp"
-                            android:paddingTop="5dp"
-                            android:paddingRight="15dp"
-                            android:paddingBottom="5dp"
+                            android:layout_width="0dp"
+                            android:layout_height="40dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/font2"
+                            android:gravity="center"
+                            android:paddingLeft="18dp"
+                            android:paddingRight="18dp"
                             android:text="@string/appName"
-                            android:textColor="@color/darkGrey">
+                            android:textColor="@color/darkGrey"
+                            android:textStyle="bold">
 
                         </TextView>
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/font3_btn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:background="@drawable/bg_background_frame">
 
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingLeft="15dp"
-                            android:paddingTop="5dp"
-                            android:paddingRight="15dp"
-                            android:paddingBottom="5dp"
+                            android:layout_width="0dp"
+                            android:layout_height="40dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/font3"
+                            android:gravity="center"
+                            android:paddingLeft="18dp"
+                            android:paddingRight="18dp"
                             android:text="@string/appName"
-                            android:textColor="@color/darkGrey">
+                            android:textColor="@color/darkGrey"
+                            android:textStyle="bold">
 
                         </TextView>
                     </LinearLayout>
@@ -101,60 +120,69 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="10dp"
+                    android:gravity="center"
                     android:orientation="horizontal">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/bg_background_frame">
+                        android:background="@drawable/bg_background_frame"
+                        android:fontFamily="@font/font4">
 
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingLeft="15dp"
-                            android:paddingTop="5dp"
-                            android:paddingRight="15dp"
-                            android:paddingBottom="5dp"
+                            android:layout_width="0dp"
+                            android:layout_height="40dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:paddingLeft="18dp"
+                            android:paddingRight="18dp"
                             android:text="@string/appName"
-                            android:textColor="@color/darkGrey">
+                            android:textColor="@color/darkGrey"
+                            android:textStyle="bold">
 
                         </TextView>
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/font5_btn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:background="@drawable/bg_background_frame">
 
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingLeft="15dp"
-                            android:paddingTop="5dp"
-                            android:paddingRight="15dp"
-                            android:paddingBottom="5dp"
+                            android:layout_width="0dp"
+                            android:layout_height="40dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/font5"
+                            android:gravity="center"
+                            android:paddingLeft="21dp"
+                            android:paddingRight="21dp"
                             android:text="@string/appName"
-                            android:textColor="@color/darkGrey">
+                            android:textColor="@color/darkGrey"
+                            android:textStyle="bold">
 
                         </TextView>
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/font6_btn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:background="@drawable/bg_background_frame">
 
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingLeft="15dp"
-                            android:paddingTop="5dp"
-                            android:paddingRight="15dp"
-                            android:paddingBottom="5dp"
+                            android:layout_width="0dp"
+                            android:layout_height="40dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/font6"
+                            android:gravity="center"
+                            android:paddingLeft="14dp"
+                            android:paddingRight="14dp"
                             android:text="@string/appName"
-                            android:textColor="@color/darkGrey">
+                            android:textColor="@color/darkGrey"
+                            android:textStyle="bold">
 
                         </TextView>
                     </LinearLayout>
@@ -165,60 +193,146 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="10dp"
+                    android:gravity="center"
                     android:orientation="horizontal">
 
                     <LinearLayout
+                        android:id="@+id/font7_btn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@drawable/bg_background_frame">
 
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingLeft="15dp"
-                            android:paddingTop="5dp"
-                            android:paddingRight="15dp"
-                            android:paddingBottom="5dp"
+                            android:layout_width="0dp"
+                            android:layout_height="40dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/font7"
+                            android:gravity="center"
+                            android:textSize="18dp"
+                            android:paddingLeft="24dp"
+                            android:paddingRight="24dp"
                             android:text="@string/appName"
-                            android:textColor="@color/darkGrey">
+                            android:textColor="@color/darkGrey"
+                            android:textStyle="bold">
 
                         </TextView>
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/font8_btn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:background="@drawable/bg_background_frame">
 
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingLeft="15dp"
-                            android:paddingTop="5dp"
-                            android:paddingRight="15dp"
-                            android:paddingBottom="5dp"
+                            android:layout_width="0dp"
+                            android:layout_height="40dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/font8"
+                            android:gravity="center"
+                            android:paddingLeft="19dp"
+                            android:paddingRight="19dp"
                             android:text="@string/appName"
-                            android:textColor="@color/darkGrey">
+                            android:textColor="@color/darkGrey"
+                            android:textStyle="bold">
 
                         </TextView>
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/font9_btn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:background="@drawable/bg_background_frame">
 
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingLeft="15dp"
-                            android:paddingTop="5dp"
-                            android:paddingRight="15dp"
-                            android:paddingBottom="5dp"
+                            android:layout_width="0dp"
+                            android:layout_height="40dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/font9"
+                            android:gravity="center"
+                            android:paddingLeft="18dp"
+                            android:paddingRight="18dp"
                             android:text="@string/appName"
-                            android:textColor="@color/darkGrey">
+                            android:textColor="@color/darkGrey"
+                            android:textStyle="bold">
+
+                        </TextView>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:id="@+id/font10_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_background_frame">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="40dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/font10"
+                            android:gravity="center"
+                            android:paddingLeft="12dp"
+                            android:paddingRight="12dp"
+                            android:text="@string/appName"
+                            android:textColor="@color/darkGrey"
+                            android:textStyle="bold">
+
+                        </TextView>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/font11_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:background="@drawable/bg_background_frame">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="40dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/font11"
+                            android:gravity="center"
+                            android:paddingLeft="16dp"
+                            android:paddingRight="16dp"
+                            android:text="@string/appName"
+                            android:textColor="@color/darkGrey"
+                            android:textStyle="bold">
+
+                        </TextView>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/font12_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:background="@drawable/bg_background_frame">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="40dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/font12"
+                            android:gravity="center"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp"
+                            android:text="@string/appName"
+                            android:textColor="@color/darkGrey"
+                            android:textSize="12dp"
+                            android:textStyle="bold">
 
                         </TextView>
                     </LinearLayout>
@@ -227,6 +341,13 @@
 
 
         </ScrollView>
+        <View
+        android:id="@+id/view2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#2794959A">
+
+        </View>
 
 
     </LinearLayout>

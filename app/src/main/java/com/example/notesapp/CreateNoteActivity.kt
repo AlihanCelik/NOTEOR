@@ -20,6 +20,7 @@ import android.net.Uri
 import android.os.Build
 import android.view.WindowInsetsController
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
@@ -303,8 +304,7 @@ class CreateNoteActivity : AppCompatActivity() {
                 view.okeyMic.setOnClickListener {
                     dialog.dismiss()
                 }
-
-
+                bottomSheet.dismiss()
             }
 
             bottomSheetView.findViewById<View>(R.id.font).setOnClickListener {
@@ -317,9 +317,43 @@ class CreateNoteActivity : AppCompatActivity() {
                 view.okeyFont.setOnClickListener {
                     dialog.dismiss()
                 }
-
-
-
+                view.font1_btn.setOnClickListener {
+                    notes_desc.typeface = ResourcesCompat.getFont(this,R.font.ralewaymedium)
+                }
+                view.font2_btn.setOnClickListener {
+                    notes_desc.typeface = ResourcesCompat.getFont(this,R.font.font2)
+                }
+                view.font3_btn.setOnClickListener {
+                    notes_desc.typeface = ResourcesCompat.getFont(this,R.font.font3)
+                }
+                view.font4_btn.setOnClickListener {
+                    notes_desc.typeface = ResourcesCompat.getFont(this,R.font.font4)
+                }
+                view.font5_btn.setOnClickListener {
+                    notes_desc.typeface = ResourcesCompat.getFont(this,R.font.font5)
+                }
+                view.font6_btn.setOnClickListener {
+                    notes_desc.typeface = ResourcesCompat.getFont(this,R.font.font6)
+                }
+                view.font7_btn.setOnClickListener {
+                    notes_desc.typeface = ResourcesCompat.getFont(this,R.font.font7)
+                }
+                view.font8_btn.setOnClickListener {
+                    notes_desc.typeface = ResourcesCompat.getFont(this,R.font.font8)
+                }
+                view.font9_btn.setOnClickListener {
+                    notes_desc.typeface = ResourcesCompat.getFont(this,R.font.font9)
+                }
+                view.font10_btn.setOnClickListener {
+                    notes_desc.typeface = ResourcesCompat.getFont(this,R.font.font10)
+                }
+                view.font11_btn.setOnClickListener {
+                    notes_desc.typeface = ResourcesCompat.getFont(this,R.font.font11)
+                }
+                view.font12_btn.setOnClickListener {
+                    notes_desc.typeface = ResourcesCompat.getFont(this,R.font.font12)
+                }
+                bottomSheet.dismiss()
             }
 
 

@@ -339,15 +339,15 @@ class CreateNoteActivity : AppCompatActivity() {
                     notes_desc.setTypeface(ResourcesCompat.getFont(this,R.font.font5),Typeface.NORMAL)
                 }
                 view.font6_btn.setOnClickListener {
-                    notes_desc.textSize=17f
+                    notes_desc.textSize=22f
                     notes_desc.setTypeface(ResourcesCompat.getFont(this,R.font.font6),Typeface.NORMAL)
                 }
                 view.font7_btn.setOnClickListener {
-                    notes_desc.textSize=17f
+                    notes_desc.textSize=22f
                     notes_desc.setTypeface(ResourcesCompat.getFont(this,R.font.font7),Typeface.NORMAL)
                 }
                 view.font8_btn.setOnClickListener {
-                    notes_desc.textSize=17f
+                    notes_desc.textSize=22f
                     notes_desc.setTypeface(ResourcesCompat.getFont(this,R.font.font8),Typeface.NORMAL)
                 }
                 view.font9_btn.setOnClickListener {

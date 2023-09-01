@@ -467,8 +467,6 @@ class CreateNoteActivity : AppCompatActivity() {
 
         }
 
-
-
     }
 
     private fun initAdapter() {

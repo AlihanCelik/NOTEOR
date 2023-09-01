@@ -285,7 +285,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp"
-                android:textSize="17dp"
+                android:textSize="17sp"
                 android:inputType="textMultiLine"
                 android:padding="10dp"
                 android:fontFamily="@font/ralewaymedium"

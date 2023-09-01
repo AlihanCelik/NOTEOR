@@ -2,6 +2,7 @@ package com.example.notesapp
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -318,40 +319,52 @@ class CreateNoteActivity : AppCompatActivity() {
                     dialog.dismiss()
                 }
                 view.font1_btn.setOnClickListener {
-                    notes_desc.typeface = ResourcesCompat.getFont(this,R.font.ralewaymedium)
+                    notes_desc.textSize=17f
+                    notes_desc.setTypeface(ResourcesCompat.getFont(this,R.font.ralewaymedium),Typeface.NORMAL)
                 }
                 view.font2_btn.setOnClickListener {
-                    notes_desc.typeface = ResourcesCompat.getFont(this,R.font.font2)
+                    notes_desc.textSize=17f
+                    notes_desc.setTypeface(ResourcesCompat.getFont(this,R.font.font4),Typeface.NORMAL)
                 }
                 view.font3_btn.setOnClickListener {
-                    notes_desc.typeface = ResourcesCompat.getFont(this,R.font.font3)
+                    notes_desc.textSize=17f
+                    notes_desc.setTypeface(ResourcesCompat.getFont(this,R.font.font3),Typeface.NORMAL)
                 }
                 view.font4_btn.setOnClickListener {
-                    notes_desc.typeface = ResourcesCompat.getFont(this,R.font.font4)
+                    notes_desc.textSize=17f
+                    notes_desc.setTypeface(ResourcesCompat.getFont(this,R.font.font4),Typeface.NORMAL)
                 }
                 view.font5_btn.setOnClickListener {
-                    notes_desc.typeface = ResourcesCompat.getFont(this,R.font.font5)
+                    notes_desc.textSize=17f
+                    notes_desc.setTypeface(ResourcesCompat.getFont(this,R.font.font5),Typeface.NORMAL)
                 }
                 view.font6_btn.setOnClickListener {
-                    notes_desc.typeface = ResourcesCompat.getFont(this,R.font.font6)
+                    notes_desc.textSize=17f
+                    notes_desc.setTypeface(ResourcesCompat.getFont(this,R.font.font6),Typeface.NORMAL)
                 }
                 view.font7_btn.setOnClickListener {
-                    notes_desc.typeface = ResourcesCompat.getFont(this,R.font.font7)
+                    notes_desc.textSize=17f
+                    notes_desc.setTypeface(ResourcesCompat.getFont(this,R.font.font7),Typeface.NORMAL)
                 }
                 view.font8_btn.setOnClickListener {
-                    notes_desc.typeface = ResourcesCompat.getFont(this,R.font.font8)
+                    notes_desc.textSize=17f
+                    notes_desc.setTypeface(ResourcesCompat.getFont(this,R.font.font8),Typeface.NORMAL)
                 }
                 view.font9_btn.setOnClickListener {
-                    notes_desc.typeface = ResourcesCompat.getFont(this,R.font.font9)
+                    notes_desc.textSize=17f
+                    notes_desc.setTypeface(ResourcesCompat.getFont(this,R.font.font9),Typeface.NORMAL)
                 }
                 view.font10_btn.setOnClickListener {
-                    notes_desc.typeface = ResourcesCompat.getFont(this,R.font.font10)
+                    notes_desc.textSize=17f
+                    notes_desc.setTypeface(ResourcesCompat.getFont(this,R.font.font10),Typeface.NORMAL)
                 }
                 view.font11_btn.setOnClickListener {
-                    notes_desc.typeface = ResourcesCompat.getFont(this,R.font.font11)
+                    notes_desc.textSize=17f
+                    notes_desc.setTypeface(ResourcesCompat.getFont(this,R.font.font11),Typeface.NORMAL)
                 }
                 view.font12_btn.setOnClickListener {
-                    notes_desc.typeface = ResourcesCompat.getFont(this,R.font.font12)
+                    notes_desc.textSize=17f
+                    notes_desc.setTypeface(ResourcesCompat.getFont(this,R.font.font12),Typeface.NORMAL)
                 }
                 bottomSheet.dismiss()
             }

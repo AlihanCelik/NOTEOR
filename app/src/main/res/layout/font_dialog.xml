@@ -139,6 +139,7 @@
                             android:paddingRight="18dp"
                             android:fontFamily="@font/font4"
                             android:text="@string/appName"
+                            android:textSize="15dp"
                             android:textColor="@color/darkGrey"
                             android:textStyle="bold">
 
@@ -333,7 +334,7 @@
                             android:paddingRight="10dp"
                             android:text="@string/appName"
                             android:textColor="@color/darkGrey"
-                            android:textSize="12dp"
+                            android:textSize="16dp"
                             android:textStyle="bold">
 
                         </TextView>

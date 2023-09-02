@@ -19,6 +19,8 @@ import kotlinx.coroutines.*
 import java.io.File
 import android.net.Uri
 import android.os.Build
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.WindowInsetsController
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.res.ResourcesCompat
@@ -40,6 +42,9 @@ class CreateNoteActivity : AppCompatActivity() {
 
     var picLay=true
     var linkLay=true
+
+    var textBold=false
+    var isNewTextBold = false
 
     var PICK_IMAGES_CODE = 1
     lateinit var items: MutableList<Uri>
@@ -113,6 +118,24 @@ class CreateNoteActivity : AppCompatActivity() {
                 favButton.setImageResource(R.drawable.favoriteoff)
             }
         }
+
+        notes_desc.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                // Metin düzenlendiğinde yapılacak işlemler
+                if (isNewTextBold) {
+                    notes_desc.setTypeface(null, Typeface.BOLD)
+                } else {
+                    // Yeni metin bold olmayacaksa, metni normale döndür
+                    notes_desc.setTypeface(null, Typeface.NORMAL)
+                }
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+            }
+        })
 
         more.setOnClickListener {
 
@@ -317,6 +340,15 @@ class CreateNoteActivity : AppCompatActivity() {
                 dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
                 view.okeyFont.setOnClickListener {
                     dialog.dismiss()
+                }
+                view.font_bold_btn.setOnClickListener {
+                    if(!textBold){
+                        textBold=true
+                        view.font_bold_btn.setColorFilter(resources.getColor(R.color.blue1))
+                    }else{
+                        textBold=false
+                        view.font_bold_btn.setColorFilter(resources.getColor(R.color.darkGrey))
+                    }
                 }
                 view.font1_btn.setOnClickListener {
                     notes_desc.textSize=17f

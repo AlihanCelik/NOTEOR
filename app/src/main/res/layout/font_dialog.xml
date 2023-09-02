@@ -11,7 +11,7 @@
     <LinearLayout
         android:id="@+id/ll"
         android:layout_width="match_parent"
-        android:layout_height="280dp"
+        android:layout_height="310dp"
         android:layout_marginTop="50dp"
         android:layout_marginBottom="50dp"
         android:background="@drawable/bg_linear_layout"
@@ -21,11 +21,114 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <LinearLayout
+            android:layout_marginTop="45dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="horizontal">
+            <ImageView
+                android:id="@+id/font_bold_btn"
+                android:layout_width="23dp"
+                android:layout_height="23dp"
+                android:layout_gravity="center"
+                android:src="@drawable/boldtext"
+                android:layout_marginRight="12dp"
+                app:tint="@color/darkGrey">
+
+            </ImageView>
+
+
+            <ImageView
+                android:id="@+id/font_italic_btn"
+                android:layout_width="23dp"
+                android:layout_height="23dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:src="@drawable/italictext"
+                app:tint="@color/darkGrey">
+
+            </ImageView>
+            <ImageView
+                android:id="@+id/font_underline_btn"
+                android:layout_width="23dp"
+                android:layout_height="23dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:src="@drawable/underlinetext"
+                app:tint="@color/darkGrey">
+
+            </ImageView>
+            <ImageView
+                android:id="@+id/font_color_btn"
+                android:layout_width="23dp"
+                android:layout_height="23dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:src="@drawable/fontcolor"
+                app:tint="@color/darkGrey">
+
+            </ImageView>
+            <View
+                android:layout_width="1dp"
+                android:layout_height="25dp"
+                android:layout_gravity=""
+                android:background="#2794959A">
+            </View>
+
+            <ImageView
+                android:layout_width="23dp"
+                android:layout_height="23dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/textsize"
+                app:tint="@color/darkGrey">
+
+            </ImageView>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <ImageView
+                    android:id="@+id/minus_btn"
+                    android:layout_width="23dp"
+                    android:layout_height="23dp"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="12dp"
+                    android:src="@drawable/minus"
+                    app:tint="@color/AdvGrey2">
+
+                </ImageView>
+                <TextView
+                    android:id="@+id/text_size_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="16"
+                    android:textSize="16dp"
+                    android:textColor="@color/AdvGrey"
+                    android:textStyle="bold">
+                </TextView>
+                <ImageView
+                    android:id="@+id/plus_btn"
+                    android:layout_width="23dp"
+                    android:layout_height="23dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:src="@drawable/plus"
+                    app:tint="@color/AdvGrey2">
+
+                </ImageView>
+            </LinearLayout>
+
+
+        </LinearLayout>
         <View
         android:id="@+id/view"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-            android:layout_marginTop="45dp"
+            android:layout_marginTop="10dp"
         android:background="#2794959A">
         </View>
 

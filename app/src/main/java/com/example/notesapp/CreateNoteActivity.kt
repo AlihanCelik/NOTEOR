@@ -19,6 +19,9 @@ import kotlinx.coroutines.*
 import java.io.File
 import android.net.Uri
 import android.os.Build
+import android.text.Spannable
+import android.text.SpannableStringBuilder
+import android.text.style.StyleSpan
 import android.view.WindowInsetsController
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.res.ResourcesCompat
@@ -320,14 +323,39 @@ class CreateNoteActivity : AppCompatActivity() {
                 view.okeyFont.setOnClickListener {
                     dialog.dismiss()
                 }
+                if(textBold){
+                    view.font_bold_btn.setColorFilter(resources.getColor(R.color.blue1))
+                }else{
+                    view.font_bold_btn.setColorFilter(resources.getColor(R.color.darkGrey))
+                }
                 view.font_bold_btn.setOnClickListener {
-                    if(!textBold){
-                        textBold=true
+                    val spannable = SpannableStringBuilder(notes_desc.text)
+                    val selectionStart = notes_desc.text.toString().length
+                    val selectionEnd = notes_desc.selectionEnd
+                    if(textBold){
+                        spannable.setSpan(
+                            StyleSpan(Typeface.BOLD),
+                            selectionStart,
+                            selectionEnd,
+                            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                        )
                         view.font_bold_btn.setColorFilter(resources.getColor(R.color.blue1))
+                        textBold = !textBold
+
                     }else{
-                        textBold=false
+                        spannable.setSpan(
+                            StyleSpan(Typeface.NORMAL),
+                            selectionStart,
+                            selectionEnd,
+                            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                        )
                         view.font_bold_btn.setColorFilter(resources.getColor(R.color.darkGrey))
+                        textBold = !textBold
                     }
+                    notes_desc.text = spannable
+
+
+
                 }
                 view.font1_btn.setOnClickListener {
                     notes_desc.textSize=17f

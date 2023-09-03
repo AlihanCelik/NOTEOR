@@ -329,20 +329,13 @@ class CreateNoteActivity : AppCompatActivity() {
                     view.font_bold_btn.setColorFilter(resources.getColor(R.color.darkGrey))
                 }
                 view.font_bold_btn.setOnClickListener {
-                    val spannable = SpannableStringBuilder(notes_desc.text)
-                    val selectionStart = notes_desc.text.toString().length
-                    val selectionEnd = notes_desc.selectionEnd
-                    if(textBold){
-                        spannable.setSpan(
-                            StyleSpan(Typeface.BOLD),
-                            selectionStart,
-                            selectionEnd,
-                            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-                        )
-                        view.font_bold_btn.setColorFilter(resources.getColor(R.color.blue1))
-                        textBold = !textBold
+                    var currentText=notes_desc.text.toString()
 
-                    }else{
+
+                    if(textBold){
+                        val spannable=SpannableStringBuilder(currentText)
+                        var selectionStart = notes_desc.text.toString().length
+                        var selectionEnd = notes_desc.selectionEnd
                         spannable.setSpan(
                             StyleSpan(Typeface.NORMAL),
                             selectionStart,
@@ -351,10 +344,21 @@ class CreateNoteActivity : AppCompatActivity() {
                         )
                         view.font_bold_btn.setColorFilter(resources.getColor(R.color.darkGrey))
                         textBold = !textBold
+                        notes_desc.text = spannable
+                    }else{
+                        var selectionStart = notes_desc.text.toString().length
+                        var selectionEnd = notes_desc.selectionEnd
+                        val spannable=SpannableStringBuilder(currentText)
+                        spannable.setSpan(
+                            StyleSpan(Typeface.BOLD),
+                            selectionStart,
+                            selectionEnd,
+                            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                        )
+                        view.font_bold_btn.setColorFilter(resources.getColor(R.color.blue1))
+                        textBold = !textBold
+                        notes_desc.text = spannable
                     }
-                    notes_desc.text = spannable
-
-
 
                 }
                 view.font1_btn.setOnClickListener {

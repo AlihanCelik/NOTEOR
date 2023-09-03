@@ -32,6 +32,8 @@ import com.example.notesapp.Adapter.ImageAdapter
 import com.example.notesapp.Adapter.LinksAdapter
 import kotlinx.android.synthetic.main.dialog_url.view.*
 import kotlinx.android.synthetic.main.font_dialog.view.*
+import kotlinx.android.synthetic.main.locked_dialog.*
+import kotlinx.android.synthetic.main.locked_dialog.view.*
 import kotlinx.android.synthetic.main.record_voice_dialog.view.*
 
 class CreateNoteActivity : AppCompatActivity() {
@@ -299,6 +301,20 @@ class CreateNoteActivity : AppCompatActivity() {
                 }
                 bottomSheet.dismiss()
 
+            }
+
+            bottomSheetView.findViewById<View>(R.id.locked).setOnClickListener {
+                val view = View.inflate(this, R.layout.locked_dialog, null)
+                val builder = AlertDialog.Builder(this)
+                builder.setView(view)
+                val dialog = builder.create()
+                dialog.show()
+                dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+                view.okeylock.setOnClickListener {
+                    dialog.dismiss()
+                }
+
+                bottomSheet.dismiss()
             }
             bottomSheetView.findViewById<View>(R.id.mic).setOnClickListener {
                 val view = View.inflate(this, R.layout.record_voice_dialog, null)

@@ -46,7 +46,6 @@
                 app:counterMaxLength="16"
                 android:layout_marginTop="20dp"
                 app:passwordToggleEnabled="true"
-
                 app:passwordToggleTint="@color/darkGrey"
                 android:textColorHint="@color/grey"
                 app:boxStrokeColor="@color/darkGrey"

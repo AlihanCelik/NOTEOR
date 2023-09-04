@@ -401,22 +401,17 @@ class CreateNoteActivity : AppCompatActivity() {
                             before: Int,
                             count: Int
                         ) {
-                            if(confirm_password!=view.confirm_passwordEditText.text.toString()){
+                            if(confirm_password!=view.confirm_passwordEditText.text.toString() || view.passwordContainer.helperText!="Successful"){
                                 view.confirmpasswordContainer.setHelperTextColor(ColorStateList.valueOf(
                                     ContextCompat.getColor(this@CreateNoteActivity, android.R.color.holo_red_dark)))
                                 view.confirmpasswordContainer.helperText="Must match the previous entry"
                                 view.confirmpasswordContainer.error=""
                             }
                             else{
-                                view.confirmpasswordContainer.setHelperTextColor(ColorStateList.valueOf(
-                                    ContextCompat.getColor(this@CreateNoteActivity, android.R.color.holo_green_dark)))
-                                if(view.confirmpasswordContainer.helperText=="Successful"){
+                                    view.confirmpasswordContainer.setHelperTextColor(ColorStateList.valueOf(ContextCompat.getColor(this@CreateNoteActivity, android.R.color.holo_green_dark)))
                                     view.confirmpasswordContainer.helperText="Successful"
                                     view.confirmpasswordContainer.error=""
-                                }else{
-                                    view.confirmpasswordContainer.helperText="Must match the previous entry"
-                                    view.confirmpasswordContainer.error=""
-                                }
+
 
 
 

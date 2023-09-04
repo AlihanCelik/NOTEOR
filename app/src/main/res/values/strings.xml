@@ -11,7 +11,8 @@
     <string name="enter_note_here">Enter Note Here</string>
     <string name="open">Open</string>
     <string name="close">Close</string>
-    <string name="required">Required</string>
+    <string name="enter_password">Enter Password</string>
+    <string name="enterconfirm_password">Enter Confirm Password</string>
     <string name="password">Password</string>
     <string name="confirm_password">Confirm Password</string>
 </resources>

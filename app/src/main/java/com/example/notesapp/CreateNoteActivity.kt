@@ -2,6 +2,7 @@ package com.example.notesapp
 
 import android.app.Activity
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -19,11 +20,15 @@ import kotlinx.coroutines.*
 import java.io.File
 import android.net.Uri
 import android.os.Build
+import android.text.Editable
 import android.text.Spannable
 import android.text.SpannableStringBuilder
+import android.text.TextWatcher
 import android.text.style.StyleSpan
 import android.view.WindowInsetsController
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -35,6 +40,7 @@ import kotlinx.android.synthetic.main.font_dialog.view.*
 import kotlinx.android.synthetic.main.locked_dialog.*
 import kotlinx.android.synthetic.main.locked_dialog.view.*
 import kotlinx.android.synthetic.main.record_voice_dialog.view.*
+import java.util.regex.Pattern
 
 class CreateNoteActivity : AppCompatActivity() {
     var currentDate:String? = null
@@ -47,6 +53,9 @@ class CreateNoteActivity : AppCompatActivity() {
     var linkLay=true
 
     var textBold=false
+
+    var password=""
+    var confirm_password=""
 
     var PICK_IMAGES_CODE = 1
     lateinit var items: MutableList<Uri>
@@ -311,8 +320,89 @@ class CreateNoteActivity : AppCompatActivity() {
                 dialog.show()
                 dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
                 view.okeylock.setOnClickListener {
+
                     dialog.dismiss()
                 }
+                view.passwordEditText.addTextChangedListener(object: TextWatcher {
+                    override fun beforeTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        count: Int,
+                        after: Int
+                    ) {
+                        view.passwordContainer.setHelperTextColor(ColorStateList.valueOf(
+                            ContextCompat.getColor(this@CreateNoteActivity, android.R.color.holo_green_dark)))
+                        view.passwordContainer.helperText="Enter Password"
+                    }
+
+                    override fun onTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        before: Int,
+                        count: Int
+                    ) {
+                        var password=s.toString()
+                        if(password.length<4){
+                            view.passwordContainer.setHelperTextColor(ColorStateList.valueOf(
+                                ContextCompat.getColor(this@CreateNoteActivity, android.R.color.holo_red_dark)))
+                            view.passwordContainer.helperText="Minimum 4 Character Password"
+                            view.passwordContainer.error=""
+                        }else if(password.length in 4..10){
+                            view.passwordContainer.setHelperTextColor(ColorStateList.valueOf(
+                                ContextCompat.getColor(this@CreateNoteActivity, android.R.color.holo_green_dark)))
+                            view.passwordContainer.helperText="Enter Password"
+                        }else{
+                            view.passwordContainer.setHelperTextColor(ColorStateList.valueOf(
+                                ContextCompat.getColor(this@CreateNoteActivity, android.R.color.holo_red_dark)))
+                            view.passwordContainer.helperText="Maximum 10 Character Password"
+                        }
+
+                    }
+
+                    override fun afterTextChanged(s: Editable?) {
+                        confirm_password=view.passwordEditText.text.toString()
+                    }
+
+                })
+                view.confirm_passwordEditText.addTextChangedListener(object : TextWatcher{
+                    override fun beforeTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        count: Int,
+                        after: Int
+                    ) {
+                        view.confirmpasswordContainer.setHelperTextColor(ColorStateList.valueOf(
+                            ContextCompat.getColor(this@CreateNoteActivity, android.R.color.holo_green_dark)))
+                        view.confirmpasswordContainer.helperText="Enter Password"
+                    }
+
+                    override fun onTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        before: Int,
+                        count: Int
+                    ) {
+                        if(confirm_password!=view.confirm_passwordEditText.text.toString()){
+                            view.confirmpasswordContainer.setHelperTextColor(ColorStateList.valueOf(
+                                ContextCompat.getColor(this@CreateNoteActivity, android.R.color.holo_red_dark)))
+                            view.confirmpasswordContainer.helperText="Must match the previous entry"
+                            view.confirmpasswordContainer.error=""
+                        }
+                        else{
+                            view.confirmpasswordContainer.setHelperTextColor(ColorStateList.valueOf(
+                                ContextCompat.getColor(this@CreateNoteActivity, android.R.color.holo_green_dark)))
+                            view.confirmpasswordContainer.helperText="Successful"
+                            view.confirmpasswordContainer.error=""
+
+                        }
+                    }
+
+                    override fun afterTextChanged(s: Editable?) {
+                        password=view.confirm_passwordEditText.text.toString()
+                    }
+
+                })
+
 
                 bottomSheet.dismiss()
             }
@@ -545,3 +635,4 @@ class CreateNoteActivity : AppCompatActivity() {
 
 
 }
+

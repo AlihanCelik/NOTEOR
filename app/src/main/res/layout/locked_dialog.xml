@@ -24,6 +24,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:layout_marginTop="45dp">
             <View
             android:id="@+id/view2"
@@ -44,6 +46,7 @@
                 app:counterMaxLength="16"
                 android:layout_marginTop="20dp"
                 app:passwordToggleEnabled="true"
+
                 app:passwordToggleTint="@color/darkGrey"
                 android:textColorHint="@color/grey"
                 app:boxStrokeColor="@color/darkGrey"
@@ -55,6 +58,7 @@
                     android:layout_height="match_parent"
                     android:lines="1"
                     android:maxLength="16"
+                    android:textColor="@color/darkGrey"
                     android:inputType="textPassword"
                     android:hint="@string/password"/>
 
@@ -84,6 +88,7 @@
                     android:layout_height="match_parent"
                     android:lines="1"
                     android:maxLength="16"
+                    android:textColor="@color/darkGrey"
                     android:inputType="textPassword"
                     android:hint="@string/confirm_password"/>
 

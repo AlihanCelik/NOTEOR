@@ -32,26 +32,63 @@
             android:background="#2794959A">
 
         </View>
-            <com.poovam.pinedittextfield.LinePinField
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/passwordContainer"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_marginHorizontal="20dp"
+                app:helperText="@string/required"
+                app:helperTextTextColor="@android:color/holo_red_dark"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="55dp"
-                android:layout_marginLeft="55dp"
-                android:inputType="number|numberPassword"
-                android:textSize="20sp"
-                app:highlightType="allFields"
-                android:textSelectHandle="@drawable/text_handle"
-                app:noOfFields="4"
-                app:distanceInBetween="20dp"
-                app:fieldColor="@color/AdvGrey2"
-                app:highlightColor="@color/darkGrey"
-                app:lineThickness="1dp"
-                android:textColor="@color/AdvGrey2"
-                app:isCustomBackground="true"
-                app:isCursorEnabled="true"
-                app:bottomTextPaddingDp="5dp"
-                android:background="@color/white"
-                android:id="@+id/lineField"/>
+                app:counterEnabled="true"
+                app:counterMaxLength="16"
+                android:layout_marginTop="20dp"
+                app:passwordToggleEnabled="true"
+                app:passwordToggleTint="@color/darkGrey"
+                android:textColorHint="@color/grey"
+                app:boxStrokeColor="@color/darkGrey"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/passwordEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:lines="1"
+                    android:maxLength="16"
+                    android:inputType="textPassword"
+                    android:hint="@string/password"/>
+
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/confirmpasswordContainer"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_marginHorizontal="20dp"
+                app:helperText="@string/required"
+                app:helperTextTextColor="@android:color/holo_red_dark"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:counterEnabled="true"
+                app:counterMaxLength="16"
+                android:layout_marginTop="20dp"
+                app:passwordToggleEnabled="true"
+                app:passwordToggleTint="@color/darkGrey"
+                android:textColorHint="@color/grey"
+                app:boxStrokeColor="@color/darkGrey"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/confirm_passwordEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:lines="1"
+                    android:maxLength="16"
+                    android:inputType="textPassword"
+                    android:hint="@string/confirm_password"/>
+
+
+            </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>
 

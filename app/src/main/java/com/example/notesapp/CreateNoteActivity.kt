@@ -55,6 +55,7 @@ class CreateNoteActivity : AppCompatActivity() {
     var textBold=false
 
     var password=""
+    var passwordBoolean=false
 
 
     var PICK_IMAGES_CODE = 1
@@ -292,107 +293,83 @@ class CreateNoteActivity : AppCompatActivity() {
 
             }
             bottomSheetView.findViewById<View>(R.id.link).setOnClickListener {
-                val view = View.inflate(this, R.layout.dialog_url, null)
-                val builder = AlertDialog.Builder(this)
-                builder.setView(view)
-                val dialog = builder.create()
-                dialog.show()
-                dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-                view.okeyUrl.setOnClickListener {
-                    if(view.etWebLink.text.toString()!=""){
-                        webLink=view.etWebLink.text.toString()
-                        items_link.add(webLink)
-                        linksAdapter.notifyDataSetChanged()
-                        layout_link_preview.visibility = View.VISIBLE
-                    }
+                if (!isFinishing) {
+                    val view = View.inflate(this, R.layout.dialog_url, null)
+                    val builder = AlertDialog.Builder(this)
+                    builder.setView(view)
+                    val dialog = builder.create()
+                    dialog.show()
+                    dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+                    view.okeyUrl.setOnClickListener {
+                        if(view.etWebLink.text.toString()!=""){
+                            webLink=view.etWebLink.text.toString()
+                            items_link.add(webLink)
+                            linksAdapter.notifyDataSetChanged()
+                            layout_link_preview.visibility = View.VISIBLE
+                        }
 
-                    dialog.dismiss()
+                        dialog.dismiss()
+                    }
                 }
                 bottomSheet.dismiss()
 
             }
 
             bottomSheetView.findViewById<View>(R.id.locked).setOnClickListener {
-                val view = View.inflate(this, R.layout.locked_dialog, null)
-                val builder = AlertDialog.Builder(this)
-                builder.setView(view)
-                val dialog = builder.create()
-                dialog.show()
-                dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-                var passwordBoolean=false
-                var confirm_password=""
-                view.okeylock.setOnClickListener {
-                    if(view.confirmpasswordContainer.helperText == "Successful" && view.passwordContainer.helperText == "Successful"){
-                        password=view.confirm_passwordEditText.text.toString()
-                        dialog.dismiss()
-                    }else{
-                        view.confirmpasswordContainer.setHelperTextColor(ColorStateList.valueOf(
-                            ContextCompat.getColor(this@CreateNoteActivity, android.R.color.holo_red_dark)))
-                        view.confirmpasswordContainer.helperText="Enter Confirm Password"
+                if (!isFinishing) {
+                    val view = View.inflate(this, R.layout.locked_dialog, null)
+                    val builder = AlertDialog.Builder(this)
+                    builder.setView(view)
+                    val dialog = builder.create()
+                    dialog.show()
+                    dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
 
-                        view.passwordContainer.setHelperTextColor(ColorStateList.valueOf(
-                            ContextCompat.getColor(this@CreateNoteActivity, android.R.color.holo_red_dark)))
-                        view.passwordContainer.helperText="Enter Password"
+                    var confirm_password = ""
+                    view.okeylock.setOnClickListener {
+                        if (view.confirmpasswordContainer.helperText == "Successful" &&
+                            view.passwordContainer.helperText == "Successful" &&
+                            view.confirm_passwordEditText.text.toString() == view.passwordEditText.text.toString()
+                        ) {
+                            password = view.confirm_passwordEditText.text.toString()
+                            dialog.dismiss()
+                        } else {
+                            view.confirmpasswordContainer.setHelperTextColor(
+                                ColorStateList.valueOf(
+                                    ContextCompat.getColor(
+                                        this@CreateNoteActivity,
+                                        android.R.color.holo_red_dark
+                                    )
+                                )
+                            )
+                            view.confirmpasswordContainer.helperText = "Enter Confirm Password"
 
-                    }
-
-                }
-                view.passwordEditText.addTextChangedListener(object: TextWatcher {
-                    override fun beforeTextChanged(
-                        s: CharSequence?,
-                        start: Int,
-                        count: Int,
-                        after: Int
-                    ) {
-                        view.passwordContainer.setHelperTextColor(ColorStateList.valueOf(
-                            ContextCompat.getColor(this@CreateNoteActivity, android.R.color.holo_green_dark)))
-                        view.passwordContainer.helperText="Enter Password"
-                    }
-
-                    override fun onTextChanged(
-                        s: CharSequence?,
-                        start: Int,
-                        before: Int,
-                        count: Int
-                    ) {
-                        var password=s.toString()
-                        if(password.length<4){
-                            view.passwordContainer.setHelperTextColor(ColorStateList.valueOf(
-                                ContextCompat.getColor(this@CreateNoteActivity, android.R.color.holo_red_dark)))
-                            view.passwordContainer.helperText="Minimum 4 Character Password"
-                            view.passwordContainer.error=""
-                        }else if(password.length in 4..10){
-                            view.passwordContainer.setHelperTextColor(ColorStateList.valueOf(
-                                ContextCompat.getColor(this@CreateNoteActivity, android.R.color.holo_green_dark)))
-
-                            view.passwordContainer.helperText="Successful"
-                            passwordBoolean=true
-                        }else{
-                            view.passwordContainer.setHelperTextColor(ColorStateList.valueOf(
-                                ContextCompat.getColor(this@CreateNoteActivity, android.R.color.holo_red_dark)))
-                            view.passwordContainer.helperText="Maximum 10 Character Password"
+                            view.passwordContainer.setHelperTextColor(
+                                ColorStateList.valueOf(
+                                    ContextCompat.getColor(
+                                        this@CreateNoteActivity,
+                                        android.R.color.holo_red_dark
+                                    )
+                                )
+                            )
+                            view.passwordContainer.helperText = "Enter Password"
                         }
-
                     }
-
-                    override fun afterTextChanged(s: Editable?) {
-                        confirm_password=view.passwordEditText.text.toString()
-                    }
-
-                })
-
-
-
-                    view.confirm_passwordEditText.addTextChangedListener(object : TextWatcher{
+                    view.passwordEditText.addTextChangedListener(object : TextWatcher {
                         override fun beforeTextChanged(
                             s: CharSequence?,
                             start: Int,
                             count: Int,
                             after: Int
                         ) {
-                            view.confirmpasswordContainer.setHelperTextColor(ColorStateList.valueOf(
-                                ContextCompat.getColor(this@CreateNoteActivity, android.R.color.holo_green_dark)))
-                            view.confirmpasswordContainer.helperText="Enter Confirm Password"
+                            view.passwordContainer.setHelperTextColor(
+                                ColorStateList.valueOf(
+                                    ContextCompat.getColor(
+                                        this@CreateNoteActivity,
+                                        android.R.color.holo_green_dark
+                                    )
+                                )
+                            )
+                            view.passwordContainer.helperText = "Enter Password"
                         }
 
                         override fun onTextChanged(
@@ -401,153 +378,267 @@ class CreateNoteActivity : AppCompatActivity() {
                             before: Int,
                             count: Int
                         ) {
-                            if(confirm_password!=view.confirm_passwordEditText.text.toString() || view.passwordContainer.helperText!="Successful"){
-                                view.confirmpasswordContainer.setHelperTextColor(ColorStateList.valueOf(
-                                    ContextCompat.getColor(this@CreateNoteActivity, android.R.color.holo_red_dark)))
-                                view.confirmpasswordContainer.helperText="Must match the previous entry"
-                                view.confirmpasswordContainer.error=""
+                            var password = s.toString()
+                            if (password.length < 4) {
+                                view.passwordContainer.setHelperTextColor(
+                                    ColorStateList.valueOf(
+                                        ContextCompat.getColor(
+                                            this@CreateNoteActivity,
+                                            android.R.color.holo_red_dark
+                                        )
+                                    )
+                                )
+                                view.passwordContainer.helperText = "Minimum 4 Character Password"
+                                view.passwordContainer.error = ""
+                            } else if (password.length in 4..10) {
+                                view.passwordContainer.setHelperTextColor(
+                                    ColorStateList.valueOf(
+                                        ContextCompat.getColor(
+                                            this@CreateNoteActivity,
+                                            android.R.color.holo_green_dark
+                                        )
+                                    )
+                                )
+
+                                view.passwordContainer.helperText = "Successful"
+                                passwordBoolean = true
+                            } else {
+                                view.passwordContainer.setHelperTextColor(
+                                    ColorStateList.valueOf(
+                                        ContextCompat.getColor(
+                                            this@CreateNoteActivity,
+                                            android.R.color.holo_red_dark
+                                        )
+                                    )
+                                )
+                                view.passwordContainer.helperText = "Maximum 10 Character Password"
                             }
-                            else{
-                                    view.confirmpasswordContainer.setHelperTextColor(ColorStateList.valueOf(ContextCompat.getColor(this@CreateNoteActivity, android.R.color.holo_green_dark)))
-                                    view.confirmpasswordContainer.helperText="Successful"
-                                    view.confirmpasswordContainer.error=""
+                        }
 
+                        override fun afterTextChanged(s: Editable?) {
+                            confirm_password = view.passwordEditText.text.toString()
+                        }
+                    })
 
+                    view.confirm_passwordEditText.addTextChangedListener(object : TextWatcher {
+                        override fun beforeTextChanged(
+                            s: CharSequence?,
+                            start: Int,
+                            count: Int,
+                            after: Int
+                        ) {
+                            view.confirmpasswordContainer.setHelperTextColor(
+                                ColorStateList.valueOf(
+                                    ContextCompat.getColor(
+                                        this@CreateNoteActivity,
+                                        android.R.color.holo_green_dark
+                                    )
+                                )
+                            )
+                            view.confirmpasswordContainer.helperText = "Enter Confirm Password"
+                        }
 
-
+                        override fun onTextChanged(
+                            s: CharSequence?,
+                            start: Int,
+                            before: Int,
+                            count: Int
+                        ) {
+                            if (confirm_password != view.confirm_passwordEditText.text.toString() ||
+                                view.passwordContainer.helperText != "Successful"
+                            ) {
+                                view.confirmpasswordContainer.setHelperTextColor(
+                                    ColorStateList.valueOf(
+                                        ContextCompat.getColor(
+                                            this@CreateNoteActivity,
+                                            android.R.color.holo_red_dark
+                                        )
+                                    )
+                                )
+                                view.confirmpasswordContainer.helperText = "Must match the previous entry"
+                                view.confirmpasswordContainer.error = ""
+                            } else {
+                                view.confirmpasswordContainer.setHelperTextColor(
+                                    ColorStateList.valueOf(
+                                        ContextCompat.getColor(
+                                            this@CreateNoteActivity,
+                                            android.R.color.holo_green_dark
+                                        )
+                                    )
+                                )
+                                view.confirmpasswordContainer.helperText = "Successful"
+                                view.confirmpasswordContainer.error = ""
                             }
                         }
 
                         override fun afterTextChanged(s: Editable?) {
 
                         }
-
                     })
 
-
-
-
-                bottomSheet.dismiss()
+                    bottomSheet.dismiss()
+                }
             }
             bottomSheetView.findViewById<View>(R.id.mic).setOnClickListener {
-                val view = View.inflate(this, R.layout.record_voice_dialog, null)
-                val builder = AlertDialog.Builder(this)
-                builder.setView(view)
-                val dialog = builder.create()
-                dialog.show()
-                dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-                view.okeyMic.setOnClickListener {
-                    dialog.dismiss()
+                if(!isFinishing){
+                    val view = View.inflate(this, R.layout.record_voice_dialog, null)
+                    val builder = AlertDialog.Builder(this)
+                    builder.setView(view)
+                    val dialog = builder.create()
+                    dialog.show()
+                    dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+                    view.okeyMic.setOnClickListener {
+                        dialog.dismiss()
+                    }
+                    bottomSheet.dismiss()
                 }
-                bottomSheet.dismiss()
+
             }
 
             bottomSheetView.findViewById<View>(R.id.font).setOnClickListener {
-                val view = View.inflate(this, R.layout.font_dialog, null)
-                val builder = AlertDialog.Builder(this)
-                builder.setView(view)
-                val dialog = builder.create()
-                dialog.show()
-                dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-                view.okeyFont.setOnClickListener {
-                    dialog.dismiss()
-                }
-                if(textBold){
-                    view.font_bold_btn.setColorFilter(resources.getColor(R.color.blue1))
-                }else{
-                    view.font_bold_btn.setColorFilter(resources.getColor(R.color.darkGrey))
-                }
-                view.font_bold_btn.setOnClickListener {
-                    var currentText=notes_desc.text.toString()
 
-
-                    if(textBold){
-                        val spannable=SpannableStringBuilder(currentText)
-                        var selectionStart = notes_desc.text.toString().length
-                        var selectionEnd = notes_desc.selectionEnd
-                        spannable.setSpan(
-                            StyleSpan(Typeface.NORMAL),
-                            selectionStart,
-                            selectionEnd,
-                            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-                        )
-                        view.font_bold_btn.setColorFilter(resources.getColor(R.color.darkGrey))
-                        textBold = !textBold
-                        notes_desc.text = spannable
-                    }else{
-                        var selectionStart = notes_desc.text.toString().length
-                        var selectionEnd = notes_desc.selectionEnd
-                        val spannable=SpannableStringBuilder(currentText)
-                        spannable.setSpan(
-                            StyleSpan(Typeface.BOLD),
-                            selectionStart,
-                            selectionEnd,
-                            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-                        )
-                        view.font_bold_btn.setColorFilter(resources.getColor(R.color.blue1))
-                        textBold = !textBold
-                        notes_desc.text = spannable
+                if (!isFinishing) {
+                    val view = View.inflate(this, R.layout.font_dialog, null)
+                    val builder = AlertDialog.Builder(this)
+                    builder.setView(view)
+                    val dialog = builder.create()
+                    dialog.show()
+                    dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+                    view.okeyFont.setOnClickListener {
+                        dialog.dismiss()
                     }
+                    if (textBold) {
+                        view.font_bold_btn.setColorFilter(resources.getColor(R.color.blue1))
+                    } else {
+                        view.font_bold_btn.setColorFilter(resources.getColor(R.color.darkGrey))
+                    }
+                    view.font_bold_btn.setOnClickListener {
+                        var currentText = notes_desc.text.toString()
 
+                        if (textBold) {
+                            val spannable = SpannableStringBuilder(currentText)
+                            var selectionStart = notes_desc.text.toString().length
+                            var selectionEnd = notes_desc.selectionEnd
+                            spannable.setSpan(
+                                StyleSpan(Typeface.NORMAL),
+                                selectionStart,
+                                selectionEnd,
+                                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                            )
+                            view.font_bold_btn.setColorFilter(resources.getColor(R.color.darkGrey))
+                            textBold = !textBold
+                            notes_desc.text = spannable
+                        } else {
+                            var selectionStart = notes_desc.text.toString().length
+                            var selectionEnd = notes_desc.selectionEnd
+                            val spannable = SpannableStringBuilder(currentText)
+                            spannable.setSpan(
+                                StyleSpan(Typeface.BOLD),
+                                selectionStart,
+                                selectionEnd,
+                                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                            )
+                            view.font_bold_btn.setColorFilter(resources.getColor(R.color.blue1))
+                            textBold = !textBold
+                            notes_desc.text = spannable
+                        }
+                    }
+                    view.font1_btn.setOnClickListener {
+                        notes_desc.textSize = 17f
+                        notes_desc.setTypeface(
+                            ResourcesCompat.getFont(this, R.font.ralewaymedium),
+                            Typeface.NORMAL
+                        )
+                    }
+                    view.font2_btn.setOnClickListener {
+                        notes_desc.textSize = 17f
+                        notes_desc.setTypeface(
+                            ResourcesCompat.getFont(this, R.font.font4),
+                            Typeface.NORMAL
+                        )
+                    }
+                    view.font3_btn.setOnClickListener {
+                        notes_desc.textSize = 17f
+                        notes_desc.setTypeface(
+                            ResourcesCompat.getFont(this, R.font.font3),
+                            Typeface.NORMAL
+                        )
+                    }
+                    view.font4_btn.setOnClickListener {
+                        notes_desc.textSize = 17f
+                        notes_desc.setTypeface(
+                            ResourcesCompat.getFont(this, R.font.font4),
+                            Typeface.NORMAL
+                        )
+                    }
+                    view.font5_btn.setOnClickListener {
+                        notes_desc.textSize = 20f
+                        notes_desc.setTypeface(
+                            ResourcesCompat.getFont(this, R.font.font5),
+                            Typeface.NORMAL
+                        )
+                    }
+                    view.font6_btn.setOnClickListener {
+                        notes_desc.textSize = 22f
+                        notes_desc.setTypeface(
+                            ResourcesCompat.getFont(this, R.font.font6),
+                            Typeface.NORMAL
+                        )
+                    }
+                    view.font7_btn.setOnClickListener {
+                        notes_desc.textSize = 22f
+                        notes_desc.setTypeface(
+                            ResourcesCompat.getFont(this, R.font.font7),
+                            Typeface.NORMAL
+                        )
+                    }
+                    view.font8_btn.setOnClickListener {
+                        notes_desc.textSize = 22f
+                        notes_desc.setTypeface(
+                            ResourcesCompat.getFont(this, R.font.font8),
+                            Typeface.NORMAL
+                        )
+                    }
+                    view.font9_btn.setOnClickListener {
+                        notes_desc.textSize = 20f
+                        notes_desc.setTypeface(
+                            ResourcesCompat.getFont(this, R.font.font9),
+                            Typeface.NORMAL
+                        )
+                    }
+                    view.font10_btn.setOnClickListener {
+                        notes_desc.textSize = 17f
+                        notes_desc.setTypeface(
+                            ResourcesCompat.getFont(this, R.font.font10),
+                            Typeface.NORMAL
+                        )
+                    }
+                    view.font11_btn.setOnClickListener {
+                        notes_desc.textSize = 17f
+                        notes_desc.setTypeface(
+                            ResourcesCompat.getFont(this, R.font.font11),
+                            Typeface.NORMAL
+                        )
+                    }
+                    view.font12_btn.setOnClickListener {
+                        notes_desc.textSize = 17f
+                        notes_desc.setTypeface(
+                            ResourcesCompat.getFont(this, R.font.font12),
+                            Typeface.NORMAL
+                        )
+                    }
+                    bottomSheet.dismiss()
                 }
-                view.font1_btn.setOnClickListener {
-                    notes_desc.textSize=17f
-                    notes_desc.setTypeface(ResourcesCompat.getFont(this,R.font.ralewaymedium),Typeface.NORMAL)
-                }
-                view.font2_btn.setOnClickListener {
-                    notes_desc.textSize=17f
-                    notes_desc.setTypeface(ResourcesCompat.getFont(this,R.font.font4),Typeface.NORMAL)
-                }
-                view.font3_btn.setOnClickListener {
-                    notes_desc.textSize=17f
-                    notes_desc.setTypeface(ResourcesCompat.getFont(this,R.font.font3),Typeface.NORMAL)
-                }
-                view.font4_btn.setOnClickListener {
-                    notes_desc.textSize=17f
-                    notes_desc.setTypeface(ResourcesCompat.getFont(this,R.font.font4),Typeface.NORMAL)
-                }
-                view.font5_btn.setOnClickListener {
-                    notes_desc.textSize=20f
-                    notes_desc.setTypeface(ResourcesCompat.getFont(this,R.font.font5),Typeface.NORMAL)
-                }
-                view.font6_btn.setOnClickListener {
-                    notes_desc.textSize=22f
-                    notes_desc.setTypeface(ResourcesCompat.getFont(this,R.font.font6),Typeface.NORMAL)
-                }
-                view.font7_btn.setOnClickListener {
-                    notes_desc.textSize=22f
-                    notes_desc.setTypeface(ResourcesCompat.getFont(this,R.font.font7),Typeface.NORMAL)
-                }
-                view.font8_btn.setOnClickListener {
-                    notes_desc.textSize=22f
-                    notes_desc.setTypeface(ResourcesCompat.getFont(this,R.font.font8),Typeface.NORMAL)
-                }
-                view.font9_btn.setOnClickListener {
-                    notes_desc.textSize=20f
-                    notes_desc.setTypeface(ResourcesCompat.getFont(this,R.font.font9),Typeface.NORMAL)
-                }
-                view.font10_btn.setOnClickListener {
-                    notes_desc.textSize=17f
-                    notes_desc.setTypeface(ResourcesCompat.getFont(this,R.font.font10),Typeface.NORMAL)
-                }
-                view.font11_btn.setOnClickListener {
-                    notes_desc.textSize=17f
-                    notes_desc.setTypeface(ResourcesCompat.getFont(this,R.font.font11),Typeface.NORMAL)
-                }
-                view.font12_btn.setOnClickListener {
-                    notes_desc.textSize=17f
-                    notes_desc.setTypeface(ResourcesCompat.getFont(this,R.font.font12),Typeface.NORMAL)
-                }
-                bottomSheet.dismiss()
+
+
+
             }
-
-
             bottomSheet.setContentView(bottomSheetView)
             bottomSheet.show()
         }
 
         pictures_layout.setOnClickListener {
-            if(picLay==true){
+            if(picLay){
                 picLay=false
                 rv_recyclerView.visibility=View.GONE
                 pictures_updown.setImageResource(R.drawable.arrowdown)

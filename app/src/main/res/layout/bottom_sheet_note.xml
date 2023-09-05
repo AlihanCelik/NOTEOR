@@ -75,6 +75,15 @@
             android:layout_weight="1" />
 
         <ImageView
+            android:id="@+id/remainder"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_margin="10dp"
+            android:src="@drawable/remindernotes">
+
+        </ImageView>
+
+        <ImageView
             android:id="@+id/locked"
             android:layout_width="25dp"
             android:layout_height="25dp"

@@ -9,14 +9,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.notesapp.R
 import com.example.notesapp.entities.Notes
-import kotlinx.android.synthetic.main.item_calendar_notes.view.*
 import kotlinx.android.synthetic.main.item_calendar_notes.view.itemLinkLayout
 import kotlinx.android.synthetic.main.item_calendar_notes.view.itemWebLink
 import kotlinx.android.synthetic.main.item_calendar_notes.view.item_color
 import kotlinx.android.synthetic.main.item_calendar_notes.view.item_desc
 import kotlinx.android.synthetic.main.item_calendar_notes.view.item_fav
 import kotlinx.android.synthetic.main.item_calendar_notes.view.item_layout_img
+import kotlinx.android.synthetic.main.item_calendar_notes.view.item_psw
 import kotlinx.android.synthetic.main.item_calendar_notes.view.item_title
+import kotlinx.android.synthetic.main.item_calendar_notes.view.multiple_img_icon
 
 class CalendarNoteAdapter :
     RecyclerView.Adapter<CalendarNoteAdapter.CalendarNotesViewHolder>() {
@@ -48,6 +49,11 @@ class CalendarNoteAdapter :
             }else{
                 holder.itemView.multiple_img_icon.visibility=View.VISIBLE
             }
+        }
+        if(arrList[position].password.isNullOrEmpty()){
+            holder.itemView.item_psw.visibility=View.GONE
+        }else{
+            holder.itemView.item_psw.visibility=View.VISIBLE
         }
 
         if(arrList[position].imgPath.isNullOrEmpty()){

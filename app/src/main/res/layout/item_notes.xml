@@ -56,15 +56,31 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1" />
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:layout_gravity="start">
+                        <ImageView
+                            android:id="@+id/item_fav"
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
+                            android:layout_gravity="start"
+                            android:src="@drawable/favoriteon">
+                        </ImageView>
+                        <ImageView
+                            android:id="@+id/item_psw"
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
+                            android:layout_marginTop="6dp"
+                            android:layout_gravity="start"
+                            android:src="@drawable/locked">
+                        </ImageView>
 
-                    <ImageView
-                        android:id="@+id/item_fav"
-                        android:layout_width="15dp"
-                        android:layout_height="15dp"
-                        android:layout_gravity="start"
-                        android:src="@drawable/favoriteon">
+                    </LinearLayout>
 
-                    </ImageView>
+
 
                 </LinearLayout>
 

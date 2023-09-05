@@ -3,6 +3,7 @@ package com.example.notesapp
 import android.app.Activity
 import android.content.Intent
 import android.content.res.ColorStateList
+import android.graphics.PorterDuff
 import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -26,6 +27,8 @@ import android.text.SpannableStringBuilder
 import android.text.TextWatcher
 import android.text.style.StyleSpan
 import android.view.WindowInsetsController
+import android.widget.Button
+import android.widget.ImageView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
@@ -39,6 +42,7 @@ import kotlinx.android.synthetic.main.dialog_url.view.*
 import kotlinx.android.synthetic.main.font_dialog.view.*
 import kotlinx.android.synthetic.main.locked_dialog.*
 import kotlinx.android.synthetic.main.locked_dialog.view.*
+import kotlinx.android.synthetic.main.password_remove_dialog.view.*
 import kotlinx.android.synthetic.main.record_voice_dialog.view.*
 import java.util.regex.Pattern
 
@@ -139,8 +143,13 @@ class CreateNoteActivity : AppCompatActivity() {
                 R.layout.bottom_sheet_note,
                 findViewById(R.id.bottomSheet)
             ) as ConstraintLayout
+            if (passwordBoolean) {
+                bottomSheetView.findViewById<ImageView>(R.id.locked).setImageDrawable(ContextCompat.getDrawable(this,R.drawable.unlocked))
+            } else {
+                bottomSheetView.findViewById<ImageView>(R.id.locked).setImageDrawable(ContextCompat.getDrawable(this,R.drawable.locked))
+            }
             bottomSheetView.findViewById<View>(R.id.blue).setOnClickListener {
-                color="blue"
+                color = "blue"
                 colorView.setBackgroundColor(moonBlue)
                 createNote.setBackgroundColor(backgroundBlue)
 
@@ -160,7 +169,7 @@ class CreateNoteActivity : AppCompatActivity() {
 
             }
             bottomSheetView.findViewById<View>(R.id.pink).setOnClickListener {
-                color="pink"
+                color = "pink"
                 colorView.setBackgroundColor(moonPink)
                 createNote.setBackgroundColor(backgroundPink)
 
@@ -180,7 +189,7 @@ class CreateNoteActivity : AppCompatActivity() {
 
             }
             bottomSheetView.findViewById<View>(R.id.purple).setOnClickListener {
-                color="purple"
+                color = "purple"
                 colorView.setBackgroundColor(moonPurple)
                 createNote.setBackgroundColor(backgroundPurple)
 
@@ -200,7 +209,7 @@ class CreateNoteActivity : AppCompatActivity() {
 
             }
             bottomSheetView.findViewById<View>(R.id.green).setOnClickListener {
-                color="green"
+                color = "green"
                 colorView.setBackgroundColor(moonGreen)
                 createNote.setBackgroundColor(backgroundGreen)
 
@@ -220,7 +229,7 @@ class CreateNoteActivity : AppCompatActivity() {
 
             }
             bottomSheetView.findViewById<View>(R.id.yellow).setOnClickListener {
-                color="yellow"
+                color = "yellow"
                 colorView.setBackgroundColor(moonYellow)
                 createNote.setBackgroundColor(backgroundYellow)
 
@@ -240,7 +249,7 @@ class CreateNoteActivity : AppCompatActivity() {
 
             }
             bottomSheetView.findViewById<View>(R.id.red).setOnClickListener {
-                color="red"
+                color = "red"
                 colorView.setBackgroundColor(moonRed)
                 createNote.setBackgroundColor(backgroundRed)
 
@@ -260,7 +269,7 @@ class CreateNoteActivity : AppCompatActivity() {
 
             }
             bottomSheetView.findViewById<View>(R.id.orange).setOnClickListener {
-                color="orange"
+                color = "orange"
                 colorView.setBackgroundColor(moonOrange)
                 createNote.setBackgroundColor(backgroundOrange)
 
@@ -301,8 +310,8 @@ class CreateNoteActivity : AppCompatActivity() {
                     dialog.show()
                     dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
                     view.okeyUrl.setOnClickListener {
-                        if(view.etWebLink.text.toString()!=""){
-                            webLink=view.etWebLink.text.toString()
+                        if (view.etWebLink.text.toString() != "") {
+                            webLink = view.etWebLink.text.toString()
                             items_link.add(webLink)
                             linksAdapter.notifyDataSetChanged()
                             layout_link_preview.visibility = View.VISIBLE
@@ -321,65 +330,52 @@ class CreateNoteActivity : AppCompatActivity() {
                     val builder = AlertDialog.Builder(this)
                     builder.setView(view)
                     val dialog = builder.create()
-                    dialog.show()
+
                     dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+                    if (passwordBoolean) {
 
-                    var confirm_password = ""
-                    view.okeylock.setOnClickListener {
-                        if (view.confirmpasswordContainer.helperText == "Successful" &&
-                            view.passwordContainer.helperText == "Successful" &&
-                            view.confirm_passwordEditText.text.toString() == view.passwordEditText.text.toString()
-                        ) {
-                            password = view.confirm_passwordEditText.text.toString()
-                            dialog.dismiss()
-                        } else {
-                            view.confirmpasswordContainer.setHelperTextColor(
-                                ColorStateList.valueOf(
-                                    ContextCompat.getColor(
-                                        this@CreateNoteActivity,
-                                        android.R.color.holo_red_dark
+                            if (!isFinishing) {
+                                val view = View.inflate(this, R.layout.password_remove_dialog, null)
+                                val builder = AlertDialog.Builder(this)
+                                builder.setView(view)
+                                val dialog = builder.create()
+                                dialog.show()
+                                dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+                                view.okRemovePsw.setOnClickListener {
+                                    password = ""
+                                    passwordBoolean = false
+                                    dialog.dismiss()
+                                }
+                                view.cancelRemovePsw.setOnClickListener{
+                                    dialog.dismiss()
+                                }
+                            }
+                            bottomSheet.dismiss()
+
+
+
+                    } else {
+                        dialog.show()
+                        var confirm_password = ""
+                        view.okeylock.setOnClickListener {
+                            if (view.confirmpasswordContainer.helperText == "Successful" &&
+                                view.passwordContainer.helperText == "Successful" &&
+                                view.confirm_passwordEditText.text.toString() == view.passwordEditText.text.toString()
+                            ) {
+                                password = view.confirm_passwordEditText.text.toString()
+                                passwordBoolean = true
+                                dialog.dismiss()
+                            } else {
+                                view.confirmpasswordContainer.setHelperTextColor(
+                                    ColorStateList.valueOf(
+                                        ContextCompat.getColor(
+                                            this@CreateNoteActivity,
+                                            android.R.color.holo_red_dark
+                                        )
                                     )
                                 )
-                            )
-                            view.confirmpasswordContainer.helperText = "Enter Confirm Password"
+                                view.confirmpasswordContainer.helperText = "Enter Confirm Password"
 
-                            view.passwordContainer.setHelperTextColor(
-                                ColorStateList.valueOf(
-                                    ContextCompat.getColor(
-                                        this@CreateNoteActivity,
-                                        android.R.color.holo_red_dark
-                                    )
-                                )
-                            )
-                            view.passwordContainer.helperText = "Enter Password"
-                        }
-                    }
-                    view.passwordEditText.addTextChangedListener(object : TextWatcher {
-                        override fun beforeTextChanged(
-                            s: CharSequence?,
-                            start: Int,
-                            count: Int,
-                            after: Int
-                        ) {
-                            view.passwordContainer.setHelperTextColor(
-                                ColorStateList.valueOf(
-                                    ContextCompat.getColor(
-                                        this@CreateNoteActivity,
-                                        android.R.color.holo_green_dark
-                                    )
-                                )
-                            )
-                            view.passwordContainer.helperText = "Enter Password"
-                        }
-
-                        override fun onTextChanged(
-                            s: CharSequence?,
-                            start: Int,
-                            before: Int,
-                            count: Int
-                        ) {
-                            var password = s.toString()
-                            if (password.length < 4) {
                                 view.passwordContainer.setHelperTextColor(
                                     ColorStateList.valueOf(
                                         ContextCompat.getColor(
@@ -388,9 +384,16 @@ class CreateNoteActivity : AppCompatActivity() {
                                         )
                                     )
                                 )
-                                view.passwordContainer.helperText = "Minimum 4 Character Password"
-                                view.passwordContainer.error = ""
-                            } else if (password.length in 4..10) {
+                                view.passwordContainer.helperText = "Enter Password"
+                            }
+                        }
+                        view.passwordEditText.addTextChangedListener(object : TextWatcher {
+                            override fun beforeTextChanged(
+                                s: CharSequence?,
+                                start: Int,
+                                count: Int,
+                                after: Int
+                            ) {
                                 view.passwordContainer.setHelperTextColor(
                                     ColorStateList.valueOf(
                                         ContextCompat.getColor(
@@ -399,88 +402,121 @@ class CreateNoteActivity : AppCompatActivity() {
                                         )
                                     )
                                 )
+                                view.passwordContainer.helperText = "Enter Password"
+                            }
 
-                                view.passwordContainer.helperText = "Successful"
-                                passwordBoolean = true
-                            } else {
-                                view.passwordContainer.setHelperTextColor(
-                                    ColorStateList.valueOf(
-                                        ContextCompat.getColor(
-                                            this@CreateNoteActivity,
-                                            android.R.color.holo_red_dark
+                            override fun onTextChanged(
+                                s: CharSequence?,
+                                start: Int,
+                                before: Int,
+                                count: Int
+                            ) {
+                                var password = s.toString()
+                                if (password.length < 4) {
+                                    view.passwordContainer.setHelperTextColor(
+                                        ColorStateList.valueOf(
+                                            ContextCompat.getColor(
+                                                this@CreateNoteActivity,
+                                                android.R.color.holo_red_dark
+                                            )
                                         )
                                     )
-                                )
-                                view.passwordContainer.helperText = "Maximum 10 Character Password"
-                            }
-                        }
-
-                        override fun afterTextChanged(s: Editable?) {
-                            confirm_password = view.passwordEditText.text.toString()
-                        }
-                    })
-
-                    view.confirm_passwordEditText.addTextChangedListener(object : TextWatcher {
-                        override fun beforeTextChanged(
-                            s: CharSequence?,
-                            start: Int,
-                            count: Int,
-                            after: Int
-                        ) {
-                            view.confirmpasswordContainer.setHelperTextColor(
-                                ColorStateList.valueOf(
-                                    ContextCompat.getColor(
-                                        this@CreateNoteActivity,
-                                        android.R.color.holo_green_dark
+                                    view.passwordContainer.helperText =
+                                        "Minimum 4 Character Password"
+                                    view.passwordContainer.error = ""
+                                } else if (password.length in 4..10) {
+                                    view.passwordContainer.setHelperTextColor(
+                                        ColorStateList.valueOf(
+                                            ContextCompat.getColor(
+                                                this@CreateNoteActivity,
+                                                android.R.color.holo_green_dark
+                                            )
+                                        )
                                     )
-                                )
-                            )
-                            view.confirmpasswordContainer.helperText = "Enter Confirm Password"
-                        }
 
-                        override fun onTextChanged(
-                            s: CharSequence?,
-                            start: Int,
-                            before: Int,
-                            count: Int
-                        ) {
-                            if (confirm_password != view.confirm_passwordEditText.text.toString() ||
-                                view.passwordContainer.helperText != "Successful"
+                                    view.passwordContainer.helperText = "Successful"
+                                    passwordBoolean = true
+                                } else {
+                                    view.passwordContainer.setHelperTextColor(
+                                        ColorStateList.valueOf(
+                                            ContextCompat.getColor(
+                                                this@CreateNoteActivity,
+                                                android.R.color.holo_red_dark
+                                            )
+                                        )
+                                    )
+                                    view.passwordContainer.helperText =
+                                        "Maximum 10 Character Password"
+                                }
+                            }
+
+                            override fun afterTextChanged(s: Editable?) {
+                                confirm_password = view.passwordEditText.text.toString()
+                            }
+                        })
+
+                        view.confirm_passwordEditText.addTextChangedListener(object : TextWatcher {
+                            override fun beforeTextChanged(
+                                s: CharSequence?,
+                                start: Int,
+                                count: Int,
+                                after: Int
                             ) {
                                 view.confirmpasswordContainer.setHelperTextColor(
                                     ColorStateList.valueOf(
                                         ContextCompat.getColor(
                                             this@CreateNoteActivity,
-                                            android.R.color.holo_red_dark
-                                        )
-                                    )
-                                )
-                                view.confirmpasswordContainer.helperText = "Must match the previous entry"
-                                view.confirmpasswordContainer.error = ""
-                            } else {
-                                view.confirmpasswordContainer.setHelperTextColor(
-                                    ColorStateList.valueOf(
-                                        ContextCompat.getColor(
-                                            this@CreateNoteActivity,
                                             android.R.color.holo_green_dark
                                         )
                                     )
                                 )
-                                view.confirmpasswordContainer.helperText = "Successful"
-                                view.confirmpasswordContainer.error = ""
+                                view.confirmpasswordContainer.helperText = "Enter Confirm Password"
                             }
-                        }
 
-                        override fun afterTextChanged(s: Editable?) {
+                            override fun onTextChanged(
+                                s: CharSequence?,
+                                start: Int,
+                                before: Int,
+                                count: Int
+                            ) {
+                                if (confirm_password != view.confirm_passwordEditText.text.toString() ||
+                                    view.passwordContainer.helperText != "Successful"
+                                ) {
+                                    view.confirmpasswordContainer.setHelperTextColor(
+                                        ColorStateList.valueOf(
+                                            ContextCompat.getColor(
+                                                this@CreateNoteActivity,
+                                                android.R.color.holo_red_dark
+                                            )
+                                        )
+                                    )
+                                    view.confirmpasswordContainer.helperText =
+                                        "Must match the previous entry"
+                                    view.confirmpasswordContainer.error = ""
+                                } else {
+                                    view.confirmpasswordContainer.setHelperTextColor(
+                                        ColorStateList.valueOf(
+                                            ContextCompat.getColor(
+                                                this@CreateNoteActivity,
+                                                android.R.color.holo_green_dark
+                                            )
+                                        )
+                                    )
+                                    view.confirmpasswordContainer.helperText = "Successful"
+                                    view.confirmpasswordContainer.error = ""
+                                }
+                            }
 
-                        }
-                    })
+                            override fun afterTextChanged(s: Editable?) {
 
+                            }
+                        })
+                    }
                     bottomSheet.dismiss()
                 }
             }
             bottomSheetView.findViewById<View>(R.id.mic).setOnClickListener {
-                if(!isFinishing){
+                if (!isFinishing) {
                     val view = View.inflate(this, R.layout.record_voice_dialog, null)
                     val builder = AlertDialog.Builder(this)
                     builder.setView(view)
@@ -631,7 +667,6 @@ class CreateNoteActivity : AppCompatActivity() {
                 }
 
 
-
             }
             bottomSheet.setContentView(bottomSheetView)
             bottomSheet.show()
@@ -693,6 +728,7 @@ class CreateNoteActivity : AppCompatActivity() {
                 notes.imgPath=items
                 notes.webLink=items_link
                 notes.favorite=fav
+                notes.password=password
                 applicationContext?.let {
                     NotesDatabase.getDatabase(it).noteDao().insertNotes(notes)
                     notes_title.setText("")
@@ -705,6 +741,8 @@ class CreateNoteActivity : AppCompatActivity() {
                     layout_link_preview.visibility=View.GONE
                     items.clear()
                     items_link.clear()
+                    password=""
+                    passwordBoolean=false
                     setResult(Activity.RESULT_OK)
                 }
             }

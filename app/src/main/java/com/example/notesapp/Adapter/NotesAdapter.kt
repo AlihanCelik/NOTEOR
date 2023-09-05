@@ -67,6 +67,11 @@ class NotesAdapter :
         }else{
             holder.itemView.item_fav.visibility=View.GONE
         }
+        if(arrList[position].password.isNullOrEmpty()){
+            holder.itemView.item_psw.visibility=View.GONE
+        }else{
+            holder.itemView.item_psw.visibility=View.VISIBLE
+        }
 
         when (arrList[position].color) {
             "blue" -> {

@@ -34,7 +34,12 @@ data class Notes(
     var favorite: Boolean? = false,
 
     @ColumnInfo(name = "color")
-    var color: String? = null
+    var color: String? = null,
+
+    @ColumnInfo(name = "password")
+    var password: String? = null
+
+
 
 
 ) : Serializable {

@@ -57,7 +57,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:lines="1"
-                    android:maxLength="16"
+                    android:maxLength="15"
                     android:textColor="@color/darkGrey"
                     android:inputType="textPassword"
                     android:hint="@string/password"/>
@@ -88,7 +88,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:lines="1"
-                    android:maxLength="16"
+                    android:maxLength="15"
                     android:textColor="@color/darkGrey"
                     android:inputType="textPassword"
                     android:hint="@string/confirm_password"/>

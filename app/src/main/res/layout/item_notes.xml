@@ -154,6 +154,7 @@
                             android:layout_weight="2"
                             android:maxLines="2"
                             android:ellipsize="end"
+                            android:textSize="10dp"
                             android:layout_marginLeft="7dp"
                             android:autoLink="web"
                             android:background="@null"

@@ -147,6 +147,7 @@
                         android:ellipsize="end"
                         android:layout_marginLeft="7dp"
                         android:autoLink="web"
+                        android:textSize="12dp"
                         android:background="@null"
                         android:hint="@string/web_url"
                         android:inputType="textMultiLine"

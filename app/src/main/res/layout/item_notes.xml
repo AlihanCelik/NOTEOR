@@ -64,15 +64,15 @@
                         android:layout_gravity="start">
                         <ImageView
                             android:id="@+id/item_fav"
-                            android:layout_width="15dp"
-                            android:layout_height="15dp"
+                            android:layout_width="12dp"
+                            android:layout_height="12dp"
                             android:layout_gravity="start"
                             android:src="@drawable/favoriteon">
                         </ImageView>
                         <ImageView
                             android:id="@+id/item_psw"
-                            android:layout_width="15dp"
-                            android:layout_height="15dp"
+                            android:layout_width="12dp"
+                            android:layout_height="12dp"
                             android:layout_marginTop="6dp"
                             android:layout_gravity="start"
                             android:src="@drawable/locked">
@@ -138,8 +138,8 @@
                         android:layout_marginRight="7dp"
                         android:layout_marginLeft="7dp">
                         <ImageView
-                            android:layout_width="15dp"
-                            android:layout_height="15dp"
+                            android:layout_width="11dp"
+                            android:layout_height="11dp"
                             android:src="@drawable/link"
                             android:layout_gravity="center"
                             android:layout_marginLeft="10dp">

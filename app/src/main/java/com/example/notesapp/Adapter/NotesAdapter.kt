@@ -1,5 +1,6 @@
 package com.example.notesapp.Adapter
 
+import android.app.AlertDialog
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -36,7 +37,6 @@ class NotesAdapter :
 
 
     override fun onBindViewHolder(holder: NotesViewHolder, position: Int) {
-
         val context = holder.itemView.context
 
         if(arrList[position].webLink.isNullOrEmpty()){

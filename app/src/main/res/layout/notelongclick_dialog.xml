@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="15dp"
+        app:cardElevation="5dp"
+        android:layout_margin="5dp"
+        app:cardBackgroundColor="@color/white"
+        android:id="@+id/item_back"
+        android:padding="5dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout
+                android:id="@+id/favori_add_remove"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/favoriteoff"
+                    android:tint="@color/darkGrey">
+
+                </ImageView>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/darkGrey"
+                    android:text="Add/Remove to Favorites"
+                    android:padding="10dp"
+                    android:textSize="16sp"
+                    android:visibility="visible"></TextView>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:text="Delete for Me"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:id="@+id/delete"
+
+                android:padding="10dp"
+                android:textSize="16sp"></TextView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:id="@+id/cancel"
+                android:text="Cancel"
+                android:padding="10dp"
+                android:textSize="16sp"
+                android:textStyle="bold"></TextView>
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+
+
+
+
+
+</LinearLayout>

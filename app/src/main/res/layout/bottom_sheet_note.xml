@@ -39,6 +39,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginBottom="10dp"
+            app:tint="@color/AdvGrey2"
             android:src="@drawable/addpictures">
 
         </ImageView>
@@ -47,6 +48,7 @@
             android:id="@+id/link"
             android:layout_width="32dp"
             android:layout_height="32dp"
+            app:tint="@color/AdvGrey2"
             android:layout_margin="10dp"
             android:src="@drawable/addlink">
 
@@ -57,6 +59,7 @@
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_margin="10dp"
+            app:tint="@color/AdvGrey2"
             android:src="@drawable/mic">
 
         </ImageView>
@@ -66,6 +69,7 @@
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_margin="10dp"
+            app:tint="@color/AdvGrey2"
             android:src="@drawable/font">
 
         </ImageView>
@@ -95,6 +99,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginBottom="10dp"
+            app:tint="@color/AdvGrey2"
             android:src="@drawable/remindernotes">
 
         </ImageView>
@@ -108,19 +113,21 @@
             android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginBottom="10dp"
+            app:tint="@color/AdvGrey2"
             android:src="@drawable/locked">
 
         </ImageView>
         <ImageView
             android:id="@+id/delete"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="29dp"
+            android:layout_height="29dp"
             android:layout_gravity="center"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="20dp"
             android:layout_marginBottom="10dp"
-            android:src="@drawable/trash2">
+            android:src="@drawable/trash2"
+            app:tint="@color/AdvGrey2">
 
         </ImageView>
 

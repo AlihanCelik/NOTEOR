@@ -45,11 +45,12 @@
         </ImageView>
         <ImageView
             android:id="@+id/saveButton"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="27dp"
+            android:layout_height="27dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:src="@drawable/save"
+            android:tint="@color/darkGrey"
             android:layout_marginRight="20dp">
 
         </ImageView>

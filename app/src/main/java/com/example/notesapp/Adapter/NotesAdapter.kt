@@ -1,16 +1,18 @@
 package com.example.notesapp.Adapter
 
-import android.app.AlertDialog
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.notesapp.R
 import com.example.notesapp.entities.Notes
 import kotlinx.android.synthetic.main.item_notes.view.*
+import kotlinx.android.synthetic.main.notelongclick_dialog.view.*
+import kotlinx.android.synthetic.main.record_voice_dialog.view.*
 
 class NotesAdapter :
     RecyclerView.Adapter<NotesAdapter.NotesViewHolder>() {
@@ -37,6 +39,24 @@ class NotesAdapter :
 
 
     override fun onBindViewHolder(holder: NotesViewHolder, position: Int) {
+        holder.itemView.setOnLongClickListener {
+                val view = View.inflate(holder.itemView.context, R.layout.notelongclick_dialog, null)
+                val builder = AlertDialog.Builder(holder.itemView.context)
+                builder.setView(view)
+                val dialog = builder.create()
+                dialog.show()
+                dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+                view.cancelLong.setOnClickListener {
+                    dialog.dismiss()
+                }
+               true
+
+        }
+
+
+
+
+
         val context = holder.itemView.context
 
         if(arrList[position].webLink.isNullOrEmpty()){

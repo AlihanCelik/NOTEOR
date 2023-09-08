@@ -39,14 +39,14 @@ class NotesAdapter :
 
 
     override fun onBindViewHolder(holder: NotesViewHolder, position: Int) {
-        holder.itemView.item_back.setBackgroundColor(Color.WHITE)
+        holder.itemView.item_bg.setBackgroundColor(Color.WHITE)
         val context = holder.itemView.context
         holder.itemView.setOnLongClickListener {
             val view = View.inflate(holder.itemView.context, R.layout.notelongclick_dialog, null)
             val builder = AlertDialog.Builder(holder.itemView.context)
             builder.setView(view)
             val dialog = builder.create()
-            holder.itemView.item_back.setBackgroundColor(ContextCompat.getColor(context, R.color.moonBlue))
+            holder.itemView.item_bg.setBackgroundColor(ContextCompat.getColor(context, R.color.moonBlue))
             dialog.show()
             dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
             view.cancelLong.setOnClickListener {
@@ -54,7 +54,7 @@ class NotesAdapter :
                 dialog.dismiss()
             }
             dialog.setOnCancelListener {
-                holder.itemView.setBackgroundColor(Color.WHITE)
+                holder.itemView.item_bg.setBackgroundColor(Color.WHITE)
             }
             true
 

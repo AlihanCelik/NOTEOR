@@ -1,6 +1,9 @@
 package com.example.notesapp.Adapter
 
+import android.content.res.ColorStateList
 import android.graphics.Color
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +16,9 @@ import com.example.notesapp.R
 import com.example.notesapp.database.NotesDatabase
 import com.example.notesapp.entities.Notes
 import kotlinx.android.synthetic.main.item_notes.view.*
+import kotlinx.android.synthetic.main.locked_dialog.view.*
 import kotlinx.android.synthetic.main.notelongclick_dialog.view.*
+import kotlinx.android.synthetic.main.password_remove_dialog.view.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -44,6 +49,7 @@ class NotesAdapter :
 
 
     override fun onBindViewHolder(holder: NotesViewHolder, position: Int) {
+        var password=""
         holder.itemView.item_bg.setBackgroundColor(Color.WHITE)
         val context = holder.itemView.context
         holder.itemView.setOnLongClickListener {
@@ -83,6 +89,191 @@ class NotesAdapter :
                 notifyDataSetChanged()
                 holder.itemView.item_bg.setBackgroundColor(Color.WHITE)
                 dialog.dismiss()
+            }
+            view.lock.setOnClickListener {
+                if(arrList[position].password.isNullOrEmpty()){
+                    val view2 = View.inflate(context, R.layout.locked_dialog, null)
+                    val builder = AlertDialog.Builder(context)
+                    builder.setView(view2)
+                    val dialog = builder.create()
+                    dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+                        dialog.show()
+                        var confirm_password = ""
+                        view2.okeylock.setOnClickListener {
+                            if (view2.confirmpasswordContainer.helperText == "Successful" &&
+                                view2.passwordContainer.helperText == "Successful" &&
+                                view2.confirm_passwordEditText.text.toString() == view2.passwordEditText.text.toString()
+                            ) {
+                                password = view2.confirm_passwordEditText.text.toString()
+                                dialog.dismiss()
+                            } else {
+                                view2.confirmpasswordContainer.setHelperTextColor(
+                                    ColorStateList.valueOf(
+                                        ContextCompat.getColor(
+                                            context,
+                                            android.R.color.holo_red_dark
+                                        )
+                                    )
+                                )
+                                view2.confirmpasswordContainer.helperText = "Enter Confirm Password"
+
+                                view2.passwordContainer.setHelperTextColor(
+                                    ColorStateList.valueOf(
+                                        ContextCompat.getColor(
+                                            context,
+                                            android.R.color.holo_red_dark
+                                        )
+                                    )
+                                )
+                                view2.passwordContainer.helperText = "Enter Password"
+                            }
+                        }
+                        view2.passwordEditText.addTextChangedListener(object : TextWatcher {
+                            override fun beforeTextChanged(
+                                s: CharSequence?,
+                                start: Int,
+                                count: Int,
+                                after: Int
+                            ) {
+                                view2.passwordContainer.setHelperTextColor(
+                                    ColorStateList.valueOf(
+                                        ContextCompat.getColor(
+                                            context,
+                                            android.R.color.holo_green_dark
+                                        )
+                                    )
+                                )
+                                view2.passwordContainer.helperText = "Enter Password"
+                            }
+
+                            override fun onTextChanged(
+                                s: CharSequence?,
+                                start: Int,
+                                before: Int,
+                                count: Int
+                            ) {
+                                var password = s.toString()
+                                if (password.length < 4) {
+                                    view2.passwordContainer.setHelperTextColor(
+                                        ColorStateList.valueOf(
+                                            ContextCompat.getColor(
+                                                context,
+                                                android.R.color.holo_red_dark
+                                            )
+                                        )
+                                    )
+                                    view2.passwordContainer.helperText =
+                                        "Minimum 4 Character Password"
+                                    view2.passwordContainer.error = ""
+                                } else if (password.length in 4..10) {
+                                    view2.passwordContainer.setHelperTextColor(
+                                        ColorStateList.valueOf(
+                                            ContextCompat.getColor(
+                                                context,
+                                                android.R.color.holo_green_dark
+                                            )
+                                        )
+                                    )
+
+                                    view2.passwordContainer.helperText = "Successful"
+                                } else {
+                                    view2.passwordContainer.setHelperTextColor(
+                                        ColorStateList.valueOf(
+                                            ContextCompat.getColor(
+                                                context,
+                                                android.R.color.holo_red_dark
+                                            )
+                                        )
+                                    )
+                                    view2.passwordContainer.helperText =
+                                        "Maximum 10 Character Password"
+                                }
+                            }
+
+                            override fun afterTextChanged(s: Editable?) {
+                                confirm_password = view2.passwordEditText.text.toString()
+                            }
+                        })
+
+                        view2.confirm_passwordEditText.addTextChangedListener(object : TextWatcher {
+                            override fun beforeTextChanged(
+                                s: CharSequence?,
+                                start: Int,
+                                count: Int,
+                                after: Int
+                            ) {
+                                view2.confirmpasswordContainer.setHelperTextColor(
+                                    ColorStateList.valueOf(
+                                        ContextCompat.getColor(
+                                            context,
+                                            android.R.color.holo_green_dark
+                                        )
+                                    )
+                                )
+                                view2.confirmpasswordContainer.helperText = "Enter Confirm Password"
+                            }
+
+                            override fun onTextChanged(
+                                s: CharSequence?,
+                                start: Int,
+                                before: Int,
+                                count: Int
+                            ) {
+                                if (confirm_password != view2.confirm_passwordEditText.text.toString() ||
+                                    view2.passwordContainer.helperText != "Successful"
+                                ) {
+                                    view2.confirmpasswordContainer.setHelperTextColor(
+                                        ColorStateList.valueOf(
+                                            ContextCompat.getColor(
+                                                context,
+                                                android.R.color.holo_red_dark
+                                            )
+                                        )
+                                    )
+                                    view2.confirmpasswordContainer.helperText =
+                                        "Must match the previous entry"
+                                    view2.confirmpasswordContainer.error = ""
+                                } else {
+                                    view2.confirmpasswordContainer.setHelperTextColor(
+                                        ColorStateList.valueOf(
+                                            ContextCompat.getColor(
+                                                context,
+                                                android.R.color.holo_green_dark
+                                            )
+                                        )
+                                    )
+                                    view2.confirmpasswordContainer.helperText = "Successful"
+                                    view2.confirmpasswordContainer.error = ""
+                                }
+                            }
+
+                            override fun afterTextChanged(s: Editable?) {
+
+                            }
+                        })
+
+
+                }else{
+                    val view3 = View.inflate(context, R.layout.password_remove_dialog, null)
+                    val builder = AlertDialog.Builder(context)
+                    builder.setView(view3)
+                    val dialog = builder.create()
+                    dialog.show()
+                    dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+                    view3.okRemovePsw.setOnClickListener {
+                        password = ""
+                        dialog.dismiss()
+                    }
+                    view3.cancelRemovePsw.setOnClickListener{
+                        dialog.dismiss()
+                    }
+
+                }
+                arrList[position].password=password
+                GlobalScope.launch(Dispatchers.IO) {
+                    NotesDatabase.getDatabase(context).noteDao().updateNote(arrList[position])
+                }
+                notifyDataSetChanged()
             }
             dialog.setOnCancelListener {
                 holder.itemView.item_bg.setBackgroundColor(Color.WHITE)

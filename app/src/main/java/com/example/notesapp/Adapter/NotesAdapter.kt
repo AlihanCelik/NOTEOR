@@ -60,7 +60,19 @@ class NotesAdapter :
             dialog.show()
             dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
             view.cancelLong.setOnClickListener {
-                holder.itemView.setBackgroundColor(Color.WHITE)
+                holder.itemView.item_bg.setBackgroundColor(Color.WHITE)
+                dialog.dismiss()
+            }
+            view.add_remove_Favorites.setOnClickListener {
+                if(arrList[position].favorite==false){
+                    arrList[position].favorite=true
+                    holder.itemView.item_fav.visibility=View.VISIBLE
+
+                }else{
+                    arrList[position].favorite=false
+                    holder.itemView.item_fav.visibility=View.GONE
+                }
+                holder.itemView.item_bg.setBackgroundColor(Color.WHITE)
                 dialog.dismiss()
             }
             dialog.setOnCancelListener {

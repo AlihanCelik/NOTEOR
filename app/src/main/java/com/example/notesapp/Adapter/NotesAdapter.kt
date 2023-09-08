@@ -1,5 +1,6 @@
 package com.example.notesapp.Adapter
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +13,6 @@ import com.example.notesapp.R
 import com.example.notesapp.entities.Notes
 import kotlinx.android.synthetic.main.item_notes.view.*
 import kotlinx.android.synthetic.main.notelongclick_dialog.view.*
-import kotlinx.android.synthetic.main.record_voice_dialog.view.*
 
 class NotesAdapter :
     RecyclerView.Adapter<NotesAdapter.NotesViewHolder>() {
@@ -39,17 +39,24 @@ class NotesAdapter :
 
 
     override fun onBindViewHolder(holder: NotesViewHolder, position: Int) {
+        holder.itemView.item_back.setBackgroundColor(Color.WHITE)
+        val context = holder.itemView.context
         holder.itemView.setOnLongClickListener {
-                val view = View.inflate(holder.itemView.context, R.layout.notelongclick_dialog, null)
-                val builder = AlertDialog.Builder(holder.itemView.context)
-                builder.setView(view)
-                val dialog = builder.create()
-                dialog.show()
-                dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-                view.cancelLong.setOnClickListener {
-                    dialog.dismiss()
-                }
-               true
+            val view = View.inflate(holder.itemView.context, R.layout.notelongclick_dialog, null)
+            val builder = AlertDialog.Builder(holder.itemView.context)
+            builder.setView(view)
+            val dialog = builder.create()
+            holder.itemView.item_back.setBackgroundColor(ContextCompat.getColor(context, R.color.moonBlue))
+            dialog.show()
+            dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+            view.cancelLong.setOnClickListener {
+                holder.itemView.setBackgroundColor(Color.WHITE)
+                dialog.dismiss()
+            }
+            dialog.setOnCancelListener {
+                holder.itemView.setBackgroundColor(Color.WHITE)
+            }
+            true
 
         }
 
@@ -57,7 +64,7 @@ class NotesAdapter :
 
 
 
-        val context = holder.itemView.context
+
 
         if(arrList[position].webLink.isNullOrEmpty()){
             holder.itemView.itemLinkLayout.visibility=View.GONE

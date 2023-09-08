@@ -1,23 +1,18 @@
 package com.example.notesapp.Adapter
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.notesapp.R
 import com.example.notesapp.entities.Notes
-import kotlinx.android.synthetic.main.item_calendar_notes.view.itemLinkLayout
-import kotlinx.android.synthetic.main.item_calendar_notes.view.itemWebLink
-import kotlinx.android.synthetic.main.item_calendar_notes.view.item_color
-import kotlinx.android.synthetic.main.item_calendar_notes.view.item_desc
-import kotlinx.android.synthetic.main.item_calendar_notes.view.item_fav
-import kotlinx.android.synthetic.main.item_calendar_notes.view.item_layout_img
-import kotlinx.android.synthetic.main.item_calendar_notes.view.item_psw
-import kotlinx.android.synthetic.main.item_calendar_notes.view.item_title
-import kotlinx.android.synthetic.main.item_calendar_notes.view.multiple_img_icon
+import kotlinx.android.synthetic.main.item_calendar_notes.view.*
+import kotlinx.android.synthetic.main.notelongclick_dialog.view.*
 
 class CalendarNoteAdapter :
     RecyclerView.Adapter<CalendarNoteAdapter.CalendarNotesViewHolder>() {
@@ -30,7 +25,36 @@ class CalendarNoteAdapter :
     }
 
     override fun onBindViewHolder(holder: CalendarNotesViewHolder, position: Int) {
+        holder.itemView.item_bg.setBackgroundColor(Color.WHITE)
         val context = holder.itemView.context
+        holder.itemView.setOnLongClickListener {
+            val view = View.inflate(holder.itemView.context, R.layout.notelongclick_dialog, null)
+            val builder = AlertDialog.Builder(holder.itemView.context)
+            builder.setView(view)
+            val dialog = builder.create()
+            when (arrList[position].color) {
+                "blue" -> holder.itemView.item_bg.setBackgroundColor(ContextCompat.getColor(context, R.color.background_blue))
+                "pink" -> holder.itemView.item_bg.setBackgroundColor(ContextCompat.getColor(context, R.color.background_pink))
+                "purple" -> holder.itemView.item_bg.setBackgroundColor(ContextCompat.getColor(context, R.color.background_purple))
+                "yellow" -> holder.itemView.item_bg.setBackgroundColor(ContextCompat.getColor(context, R.color.background_yellow))
+                "green" -> holder.itemView.item_bg.setBackgroundColor(ContextCompat.getColor(context, R.color.background_green))
+                "red" -> holder.itemView.item_bg.setBackgroundColor(ContextCompat.getColor(context, R.color.background_red))
+                "orange" -> holder.itemView.item_bg.setBackgroundColor(ContextCompat.getColor(context, R.color.background_orange))
+
+            }
+
+            dialog.show()
+            dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+            view.cancelLong.setOnClickListener {
+                holder.itemView.setBackgroundColor(Color.WHITE)
+                dialog.dismiss()
+            }
+            dialog.setOnCancelListener {
+                holder.itemView.item_bg.setBackgroundColor(Color.WHITE)
+            }
+            true
+
+        }
 
         if(arrList[position].webLink.isNullOrEmpty()){
             holder.itemView.itemLinkLayout.visibility=View.GONE

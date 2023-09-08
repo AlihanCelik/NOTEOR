@@ -10,9 +10,14 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.notesapp.R
+import com.example.notesapp.database.NotesDatabase
 import com.example.notesapp.entities.Notes
 import kotlinx.android.synthetic.main.item_notes.view.*
 import kotlinx.android.synthetic.main.notelongclick_dialog.view.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class NotesAdapter :
     RecyclerView.Adapter<NotesAdapter.NotesViewHolder>() {
@@ -72,6 +77,10 @@ class NotesAdapter :
                     arrList[position].favorite=false
                     holder.itemView.item_fav.visibility=View.GONE
                 }
+                GlobalScope.launch(Dispatchers.IO) {
+                    NotesDatabase.getDatabase(context).noteDao().updateNote(arrList[position])
+                }
+                notifyDataSetChanged()
                 holder.itemView.item_bg.setBackgroundColor(Color.WHITE)
                 dialog.dismiss()
             }
@@ -81,9 +90,6 @@ class NotesAdapter :
             true
 
         }
-
-
-
 
 
 

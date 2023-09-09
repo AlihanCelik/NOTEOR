@@ -105,6 +105,8 @@ class NotesAdapter :
                                 view2.confirm_passwordEditText.text.toString() == view2.passwordEditText.text.toString()
                             ) {
                                 password = view2.confirm_passwordEditText.text.toString()
+                                arrList[position].password=password
+                                holder.itemView.item_psw.visibility=View.VISIBLE
                                 dialog2.dismiss()
                             } else {
                                 view2.confirmpasswordContainer.setHelperTextColor(
@@ -262,6 +264,8 @@ class NotesAdapter :
                     dialog3.window?.setBackgroundDrawableResource(android.R.color.transparent)
                     view3.okRemovePsw.setOnClickListener {
                         password = ""
+                        arrList[position].password=password
+                        holder.itemView.item_psw.visibility=View.GONE
                         dialog3.dismiss()
                     }
                     view3.cancelRemovePsw.setOnClickListener{
@@ -269,7 +273,7 @@ class NotesAdapter :
                     }
 
                 }
-                arrList[position].password=password
+
                 GlobalScope.launch(Dispatchers.IO) {
                     NotesDatabase.getDatabase(context).noteDao().updateNote(arrList[position])
                 }

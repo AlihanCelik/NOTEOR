@@ -107,6 +107,10 @@ class NotesAdapter :
                                 password = view2.confirm_passwordEditText.text.toString()
                                 arrList[position].password=password
                                 holder.itemView.item_psw.visibility=View.VISIBLE
+                                GlobalScope.launch(Dispatchers.IO) {
+                                    NotesDatabase.getDatabase(context).noteDao().updateNote(arrList[position])
+                                }
+                                notifyDataSetChanged()
                                 dialog2.dismiss()
                             } else {
                                 view2.confirmpasswordContainer.setHelperTextColor(
@@ -265,6 +269,10 @@ class NotesAdapter :
                     view3.okRemovePsw.setOnClickListener {
                         password = ""
                         arrList[position].password=password
+                        GlobalScope.launch(Dispatchers.IO) {
+                            NotesDatabase.getDatabase(context).noteDao().updateNote(arrList[position])
+                        }
+                        notifyDataSetChanged()
                         holder.itemView.item_psw.visibility=View.GONE
                         dialog3.dismiss()
                     }
@@ -274,10 +282,9 @@ class NotesAdapter :
 
                 }
 
-                GlobalScope.launch(Dispatchers.IO) {
-                    NotesDatabase.getDatabase(context).noteDao().updateNote(arrList[position])
-                }
-                notifyDataSetChanged()
+
+                dialog.dismiss()
+                holder.itemView.item_bg.setBackgroundColor(Color.WHITE)
             }
             dialog.setOnCancelListener {
                 holder.itemView.item_bg.setBackgroundColor(Color.WHITE)

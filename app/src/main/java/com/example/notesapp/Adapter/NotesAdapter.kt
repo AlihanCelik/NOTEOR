@@ -93,11 +93,11 @@ class NotesAdapter :
             view.lock.setOnClickListener {
                 if(arrList[position].password.isNullOrEmpty()){
                     val view2 = View.inflate(context, R.layout.locked_dialog, null)
-                    val builder = AlertDialog.Builder(context)
-                    builder.setView(view2)
-                    val dialog = builder.create()
-                    dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-                        dialog.show()
+                    val builder2 = AlertDialog.Builder(context)
+                    builder2.setView(view2)
+                    val dialog2 = builder2.create()
+                    dialog2.window?.setBackgroundDrawableResource(android.R.color.transparent)
+                        dialog2.show()
                         var confirm_password = ""
                         view2.okeylock.setOnClickListener {
                             if (view2.confirmpasswordContainer.helperText == "Successful" &&
@@ -105,7 +105,7 @@ class NotesAdapter :
                                 view2.confirm_passwordEditText.text.toString() == view2.passwordEditText.text.toString()
                             ) {
                                 password = view2.confirm_passwordEditText.text.toString()
-                                dialog.dismiss()
+                                dialog2.dismiss()
                             } else {
                                 view2.confirmpasswordContainer.setHelperTextColor(
                                     ColorStateList.valueOf(
@@ -255,17 +255,17 @@ class NotesAdapter :
 
                 }else{
                     val view3 = View.inflate(context, R.layout.password_remove_dialog, null)
-                    val builder = AlertDialog.Builder(context)
-                    builder.setView(view3)
-                    val dialog = builder.create()
-                    dialog.show()
-                    dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+                    val builder3 = AlertDialog.Builder(context)
+                    builder3.setView(view3)
+                    val dialog3 = builder3.create()
+                    dialog3.show()
+                    dialog3.window?.setBackgroundDrawableResource(android.R.color.transparent)
                     view3.okRemovePsw.setOnClickListener {
                         password = ""
-                        dialog.dismiss()
+                        dialog3.dismiss()
                     }
                     view3.cancelRemovePsw.setOnClickListener{
-                        dialog.dismiss()
+                        dialog3.dismiss()
                     }
 
                 }

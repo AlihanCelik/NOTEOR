@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide
 import com.example.notesapp.R
 import com.example.notesapp.database.NotesDatabase
 import com.example.notesapp.entities.Notes
+import kotlinx.android.synthetic.main.enter_psw_dialog.view.*
 import kotlinx.android.synthetic.main.item_notes.view.*
 import kotlinx.android.synthetic.main.locked_dialog.view.*
 import kotlinx.android.synthetic.main.notelongclick_dialog.view.*
@@ -260,25 +261,68 @@ class NotesAdapter :
 
 
                 }else{
-                    val view3 = View.inflate(context, R.layout.password_remove_dialog, null)
-                    val builder3 = AlertDialog.Builder(context)
-                    builder3.setView(view3)
-                    val dialog3 = builder3.create()
-                    dialog3.show()
-                    dialog3.window?.setBackgroundDrawableResource(android.R.color.transparent)
-                    view3.okRemovePsw.setOnClickListener {
-                        password = ""
-                        arrList[position].password=password
-                        GlobalScope.launch(Dispatchers.IO) {
-                            NotesDatabase.getDatabase(context).noteDao().updateNote(arrList[position])
+                    val view4 = View.inflate(context, R.layout.enter_psw_dialog, null)
+                    val builder4 = AlertDialog.Builder(context)
+                    builder4.setView(view4)
+                    val dialog4 = builder4.create()
+                    dialog4.show()
+                    dialog4.window?.setBackgroundDrawableResource(android.R.color.transparent)
+                    view4.enter_passwordContainer.setHelperTextColor(
+                        ColorStateList.valueOf(
+                            ContextCompat.getColor(
+                                context,
+                                android.R.color.holo_green_dark
+                            )
+                        )
+                    )
+                    view4.enter_passwordContainer.helperText="Enter Password"
+                    view4.enter_okeylock.setOnClickListener {
+                        if(arrList[position].password==view4.enter_passwordEditText.text.toString()){
+                            view4.enter_passwordContainer.setHelperTextColor(
+                                ColorStateList.valueOf(
+                                    ContextCompat.getColor(
+                                        context,
+                                        android.R.color.holo_green_dark
+                                    )
+                                )
+                            )
+                            view4.enter_passwordContainer.helperText="Successful"
+                            dialog4.dismiss()
+                            val view3 = View.inflate(context, R.layout.password_remove_dialog, null)
+                            val builder3 = AlertDialog.Builder(context)
+                            builder3.setView(view3)
+                            val dialog3 = builder3.create()
+                            dialog3.show()
+                            dialog3.window?.setBackgroundDrawableResource(android.R.color.transparent)
+                            view3.okRemovePsw.setOnClickListener {
+                                password = ""
+                                arrList[position].password=password
+                                GlobalScope.launch(Dispatchers.IO) {
+                                    NotesDatabase.getDatabase(context).noteDao().updateNote(arrList[position])
+                                }
+                                notifyDataSetChanged()
+                                holder.itemView.item_psw.visibility=View.GONE
+                                dialog3.dismiss()
+                            }
+                            view3.cancelRemovePsw.setOnClickListener{
+                                dialog3.dismiss()
+                            }
+                        }else{
+                            view4.enter_passwordContainer.helperText="Wrong Password"
+                            view4.enter_passwordContainer.setHelperTextColor(
+                                ColorStateList.valueOf(
+                                    ContextCompat.getColor(
+                                        context,
+                                        android.R.color.holo_red_dark
+                                    )
+                                )
+                            )
+
+
                         }
-                        notifyDataSetChanged()
-                        holder.itemView.item_psw.visibility=View.GONE
-                        dialog3.dismiss()
+
                     }
-                    view3.cancelRemovePsw.setOnClickListener{
-                        dialog3.dismiss()
-                    }
+
 
                 }
 

@@ -38,6 +38,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.notesapp.Adapter.ImageAdapter
 import com.example.notesapp.Adapter.LinksAdapter
+import kotlinx.android.synthetic.main.createactivty_permi_dialog.view.*
 import kotlinx.android.synthetic.main.dialog_url.view.*
 import kotlinx.android.synthetic.main.font_dialog.view.*
 import kotlinx.android.synthetic.main.locked_dialog.*
@@ -116,8 +117,26 @@ class CreateNoteActivity : AppCompatActivity() {
         }
 
         backButton.setOnClickListener {
-            setResult(Activity.RESULT_OK)
-            finish()
+            if(fav || !items.isEmpty() || !items_link.isEmpty() || password!="" || !notes_title.text.toString().isNullOrEmpty() ||
+                !notes_sub_title.text.toString().isNullOrEmpty() || !notes_desc.text.toString().isNullOrEmpty()){
+                val view = View.inflate(this, R.layout.createactivty_permi_dialog, null)
+                val builder = AlertDialog.Builder(this)
+                builder.setView(view)
+                val dialog = builder.create()
+                dialog.show()
+                dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+                view.cancel_permi.setOnClickListener {
+                    dialog.dismiss()
+                }
+                view.yes_permi.setOnClickListener {
+                    dialog.dismiss()
+                    setResult(Activity.RESULT_OK)
+                    finish()
+                }
+            }else{
+                setResult(Activity.RESULT_OK)
+                finish()
+            }
 
         }
         saveButton.setOnClickListener {

@@ -33,7 +33,7 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="3dp"
                     android:layout_marginRight="5dp"
-                    android:layout_marginLeft="3dp"
+                    android:layout_marginLeft="5dp"
                     android:orientation="horizontal">
                     <Space
                         android:layout_width="0dp"
@@ -46,6 +46,7 @@
                         android:fontFamily="@font/arcuata"
                         android:gravity="center"
                         android:text="Title"
+                        android:layout_marginLeft="12dp"
                         android:maxLines="1"
                         android:textColor="@color/darkGrey"
                         android:textSize="19dp">

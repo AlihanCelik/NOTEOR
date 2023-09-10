@@ -144,7 +144,7 @@ class NotesAdapter :
 
                 }else{
                     arrList[position].favorite=false
-                    holder.itemView.item_fav.visibility=View.GONE
+                    holder.itemView.item_fav.visibility=View.INVISIBLE
                 }
                 GlobalScope.launch(Dispatchers.IO) {
                     NotesDatabase.getDatabase(context).noteDao().updateNote(arrList[position])
@@ -428,7 +428,7 @@ class NotesAdapter :
         if(arrList[position].favorite==true){
             holder.itemView.item_fav.visibility=View.VISIBLE
         }else{
-            holder.itemView.item_fav.visibility=View.GONE
+            holder.itemView.item_fav.visibility=View.INVISIBLE
         }
         if(arrList[position].password.isNullOrEmpty()){
             holder.itemView.item_psw.visibility=View.GONE

@@ -91,8 +91,8 @@
                 android:background="@drawable/date_background"
                 android:orientation="horizontal">
                 <ImageView
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
                     android:src="@drawable/date"
                     android:layout_gravity="center"
                     app:tint="@color/grey"></ImageView>
@@ -103,8 +103,9 @@
                     android:text="date"
                     android:textColor="@color/grey"
                     android:gravity="center"
+                    android:textSize="10dp"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="8dp"
                     >
 
                 </TextView>

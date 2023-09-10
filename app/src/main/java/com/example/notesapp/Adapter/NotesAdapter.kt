@@ -53,6 +53,68 @@ class NotesAdapter :
         var password=""
         holder.itemView.item_bg.setBackgroundColor(Color.WHITE)
         val context = holder.itemView.context
+        holder.itemView.setOnClickListener {
+            if(arrList[position].password.isNullOrEmpty()){
+
+            }else{
+                val view = View.inflate(holder.itemView.context, R.layout.enter_psw_dialog,null)
+                val builder = AlertDialog.Builder(holder.itemView.context)
+                builder.setView(view)
+                val dialog = builder.create()
+                when (arrList[position].color) {
+                    "blue" -> holder.itemView.item_bg.setBackgroundColor(ContextCompat.getColor(context, R.color.background_blue))
+                    "pink" -> holder.itemView.item_bg.setBackgroundColor(ContextCompat.getColor(context, R.color.background_pink))
+                    "purple" -> holder.itemView.item_bg.setBackgroundColor(ContextCompat.getColor(context, R.color.background_purple))
+                    "yellow" -> holder.itemView.item_bg.setBackgroundColor(ContextCompat.getColor(context, R.color.background_yellow))
+                    "green" -> holder.itemView.item_bg.setBackgroundColor(ContextCompat.getColor(context, R.color.background_green))
+                    "red" -> holder.itemView.item_bg.setBackgroundColor(ContextCompat.getColor(context, R.color.background_red))
+                    "orange" -> holder.itemView.item_bg.setBackgroundColor(ContextCompat.getColor(context, R.color.background_orange))
+
+                }
+
+                dialog.show()
+                dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+                view.enter_passwordContainer.setHelperTextColor(
+                    ColorStateList.valueOf(
+                        ContextCompat.getColor(
+                            context,
+                            android.R.color.holo_green_dark
+                        )
+                    )
+                )
+                view.enter_passwordContainer.helperText="Enter Password"
+                view.enter_okeylock.setOnClickListener {
+                    if(arrList[position].password==view.enter_passwordEditText.text.toString()){
+                        view.enter_passwordContainer.setHelperTextColor(
+                            ColorStateList.valueOf(
+                                ContextCompat.getColor(
+                                    context,
+                                    android.R.color.holo_green_dark
+                                )
+                            )
+                        )
+                        view.enter_passwordContainer.helperText="Successful"
+                        dialog.dismiss()
+                        holder.itemView.item_bg.setBackgroundColor(Color.WHITE)
+                    }else{
+                        view.enter_passwordContainer.helperText="Wrong Password"
+                        view.enter_passwordContainer.setHelperTextColor(
+                            ColorStateList.valueOf(
+                                ContextCompat.getColor(
+                                    context,
+                                    android.R.color.holo_red_dark
+                                )
+                            )
+                        )
+                    }
+                }
+            dialog.setOnCancelListener {
+                holder.itemView.item_bg.setBackgroundColor(Color.WHITE)
+            }
+        }
+
+
+        }
         holder.itemView.setOnLongClickListener {
             val view = View.inflate(holder.itemView.context, R.layout.notelongclick_dialog, null)
             val builder = AlertDialog.Builder(holder.itemView.context)

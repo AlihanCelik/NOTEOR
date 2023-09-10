@@ -192,12 +192,12 @@
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:layout_margin="7dp"
-                    android:paddingRight="7dp"
-                    android:paddingLeft="7dp"
+                    android:paddingRight="5dp"
+                    android:paddingLeft="5dp"
                     android:background="@drawable/date_background"
                     android:text="date"
                     android:textColor="@color/grey"
-                    android:textSize="12dp">
+                    android:textSize="10dp">
                 </TextView>
                 <LinearLayout
                     android:layout_width="match_parent"

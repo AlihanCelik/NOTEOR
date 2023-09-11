@@ -142,45 +142,49 @@ class NotesAdapter :
                 dialog.dismiss()
             }
             view.delete.setOnClickListener {
+                dialog.dismiss()
+
                 if(arrList[position].password.isNullOrEmpty()){
+
                     val view3 = View.inflate(context, R.layout.delete_permi_dialog, null)
                     val builder3 = AlertDialog.Builder(context)
                     builder3.setView(view3)
                     val dialog3 = builder3.create()
                     dialog3.show()
                     dialog3.window?.setBackgroundDrawableResource(android.R.color.transparent)
+                    view3.cancel_delete_permi.setOnClickListener{
+                        holder.itemView.item_bg.setBackgroundColor(Color.WHITE)
+                        dialog3.dismiss()
+                    }
+                    var note=arrList[position]
                     view3.yes_delete_permi.setOnClickListener {
-                        val coroutineScope = CoroutineScope(Dispatchers.Main)
-                        coroutineScope.launch {
-
+                        GlobalScope.launch {
+                            println(note.noteText)
                             var trash = Trash()
-                            trash.title_t = arrList[position].title
-                            trash.subTitle_t = arrList[position].subTitle
-                            trash.noteText_t = arrList[position].noteText
-                            trash.dateTime_t = arrList[position].dateTime
-                            trash.color_t = arrList[position].color
-                            trash.imgPath_t = arrList[position].imgPath
-                            trash.webLink_t = arrList[position].webLink
-                            trash.favorite_t = arrList[position].favorite
-                            trash.password_t = arrList[position].password
+                            trash.title_t = note.title
+                            trash.subTitle_t = note.subTitle
+                            trash.noteText_t = note.noteText
+                            trash.dateTime_t = note.dateTime
+                            trash.color_t = note.color
+                            trash.imgPath_t = note.imgPath
+                            trash.webLink_t = note.webLink
+                            trash.favorite_t = note.favorite
+                            trash.password_t = note.password
+
                             context?.let {
                                 TrashDatabase.getDatabase(it).trashDao().insertTrash(trash)
+                                note.id?.let { it1 ->
+                                    NotesDatabase.getDatabase(it).noteDao().deleteSpecificNote(
+                                        it1
+                                    )
+                                }
                             }
                         }
-                        GlobalScope.launch(Dispatchers.IO) {
-                            NotesDatabase.getDatabase(context).noteDao().deleteNote(arrList[position])
-                        }
-                        notifyDataSetChanged()
                         arrList.removeAt(position)
                         notifyItemRemoved(position)
                         Toast.makeText(context, "Note deleted", Toast.LENGTH_SHORT).show()
-
-
-
                         dialog3.dismiss()
-                    }
-                    view3.cancel_delete_permi.setOnClickListener{
-                        dialog3.dismiss()
+                        holder.itemView.item_bg.setBackgroundColor(Color.WHITE)
                     }
                 }else{
                     val view4 = View.inflate(context, R.layout.enter_psw_dialog, null)
@@ -197,6 +201,9 @@ class NotesAdapter :
                             )
                         )
                     )
+                    dialog4.setOnCancelListener {
+                        holder.itemView.item_bg.setBackgroundColor(Color.WHITE)
+                    }
                     view4.enter_passwordContainer.helperText="Enter Password"
                     view4.enter_okeylock.setOnClickListener {
                         if(arrList[position].password==view4.enter_passwordEditText.text.toString()){
@@ -216,38 +223,39 @@ class NotesAdapter :
                             val dialog3 = builder3.create()
                             dialog3.show()
                             dialog3.window?.setBackgroundDrawableResource(android.R.color.transparent)
+                            view3.cancel_delete_permi.setOnClickListener{
+                                holder.itemView.item_bg.setBackgroundColor(Color.WHITE)
+                                dialog3.dismiss()
+                            }
+                            var note=arrList[position]
                             view3.yes_delete_permi.setOnClickListener {
-                                val coroutineScope = CoroutineScope(Dispatchers.Main)
-                                coroutineScope.launch {
-
+                                GlobalScope.launch {
+                                    println(note.noteText)
                                     var trash = Trash()
-                                    trash.title_t = arrList[position].title
-                                    trash.subTitle_t = arrList[position].subTitle
-                                    trash.noteText_t = arrList[position].noteText
-                                    trash.dateTime_t = arrList[position].dateTime
-                                    trash.color_t = arrList[position].color
-                                    trash.imgPath_t = arrList[position].imgPath
-                                    trash.webLink_t = arrList[position].webLink
-                                    trash.favorite_t = arrList[position].favorite
-                                    trash.password_t = arrList[position].password
+                                    trash.title_t = note.title
+                                    trash.subTitle_t = note.subTitle
+                                    trash.noteText_t = note.noteText
+                                    trash.dateTime_t = note.dateTime
+                                    trash.color_t = note.color
+                                    trash.imgPath_t = note.imgPath
+                                    trash.webLink_t = note.webLink
+                                    trash.favorite_t = note.favorite
+                                    trash.password_t = note.password
+
                                     context?.let {
                                         TrashDatabase.getDatabase(it).trashDao().insertTrash(trash)
+                                        note.id?.let { it1 ->
+                                            NotesDatabase.getDatabase(it).noteDao().deleteSpecificNote(
+                                                it1
+                                            )
+                                        }
                                     }
                                 }
-                                GlobalScope.launch(Dispatchers.IO) {
-                                    NotesDatabase.getDatabase(context).noteDao().deleteNote(arrList[position])
-                                }
-                                notifyDataSetChanged()
                                 arrList.removeAt(position)
                                 notifyItemRemoved(position)
                                 Toast.makeText(context, "Note deleted", Toast.LENGTH_SHORT).show()
-
-
-
                                 dialog3.dismiss()
-                            }
-                            view3.cancel_delete_permi.setOnClickListener{
-                                dialog3.dismiss()
+                                holder.itemView.item_bg.setBackgroundColor(Color.WHITE)
                             }
                         }else{
                             view4.enter_passwordContainer.helperText="Wrong Password"

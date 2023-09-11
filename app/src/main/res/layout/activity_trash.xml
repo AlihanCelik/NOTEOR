@@ -39,6 +39,7 @@
             android:layout_height="wrap_content"
             android:text="Trash"
             android:textSize="17dp"
+            android:layout_marginLeft="30dp"
             android:fontFamily="@font/scarlet"
             android:textStyle="bold"
             android:textColor="@color/black"
@@ -51,6 +52,15 @@
             android:layout_height="match_parent"
             android:layout_marginRight="40dp"
             android:layout_weight="1" />
+        <ImageView
+            android:id="@+id/allTrashDelete"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/trash"
+            android:layout_gravity="center"
+            android:layout_marginRight="10dp">
+
+        </ImageView>
 
     </LinearLayout>
 

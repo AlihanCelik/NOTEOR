@@ -152,9 +152,9 @@ class CalendarFragment : Fragment() , CalendarAdapter.onItemClickListener{
 
         GlobalScope.launch(Dispatchers.Main){
             context?.let {
-                var notes = NotesDatabase.getDatabase(it).noteDao().getAllNotes()
-                notesAdapter!!.setData(notes)
-                arrNotes = notes as ArrayList<Notes>
+                var notes = NotesDatabase.getDatabase(it).noteDao().getAllNotesSortedByDate().asReversed()
+                val arrNotes = notes.toMutableList()
+                notesAdapter!!.setData(arrNotes)
                 var CArr = ArrayList<Notes>()
                 for (arr in arrNotes){
                     date_time=arr.dateTime.toString().split(" ")[0]

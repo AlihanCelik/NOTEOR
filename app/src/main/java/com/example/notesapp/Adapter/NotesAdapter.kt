@@ -1,5 +1,6 @@
 package com.example.notesapp.Adapter
 
+import android.app.Activity
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.text.Editable
@@ -8,22 +9,25 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.notesapp.R
 import com.example.notesapp.database.NotesDatabase
+import com.example.notesapp.database.TrashDatabase
 import com.example.notesapp.entities.Notes
+import com.example.notesapp.entities.Trash
+import kotlinx.android.synthetic.main.activity_create_note.*
+import kotlinx.android.synthetic.main.createactivty_permi_dialog.view.*
+import kotlinx.android.synthetic.main.delete_permi_dialog.view.*
 import kotlinx.android.synthetic.main.enter_psw_dialog.view.*
 import kotlinx.android.synthetic.main.item_notes.view.*
 import kotlinx.android.synthetic.main.locked_dialog.view.*
 import kotlinx.android.synthetic.main.notelongclick_dialog.view.*
 import kotlinx.android.synthetic.main.password_remove_dialog.view.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 
 class NotesAdapter :
     RecyclerView.Adapter<NotesAdapter.NotesViewHolder>() {
@@ -136,6 +140,133 @@ class NotesAdapter :
             view.cancelLong.setOnClickListener {
                 holder.itemView.item_bg.setBackgroundColor(Color.WHITE)
                 dialog.dismiss()
+            }
+            view.delete.setOnClickListener {
+                if(arrList[position].password.isNullOrEmpty()){
+                    val view3 = View.inflate(context, R.layout.delete_permi_dialog, null)
+                    val builder3 = AlertDialog.Builder(context)
+                    builder3.setView(view3)
+                    val dialog3 = builder3.create()
+                    dialog3.show()
+                    dialog3.window?.setBackgroundDrawableResource(android.R.color.transparent)
+                    view3.yes_delete_permi.setOnClickListener {
+                        val coroutineScope = CoroutineScope(Dispatchers.Main)
+                        coroutineScope.launch {
+
+                            var trash = Trash()
+                            trash.title_t = arrList[position].title
+                            trash.subTitle_t = arrList[position].subTitle
+                            trash.noteText_t = arrList[position].noteText
+                            trash.dateTime_t = arrList[position].dateTime
+                            trash.color_t = arrList[position].color
+                            trash.imgPath_t = arrList[position].imgPath
+                            trash.webLink_t = arrList[position].webLink
+                            trash.favorite_t = arrList[position].favorite
+                            trash.password_t = arrList[position].password
+                            context?.let {
+                                TrashDatabase.getDatabase(it).trashDao().insertTrash(trash)
+                            }
+                        }
+                        GlobalScope.launch(Dispatchers.IO) {
+                            NotesDatabase.getDatabase(context).noteDao().deleteNote(arrList[position])
+                        }
+                        notifyDataSetChanged()
+                        arrList.removeAt(position)
+                        notifyItemRemoved(position)
+                        Toast.makeText(context, "Note deleted", Toast.LENGTH_SHORT).show()
+
+
+
+                        dialog3.dismiss()
+                    }
+                    view3.cancel_delete_permi.setOnClickListener{
+                        dialog3.dismiss()
+                    }
+                }else{
+                    val view4 = View.inflate(context, R.layout.enter_psw_dialog, null)
+                    val builder4 = AlertDialog.Builder(context)
+                    builder4.setView(view4)
+                    val dialog4 = builder4.create()
+                    dialog4.show()
+                    dialog4.window?.setBackgroundDrawableResource(android.R.color.transparent)
+                    view4.enter_passwordContainer.setHelperTextColor(
+                        ColorStateList.valueOf(
+                            ContextCompat.getColor(
+                                context,
+                                android.R.color.holo_green_dark
+                            )
+                        )
+                    )
+                    view4.enter_passwordContainer.helperText="Enter Password"
+                    view4.enter_okeylock.setOnClickListener {
+                        if(arrList[position].password==view4.enter_passwordEditText.text.toString()){
+                            view4.enter_passwordContainer.setHelperTextColor(
+                                ColorStateList.valueOf(
+                                    ContextCompat.getColor(
+                                        context,
+                                        android.R.color.holo_green_dark
+                                    )
+                                )
+                            )
+                            view4.enter_passwordContainer.helperText="Successful"
+                            dialog4.dismiss()
+                            val view3 = View.inflate(context, R.layout.delete_permi_dialog, null)
+                            val builder3 = AlertDialog.Builder(context)
+                            builder3.setView(view3)
+                            val dialog3 = builder3.create()
+                            dialog3.show()
+                            dialog3.window?.setBackgroundDrawableResource(android.R.color.transparent)
+                            view3.yes_delete_permi.setOnClickListener {
+                                val coroutineScope = CoroutineScope(Dispatchers.Main)
+                                coroutineScope.launch {
+
+                                    var trash = Trash()
+                                    trash.title_t = arrList[position].title
+                                    trash.subTitle_t = arrList[position].subTitle
+                                    trash.noteText_t = arrList[position].noteText
+                                    trash.dateTime_t = arrList[position].dateTime
+                                    trash.color_t = arrList[position].color
+                                    trash.imgPath_t = arrList[position].imgPath
+                                    trash.webLink_t = arrList[position].webLink
+                                    trash.favorite_t = arrList[position].favorite
+                                    trash.password_t = arrList[position].password
+                                    context?.let {
+                                        TrashDatabase.getDatabase(it).trashDao().insertTrash(trash)
+                                    }
+                                }
+                                GlobalScope.launch(Dispatchers.IO) {
+                                    NotesDatabase.getDatabase(context).noteDao().deleteNote(arrList[position])
+                                }
+                                notifyDataSetChanged()
+                                arrList.removeAt(position)
+                                notifyItemRemoved(position)
+                                Toast.makeText(context, "Note deleted", Toast.LENGTH_SHORT).show()
+
+
+
+                                dialog3.dismiss()
+                            }
+                            view3.cancel_delete_permi.setOnClickListener{
+                                dialog3.dismiss()
+                            }
+                        }else{
+                            view4.enter_passwordContainer.helperText="Wrong Password"
+                            view4.enter_passwordContainer.setHelperTextColor(
+                                ColorStateList.valueOf(
+                                    ContextCompat.getColor(
+                                        context,
+                                        android.R.color.holo_red_dark
+                                    )
+                                )
+                            )
+
+
+                        }
+
+                    }
+                }
+
+
             }
             view.add_remove_Favorites.setOnClickListener {
                 if(arrList[position].favorite==false){

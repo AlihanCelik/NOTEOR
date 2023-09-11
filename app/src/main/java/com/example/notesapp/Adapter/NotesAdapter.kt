@@ -36,7 +36,7 @@ class NotesAdapter :
         )
     }
     fun setData(arrNotesList: List<Notes>){
-        arrList = arrNotesList as ArrayList<Notes>
+        arrList = ArrayList(arrNotesList)
     }
 
     override fun getItemCount(): Int {

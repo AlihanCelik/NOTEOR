@@ -46,9 +46,10 @@ class NoteFragment : Fragment() {
         recycler_view.layoutManager=StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL)
         GlobalScope.launch(Dispatchers.Main){
             context?.let {
-                var notes = NotesDatabase.getDatabase(it).noteDao().getAllNotes()
-                notesAdapter!!.setData(notes)
-                arrNotes = notes as ArrayList<Notes>
+                var notes = NotesDatabase.getDatabase(it).noteDao().getAllNotesSortedByDate().asReversed()
+
+                val arrNotes = notes.toMutableList()
+                notesAdapter!!.setData(arrNotes)
                 recycler_view.adapter = notesAdapter
             }
 

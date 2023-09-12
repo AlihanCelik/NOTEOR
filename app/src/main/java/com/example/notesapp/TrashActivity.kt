@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.WindowInsetsController
 import android.widget.SearchView
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.notesapp.Adapter.TrashAdapter
@@ -34,22 +35,27 @@ class TrashActivity : AppCompatActivity() {
             finish()
         }
         allTrashDelete.setOnClickListener {
-            val view = View.inflate(this, R.layout.delete_trash_permi_dialog, null)
-            val builder = AlertDialog.Builder(this)
-            builder.setView(view)
-            val dialog = builder.create()
-            dialog.show()
-            dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-            view.cancel_trashdelete_permi.setOnClickListener {
-                dialog.dismiss()
-            }
-            view.yes_trashdelete_permi.setOnClickListener {
-                GlobalScope.launch(Dispatchers.Main) {
-                    TrashDatabase.getDatabase(this@TrashActivity).trashDao().deleteNote(arrTrash)
-                    trashAdapter.clearData() // Tüm verileri temizler
-                    dialog.dismiss() // Dialog penceresini kapat
+            if(arrTrash.isEmpty()){
+                Toast.makeText(this,"Empty Trash", Toast.LENGTH_SHORT).show()
+            }else{
+                val view = View.inflate(this, R.layout.delete_trash_permi_dialog, null)
+                val builder = AlertDialog.Builder(this)
+                builder.setView(view)
+                val dialog = builder.create()
+                dialog.show()
+                dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+                view.cancel_trashdelete_permi.setOnClickListener {
+                    dialog.dismiss()
+                }
+                view.yes_trashdelete_permi.setOnClickListener {
+                    GlobalScope.launch(Dispatchers.Main) {
+                        TrashDatabase.getDatabase(this@TrashActivity).trashDao().deleteNote(arrTrash)
+                        trashAdapter.clearData()
+                        dialog.dismiss()
+                    }
                 }
             }
+
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             window.statusBarColor = Color.WHITE

@@ -36,7 +36,7 @@ class TrashActivity : AppCompatActivity() {
         }
         allTrashDelete.setOnClickListener {
             if(arrTrash.isEmpty()){
-                Toast.makeText(this,"Empty Trash", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this,"No Trash", Toast.LENGTH_SHORT).show()
             }else{
                 val view = View.inflate(this, R.layout.delete_trash_permi_dialog, null)
                 val builder = AlertDialog.Builder(this)
@@ -51,6 +51,8 @@ class TrashActivity : AppCompatActivity() {
                     GlobalScope.launch(Dispatchers.Main) {
                         TrashDatabase.getDatabase(this@TrashActivity).trashDao().deleteNote(arrTrash)
                         trashAdapter.clearData()
+                        noTrashLayout.visibility=View.VISIBLE
+                        recycler_view_trash.visibility=View.GONE
                         dialog.dismiss()
                     }
                 }
@@ -78,8 +80,16 @@ class TrashActivity : AppCompatActivity() {
                 trashAdapter!!.setData(notes)
                 arrTrash = notes as ArrayList<Trash>
                 val arrNotes = notes.toMutableList()
+                if(arrNotes.isEmpty()){
+                    noTrashLayout.visibility=View.VISIBLE
+                    recycler_view_trash.visibility=View.GONE
+                }else{
+                    noTrashLayout.visibility=View.GONE
+                    recycler_view_trash.visibility=View.VISIBLE
+                }
                 trashAdapter!!.setData(arrNotes)
                 recycler_view_trash.adapter = trashAdapter
+
             }
 
         }

@@ -36,6 +36,10 @@ class TrashAdapter() :
     fun setData(arrNotesList: List<Trash>){
         arrList = ArrayList(arrNotesList)
     }
+    fun clearData() {
+        arrList.clear()
+        notifyDataSetChanged()
+    }
 
     override fun getItemCount(): Int {
         return arrList.size

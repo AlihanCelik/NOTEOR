@@ -17,7 +17,7 @@ interface TrashDao {
     suspend fun insertTrash(trash:Trash)
 
     @Delete
-    suspend fun deleteNote(trash:Trash)
+    suspend fun deleteNote(trash: kotlin.collections.ArrayList<com.example.notesapp.entities.Trash>)
 
     @Query("DELETE FROM trash WHERE id = :id")
     suspend fun deleteSpecificTrash(id: Int)

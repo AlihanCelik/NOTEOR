@@ -5,14 +5,18 @@ import android.graphics.Color
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.view.WindowInsetsController
 import android.widget.SearchView
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.notesapp.Adapter.TrashAdapter
 import com.example.notesapp.database.TrashDatabase
 import com.example.notesapp.entities.Trash
 import kotlinx.android.synthetic.main.activity_trash.*
 import kotlinx.android.synthetic.main.activity_trash.backButton
+import kotlinx.android.synthetic.main.delete_permi_dialog.view.*
+import kotlinx.android.synthetic.main.delete_trash_permi_dialog.view.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -28,6 +32,24 @@ class TrashActivity : AppCompatActivity() {
         backButton.setOnClickListener {
             NoteFragment().updateRecyclerView()
             finish()
+        }
+        allTrashDelete.setOnClickListener {
+            val view = View.inflate(this, R.layout.delete_trash_permi_dialog, null)
+            val builder = AlertDialog.Builder(this)
+            builder.setView(view)
+            val dialog = builder.create()
+            dialog.show()
+            dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+            view.cancel_trashdelete_permi.setOnClickListener {
+                dialog.dismiss()
+            }
+            view.yes_trashdelete_permi.setOnClickListener {
+                GlobalScope.launch(Dispatchers.Main) {
+                    TrashDatabase.getDatabase(this@TrashActivity).trashDao().deleteNote(arrTrash)
+                    trashAdapter.clearData() // Tüm verileri temizler
+                    dialog.dismiss() // Dialog penceresini kapat
+                }
+            }
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             window.statusBarColor = Color.WHITE

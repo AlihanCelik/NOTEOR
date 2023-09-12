@@ -1,5 +1,6 @@
 package com.example.notesapp.Adapter
 
+import android.app.Activity
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.view.LayoutInflater
@@ -11,6 +12,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.notesapp.NoteFragment
 import com.example.notesapp.R
 import com.example.notesapp.database.NotesDatabase
 import com.example.notesapp.database.TrashDatabase
@@ -22,9 +24,8 @@ import kotlinx.android.synthetic.main.item_notes.view.*
 import kotlinx.android.synthetic.main.trashlongclick_dialog.view.*
 import kotlinx.coroutines.*
 
-class TrashAdapter :
+class TrashAdapter() :
     RecyclerView.Adapter<TrashAdapter.NotesViewHolder>() {
-
     var arrList = ArrayList<Trash>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NotesViewHolder {
 

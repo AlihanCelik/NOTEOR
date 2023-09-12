@@ -1,5 +1,6 @@
 package com.example.notesapp
 
+import android.app.Activity
 import android.graphics.Color
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -25,6 +26,7 @@ class TrashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_trash)
         backButton.setOnClickListener {
+            NoteFragment().updateRecyclerView()
             finish()
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

@@ -22,6 +22,11 @@ class NoteFragment : Fragment() {
     var arrNotes = ArrayList<Notes>()
     var notesAdapter: NotesAdapter = NotesAdapter()
 
+    override fun onResume() {
+        super.onResume()
+        updateRecyclerView()
+    }
+
     companion object {
         fun newInstance(): NoteFragment {
             return NoteFragment()

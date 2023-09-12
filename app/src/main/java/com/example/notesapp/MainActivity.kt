@@ -22,7 +22,6 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
     private val CREATE_NOTE_REQUEST = 1
     lateinit var toggle: ActionBarDrawerToggle
-
     private lateinit var viewPager: ViewPager2
     private lateinit var bottomNavigation: BottomNavigationView
     private lateinit var viewPagerAdapter: VpAdapter

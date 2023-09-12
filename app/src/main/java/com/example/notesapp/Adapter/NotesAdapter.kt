@@ -181,7 +181,7 @@ class NotesAdapter :
                         }
                         arrList.removeAt(position)
                         notifyItemRemoved(position)
-                        Toast.makeText(context, "Note deleted", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "Note moved to trash", Toast.LENGTH_SHORT).show()
                         dialog3.dismiss()
                         holder.itemView.item_bg.setBackgroundColor(Color.WHITE)
                     }

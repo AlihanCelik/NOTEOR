@@ -159,7 +159,6 @@ class NotesAdapter :
                     var note=arrList[position]
                     view3.yes_delete_permi.setOnClickListener {
                         GlobalScope.launch {
-                            println(note.noteText)
                             var trash = Trash()
                             trash.title_t = note.title
                             trash.subTitle_t = note.subTitle

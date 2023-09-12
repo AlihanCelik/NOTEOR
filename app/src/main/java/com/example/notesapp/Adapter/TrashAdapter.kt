@@ -161,9 +161,9 @@ class TrashAdapter() :
                             )
                         }
                     }
-                    val deletedItemPosition = position
-                    arrList.removeAt(deletedItemPosition)
-                    notifyDataSetChanged()
+                    arrList.removeAt(position)
+                    notifyItemRemoved(position)
+                    notifyItemRangeChanged(position, itemCount)
                     Toast.makeText(context, "Note deleted", Toast.LENGTH_SHORT).show()
                     dialog3.dismiss()
 
@@ -201,7 +201,7 @@ class TrashAdapter() :
                 }
                 arrList.removeAt(position)
                 notifyItemRemoved(position)
-                notifyDataSetChanged()
+                notifyItemRangeChanged(position, itemCount)
                 Toast.makeText(context, "Note Restored", Toast.LENGTH_SHORT).show()
                 holder.itemView.item_bg.setBackgroundColor(Color.WHITE)
 

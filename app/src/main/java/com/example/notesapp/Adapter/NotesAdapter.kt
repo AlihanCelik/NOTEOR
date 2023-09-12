@@ -169,7 +169,6 @@ class NotesAdapter :
                             trash.webLink_t = note.webLink
                             trash.favorite_t = note.favorite
                             trash.password_t = note.password
-
                             context?.let {
                                 TrashDatabase.getDatabase(it).trashDao().insertTrash(trash)
                                 note.id?.let { it1 ->
@@ -181,6 +180,7 @@ class NotesAdapter :
                         }
                         arrList.removeAt(position)
                         notifyItemRemoved(position)
+                        notifyDataSetChanged()
                         Toast.makeText(context, "Note moved to trash", Toast.LENGTH_SHORT).show()
                         dialog3.dismiss()
                         holder.itemView.item_bg.setBackgroundColor(Color.WHITE)
@@ -252,6 +252,7 @@ class NotesAdapter :
                                 }
                                 arrList.removeAt(position)
                                 notifyItemRemoved(position)
+                                notifyItemRangeChanged(position, itemCount)
                                 Toast.makeText(context, "Note deleted", Toast.LENGTH_SHORT).show()
                                 dialog3.dismiss()
                                 holder.itemView.item_bg.setBackgroundColor(Color.WHITE)

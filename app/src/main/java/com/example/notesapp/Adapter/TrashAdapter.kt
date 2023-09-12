@@ -54,7 +54,6 @@ class TrashAdapter() :
 
 
     override fun onBindViewHolder(holder: NotesViewHolder, position: Int) {
-        var password=""
         holder.itemView.item_bg.setBackgroundColor(Color.WHITE)
         val context = holder.itemView.context
         holder.itemView.setOnClickListener {
@@ -124,7 +123,8 @@ class TrashAdapter() :
             val builder = AlertDialog.Builder(holder.itemView.context)
             builder.setView(view)
             val dialog = builder.create()
-            when (arrList[position].color_t) {
+            var trash=arrList[position]
+            when (trash.color_t) {
                 "blue" -> holder.itemView.item_bg.setBackgroundColor(ContextCompat.getColor(context, R.color.background_blue))
                 "pink" -> holder.itemView.item_bg.setBackgroundColor(ContextCompat.getColor(context, R.color.background_pink))
                 "purple" -> holder.itemView.item_bg.setBackgroundColor(ContextCompat.getColor(context, R.color.background_purple))
@@ -161,17 +161,12 @@ class TrashAdapter() :
                             )
                         }
                     }
-                    arrList.removeAt(position)
-                    notifyItemRemoved(position)
+                    val deletedItemPosition = position
+                    arrList.removeAt(deletedItemPosition)
+                    notifyDataSetChanged()
                     Toast.makeText(context, "Note deleted", Toast.LENGTH_SHORT).show()
                     dialog3.dismiss()
-                    if(arrList.isEmpty()){
-                        TrashActivity().noTrashLayout.visibility=View.VISIBLE
-                        TrashActivity().recycler_view_trash.visibility=View.GONE
-                    }else{
-                        TrashActivity().noTrashLayout.visibility=View.GONE
-                        TrashActivity().recycler_view_trash.visibility=View.VISIBLE
-                    }
+
 
                     holder.itemView.item_bg.setBackgroundColor(Color.WHITE)
                 }
@@ -206,6 +201,7 @@ class TrashAdapter() :
                 }
                 arrList.removeAt(position)
                 notifyItemRemoved(position)
+                notifyDataSetChanged()
                 Toast.makeText(context, "Note Restored", Toast.LENGTH_SHORT).show()
                 holder.itemView.item_bg.setBackgroundColor(Color.WHITE)
 

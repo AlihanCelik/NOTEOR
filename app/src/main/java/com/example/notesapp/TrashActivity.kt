@@ -16,7 +16,6 @@ import com.example.notesapp.database.TrashDatabase
 import com.example.notesapp.entities.Trash
 import kotlinx.android.synthetic.main.activity_trash.*
 import kotlinx.android.synthetic.main.activity_trash.backButton
-import kotlinx.android.synthetic.main.delete_permi_dialog.view.*
 import kotlinx.android.synthetic.main.delete_trash_permi_dialog.view.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope

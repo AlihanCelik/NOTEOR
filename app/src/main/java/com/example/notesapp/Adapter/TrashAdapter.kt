@@ -14,10 +14,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.notesapp.NoteFragment
 import com.example.notesapp.R
+import com.example.notesapp.TrashActivity
 import com.example.notesapp.database.NotesDatabase
 import com.example.notesapp.database.TrashDatabase
 import com.example.notesapp.entities.Notes
 import com.example.notesapp.entities.Trash
+import kotlinx.android.synthetic.main.activity_trash.*
 import kotlinx.android.synthetic.main.delete_permi_dialog.view.*
 import kotlinx.android.synthetic.main.enter_psw_dialog.view.*
 import kotlinx.android.synthetic.main.item_notes.view.*
@@ -163,6 +165,14 @@ class TrashAdapter() :
                     notifyItemRemoved(position)
                     Toast.makeText(context, "Note deleted", Toast.LENGTH_SHORT).show()
                     dialog3.dismiss()
+                    if(arrList.isEmpty()){
+                        TrashActivity().noTrashLayout.visibility=View.VISIBLE
+                        TrashActivity().recycler_view_trash.visibility=View.GONE
+                    }else{
+                        TrashActivity().noTrashLayout.visibility=View.GONE
+                        TrashActivity().recycler_view_trash.visibility=View.VISIBLE
+                    }
+
                     holder.itemView.item_bg.setBackgroundColor(Color.WHITE)
                 }
                 holder.itemView.item_bg.setBackgroundColor(Color.WHITE)

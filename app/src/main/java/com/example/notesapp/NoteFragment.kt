@@ -79,7 +79,6 @@ class NoteFragment : Fragment() {
     }
 
     fun updateRecyclerView() {
-        // Güncellenmiş verileri getirip adaptörü güncelleyin
         GlobalScope.launch(Dispatchers.Main) {
             context?.let {
                 val notes = NotesDatabase.getDatabase(it).noteDao().getAllNotes()

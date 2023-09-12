@@ -76,6 +76,12 @@ class MainActivity : AppCompatActivity() {
                     true
 
                 }
+                R.id.nav_trash -> {
+                    val intent=Intent(applicationContext,TrashActivity::class.java)
+                    startActivity(intent)
+                    drawerLayout.closeDrawer(GravityCompat.START)
+                    true
+                }
                 R.id.nav_favorites -> {
                     val intent=Intent(applicationContext,FavoritesActivtity::class.java)
                     startActivity(intent)

@@ -69,7 +69,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#2794959A"
-        app:layout_constraintBottom_toTopOf="@+id/searchFavorites"
+        app:layout_constraintBottom_toTopOf="@+id/searchTrash"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -78,7 +78,7 @@
 
 
     <SearchView
-        android:id="@+id/searchFavorites"
+        android:id="@+id/searchTrash"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="25dp"
@@ -110,7 +110,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/searchFavorites" />
+        app:layout_constraintTop_toBottomOf="@id/searchTrash" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

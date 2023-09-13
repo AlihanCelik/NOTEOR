@@ -5,6 +5,8 @@ import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.PorterDuff
 import android.graphics.Typeface
+import android.media.MediaPlayer
+import android.media.MediaRecorder
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -21,11 +23,15 @@ import kotlinx.coroutines.*
 import java.io.File
 import android.net.Uri
 import android.os.Build
+import android.os.Handler
+import android.os.SystemClock
 import android.text.Editable
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.TextWatcher
 import android.text.style.StyleSpan
+import android.transition.TransitionManager
+import android.util.Log
 import android.view.WindowInsetsController
 import android.widget.Button
 import android.widget.ImageView
@@ -45,6 +51,7 @@ import kotlinx.android.synthetic.main.locked_dialog.*
 import kotlinx.android.synthetic.main.locked_dialog.view.*
 import kotlinx.android.synthetic.main.password_remove_dialog.view.*
 import kotlinx.android.synthetic.main.record_voice_dialog.view.*
+import java.io.IOException
 import java.util.regex.Pattern
 
 class CreateNoteActivity : AppCompatActivity() {
@@ -53,17 +60,13 @@ class CreateNoteActivity : AppCompatActivity() {
     var color="blue"
     var webLink = ""
     var fav=false
-
     var picLay=true
     var linkLay=true
-
     var textBold=false
-
     var password=""
     var passwordBoolean=false
-
-
     var PICK_IMAGES_CODE = 1
+
     lateinit var items: MutableList<Uri>
     lateinit var recyclerView: RecyclerView
     lateinit var imageAdapter: ImageAdapter
@@ -545,6 +548,7 @@ class CreateNoteActivity : AppCompatActivity() {
                     view.okeyMic.setOnClickListener {
                         dialog.dismiss()
                     }
+
                     bottomSheet.dismiss()
                 }
 
@@ -771,6 +775,7 @@ class CreateNoteActivity : AppCompatActivity() {
         }
 
     }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 

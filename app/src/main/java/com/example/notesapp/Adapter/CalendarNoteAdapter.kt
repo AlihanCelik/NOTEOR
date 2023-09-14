@@ -461,9 +461,6 @@ class CalendarNoteAdapter :
     }
 
 
-
-
-
     class CalendarNotesViewHolder(view:View) : RecyclerView.ViewHolder(view){
         var image: ImageView = itemView.findViewById(R.id.item_img)
 

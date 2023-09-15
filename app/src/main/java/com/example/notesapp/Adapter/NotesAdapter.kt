@@ -29,7 +29,7 @@ import kotlinx.android.synthetic.main.notelongclick_dialog.view.*
 import kotlinx.android.synthetic.main.password_remove_dialog.view.*
 import kotlinx.coroutines.*
 
-class NotesAdapter :
+class NotesAdapter(val frag:Int) :
     RecyclerView.Adapter<NotesAdapter.NotesViewHolder>() {
 
     var arrList = ArrayList<Notes>()
@@ -573,6 +573,11 @@ class NotesAdapter :
             holder.itemView.item_psw.visibility=View.GONE
         }else{
             holder.itemView.item_psw.visibility=View.VISIBLE
+        }
+        if(frag==0){
+            holder.itemView.item_date.visibility=View.VISIBLE
+        }else{
+            holder.itemView.item_date.visibility=View.GONE
         }
 
         when (arrList[position].color) {

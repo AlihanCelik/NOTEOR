@@ -20,7 +20,7 @@ import kotlin.collections.ArrayList
 
 class NoteFragment : Fragment() {
     var arrNotes = ArrayList<Notes>()
-    var notesAdapter: NotesAdapter = NotesAdapter()
+    var notesAdapter: NotesAdapter = NotesAdapter(0)
 
     override fun onResume() {
         super.onResume()

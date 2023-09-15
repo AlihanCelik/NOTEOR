@@ -11,7 +11,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.*
 import com.example.notesapp.Adapter.CalendarAdapter
-import com.example.notesapp.Adapter.CalendarNoteAdapter
+import com.example.notesapp.Adapter.NotesAdapter
 import com.example.notesapp.database.NotesDatabase
 import com.example.notesapp.entities.Notes
 import kotlinx.coroutines.Dispatchers
@@ -36,7 +36,7 @@ class CalendarFragment : Fragment() , CalendarAdapter.onItemClickListener{
     }
 
     var arrNotes = ArrayList<Notes>()
-    var notesAdapter: CalendarNoteAdapter= CalendarNoteAdapter()
+    var notesAdapter: NotesAdapter= NotesAdapter(1)
 
     val s = SimpleDateFormat("dd/M/yyyy", Locale.getDefault())
     var date_time=""
@@ -182,7 +182,6 @@ class CalendarFragment : Fragment() , CalendarAdapter.onItemClickListener{
 
     }
     fun updateRecyclerView() {
-        // Güncellenmiş verileri getirip adaptörü güncelleyin
         GlobalScope.launch(Dispatchers.Main) {
             context?.let {
                 val notes = NotesDatabase.getDatabase(it).noteDao().getAllNotes()

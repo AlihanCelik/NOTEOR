@@ -19,7 +19,7 @@ import kotlin.collections.ArrayList
 
 class FavoritesActivtity : AppCompatActivity() {
     var arrNotes = ArrayList<Notes>()
-    var notesAdapter: NotesAdapter = NotesAdapter()
+    var notesAdapter: NotesAdapter = NotesAdapter(0)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_favorites_activtity)

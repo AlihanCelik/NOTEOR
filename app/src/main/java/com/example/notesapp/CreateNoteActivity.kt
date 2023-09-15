@@ -4,10 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
-import android.graphics.PorterDuff
 import android.graphics.Typeface
-import android.media.MediaPlayer
-import android.media.MediaRecorder
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -316,7 +313,8 @@ class CreateNoteActivity : AppCompatActivity() {
 
             bottomSheetView.findViewById<View>(R.id.image).setOnClickListener {
                 if (hasPermissions()) {
-                    val intent = Intent()
+                    val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+                    intent.addCategory(Intent.CATEGORY_OPENABLE)
                     intent.type = "image/*"
                     intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
                     intent.action = Intent.ACTION_GET_CONTENT
@@ -760,7 +758,8 @@ class CreateNoteActivity : AppCompatActivity() {
         if (requestCode == PERMISSION_CODE) {
             if (grantResults.isNotEmpty() && grantResults.all { it == PackageManager.PERMISSION_GRANTED }) {
                 // İzinler verildiyse, işlemleri gerçekleştir
-                val intent = Intent()
+                val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+                intent.addCategory(Intent.CATEGORY_OPENABLE)
                 intent.type = "image/*"
                 intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
                 intent.action = Intent.ACTION_GET_CONTENT

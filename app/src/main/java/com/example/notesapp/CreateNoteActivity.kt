@@ -2,6 +2,7 @@ package com.example.notesapp
 
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.content.res.ColorStateList
 import android.graphics.PorterDuff
 import android.graphics.Typeface
@@ -23,20 +24,15 @@ import kotlinx.coroutines.*
 import java.io.File
 import android.net.Uri
 import android.os.Build
-import android.os.Handler
-import android.os.SystemClock
 import android.text.Editable
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.TextWatcher
 import android.text.style.StyleSpan
-import android.transition.TransitionManager
-import android.util.Log
 import android.view.WindowInsetsController
-import android.widget.Button
 import android.widget.ImageView
 import androidx.appcompat.app.AlertDialog
-import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.GridLayoutManager
@@ -47,12 +43,9 @@ import com.example.notesapp.Adapter.LinksAdapter
 import kotlinx.android.synthetic.main.createactivty_permi_dialog.view.*
 import kotlinx.android.synthetic.main.dialog_url.view.*
 import kotlinx.android.synthetic.main.font_dialog.view.*
-import kotlinx.android.synthetic.main.locked_dialog.*
 import kotlinx.android.synthetic.main.locked_dialog.view.*
 import kotlinx.android.synthetic.main.password_remove_dialog.view.*
 import kotlinx.android.synthetic.main.record_voice_dialog.view.*
-import java.io.IOException
-import java.util.regex.Pattern
 
 class CreateNoteActivity : AppCompatActivity() {
     var currentDate:String? = null
@@ -66,6 +59,16 @@ class CreateNoteActivity : AppCompatActivity() {
     var password=""
     var passwordBoolean=false
     var PICK_IMAGES_CODE = 1
+
+    private val PERMISSION_CODE = 1001
+    private val permissionId=14
+    private var permissionList=
+        if(Build.VERSION.SDK_INT>=33) {
+            arrayListOf(android.Manifest.permission.READ_MEDIA_IMAGES)
+        }else{
+            arrayListOf(android.Manifest.permission.READ_EXTERNAL_STORAGE,android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        }
+
 
     lateinit var items: MutableList<Uri>
     lateinit var recyclerView: RecyclerView
@@ -312,15 +315,19 @@ class CreateNoteActivity : AppCompatActivity() {
             }
 
             bottomSheetView.findViewById<View>(R.id.image).setOnClickListener {
-                val intent = Intent()
-                intent.type = "image/*"
-                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
-                intent.action = Intent.ACTION_GET_CONTENT
-                startActivityForResult(
-                    Intent.createChooser(intent, "Select Image(s)"),
-                    PICK_IMAGES_CODE
-                )
-                bottomSheet.dismiss()
+                if (hasPermissions()) {
+                    val intent = Intent()
+                    intent.type = "image/*"
+                    intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+                    intent.action = Intent.ACTION_GET_CONTENT
+                    startActivityForResult(
+                        Intent.createChooser(intent, "Select Image(s)"),
+                        PICK_IMAGES_CODE
+                    )
+                    bottomSheet.dismiss()
+                } else {
+                    requestPermissions()
+                }
 
             }
             bottomSheetView.findViewById<View>(R.id.link).setOnClickListener {
@@ -725,7 +732,48 @@ class CreateNoteActivity : AppCompatActivity() {
         initAdapter()
 
     }
+    private fun hasPermissions(): Boolean {
+        for (permission in permissionList) {
+            if (ContextCompat.checkSelfPermission(this, permission)
+                != PackageManager.PERMISSION_GRANTED
+            ) {
+                return false
+            }
+        }
+        return true
+    }
 
+    private fun requestPermissions() {
+        ActivityCompat.requestPermissions(
+            this,
+            permissionList.toTypedArray(),
+            PERMISSION_CODE
+        )
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == PERMISSION_CODE) {
+            if (grantResults.isNotEmpty() && grantResults.all { it == PackageManager.PERMISSION_GRANTED }) {
+                // İzinler verildiyse, işlemleri gerçekleştir
+                val intent = Intent()
+                intent.type = "image/*"
+                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+                intent.action = Intent.ACTION_GET_CONTENT
+                startActivityForResult(
+                    Intent.createChooser(intent, "Select Image(s)"),
+                    PICK_IMAGES_CODE
+                )
+            } else {
+                // İzinler reddedildiyse, kullanıcıya bir mesaj gösterin veya gerekli işlemleri yapın
+                // Örneğin, izinler reddedildiğinde bir açıklama gösterebilirsiniz.
+            }
+        }
+    }
     private fun saveNote(){
         if(notes_title.text.toString().isNullOrEmpty()){
             Toast.makeText(this,"Note Title is Required", Toast.LENGTH_SHORT).show()

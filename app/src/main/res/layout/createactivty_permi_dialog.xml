@@ -37,7 +37,7 @@
                 android:gravity="center"
 
                 android:text="Are you sure you want to exit without saving?"
-                android:textColor="@color/darkGrey"
+                android:textColor="@color/grey2"
                 android:textStyle="bold">
 
             </TextView>

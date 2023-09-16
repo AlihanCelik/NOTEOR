@@ -575,9 +575,9 @@ class NotesAdapter(val frag:Int) :
             holder.itemView.item_psw.visibility=View.VISIBLE
         }
         if(frag==0){
-            holder.itemView.item_date.visibility=View.VISIBLE
+            holder.itemView.item_date_l.visibility=View.VISIBLE
         }else{
-            holder.itemView.item_date.visibility=View.GONE
+            holder.itemView.item_date_l.visibility=View.GONE
         }
 
         when (arrList[position].color) {

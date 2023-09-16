@@ -76,6 +76,7 @@
                 android:text="Notes"
                 android:textColor="@color/grey"
                 android:gravity="center"
+                android:textStyle="bold"
                 android:layout_marginBottom="3dp"
                 android:textSize="15dp">
             </TextView>
@@ -121,7 +122,7 @@
             android:layout_height="200dp"
             android:src="@drawable/emptynote"
             android:layout_gravity="center"
-            app:tint="@color/AdvGrey2">
+            app:tint="@color/grey2">
 
         </ImageView>
         <TextView
@@ -129,11 +130,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="No Tasks"
-            android:textColor="@color/AdvGrey2"
+            android:textColor="@color/grey2"
             android:gravity="center"
             android:textSize="20dp"
             android:textStyle="bold"
-            android:fontFamily="@font/ralewaymedium"
+            android:fontFamily="@font/arcuata"
             android:layout_marginTop="15dp">
 
         </TextView>
@@ -143,6 +144,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="10/8/2003"
+            android:textStyle="bold"
             android:layout_marginTop="5dp"
             android:textColor="@color/grey"
             android:gravity="center">

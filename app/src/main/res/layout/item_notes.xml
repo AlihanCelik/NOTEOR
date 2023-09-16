@@ -187,20 +187,42 @@
 
                 </TextView>
 
-                <TextView
-                    android:id="@+id/item_date"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:layout_margin="7dp"
-                    android:paddingRight="5dp"
-                    android:paddingLeft="5dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="1dp"
+                    android:paddingBottom="1dp"
                     android:background="@drawable/date_background"
-                    android:text="date"
-                    android:textColor="@color/grey"
-                    android:textSize="10dp">
-                </TextView>
+                    android:layout_margin="7dp"
+                    android:layout_gravity="center"
+                    android:gravity="end"
+                    android:orientation="horizontal">
+
+
+                    <ImageView
+                        android:layout_width="14dp"
+                        android:layout_height="14dp"
+                        android:layout_gravity="center"
+                        android:layout_marginRight="5dp"
+                        android:src="@drawable/date"
+                        app:tint="@color/grey"></ImageView>
+
+                    <TextView
+                        android:id="@+id/item_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="date"
+                        android:textColor="@color/grey"
+                        android:textStyle="bold"
+                        android:textSize="10dp">
+                    </TextView>
+                </LinearLayout>
+
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -214,7 +236,7 @@
                         android:layout_height="15dp"
                         android:layout_gravity="center"
                         android:src="@drawable/remindernotes"
-                        app:tint="@color/grey">
+                        app:tint="@color/grey2">
                     </ImageView>
                     <ImageView
                         android:id="@+id/item_psw"

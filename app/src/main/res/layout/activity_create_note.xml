@@ -50,8 +50,8 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:src="@drawable/save"
-            android:tint="@color/darkGrey"
-            android:layout_marginRight="20dp">
+            android:layout_marginRight="20dp"
+            app:tint="@color/darkGrey">
 
         </ImageView>
 
@@ -80,7 +80,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
@@ -88,24 +88,32 @@
                 android:paddingBottom="1dp"
                 android:layout_marginTop="10dp"
                 android:layout_gravity="center"
-                android:background="@drawable/date_background"
+                android:gravity="end"
                 android:orientation="horizontal">
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+
                 <ImageView
-                    android:layout_width="12dp"
-                    android:layout_height="12dp"
-                    android:src="@drawable/date"
+                    android:layout_width="20dp"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    app:tint="@color/grey"></ImageView>
+                    android:layout_marginRight="5dp"
+                    android:src="@drawable/date"
+                    app:tint="@color/grey2"></ImageView>
+
                 <TextView
                     android:id="@+id/tvDateTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="date"
-                    android:textColor="@color/grey"
+                    android:textColor="@color/grey2"
                     android:gravity="center"
-                    android:textSize="11dp"
+                    android:textSize="15dp"
+                    android:textStyle="bold"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="10dp"
                     >
 
                 </TextView>

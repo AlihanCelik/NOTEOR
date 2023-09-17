@@ -976,6 +976,7 @@ class CreateNoteActivity : AppCompatActivity() {
                         notes.favorite=fav
                         notes.password=password
                         NotesDatabase.getDatabase(it).noteDao().updateNote(notes)
+                        setResult(Activity.RESULT_OK)
                     }
 
                 }

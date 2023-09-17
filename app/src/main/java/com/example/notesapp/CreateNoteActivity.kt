@@ -107,13 +107,20 @@ class CreateNoteActivity : AppCompatActivity() {
         recyclerViewLink.layoutManager= StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
 
         noteId = intent.getIntExtra("itemid",-1)
-        println(noteId)
+
 
         if(noteId!=-1){
             GlobalScope.launch(Dispatchers.Main){
                 let {
                     var notes = NotesDatabase.getDatabase(this@CreateNoteActivity).noteDao().getSpecificNote(noteId)
-                    fav= notes.favorite == true
+                    if(notes.favorite == true){
+                        fav=true
+                        favButton.setImageResource(R.drawable.favoriteon)
+                    }else{
+                        fav=false
+                        favButton.setImageResource(R.drawable.favoriteoff)
+                    }
+                    println(fav)
                     items= notes.imgPath as MutableList<Uri>
                     if(items.isNotEmpty()){
                         layout_img_preview.visibility = View.VISIBLE
@@ -954,6 +961,7 @@ class CreateNoteActivity : AppCompatActivity() {
 
         }
         else{
+
             val coroutineScope = CoroutineScope(Dispatchers.Main)
             coroutineScope.launch{
 
@@ -967,27 +975,31 @@ class CreateNoteActivity : AppCompatActivity() {
                 notes.webLink=items_link
                 notes.favorite=fav
                 notes.password=password
-                applicationContext?.let {
-                    if(noteId!=-1){
-                        NotesDatabase.getDatabase(it).noteDao().updateNote(notes)
-                    }else{
-                        NotesDatabase.getDatabase(it).noteDao().insertNotes(notes)
+                if(noteId!=-1){
+                    applicationContext?.let {
+                            NotesDatabase.getDatabase(it).noteDao().updateNote(notes)
                     }
+                }else{
+                    applicationContext?.let {
 
-                    notes_title.setText("")
-                    notes_sub_title.setText("")
-                    notes_desc.setText("")
-                    favButton.setImageResource(R.drawable.favoriteoff)
-                    fav=false
-                    getFile=null
-                    layout_img_preview.visibility=View.GONE
-                    layout_link_preview.visibility=View.GONE
-                    items.clear()
-                    items_link.clear()
-                    password=""
-                    passwordBoolean=false
-                    setResult(Activity.RESULT_OK)
+                        NotesDatabase.getDatabase(it).noteDao().insertNotes(notes)
+
+                        notes_title.setText("")
+                        notes_sub_title.setText("")
+                        notes_desc.setText("")
+                        favButton.setImageResource(R.drawable.favoriteoff)
+                        fav=false
+                        getFile=null
+                        layout_img_preview.visibility=View.GONE
+                        layout_link_preview.visibility=View.GONE
+                        items.clear()
+                        items_link.clear()
+                        password=""
+                        passwordBoolean=false
+                        setResult(Activity.RESULT_OK)
+                    }
                 }
+
             }
             Toast.makeText(this, "Note is added", Toast.LENGTH_SHORT).show()
 

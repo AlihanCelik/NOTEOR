@@ -86,7 +86,7 @@ class NoteFragment : Fragment() {
     fun updateRecyclerView() {
         GlobalScope.launch(Dispatchers.Main) {
             context?.let {
-                val notes = NotesDatabase.getDatabase(it).noteDao().getAllNotes()
+                var notes = NotesDatabase.getDatabase(it).noteDao().getAllNotesSortedByDate().asReversed()
                 notesAdapter.updateData(notes)
             }
         }

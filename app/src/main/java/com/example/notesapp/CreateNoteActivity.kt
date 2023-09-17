@@ -120,7 +120,7 @@ class CreateNoteActivity : AppCompatActivity() {
                         fav=false
                         favButton.setImageResource(R.drawable.favoriteoff)
                     }
-                    println(fav)
+
                     items= notes.imgPath as MutableList<Uri>
                     if(items.isNotEmpty()){
                         layout_img_preview.visibility = View.VISIBLE
@@ -278,7 +278,7 @@ class CreateNoteActivity : AppCompatActivity() {
                 }
             }
         }
-
+        println(fav)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             window.statusBarColor = backgroundBlue
@@ -961,25 +961,38 @@ class CreateNoteActivity : AppCompatActivity() {
 
         }
         else{
-
-            val coroutineScope = CoroutineScope(Dispatchers.Main)
-            coroutineScope.launch{
-
-                var notes = Notes()
-                notes.title=notes_title.text.toString()
-                notes.subTitle=notes_sub_title.text.toString()
-                notes.noteText=notes_desc.text.toString()
-                notes.dateTime=currentDate
-                notes.color=color
-                notes.imgPath=items
-                notes.webLink=items_link
-                notes.favorite=fav
-                notes.password=password
-                if(noteId!=-1){
-                    applicationContext?.let {
-                            NotesDatabase.getDatabase(it).noteDao().updateNote(notes)
+            if(noteId!=-1){
+                val coroutineScope = CoroutineScope(Dispatchers.Main)
+                coroutineScope.launch {
+                    applicationContext?.let{
+                        var notes = NotesDatabase.getDatabase(it).noteDao().getSpecificNote(noteId)
+                        notes.title=notes_title.text.toString()
+                        notes.subTitle=notes_sub_title.text.toString()
+                        notes.noteText=notes_desc.text.toString()
+                        notes.dateTime=currentDate
+                        notes.color=color
+                        notes.imgPath=items
+                        notes.webLink=items_link
+                        notes.favorite=fav
+                        notes.password=password
+                        NotesDatabase.getDatabase(it).noteDao().updateNote(notes)
                     }
-                }else{
+
+                }
+
+            }else{
+                val coroutineScope = CoroutineScope(Dispatchers.Main)
+                coroutineScope.launch{
+                    var notes = Notes()
+                    notes.title=notes_title.text.toString()
+                    notes.subTitle=notes_sub_title.text.toString()
+                    notes.noteText=notes_desc.text.toString()
+                    notes.dateTime=currentDate
+                    notes.color=color
+                    notes.imgPath=items
+                    notes.webLink=items_link
+                    notes.favorite=fav
+                    notes.password=password
                     applicationContext?.let {
 
                         NotesDatabase.getDatabase(it).noteDao().insertNotes(notes)
@@ -998,9 +1011,12 @@ class CreateNoteActivity : AppCompatActivity() {
                         passwordBoolean=false
                         setResult(Activity.RESULT_OK)
                     }
-                }
 
+
+                }
             }
+
+
             Toast.makeText(this, "Note is added", Toast.LENGTH_SHORT).show()
 
 

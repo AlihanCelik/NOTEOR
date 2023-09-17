@@ -1,6 +1,7 @@
 package com.example.notesapp.Adapter
 
 import android.app.Activity
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.text.Editable
@@ -14,6 +15,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.notesapp.CreateNoteActivity
 import com.example.notesapp.R
 import com.example.notesapp.database.NotesDatabase
 import com.example.notesapp.database.TrashDatabase
@@ -58,8 +60,22 @@ class NotesAdapter(val frag:Int) :
         holder.itemView.item_bg.setBackgroundColor(Color.WHITE)
         val context = holder.itemView.context
         holder.itemView.setOnClickListener {
-            if(arrList[position].password.isNullOrEmpty()){
+            when (arrList[position].color) {
+                "blue" -> holder.itemView.item_bg.setBackgroundColor(ContextCompat.getColor(context, R.color.background_blue))
+                "pink" -> holder.itemView.item_bg.setBackgroundColor(ContextCompat.getColor(context, R.color.background_pink))
+                "purple" -> holder.itemView.item_bg.setBackgroundColor(ContextCompat.getColor(context, R.color.background_purple))
+                "yellow" -> holder.itemView.item_bg.setBackgroundColor(ContextCompat.getColor(context, R.color.background_yellow))
+                "green" -> holder.itemView.item_bg.setBackgroundColor(ContextCompat.getColor(context, R.color.background_green))
+                "red" -> holder.itemView.item_bg.setBackgroundColor(ContextCompat.getColor(context, R.color.background_red))
+                "orange" -> holder.itemView.item_bg.setBackgroundColor(ContextCompat.getColor(context, R.color.background_orange))
 
+            }
+            if(arrList[position].password.isNullOrEmpty()){
+                val intent=Intent(context,CreateNoteActivity::class.java)
+                intent.putExtra("itemid",arrList[position].id)
+                println(arrList[position].id)
+                context.startActivity(intent)
+                holder.itemView.item_bg.setBackgroundColor(Color.WHITE)
             }else{
                 val view = View.inflate(holder.itemView.context, R.layout.enter_psw_dialog,null)
                 val builder = AlertDialog.Builder(holder.itemView.context)
@@ -134,7 +150,6 @@ class NotesAdapter(val frag:Int) :
                 "orange" -> holder.itemView.item_bg.setBackgroundColor(ContextCompat.getColor(context, R.color.background_orange))
 
             }
-
             dialog.show()
             dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
             view.cancelLong.setOnClickListener {

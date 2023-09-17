@@ -40,6 +40,7 @@ import com.example.notesapp.Adapter.LinksAdapter
 import kotlinx.android.synthetic.main.createactivty_permi_dialog.view.*
 import kotlinx.android.synthetic.main.dialog_url.view.*
 import kotlinx.android.synthetic.main.font_dialog.view.*
+import kotlinx.android.synthetic.main.item_notes.view.*
 import kotlinx.android.synthetic.main.locked_dialog.view.*
 import kotlinx.android.synthetic.main.password_remove_dialog.view.*
 import kotlinx.android.synthetic.main.record_voice_dialog.view.*
@@ -56,6 +57,7 @@ class CreateNoteActivity : AppCompatActivity() {
     var password=""
     var passwordBoolean=false
     var PICK_IMAGES_CODE = 1
+    var noteId=-1
 
     private val PERMISSION_CODE = 1001
     private val permissionId=14
@@ -65,7 +67,6 @@ class CreateNoteActivity : AppCompatActivity() {
         }else{
             arrayListOf(android.Manifest.permission.READ_EXTERNAL_STORAGE,android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
         }
-
 
     lateinit var items: MutableList<Uri>
     lateinit var recyclerView: RecyclerView
@@ -104,6 +105,173 @@ class CreateNoteActivity : AppCompatActivity() {
         recyclerViewLink.setHasFixedSize(true)
         recyclerView.layoutManager= StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         recyclerViewLink.layoutManager= StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
+
+        noteId = intent.getIntExtra("itemid",-1)
+        println(noteId)
+
+        if(noteId!=-1){
+            GlobalScope.launch(Dispatchers.Main){
+                let {
+                    var notes = NotesDatabase.getDatabase(this@CreateNoteActivity).noteDao().getSpecificNote(noteId)
+                    fav= notes.favorite == true
+                    items= notes.imgPath as MutableList<Uri>
+                    if(items.isNotEmpty()){
+                        layout_img_preview.visibility = View.VISIBLE
+                    }
+                    items_link= notes.webLink as MutableList<String>
+                    if(items_link.isNotEmpty()){
+                        layout_link_preview.visibility = View.VISIBLE
+                    }
+                    password= notes.password.toString()
+                    notes_title.setText(notes.title)
+                    notes_sub_title.setText(notes.subTitle)
+                    notes_desc.setText(notes.noteText)
+                    when (notes.color) {
+                        "blue" -> {
+                            color = "blue"
+                            colorView.setBackgroundColor(moonBlue)
+                            createNote.setBackgroundColor(backgroundBlue)
+
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                window.statusBarColor = backgroundBlue
+                            }
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                window.navigationBarColor = backgroundBlue
+                            }
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                                val controller = window.insetsController
+                                controller?.setSystemBarsAppearance(
+                                    WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS,
+                                    WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS
+                                )
+                            }
+                        }
+                        "pink" -> {
+                            color = "pink"
+                            colorView.setBackgroundColor(moonPink)
+                            createNote.setBackgroundColor(backgroundPink)
+
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                window.statusBarColor = backgroundPink
+                            }
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                window.navigationBarColor = backgroundPink
+                            }
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                                val controller = window.insetsController
+                                controller?.setSystemBarsAppearance(
+                                    WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS,
+                                    WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS
+                                )
+                            }
+
+                        }
+                        "purple" -> {
+                            color = "purple"
+                            colorView.setBackgroundColor(moonPurple)
+                            createNote.setBackgroundColor(backgroundPurple)
+
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                window.statusBarColor = backgroundPurple
+                            }
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                window.navigationBarColor = backgroundPurple
+                            }
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                                val controller = window.insetsController
+                                controller?.setSystemBarsAppearance(
+                                    WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS,
+                                    WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS
+                                )
+                            }
+
+                        }
+                        "yellow" -> {
+                            color = "yellow"
+                            colorView.setBackgroundColor(moonYellow)
+                            createNote.setBackgroundColor(backgroundYellow)
+
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                window.statusBarColor = backgroundYellow
+                            }
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                window.navigationBarColor = backgroundYellow
+                            }
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                                val controller = window.insetsController
+                                controller?.setSystemBarsAppearance(
+                                    WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS,
+                                    WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS
+                                )
+                            }
+
+                        }
+                        "green" -> {
+                            color = "green"
+                            colorView.setBackgroundColor(moonGreen)
+                            createNote.setBackgroundColor(backgroundGreen)
+
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                window.statusBarColor = backgroundGreen
+                            }
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                window.navigationBarColor = backgroundGreen
+                            }
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                                val controller = window.insetsController
+                                controller?.setSystemBarsAppearance(
+                                    WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS,
+                                    WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS
+                                )
+                            }
+
+                        }
+                        "red" -> {
+                            color = "red"
+                            colorView.setBackgroundColor(moonRed)
+                            createNote.setBackgroundColor(backgroundRed)
+
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                window.statusBarColor = backgroundRed
+                            }
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                window.navigationBarColor = backgroundRed
+                            }
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                                val controller = window.insetsController
+                                controller?.setSystemBarsAppearance(
+                                    WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS,
+                                    WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS
+                                )
+                            }
+
+                        }
+                        "orange" -> {
+                            color = "orange"
+                            colorView.setBackgroundColor(moonOrange)
+                            createNote.setBackgroundColor(backgroundOrange)
+
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                window.statusBarColor = backgroundOrange
+                            }
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                window.navigationBarColor = backgroundOrange
+                            }
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                                val controller = window.insetsController
+                                controller?.setSystemBarsAppearance(
+                                    WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS,
+                                    WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS
+                                )
+                            }
+                        }
+
+                    }
+                    initAdapter()
+                }
+            }
+        }
+
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             window.statusBarColor = backgroundBlue
@@ -800,7 +968,12 @@ class CreateNoteActivity : AppCompatActivity() {
                 notes.favorite=fav
                 notes.password=password
                 applicationContext?.let {
-                    NotesDatabase.getDatabase(it).noteDao().insertNotes(notes)
+                    if(noteId!=-1){
+                        NotesDatabase.getDatabase(it).noteDao().updateNote(notes)
+                    }else{
+                        NotesDatabase.getDatabase(it).noteDao().insertNotes(notes)
+                    }
+
                     notes_title.setText("")
                     notes_sub_title.setText("")
                     notes_desc.setText("")
@@ -858,4 +1031,6 @@ class CreateNoteActivity : AppCompatActivity() {
 
 
 }
+
+
 

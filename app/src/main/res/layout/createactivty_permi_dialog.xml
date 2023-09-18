@@ -31,11 +31,11 @@
 
 
             <TextView
+                android:id="@+id/permi_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
-
                 android:text="Are you sure you want to exit without saving?"
                 android:textColor="@color/grey2"
                 android:textStyle="bold">

@@ -953,8 +953,21 @@ class CreateNoteActivity : AppCompatActivity() {
                 itemDesc=notes.noteText.toString()
             }
         }
-        return fav!=itemFav || items!=itemPictures || items_link!=itemLinks || password!=itemPsw || notes_title.text.toString()!=itemTitle ||
+        return fav!=itemFav || !itemsEquals(itemPictures, items) ||!itemsEquals(itemLinks, items_link) || password!=itemPsw || notes_title.text.toString()!=itemTitle ||
                 notes_sub_title.text.toString()!=itemSubTitle || notes_desc.text.toString()!=itemDesc
+    }
+    private fun itemsEquals(list1: List<*>, list2: List<*>): Boolean {
+        if (list1.size != list2.size) {
+            return false
+        }
+
+        for (i in list1.indices) {
+            if (list1[i] != list2[i]) {
+                return false
+            }
+        }
+
+        return true
     }
     private fun hasPermissions(): Boolean {
         for (permission in permissionList) {

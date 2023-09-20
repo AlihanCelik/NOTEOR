@@ -1035,6 +1035,7 @@ class CreateNoteActivity : AppCompatActivity() {
                         notes.password=password
                         NotesDatabase.getDatabase(it).noteDao().updateNote(notes)
                         setResult(Activity.RESULT_OK)
+                        Toast.makeText(this@CreateNoteActivity, "Note is updated", Toast.LENGTH_SHORT).show()
                     }
 
                 }
@@ -1052,23 +1053,13 @@ class CreateNoteActivity : AppCompatActivity() {
                     notes.webLink=items_link
                     notes.favorite=fav
                     notes.password=password
+
                     applicationContext?.let {
 
-                        NotesDatabase.getDatabase(it).noteDao().insertNotes(notes)
-
-                        notes_title.setText("")
-                        notes_sub_title.setText("")
-                        notes_desc.setText("")
-                        favButton.setImageResource(R.drawable.favoriteoff)
-                        fav=false
-                        getFile=null
-                        layout_img_preview.visibility=View.GONE
-                        layout_link_preview.visibility=View.GONE
-                        items.clear()
-                        items_link.clear()
-                        password=""
-                        passwordBoolean=false
+                        val insertedId = NotesDatabase.getDatabase(it).noteDao().insertNotes(notes)
+                        noteId = insertedId.toInt()
                         setResult(Activity.RESULT_OK)
+                        Toast.makeText(this@CreateNoteActivity, "Note is added", Toast.LENGTH_SHORT).show()
                     }
 
 
@@ -1076,7 +1067,7 @@ class CreateNoteActivity : AppCompatActivity() {
             }
 
 
-            Toast.makeText(this, "Note is added", Toast.LENGTH_SHORT).show()
+
 
 
         }

@@ -585,8 +585,16 @@ class NotesAdapter(val frag:Int) :
             holder.itemView.item_fav.visibility=View.INVISIBLE
         }
         if(arrList[position].password.isNullOrEmpty()){
+            holder.itemView.itemLinkLayout.visibility=View.VISIBLE
+            holder.itemView.item_layout_img.visibility=View.VISIBLE
+            holder.itemView.hidden.visibility=View.GONE
+            holder.itemView.item_desc.visibility=View.VISIBLE
             holder.itemView.item_psw.visibility=View.GONE
         }else{
+            holder.itemView.itemLinkLayout.visibility=View.GONE
+            holder.itemView.item_layout_img.visibility=View.GONE
+            holder.itemView.hidden.visibility=View.VISIBLE
+            holder.itemView.item_desc.visibility=View.GONE
             holder.itemView.item_psw.visibility=View.VISIBLE
         }
         if(frag==0){

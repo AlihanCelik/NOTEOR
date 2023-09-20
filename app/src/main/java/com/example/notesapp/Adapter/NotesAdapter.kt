@@ -114,7 +114,11 @@ class NotesAdapter(val frag:Int) :
                             )
                         )
                         view.enter_passwordContainer.helperText="Successful"
+                        val intent=Intent(context,CreateNoteActivity::class.java)
+                        intent.putExtra("itemid",arrList[position].id)
+                        println(arrList[position].id)
                         dialog.dismiss()
+                        context.startActivity(intent)
                         holder.itemView.item_bg.setBackgroundColor(Color.WHITE)
                     }else{
                         view.enter_passwordContainer.helperText="Wrong Password"

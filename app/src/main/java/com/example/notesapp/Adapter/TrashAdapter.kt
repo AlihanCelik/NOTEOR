@@ -152,6 +152,9 @@ class TrashAdapter() :
                     holder.itemView.item_bg.setBackgroundColor(Color.WHITE)
                     dialog3.dismiss()
                 }
+                dialog3.setOnCancelListener {
+                    holder.itemView.item_bg.setBackgroundColor(Color.WHITE)
+                }
                 var note=arrList[position]
                 view3.yes_delete_permi.setOnClickListener {
                     GlobalScope.launch {
@@ -166,11 +169,8 @@ class TrashAdapter() :
                     notifyItemRangeChanged(position, itemCount)
                     Toast.makeText(context, "Note deleted", Toast.LENGTH_SHORT).show()
                     dialog3.dismiss()
-
-
                     holder.itemView.item_bg.setBackgroundColor(Color.WHITE)
                 }
-                holder.itemView.item_bg.setBackgroundColor(Color.WHITE)
                 dialog.dismiss()
 
             }
@@ -216,34 +216,44 @@ class TrashAdapter() :
         if(arrList[position].webLink_t.isNullOrEmpty()){
             holder.itemView.itemLinkLayout.visibility=View.GONE
         }else{
-            holder.itemView.itemWebLink.text= arrList[position].webLink_t?.get(0)
-            holder.itemView.itemLinkLayout.visibility=View.VISIBLE
+            if(!arrList[position].password_t.isNullOrEmpty()){
+                holder.itemView.itemLinkLayout.visibility=View.GONE
+            }else{
+                holder.itemView.itemWebLink.text= arrList[position].webLink_t?.get(0)
+                holder.itemView.itemLinkLayout.visibility=View.VISIBLE
+
+            }
+
         }
         if(arrList[position].imgPath_t.isNullOrEmpty()){
             holder.itemView.item_layout_img.visibility=View.GONE
         }else{
-            holder.itemView.item_layout_img.visibility=View.VISIBLE
-            Glide.with(context).load(arrList[position].imgPath_t?.get(0)).into(holder.image)
-            if(arrList[position].imgPath_t?.size == 1){
-                holder.itemView.multiple_img_icon.visibility=View.GONE
+            if(!arrList[position].password_t.isNullOrEmpty()){
+                holder.itemView.item_layout_img.visibility=View.GONE
             }else{
-                holder.itemView.multiple_img_icon.visibility=View.VISIBLE
+                holder.itemView.item_layout_img.visibility=View.VISIBLE
+                Glide.with(context).load(arrList[position].imgPath_t?.get(0)).into(holder.image)
+                if(arrList[position].imgPath_t?.size == 1){
+                    holder.itemView.multiple_img_icon.visibility=View.GONE
+                }else{
+                    holder.itemView.multiple_img_icon.visibility=View.VISIBLE
+                }
             }
+
         }
 
-        if(arrList[position].imgPath_t.isNullOrEmpty()){
-            holder.itemView.item_layout_img.visibility=View.GONE
-        }else{
-            holder.itemView.item_layout_img.visibility=View.VISIBLE
-        }
         if(arrList[position].favorite_t==true){
             holder.itemView.item_fav.visibility=View.VISIBLE
         }else{
             holder.itemView.item_fav.visibility=View.INVISIBLE
         }
         if(arrList[position].password_t.isNullOrEmpty()){
+            holder.itemView.item_desc.visibility=View.VISIBLE
+            holder.itemView.hidden.visibility=View.GONE
             holder.itemView.item_psw.visibility=View.GONE
         }else{
+            holder.itemView.item_desc.visibility=View.GONE
+            holder.itemView.hidden.visibility=View.VISIBLE
             holder.itemView.item_psw.visibility=View.VISIBLE
         }
 

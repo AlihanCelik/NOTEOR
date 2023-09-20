@@ -294,52 +294,55 @@ class CreateNoteActivity : AppCompatActivity() {
         }
 
         backButton.setOnClickListener {
-            if(noteId!=-1){
-                if(isDifferent()){
-                    val view = View.inflate(this, R.layout.createactivty_permi_dialog, null)
-                    val builder = AlertDialog.Builder(this)
-                    builder.setView(view)
-                    val dialog = builder.create()
-                    dialog.show()
-                    dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-                    view.permi_text.text="Are you sure you want to exit without saving changes?"
-                    view.cancel_permi.setOnClickListener {
-                        dialog.dismiss()
-                    }
-                    view.yes_permi.setOnClickListener {
-                        dialog.dismiss()
+            GlobalScope.launch(Dispatchers.Main){
+                if (noteId != -1) {
+                    if (isDifferent()) {
+                        val view = View.inflate(this@CreateNoteActivity, R.layout.createactivty_permi_dialog, null)
+                        val builder = AlertDialog.Builder(this@CreateNoteActivity)
+                        builder.setView(view)
+                        val dialog = builder.create()
+                        dialog.show()
+                        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+                        view.permi_text.text = "Are you sure you want to exit without saving changes?"
+                        view.cancel_permi.setOnClickListener {
+                            dialog.dismiss()
+                        }
+                        view.yes_permi.setOnClickListener {
+                            dialog.dismiss()
+                            setResult(Activity.RESULT_OK)
+                            finish()
+                        }
+                    } else {
                         setResult(Activity.RESULT_OK)
                         finish()
                     }
-                }else{
-                    setResult(Activity.RESULT_OK)
-                    finish()
-                }
-            }else{
-                if(fav || !items.isEmpty() || !items_link.isEmpty() || password!="" || !notes_title.text.toString().isNullOrEmpty() ||
-                    !notes_sub_title.text.toString().isNullOrEmpty() || !notes_desc.text.toString().isNullOrEmpty()){
-                    val view = View.inflate(this, R.layout.createactivty_permi_dialog, null)
-                    val builder = AlertDialog.Builder(this)
-                    builder.setView(view)
-                    val dialog = builder.create()
-                    dialog.show()
-                    dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-                    view.permi_text.text="Are you sure you want to exit without saving?"
-                    view.cancel_permi.setOnClickListener {
-                        dialog.dismiss()
-                    }
-                    view.yes_permi.setOnClickListener {
-                        dialog.dismiss()
+                } else {
+                    if (fav || !items.isEmpty() || !items_link.isEmpty() || password != "" ||
+                        !notes_title.text.toString().isNullOrEmpty() ||
+                        !notes_sub_title.text.toString().isNullOrEmpty() ||
+                        !notes_desc.text.toString().isNullOrEmpty()
+                    ) {
+                        val view = View.inflate(this@CreateNoteActivity, R.layout.createactivty_permi_dialog, null)
+                        val builder = AlertDialog.Builder(this@CreateNoteActivity)
+                        builder.setView(view)
+                        val dialog = builder.create()
+                        dialog.show()
+                        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+                        view.permi_text.text = "Are you sure you want to exit without saving?"
+                        view.cancel_permi.setOnClickListener {
+                            dialog.dismiss()
+                        }
+                        view.yes_permi.setOnClickListener {
+                            dialog.dismiss()
+                            setResult(Activity.RESULT_OK)
+                            finish()
+                        }
+                    } else {
                         setResult(Activity.RESULT_OK)
                         finish()
                     }
-                }else{
-                    setResult(Activity.RESULT_OK)
-                    finish()
                 }
             }
-
-
         }
         saveButton.setOnClickListener {
             saveNote()
@@ -929,32 +932,22 @@ class CreateNoteActivity : AppCompatActivity() {
         initAdapter()
 
     }
-    private fun isDifferent():Boolean{
-        var itemTitle=""
-        var itemSubTitle=""
-        var itemFav=false
-        var itemDesc=""
-        var itemPictures:MutableList<android.net.Uri>
-        var itemLinks:MutableList<String>
-        var itemPsw=""
-        itemPictures= arrayListOf()
-        itemLinks= arrayListOf()
-
-        GlobalScope.launch(Dispatchers.Main) {
-            let {
-                var notes = NotesDatabase.getDatabase(this@CreateNoteActivity).noteDao()
-                    .getSpecificNote(noteId)
-                itemFav = notes.favorite == true
-                itemPictures = notes.imgPath as MutableList<Uri>
-                itemLinks= notes.webLink as MutableList<String>
-                itemPsw = notes.password.toString()
-                itemTitle=notes.title.toString()
-                itemSubTitle=notes.subTitle.toString()
-                itemDesc=notes.noteText.toString()
-            }
+    private suspend fun isDifferent(): Boolean = coroutineScope {
+        val notes = async(Dispatchers.IO) {
+            NotesDatabase.getDatabase(this@CreateNoteActivity).noteDao().getSpecificNote(noteId)
         }
-        return fav!=itemFav || !itemsEquals(itemPictures, items) ||!itemsEquals(itemLinks, items_link) || password!=itemPsw || notes_title.text.toString()!=itemTitle ||
-                notes_sub_title.text.toString()!=itemSubTitle || notes_desc.text.toString()!=itemDesc
+
+        val itemFav = notes.await().favorite == true
+        val itemPictures = notes.await().imgPath as MutableList<Uri>
+        val itemLinks = notes.await().webLink as MutableList<String>
+        val itemPsw = notes.await().password.toString()
+        val itemTitle = notes.await().title.toString()
+        val itemSubTitle = notes.await().subTitle.toString()
+        val itemDesc = notes.await().noteText.toString()
+
+        return@coroutineScope (fav != itemFav || !itemsEquals(itemPictures, items) || !itemsEquals(itemLinks, items_link)
+                || password != itemPsw || notes_title.text.toString() != itemTitle ||
+                notes_sub_title.text.toString() != itemSubTitle || notes_desc.text.toString() != itemDesc)
     }
     private fun itemsEquals(list1: List<*>, list2: List<*>): Boolean {
         if (list1.size != list2.size) {

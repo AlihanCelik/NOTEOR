@@ -944,10 +944,11 @@ class CreateNoteActivity : AppCompatActivity() {
         val itemTitle = notes.await().title.toString()
         val itemSubTitle = notes.await().subTitle.toString()
         val itemDesc = notes.await().noteText.toString()
+        val itemColor=notes.await().color.toString()
 
         return@coroutineScope (fav != itemFav || !itemsEquals(itemPictures, items) || !itemsEquals(itemLinks, items_link)
                 || password != itemPsw || notes_title.text.toString() != itemTitle ||
-                notes_sub_title.text.toString() != itemSubTitle || notes_desc.text.toString() != itemDesc)
+                notes_sub_title.text.toString() != itemSubTitle || notes_desc.text.toString() != itemDesc || color!=itemColor)
     }
     private fun itemsEquals(list1: List<*>, list2: List<*>): Boolean {
         if (list1.size != list2.size) {

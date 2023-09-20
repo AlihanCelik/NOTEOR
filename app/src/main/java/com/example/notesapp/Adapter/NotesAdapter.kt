@@ -559,25 +559,29 @@ class NotesAdapter(val frag:Int) :
         if(arrList[position].webLink.isNullOrEmpty()){
             holder.itemView.itemLinkLayout.visibility=View.GONE
         }else{
-            holder.itemView.itemWebLink.text= arrList[position].webLink?.get(0)
-            holder.itemView.itemLinkLayout.visibility=View.VISIBLE
-        }
-        if(arrList[position].imgPath.isNullOrEmpty()){
-            holder.itemView.item_layout_img.visibility=View.GONE
-        }else{
-            holder.itemView.item_layout_img.visibility=View.VISIBLE
-            Glide.with(context).load(arrList[position].imgPath?.get(0)).into(holder.image)
-            if(arrList[position].imgPath?.size == 1){
-                holder.itemView.multiple_img_icon.visibility=View.GONE
+            if(!arrList[position].password.isNullOrEmpty()){
+                holder.itemView.itemLinkLayout.visibility=View.GONE
             }else{
-                holder.itemView.multiple_img_icon.visibility=View.VISIBLE
+                holder.itemView.itemWebLink.text= arrList[position].webLink?.get(0)
+                holder.itemView.itemLinkLayout.visibility=View.VISIBLE
             }
-        }
 
+        }
         if(arrList[position].imgPath.isNullOrEmpty()){
             holder.itemView.item_layout_img.visibility=View.GONE
         }else{
-            holder.itemView.item_layout_img.visibility=View.VISIBLE
+            if(!arrList[position].password.isNullOrEmpty()){
+                holder.itemView.item_layout_img.visibility=View.GONE
+            }else{
+                holder.itemView.item_layout_img.visibility=View.VISIBLE
+                Glide.with(context).load(arrList[position].imgPath?.get(0)).into(holder.image)
+                if(arrList[position].imgPath?.size == 1){
+                    holder.itemView.multiple_img_icon.visibility=View.GONE
+                }else{
+                    holder.itemView.multiple_img_icon.visibility=View.VISIBLE
+                }
+            }
+
         }
         if(arrList[position].favorite==true){
             holder.itemView.item_fav.visibility=View.VISIBLE
@@ -585,16 +589,12 @@ class NotesAdapter(val frag:Int) :
             holder.itemView.item_fav.visibility=View.INVISIBLE
         }
         if(arrList[position].password.isNullOrEmpty()){
-            holder.itemView.itemLinkLayout.visibility=View.VISIBLE
-            holder.itemView.item_layout_img.visibility=View.VISIBLE
-            holder.itemView.hidden.visibility=View.GONE
             holder.itemView.item_desc.visibility=View.VISIBLE
+            holder.itemView.hidden.visibility=View.GONE
             holder.itemView.item_psw.visibility=View.GONE
         }else{
-            holder.itemView.itemLinkLayout.visibility=View.GONE
-            holder.itemView.item_layout_img.visibility=View.GONE
-            holder.itemView.hidden.visibility=View.VISIBLE
             holder.itemView.item_desc.visibility=View.GONE
+            holder.itemView.hidden.visibility=View.VISIBLE
             holder.itemView.item_psw.visibility=View.VISIBLE
         }
         if(frag==0){

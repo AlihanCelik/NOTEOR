@@ -171,6 +171,9 @@ class NotesAdapter(val frag:Int) :
                         holder.itemView.item_bg.setBackgroundColor(Color.WHITE)
                         dialog3.dismiss()
                     }
+                    dialog3.setOnCancelListener {
+                        holder.itemView.item_bg.setBackgroundColor(Color.WHITE)
+                    }
                     var note=arrList[position]
                     view3.yes_delete_permi.setOnClickListener {
                         GlobalScope.launch {
@@ -240,6 +243,9 @@ class NotesAdapter(val frag:Int) :
                             view3.cancel_delete_permi.setOnClickListener{
                                 holder.itemView.item_bg.setBackgroundColor(Color.WHITE)
                                 dialog3.dismiss()
+                            }
+                            dialog3.setOnCancelListener {
+                                holder.itemView.item_bg.setBackgroundColor(Color.WHITE)
                             }
                             var note=arrList[position]
                             view3.yes_delete_permi.setOnClickListener {

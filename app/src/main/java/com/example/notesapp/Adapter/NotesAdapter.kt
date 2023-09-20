@@ -521,8 +521,13 @@ class NotesAdapter(val frag:Int) :
                                 dialog3.dismiss()
                             }
                             view3.cancelRemovePsw.setOnClickListener{
+                                holder.itemView.item_bg.setBackgroundColor(Color.WHITE)
                                 dialog3.dismiss()
                             }
+                            dialog3.setOnCancelListener {
+                                holder.itemView.item_bg.setBackgroundColor(Color.WHITE)
+                            }
+
                         }else{
                             view4.enter_passwordContainer.helperText="Wrong Password"
                             view4.enter_passwordContainer.setHelperTextColor(

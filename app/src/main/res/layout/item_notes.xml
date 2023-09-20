@@ -96,7 +96,7 @@
                     android:layout_marginTop="13dp"
                     android:layout_gravity="center"
                     android:src="@drawable/hidden"
-                    app:tint="@color/darkGrey">
+                    app:tint="@color/grey2">
 
                 </ImageView>
 
@@ -247,7 +247,7 @@
                         android:layout_height="15dp"
                         android:layout_gravity="center"
                         android:src="@drawable/remindernotes"
-                        app:tint="@color/grey2">
+                        app:tint="@color/grey">
                     </ImageView>
                     <ImageView
                         android:id="@+id/item_psw"

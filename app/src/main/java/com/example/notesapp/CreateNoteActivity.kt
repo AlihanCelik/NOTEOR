@@ -293,6 +293,7 @@ class CreateNoteActivity : AppCompatActivity() {
             )
         }
 
+
         backButton.setOnClickListener {
             GlobalScope.launch(Dispatchers.Main){
                 if (noteId != -1) {
@@ -932,11 +933,11 @@ class CreateNoteActivity : AppCompatActivity() {
         initAdapter()
 
     }
+
     private suspend fun isDifferent(): Boolean = coroutineScope {
         val notes = async(Dispatchers.IO) {
             NotesDatabase.getDatabase(this@CreateNoteActivity).noteDao().getSpecificNote(noteId)
         }
-
         val itemFav = notes.await().favorite == true
         val itemPictures = notes.await().imgPath as MutableList<Uri>
         val itemLinks = notes.await().webLink as MutableList<String>

@@ -33,43 +33,43 @@
 
         <ImageView
             android:id="@+id/image"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="29dp"
+            android:layout_height="29dp"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginBottom="10dp"
-            app:tint="@color/AdvGrey2"
+            android:layout_gravity="center"
             android:src="@drawable/addpictures">
 
         </ImageView>
 
         <ImageView
             android:id="@+id/link"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            app:tint="@color/AdvGrey2"
+            android:layout_width="29dp"
+            android:layout_height="29dp"
             android:layout_margin="10dp"
+            android:layout_gravity="center"
             android:src="@drawable/addlink">
 
         </ImageView>
 
         <ImageView
             android:id="@+id/mic"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="29dp"
+            android:layout_height="29dp"
             android:layout_margin="10dp"
-            app:tint="@color/AdvGrey2"
+            android:layout_gravity="center"
             android:src="@drawable/mic">
 
         </ImageView>
 
         <ImageView
             android:id="@+id/font"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="29dp"
+            android:layout_height="29dp"
             android:layout_margin="10dp"
-            app:tint="@color/AdvGrey2"
+            android:layout_gravity="center"
             android:src="@drawable/font">
 
         </ImageView>
@@ -93,13 +93,13 @@
 
         <ImageView
             android:id="@+id/remainder"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="29dp"
+            android:layout_height="29dp"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginBottom="10dp"
-            app:tint="@color/AdvGrey2"
+            android:layout_gravity="center"
             android:src="@drawable/remindernotes">
 
         </ImageView>
@@ -113,7 +113,6 @@
             android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginBottom="10dp"
-            app:tint="@color/AdvGrey2"
             android:src="@drawable/locked">
 
         </ImageView>
@@ -121,12 +120,12 @@
             android:id="@+id/delete"
             android:layout_width="29dp"
             android:layout_height="29dp"
-            android:layout_gravity="center"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="20dp"
             android:layout_marginBottom="10dp"
             android:src="@drawable/trash2"
+            android:layout_gravity="center"
             app:tint="@color/AdvGrey2">
 
         </ImageView>

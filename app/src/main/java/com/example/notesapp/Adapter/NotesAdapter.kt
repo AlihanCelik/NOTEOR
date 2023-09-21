@@ -588,8 +588,9 @@ class NotesAdapter(val frag:Int) :
             if(!arrList[position].password.isNullOrEmpty()){
                 holder.itemView.item_layout_img.visibility=View.GONE
             }else{
+                var picture=arrList[position].imgPath?.get(0)
                 holder.itemView.item_layout_img.visibility=View.VISIBLE
-                Glide.with(context).load(arrList[position].imgPath?.get(0)).into(holder.image)
+                Glide.with(context).load(picture).into(holder.image)
                 if(arrList[position].imgPath?.size == 1){
                     holder.itemView.multiple_img_icon.visibility=View.GONE
                 }else{

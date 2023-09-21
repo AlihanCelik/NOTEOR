@@ -368,7 +368,7 @@ class CreateNoteActivity : AppCompatActivity() {
                 R.layout.bottom_sheet_note,
                 findViewById(R.id.bottomSheet)
             ) as ConstraintLayout
-            if (passwordBoolean) {
+            if (passwordBoolean || !password.isNullOrEmpty()) {
                 bottomSheetView.findViewById<ImageView>(R.id.locked).setImageDrawable(ContextCompat.getDrawable(this,R.drawable.unlocked))
             } else {
                 bottomSheetView.findViewById<ImageView>(R.id.locked).setImageDrawable(ContextCompat.getDrawable(this,R.drawable.locked))

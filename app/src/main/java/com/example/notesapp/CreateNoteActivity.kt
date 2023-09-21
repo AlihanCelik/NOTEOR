@@ -1077,7 +1077,7 @@ class CreateNoteActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode==PICK_IMAGES_CODE){
+
             if (data != null && data.clipData != null) {
 
                 val count = data.clipData!!.itemCount
@@ -1089,18 +1089,18 @@ class CreateNoteActivity : AppCompatActivity() {
 
                 }
 
-            }else{
-                val imageUri=data!!.data
+            }else if (data != null) {
+                val imageUri = data.data
                 if (imageUri != null) {
                     items.add(imageUri)
                     imageAdapter.notifyDataSetChanged()
                     layout_img_preview.visibility = View.VISIBLE
                 }
             }
-        }
-
 
     }
+
+
 
     private fun initAdapter() {
         imageAdapter = ImageAdapter(this, items,layout_img_preview)

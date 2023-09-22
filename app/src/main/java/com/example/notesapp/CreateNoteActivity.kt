@@ -5,30 +5,24 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
 import android.graphics.Typeface
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.widget.Toast
-import androidx.constraintlayout.widget.ConstraintLayout
-import com.example.notesapp.database.NotesDatabase
-import com.example.notesapp.entities.Notes
-import com.google.android.material.bottomsheet.BottomSheetDialog
-import kotlinx.android.synthetic.main.activity_create_note.*
-import java.text.SimpleDateFormat
-import java.util.*
-import kotlinx.coroutines.*
-import java.io.File
 import android.net.Uri
 import android.os.Build
+import android.os.Bundle
 import android.text.Editable
 import android.text.Spannable
-import android.text.SpannableStringBuilder
 import android.text.TextWatcher
+import android.text.style.CharacterStyle
+import android.text.style.StrikethroughSpan
 import android.text.style.StyleSpan
+import android.text.style.UnderlineSpan
+import android.view.LayoutInflater
+import android.view.View
 import android.view.WindowInsetsController
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
@@ -37,6 +31,13 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.notesapp.Adapter.ImageAdapter
 import com.example.notesapp.Adapter.LinksAdapter
+import com.example.notesapp.database.NotesDatabase
+import com.example.notesapp.entities.Notes
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import io.noties.markwon.Markwon
+import io.noties.markwon.editor.MarkwonEditor
+import io.noties.markwon.editor.MarkwonEditorTextWatcher
+import kotlinx.android.synthetic.main.activity_create_note.*
 import kotlinx.android.synthetic.main.createactivty_permi_dialog.view.*
 import kotlinx.android.synthetic.main.dialog_url.view.*
 import kotlinx.android.synthetic.main.font_dialog.view.*
@@ -44,6 +45,11 @@ import kotlinx.android.synthetic.main.item_notes.view.*
 import kotlinx.android.synthetic.main.locked_dialog.view.*
 import kotlinx.android.synthetic.main.password_remove_dialog.view.*
 import kotlinx.android.synthetic.main.record_voice_dialog.view.*
+import kotlinx.coroutines.*
+import java.io.File
+import java.text.SimpleDateFormat
+import java.util.*
+import java.util.concurrent.Executors
 
 class CreateNoteActivity : AppCompatActivity() {
     var currentDate:String? = null
@@ -54,6 +60,8 @@ class CreateNoteActivity : AppCompatActivity() {
     var picLay=true
     var linkLay=true
     var textBold=false
+    var textItalic=false
+    var textUnderline=false
     var password=""
     var passwordBoolean=false
     var PICK_IMAGES_CODE = 1
@@ -779,35 +787,40 @@ class CreateNoteActivity : AppCompatActivity() {
                     } else {
                         view.font_bold_btn.setColorFilter(resources.getColor(R.color.darkGrey))
                     }
+                    if (textItalic) {
+                        view.font_italic_btn.setColorFilter(resources.getColor(R.color.blue1))
+                    } else {
+                        view.font_italic_btn.setColorFilter(resources.getColor(R.color.darkGrey))
+                    }
                     view.font_bold_btn.setOnClickListener {
-                        var currentText = notes_desc.text.toString()
-
                         if (textBold) {
-                            val spannable = SpannableStringBuilder(currentText)
-                            var selectionStart = notes_desc.text.toString().length
-                            var selectionEnd = notes_desc.selectionEnd
-                            spannable.setSpan(
-                                StyleSpan(Typeface.NORMAL),
-                                selectionStart,
-                                selectionEnd,
-                                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-                            )
                             view.font_bold_btn.setColorFilter(resources.getColor(R.color.darkGrey))
-                            textBold = !textBold
-                            notes_desc.text = spannable
+                            textBold = false
+
                         } else {
-                            var selectionStart = notes_desc.text.toString().length
-                            var selectionEnd = notes_desc.selectionEnd
-                            val spannable = SpannableStringBuilder(currentText)
-                            spannable.setSpan(
-                                StyleSpan(Typeface.BOLD),
-                                selectionStart,
-                                selectionEnd,
-                                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-                            )
                             view.font_bold_btn.setColorFilter(resources.getColor(R.color.blue1))
-                            textBold = !textBold
-                            notes_desc.text = spannable
+                            textBold = true
+                        }
+
+                    }
+                    view.font_underline_btn.setOnClickListener {
+                        if (textUnderline) {
+                            view.font_underline_btn.setColorFilter(resources.getColor(R.color.darkGrey))
+                            textUnderline = false
+
+                        } else {
+                            view.font_underline_btn.setColorFilter(resources.getColor(R.color.blue1))
+                            textUnderline = true
+                        }
+                    }
+                    view.font_italic_btn.setOnClickListener {
+                        if (textItalic) {
+                            view.font_italic_btn.setColorFilter(resources.getColor(R.color.darkGrey))
+                            textItalic = false
+
+                        } else {
+                            view.font_italic_btn.setColorFilter(resources.getColor(R.color.blue1))
+                            textItalic = true
                         }
                     }
                     view.font1_btn.setOnClickListener {
@@ -933,6 +946,7 @@ class CreateNoteActivity : AppCompatActivity() {
         initAdapter()
 
     }
+
 
     private suspend fun isDifferent(): Boolean = coroutineScope {
         val notes = async(Dispatchers.IO) {

@@ -11,7 +11,7 @@
     <LinearLayout
         android:id="@+id/ll"
         android:layout_width="match_parent"
-        android:layout_height="320dp"
+        android:layout_height="340dp"
         android:layout_marginTop="50dp"
         android:layout_marginBottom="50dp"
         android:background="@drawable/bg_linear_layout"
@@ -130,13 +130,14 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
             android:layout_marginTop="10dp"
+            android:layout_marginBottom="5dp"
         android:background="#2794959A">
         </View>
 
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="196dp"
-            android:layout_marginTop="3dp">
+            android:layout_marginTop="5dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -155,8 +156,9 @@
                     <LinearLayout
 
                         android:id="@+id/font1_btn"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:background="@drawable/bg_background_frame">
 
                         <TextView
@@ -169,6 +171,7 @@
                             android:paddingRight="18dp"
                             android:text="@string/appName"
                             android:textColor="@color/darkGrey"
+                            android:textSize="15dp"
                             android:textStyle="bold">
 
                         </TextView>
@@ -176,8 +179,9 @@
 
                     <LinearLayout
                         android:id="@+id/font2_btn"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:layout_marginLeft="10dp"
                         android:background="@drawable/bg_background_frame">
 
@@ -190,6 +194,7 @@
                             android:paddingLeft="18dp"
                             android:paddingRight="18dp"
                             android:text="@string/appName"
+                            android:textSize="15dp"
                             android:textColor="@color/darkGrey"
                             android:textStyle="bold">
 
@@ -198,8 +203,9 @@
 
                     <LinearLayout
                         android:id="@+id/font3_btn"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:layout_marginLeft="10dp"
                         android:background="@drawable/bg_background_frame">
 
@@ -212,6 +218,7 @@
                             android:paddingLeft="18dp"
                             android:paddingRight="18dp"
                             android:text="@string/appName"
+                            android:textSize="17dp"
                             android:textColor="@color/darkGrey"
                             android:textStyle="bold">
 
@@ -229,8 +236,9 @@
 
                     <LinearLayout
                         android:id="@+id/font4_btn"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:background="@drawable/bg_background_frame"
                         android:fontFamily="@font/font4">
 
@@ -243,7 +251,7 @@
                             android:paddingRight="18dp"
                             android:fontFamily="@font/font4"
                             android:text="@string/appName"
-                            android:textSize="15dp"
+                            android:textSize="17dp"
                             android:textColor="@color/darkGrey"
                             android:textStyle="bold">
 
@@ -252,8 +260,9 @@
 
                     <LinearLayout
                         android:id="@+id/font5_btn"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:layout_marginLeft="10dp"
                         android:background="@drawable/bg_background_frame">
 
@@ -265,6 +274,7 @@
                             android:gravity="center"
                             android:paddingLeft="21dp"
                             android:paddingRight="21dp"
+                            android:textSize="17dp"
                             android:text="@string/appName"
                             android:textColor="@color/darkGrey"
                             android:textStyle="bold">
@@ -274,8 +284,9 @@
 
                     <LinearLayout
                         android:id="@+id/font6_btn"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:layout_marginLeft="10dp"
                         android:background="@drawable/bg_background_frame">
 
@@ -287,6 +298,7 @@
                             android:gravity="center"
                             android:paddingLeft="14dp"
                             android:paddingRight="14dp"
+                            android:textSize="17dp"
                             android:text="@string/appName"
                             android:textColor="@color/darkGrey"
                             android:textStyle="bold">
@@ -305,8 +317,9 @@
 
                     <LinearLayout
                         android:id="@+id/font7_btn"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:background="@drawable/bg_background_frame">
 
                         <TextView
@@ -319,7 +332,7 @@
                             android:paddingRight="24dp"
                             android:text="@string/appName"
                             android:textColor="@color/darkGrey"
-                            android:textSize="18dp"
+                            android:textSize="20dp"
                             android:textStyle="bold">
 
                         </TextView>
@@ -327,8 +340,9 @@
 
                     <LinearLayout
                         android:id="@+id/font8_btn"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:layout_marginLeft="10dp"
                         android:background="@drawable/bg_background_frame">
 
@@ -340,6 +354,7 @@
                             android:gravity="center"
                             android:paddingLeft="19dp"
                             android:paddingRight="19dp"
+                            android:textSize="20dp"
                             android:text="@string/appName"
                             android:textColor="@color/darkGrey"
                             android:textStyle="bold">
@@ -349,8 +364,9 @@
 
                     <LinearLayout
                         android:id="@+id/font9_btn"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:layout_marginLeft="10dp"
                         android:background="@drawable/bg_background_frame">
 
@@ -363,6 +379,7 @@
                             android:paddingLeft="18dp"
                             android:paddingRight="18dp"
                             android:text="@string/appName"
+                            android:textSize="17dp"
                             android:textColor="@color/darkGrey"
                             android:textStyle="bold">
 
@@ -380,8 +397,9 @@
 
                     <LinearLayout
                         android:id="@+id/font10_btn"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:background="@drawable/bg_background_frame">
 
                         <TextView
@@ -393,6 +411,7 @@
                             android:paddingLeft="12dp"
                             android:paddingRight="12dp"
                             android:text="@string/appName"
+                            android:textSize="15dp"
                             android:textColor="@color/darkGrey"
                             android:textStyle="bold">
 
@@ -401,8 +420,9 @@
 
                     <LinearLayout
                         android:id="@+id/font11_btn"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:layout_marginLeft="10dp"
                         android:background="@drawable/bg_background_frame">
 
@@ -415,6 +435,7 @@
                             android:paddingLeft="16dp"
                             android:paddingRight="16dp"
                             android:text="@string/appName"
+                            android:textSize="15dp"
                             android:textColor="@color/darkGrey"
                             android:textStyle="bold">
 
@@ -423,8 +444,9 @@
 
                     <LinearLayout
                         android:id="@+id/font12_btn"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:layout_marginLeft="10dp"
                         android:background="@drawable/bg_background_frame">
 
@@ -452,6 +474,7 @@
         android:id="@+id/view2"
         android:layout_width="match_parent"
         android:layout_height="1dp"
+            android:layout_marginTop="5dp"
         android:background="#2794959A">
 
         </View>

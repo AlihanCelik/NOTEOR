@@ -19,6 +19,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowInsetsController
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -40,6 +41,7 @@ import io.noties.markwon.editor.MarkwonEditorTextWatcher
 import kotlinx.android.synthetic.main.activity_create_note.*
 import kotlinx.android.synthetic.main.createactivty_permi_dialog.view.*
 import kotlinx.android.synthetic.main.dialog_url.view.*
+import kotlinx.android.synthetic.main.font_dialog.*
 import kotlinx.android.synthetic.main.font_dialog.view.*
 import kotlinx.android.synthetic.main.item_notes.view.*
 import kotlinx.android.synthetic.main.locked_dialog.view.*
@@ -66,6 +68,8 @@ class CreateNoteActivity : AppCompatActivity() {
     var passwordBoolean=false
     var PICK_IMAGES_CODE = 1
     var noteId=-1
+
+    var fontfamily="font1"
 
 
     private val PERMISSION_CODE = 1001
@@ -823,12 +827,27 @@ class CreateNoteActivity : AppCompatActivity() {
                             textItalic = true
                         }
                     }
+                    fun setBackgroundForFont(button: LinearLayout) {
+                        val allButtons = arrayOf(
+                            view.font1_btn, view.font2_btn, view.font3_btn, view.font4_btn,
+                            view.font5_btn, view.font6_btn, view.font7_btn, view.font8_btn,
+                            view.font9_btn, view.font10_btn, view.font11_btn, view.font12_btn
+                        )
+
+                        for (btn in allButtons) {
+                            btn.setBackgroundResource(R.drawable.bg_background_frame)
+                        }
+
+                        button.setBackgroundResource(R.drawable.bg_background_frame_click)
+                    }
                     view.font1_btn.setOnClickListener {
                         notes_desc.textSize = 17f
                         notes_desc.setTypeface(
                             ResourcesCompat.getFont(this, R.font.ralewaymedium),
                             Typeface.NORMAL
                         )
+                        fontfamily="font1"
+                        setBackgroundForFont(view.font1_btn)
                     }
                     view.font2_btn.setOnClickListener {
                         notes_desc.textSize = 17f
@@ -836,6 +855,8 @@ class CreateNoteActivity : AppCompatActivity() {
                             ResourcesCompat.getFont(this, R.font.font4),
                             Typeface.NORMAL
                         )
+                        fontfamily="font2"
+                        setBackgroundForFont(view.font2_btn)
                     }
                     view.font3_btn.setOnClickListener {
                         notes_desc.textSize = 17f
@@ -843,6 +864,8 @@ class CreateNoteActivity : AppCompatActivity() {
                             ResourcesCompat.getFont(this, R.font.font3),
                             Typeface.NORMAL
                         )
+                        fontfamily="font3"
+                        setBackgroundForFont(view.font3_btn)
                     }
                     view.font4_btn.setOnClickListener {
                         notes_desc.textSize = 17f
@@ -850,6 +873,8 @@ class CreateNoteActivity : AppCompatActivity() {
                             ResourcesCompat.getFont(this, R.font.font4),
                             Typeface.NORMAL
                         )
+                        fontfamily="font4"
+                        setBackgroundForFont(view.font4_btn)
                     }
                     view.font5_btn.setOnClickListener {
                         notes_desc.textSize = 20f
@@ -857,6 +882,8 @@ class CreateNoteActivity : AppCompatActivity() {
                             ResourcesCompat.getFont(this, R.font.font5),
                             Typeface.NORMAL
                         )
+                        fontfamily="font5"
+                        setBackgroundForFont(view.font5_btn)
                     }
                     view.font6_btn.setOnClickListener {
                         notes_desc.textSize = 22f
@@ -864,6 +891,8 @@ class CreateNoteActivity : AppCompatActivity() {
                             ResourcesCompat.getFont(this, R.font.font6),
                             Typeface.NORMAL
                         )
+                        fontfamily="font6"
+                        setBackgroundForFont(view.font6_btn)
                     }
                     view.font7_btn.setOnClickListener {
                         notes_desc.textSize = 22f
@@ -871,6 +900,8 @@ class CreateNoteActivity : AppCompatActivity() {
                             ResourcesCompat.getFont(this, R.font.font7),
                             Typeface.NORMAL
                         )
+                        fontfamily="font7"
+                        setBackgroundForFont(view.font7_btn)
                     }
                     view.font8_btn.setOnClickListener {
                         notes_desc.textSize = 22f
@@ -878,6 +909,8 @@ class CreateNoteActivity : AppCompatActivity() {
                             ResourcesCompat.getFont(this, R.font.font8),
                             Typeface.NORMAL
                         )
+                        fontfamily="font8"
+                        setBackgroundForFont(view.font8_btn)
                     }
                     view.font9_btn.setOnClickListener {
                         notes_desc.textSize = 20f
@@ -885,6 +918,8 @@ class CreateNoteActivity : AppCompatActivity() {
                             ResourcesCompat.getFont(this, R.font.font9),
                             Typeface.NORMAL
                         )
+                        fontfamily="font9"
+                        setBackgroundForFont(view.font9_btn)
                     }
                     view.font10_btn.setOnClickListener {
                         notes_desc.textSize = 17f
@@ -892,6 +927,8 @@ class CreateNoteActivity : AppCompatActivity() {
                             ResourcesCompat.getFont(this, R.font.font10),
                             Typeface.NORMAL
                         )
+                        fontfamily="font10"
+                        setBackgroundForFont(view.font10_btn)
                     }
                     view.font11_btn.setOnClickListener {
                         notes_desc.textSize = 17f
@@ -899,6 +936,8 @@ class CreateNoteActivity : AppCompatActivity() {
                             ResourcesCompat.getFont(this, R.font.font11),
                             Typeface.NORMAL
                         )
+                        fontfamily="font11"
+                        setBackgroundForFont(view.font11_btn)
                     }
                     view.font12_btn.setOnClickListener {
                         notes_desc.textSize = 17f
@@ -906,9 +945,13 @@ class CreateNoteActivity : AppCompatActivity() {
                             ResourcesCompat.getFont(this, R.font.font12),
                             Typeface.NORMAL
                         )
+                        fontfamily="font12"
+                        setBackgroundForFont(view.font12_btn)
                     }
                     bottomSheet.dismiss()
+
                 }
+
 
 
             }
@@ -946,6 +989,7 @@ class CreateNoteActivity : AppCompatActivity() {
         initAdapter()
 
     }
+
 
 
     private suspend fun isDifferent(): Boolean = coroutineScope {

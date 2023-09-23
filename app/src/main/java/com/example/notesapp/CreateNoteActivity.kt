@@ -827,6 +827,7 @@ class CreateNoteActivity : AppCompatActivity() {
                             textItalic = true
                         }
                     }
+
                     fun setBackgroundForFont(button: LinearLayout) {
                         val allButtons = arrayOf(
                             view.font1_btn, view.font2_btn, view.font3_btn, view.font4_btn,
@@ -839,6 +840,21 @@ class CreateNoteActivity : AppCompatActivity() {
                         }
 
                         button.setBackgroundResource(R.drawable.bg_background_frame_click)
+                    }
+                    when(fontfamily){
+                        "font1"->setBackgroundForFont(view.font1_btn)
+                        "font2"->setBackgroundForFont(view.font2_btn)
+                        "font3"->setBackgroundForFont(view.font3_btn)
+                        "font4"->setBackgroundForFont(view.font4_btn)
+                        "font5"->setBackgroundForFont(view.font5_btn)
+                        "font6"->setBackgroundForFont(view.font6_btn)
+                        "font7"->setBackgroundForFont(view.font7_btn)
+                        "font8"->setBackgroundForFont(view.font8_btn)
+                        "font9"->setBackgroundForFont(view.font9_btn)
+                        "font10"->setBackgroundForFont(view.font10_btn)
+                        "font11"->setBackgroundForFont(view.font11_btn)
+                        "font12"->setBackgroundForFont(view.font12_btn)
+
                     }
                     view.font1_btn.setOnClickListener {
                         notes_desc.textSize = 17f
@@ -948,6 +964,7 @@ class CreateNoteActivity : AppCompatActivity() {
                         fontfamily="font12"
                         setBackgroundForFont(view.font12_btn)
                     }
+
                     bottomSheet.dismiss()
 
                 }
@@ -989,9 +1006,6 @@ class CreateNoteActivity : AppCompatActivity() {
         initAdapter()
 
     }
-
-
-
     private suspend fun isDifferent(): Boolean = coroutineScope {
         val notes = async(Dispatchers.IO) {
             NotesDatabase.getDatabase(this@CreateNoteActivity).noteDao().getSpecificNote(noteId)

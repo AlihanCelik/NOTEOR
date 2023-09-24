@@ -35,9 +35,15 @@ import com.example.notesapp.Adapter.LinksAdapter
 import com.example.notesapp.database.NotesDatabase
 import com.example.notesapp.entities.Notes
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.yahiaangelo.markdownedittext.MarkdownEditText
+import com.yahiaangelo.markdownedittext.MarkdownStylesBar
+import io.noties.markwon.AbstractMarkwonPlugin
 import io.noties.markwon.Markwon
+import io.noties.markwon.MarkwonVisitor
 import io.noties.markwon.editor.MarkwonEditor
 import io.noties.markwon.editor.MarkwonEditorTextWatcher
+import io.noties.markwon.ext.strikethrough.StrikethroughPlugin
+import io.noties.markwon.ext.tasklist.TaskListPlugin
 import kotlinx.android.synthetic.main.activity_create_note.*
 import kotlinx.android.synthetic.main.createactivty_permi_dialog.view.*
 import kotlinx.android.synthetic.main.dialog_url.view.*
@@ -48,6 +54,7 @@ import kotlinx.android.synthetic.main.locked_dialog.view.*
 import kotlinx.android.synthetic.main.password_remove_dialog.view.*
 import kotlinx.android.synthetic.main.record_voice_dialog.view.*
 import kotlinx.coroutines.*
+import org.commonmark.node.SoftLineBreak
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
@@ -120,6 +127,10 @@ class CreateNoteActivity : AppCompatActivity() {
         recyclerViewLink.layoutManager= StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
 
         noteId = intent.getIntExtra("itemid",-1)
+        stylesbar.stylesList = arrayOf(MarkdownEditText.TextStyle.BOLD, MarkdownEditText.TextStyle.ITALIC,
+            MarkdownEditText.TextStyle.UNORDERED_LIST,
+            MarkdownEditText.TextStyle.ORDERED_LIST,MarkdownEditText.TextStyle.STRIKE,MarkdownEditText.TextStyle.QUOTE,MarkdownEditText.TextStyle.TASKS_LIST)
+        notes_desc.setStylesBar(stylesbar)
 
 
         if(noteId!=-1){
@@ -145,7 +156,14 @@ class CreateNoteActivity : AppCompatActivity() {
                     password= notes.password.toString()
                     notes_title.setText(notes.title)
                     notes_sub_title.setText(notes.subTitle)
-                    notes_desc.setText(notes.noteText)
+                    var markwon=Markwon.builder(this@CreateNoteActivity).usePlugin(StrikethroughPlugin.create())
+                        .usePlugin(TaskListPlugin.create(this@CreateNoteActivity)).usePlugin(object :AbstractMarkwonPlugin(){
+                            override fun configureVisitor(builder: MarkwonVisitor.Builder) {
+                                super.configureVisitor(builder)
+                                builder.on(SoftLineBreak::class.java){visitor,_,-> visitor.forceNewLine()}
+                            }
+                        }).build()
+                    markwon.setMarkdown(notes_desc,notes.noteText!!)
                     when (notes.color) {
                         "blue" -> {
                             color = "blue"
@@ -786,47 +804,6 @@ class CreateNoteActivity : AppCompatActivity() {
                     view.okeyFont.setOnClickListener {
                         dialog.dismiss()
                     }
-                    if (textBold) {
-                        view.font_bold_btn.setColorFilter(resources.getColor(R.color.blue1))
-                    } else {
-                        view.font_bold_btn.setColorFilter(resources.getColor(R.color.darkGrey))
-                    }
-                    if (textItalic) {
-                        view.font_italic_btn.setColorFilter(resources.getColor(R.color.blue1))
-                    } else {
-                        view.font_italic_btn.setColorFilter(resources.getColor(R.color.darkGrey))
-                    }
-                    view.font_bold_btn.setOnClickListener {
-                        if (textBold) {
-                            view.font_bold_btn.setColorFilter(resources.getColor(R.color.darkGrey))
-                            textBold = false
-
-                        } else {
-                            view.font_bold_btn.setColorFilter(resources.getColor(R.color.blue1))
-                            textBold = true
-                        }
-
-                    }
-                    view.font_underline_btn.setOnClickListener {
-                        if (textUnderline) {
-                            view.font_underline_btn.setColorFilter(resources.getColor(R.color.darkGrey))
-                            textUnderline = false
-
-                        } else {
-                            view.font_underline_btn.setColorFilter(resources.getColor(R.color.blue1))
-                            textUnderline = true
-                        }
-                    }
-                    view.font_italic_btn.setOnClickListener {
-                        if (textItalic) {
-                            view.font_italic_btn.setColorFilter(resources.getColor(R.color.darkGrey))
-                            textItalic = false
-
-                        } else {
-                            view.font_italic_btn.setColorFilter(resources.getColor(R.color.blue1))
-                            textItalic = true
-                        }
-                    }
 
                     fun setBackgroundForFont(button: LinearLayout) {
                         val allButtons = arrayOf(
@@ -1100,7 +1077,7 @@ class CreateNoteActivity : AppCompatActivity() {
                         var notes = NotesDatabase.getDatabase(it).noteDao().getSpecificNote(noteId)
                         notes.title=notes_title.text.toString()
                         notes.subTitle=notes_sub_title.text.toString()
-                        notes.noteText=notes_desc.text.toString()
+                        notes.noteText=notes_desc.getMD()
                         notes.dateTime=currentDate
                         notes.color=color
                         notes.imgPath=items
@@ -1120,7 +1097,7 @@ class CreateNoteActivity : AppCompatActivity() {
                     var notes = Notes()
                     notes.title=notes_title.text.toString()
                     notes.subTitle=notes_sub_title.text.toString()
-                    notes.noteText=notes_desc.text.toString()
+                    notes.noteText=notes_desc.getMD()
                     notes.dateTime=currentDate
                     notes.color=color
                     notes.imgPath=items

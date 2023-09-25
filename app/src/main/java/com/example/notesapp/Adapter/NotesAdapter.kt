@@ -637,7 +637,7 @@ class NotesAdapter(val frag:Int) :
         }
 
         holder.itemView.item_title.text = arrList[position].title
-        holder.markwon.setMarkdown(holder.itemView.item_desc,arrList[position].noteText!!)
+        holder.itemView.item_desc.text=arrList[position].title
         holder.itemView.item_date.text = arrList[position].dateTime
 
 
@@ -647,13 +647,7 @@ class NotesAdapter(val frag:Int) :
 
     class NotesViewHolder(view:View) : RecyclerView.ViewHolder(view){
         var image: ImageView = itemView.findViewById(R.id.item_img)
-        val markwon = Markwon.builder(itemView.context).usePlugin(StrikethroughPlugin.create())
-            .usePlugin(TaskListPlugin.create(itemView.context)).usePlugin(object : AbstractMarkwonPlugin(){
-                override fun configureVisitor(builder: MarkwonVisitor.Builder) {
-                    super.configureVisitor(builder)
-                    builder.on(SoftLineBreak::class.java){ visitor, _,->visitor.forceNewLine()}
-                }
-            }).build()
+
     }
 
 

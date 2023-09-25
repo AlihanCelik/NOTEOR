@@ -38,7 +38,6 @@ class CalendarFragment : Fragment() , CalendarAdapter.onItemClickListener{
     var arrNotes = ArrayList<Notes>()
     var notesAdapter: NotesAdapter= NotesAdapter(1)
 
-    val s = SimpleDateFormat("dd/M/yyyy", Locale.getDefault())
     var date_time=""
 
     private val sdf = SimpleDateFormat("MMMM yyyy", Locale.ENGLISH)

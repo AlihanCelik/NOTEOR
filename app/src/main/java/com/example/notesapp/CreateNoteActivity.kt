@@ -9,14 +9,9 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.text.*
-import android.text.style.CharacterStyle
-import android.text.style.StrikethroughSpan
-import android.text.style.StyleSpan
-import android.text.style.UnderlineSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowInsetsController
-import android.widget.EdgeEffect
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Toast
@@ -34,30 +29,20 @@ import com.example.notesapp.Adapter.LinksAdapter
 import com.example.notesapp.database.NotesDatabase
 import com.example.notesapp.entities.Notes
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.yahiaangelo.markdownedittext.MarkdownEditText
-import com.yahiaangelo.markdownedittext.MarkdownStylesBar
-import io.noties.markwon.AbstractMarkwonPlugin
-import io.noties.markwon.Markwon
-import io.noties.markwon.MarkwonVisitor
-import io.noties.markwon.editor.MarkwonEditor
-import io.noties.markwon.editor.MarkwonEditorTextWatcher
-import io.noties.markwon.ext.strikethrough.StrikethroughPlugin
-import io.noties.markwon.ext.tasklist.TaskListPlugin
 import kotlinx.android.synthetic.main.activity_create_note.*
 import kotlinx.android.synthetic.main.createactivty_permi_dialog.view.*
 import kotlinx.android.synthetic.main.dialog_url.view.*
 import kotlinx.android.synthetic.main.font_dialog.*
 import kotlinx.android.synthetic.main.font_dialog.view.*
+import kotlinx.android.synthetic.main.fragment_calendar.*
 import kotlinx.android.synthetic.main.item_notes.view.*
 import kotlinx.android.synthetic.main.locked_dialog.view.*
 import kotlinx.android.synthetic.main.password_remove_dialog.view.*
 import kotlinx.android.synthetic.main.record_voice_dialog.view.*
 import kotlinx.coroutines.*
-import org.commonmark.node.SoftLineBreak
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
-import java.util.concurrent.Executors
 
 class CreateNoteActivity : AppCompatActivity() {
     var currentDate:String? = null
@@ -102,7 +87,7 @@ class CreateNoteActivity : AppCompatActivity() {
         val moonRed=resources.getColor(R.color.moonRed)
         val moonYellow=resources.getColor(R.color.moonYellow)
         val moonOrange=resources.getColor(R.color.moonOrange)
-        val sdf =SimpleDateFormat("dd/M/yyyy hh:mm:ss")
+        val sdf =SimpleDateFormat("yyyy-MM-dd HH:mm")
 
         val backgroundYellow=resources.getColor(R.color.background_yellow)
         val backgroundRed=resources.getColor(R.color.background_red)
@@ -1070,7 +1055,7 @@ class CreateNoteActivity : AppCompatActivity() {
                         var notes = NotesDatabase.getDatabase(it).noteDao().getSpecificNote(noteId)
                         notes.title=notes_title.text.toString()
                         notes.subTitle=notes_sub_title.text.toString()
-                        notes.noteText=notes_desc.getMD()
+                        notes.noteText=notes_desc.text.toString()
                         notes.dateTime=currentDate
                         notes.color=color
                         notes.imgPath=items
@@ -1090,7 +1075,7 @@ class CreateNoteActivity : AppCompatActivity() {
                     var notes = Notes()
                     notes.title=notes_title.text.toString()
                     notes.subTitle=notes_sub_title.text.toString()
-                    notes.noteText=notes_desc.getMD()
+                    notes.noteText=notes_desc.text.toString()
                     notes.dateTime=currentDate
                     notes.color=color
                     notes.imgPath=items

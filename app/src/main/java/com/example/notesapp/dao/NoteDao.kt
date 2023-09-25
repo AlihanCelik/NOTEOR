@@ -25,6 +25,6 @@ interface NoteDao {
     @Update
     suspend fun updateNote(note:Notes)
 
-    @Query("SELECT * FROM notes ORDER BY strftime('%d/%m/%Y %H:%M:%S', date_time) DESC")
+    @Query("SELECT * FROM notes ORDER BY date_time ASC")
     suspend fun getAllNotesSortedByDate(): List<Notes>
 }

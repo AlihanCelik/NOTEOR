@@ -5,11 +5,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.SearchView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.notesapp.Adapter.NotesAdapter
 import com.example.notesapp.database.NotesDatabase
 import com.example.notesapp.entities.Notes
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.android.synthetic.main.fragment_note.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -21,6 +24,7 @@ import kotlin.collections.ArrayList
 class NoteFragment : Fragment() {
     var arrNotes = ArrayList<Notes>()
     var notesAdapter: NotesAdapter = NotesAdapter(0)
+    var sortType="modifiedTime"
 
     override fun onResume() {
         super.onResume()
@@ -58,6 +62,35 @@ class NoteFragment : Fragment() {
                 recycler_view.adapter = notesAdapter
             }
 
+        }
+        sortButton.setOnClickListener {
+            val bottomSheet =
+                BottomSheetDialog(requireContext(), R.style.BottomSheetDialogTheme)
+            val bottomSheetView = LayoutInflater.from(context).inflate(
+                R.layout.bottom_sheet_short,null
+            ) as ConstraintLayout
+            if(sortType=="modifiedTime"){
+                bottomSheetView.findViewById<View>(R.id.modifed_done).visibility=View.VISIBLE
+                bottomSheetView.findViewById<View>(R.id.created_done).visibility=View.GONE
+            }else{
+                bottomSheetView.findViewById<View>(R.id.modifed_done).visibility=View.GONE
+                bottomSheetView.findViewById<View>(R.id.created_done).visibility=View.VISIBLE
+            }
+
+            bottomSheetView.findViewById<LinearLayout>(R.id.modified_sort).setOnClickListener {
+                sortType="modifiedTime"
+                bottomSheetView.findViewById<View>(R.id.modifed_done).visibility=View.VISIBLE
+                bottomSheetView.findViewById<View>(R.id.created_done).visibility=View.GONE
+
+            }
+            bottomSheetView.findViewById<LinearLayout>(R.id.created_sort).setOnClickListener {
+                sortType="createdTime"
+                bottomSheetView.findViewById<View>(R.id.modifed_done).visibility=View.GONE
+                bottomSheetView.findViewById<View>(R.id.created_done).visibility=View.VISIBLE
+
+            }
+            bottomSheet.setContentView(bottomSheetView)
+            bottomSheet.show()
         }
 
         search.setOnQueryTextListener( object : SearchView.OnQueryTextListener{

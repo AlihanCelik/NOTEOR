@@ -36,6 +36,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:queryBackground="@android:color/transparent" />
         <ImageView
+            android:id="@+id/sortButton"
             android:layout_gravity="center"
             android:layout_width="27dp"
             android:layout_height="27dp"

@@ -21,6 +21,11 @@ import com.example.notesapp.database.NotesDatabase
 import com.example.notesapp.database.TrashDatabase
 import com.example.notesapp.entities.Notes
 import com.example.notesapp.entities.Trash
+import io.noties.markwon.AbstractMarkwonPlugin
+import io.noties.markwon.Markwon
+import io.noties.markwon.MarkwonVisitor
+import io.noties.markwon.ext.strikethrough.StrikethroughPlugin
+import io.noties.markwon.ext.tasklist.TaskListPlugin
 import kotlinx.android.synthetic.main.activity_create_note.*
 import kotlinx.android.synthetic.main.createactivty_permi_dialog.view.*
 import kotlinx.android.synthetic.main.delete_permi_dialog.view.*
@@ -30,6 +35,7 @@ import kotlinx.android.synthetic.main.locked_dialog.view.*
 import kotlinx.android.synthetic.main.notelongclick_dialog.view.*
 import kotlinx.android.synthetic.main.password_remove_dialog.view.*
 import kotlinx.coroutines.*
+import org.commonmark.node.SoftLineBreak
 
 class NotesAdapter(val frag:Int) :
     RecyclerView.Adapter<NotesAdapter.NotesViewHolder>() {
@@ -629,8 +635,9 @@ class NotesAdapter(val frag:Int) :
             "orange" -> holder.itemView.item_color.setBackgroundColor(ContextCompat.getColor(context, R.color.moonOrange))
 
         }
+
         holder.itemView.item_title.text = arrList[position].title
-        holder.itemView.item_desc.text = arrList[position].noteText
+        holder.markwon.setMarkdown(holder.itemView.item_desc,arrList[position].noteText!!)
         holder.itemView.item_date.text = arrList[position].dateTime
 
 
@@ -640,6 +647,13 @@ class NotesAdapter(val frag:Int) :
 
     class NotesViewHolder(view:View) : RecyclerView.ViewHolder(view){
         var image: ImageView = itemView.findViewById(R.id.item_img)
+        val markwon = Markwon.builder(itemView.context).usePlugin(StrikethroughPlugin.create())
+            .usePlugin(TaskListPlugin.create(itemView.context)).usePlugin(object : AbstractMarkwonPlugin(){
+                override fun configureVisitor(builder: MarkwonVisitor.Builder) {
+                    super.configureVisitor(builder)
+                    builder.on(SoftLineBreak::class.java){ visitor, _,->visitor.forceNewLine()}
+                }
+            }).build()
     }
 
 

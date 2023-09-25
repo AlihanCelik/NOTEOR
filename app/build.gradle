@@ -81,7 +81,6 @@ dependencies {
     implementation "io.noties.markwon:ext-tasklist:4.6.2"
     implementation "me.saket:better-link-movement-method:2.2.0"
 
-    implementation "io.github.yahiaangelo.markdownedittext:markdownedittext:1.1.3"
 
 
 

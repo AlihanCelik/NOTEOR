@@ -8,9 +8,7 @@ import android.graphics.Typeface
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.text.Editable
-import android.text.Spannable
-import android.text.TextWatcher
+import android.text.*
 import android.text.style.CharacterStyle
 import android.text.style.StrikethroughSpan
 import android.text.style.StyleSpan
@@ -18,6 +16,7 @@ import android.text.style.UnderlineSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowInsetsController
+import android.widget.EdgeEffect
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Toast
@@ -127,10 +126,6 @@ class CreateNoteActivity : AppCompatActivity() {
         recyclerViewLink.layoutManager= StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
 
         noteId = intent.getIntExtra("itemid",-1)
-        stylesbar.stylesList = arrayOf(MarkdownEditText.TextStyle.BOLD, MarkdownEditText.TextStyle.ITALIC,
-            MarkdownEditText.TextStyle.UNORDERED_LIST,
-            MarkdownEditText.TextStyle.ORDERED_LIST,MarkdownEditText.TextStyle.STRIKE,MarkdownEditText.TextStyle.QUOTE,MarkdownEditText.TextStyle.TASKS_LIST)
-        notes_desc.setStylesBar(stylesbar)
 
 
         if(noteId!=-1){
@@ -156,14 +151,9 @@ class CreateNoteActivity : AppCompatActivity() {
                     password= notes.password.toString()
                     notes_title.setText(notes.title)
                     notes_sub_title.setText(notes.subTitle)
-                    var markwon=Markwon.builder(this@CreateNoteActivity).usePlugin(StrikethroughPlugin.create())
-                        .usePlugin(TaskListPlugin.create(this@CreateNoteActivity)).usePlugin(object :AbstractMarkwonPlugin(){
-                            override fun configureVisitor(builder: MarkwonVisitor.Builder) {
-                                super.configureVisitor(builder)
-                                builder.on(SoftLineBreak::class.java){visitor,_,-> visitor.forceNewLine()}
-                            }
-                        }).build()
-                    markwon.setMarkdown(notes_desc,notes.noteText!!)
+                    notes_desc.setText(notes.noteText)
+
+
                     when (notes.color) {
                         "blue" -> {
                             color = "blue"
@@ -953,6 +943,8 @@ class CreateNoteActivity : AppCompatActivity() {
             bottomSheet.show()
         }
 
+
+
         pictures_layout.setOnClickListener {
             if(picLay){
                 picLay=false
@@ -983,6 +975,7 @@ class CreateNoteActivity : AppCompatActivity() {
         initAdapter()
 
     }
+
     private suspend fun isDifferent(): Boolean = coroutineScope {
         val notes = async(Dispatchers.IO) {
             NotesDatabase.getDatabase(this@CreateNoteActivity).noteDao().getSpecificNote(noteId)

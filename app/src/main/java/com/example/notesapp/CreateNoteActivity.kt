@@ -366,7 +366,6 @@ class CreateNoteActivity : AppCompatActivity() {
         }
 
         more.setOnClickListener {
-
             val bottomSheet =
                 BottomSheetDialog(this@CreateNoteActivity, R.style.BottomSheetDialogTheme)
             val bottomSheetView = LayoutInflater.from(applicationContext).inflate(

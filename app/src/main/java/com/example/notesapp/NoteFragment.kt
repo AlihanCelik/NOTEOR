@@ -81,12 +81,14 @@ class NoteFragment : Fragment() {
                 sortType="modifiedTime"
                 bottomSheetView.findViewById<View>(R.id.modifed_done).visibility=View.VISIBLE
                 bottomSheetView.findViewById<View>(R.id.created_done).visibility=View.GONE
+                updateRecyclerView()
 
             }
             bottomSheetView.findViewById<LinearLayout>(R.id.created_sort).setOnClickListener {
                 sortType="createdTime"
                 bottomSheetView.findViewById<View>(R.id.modifed_done).visibility=View.GONE
                 bottomSheetView.findViewById<View>(R.id.created_done).visibility=View.VISIBLE
+                updateRecyclerView()
 
             }
             bottomSheet.setContentView(bottomSheetView)
@@ -117,13 +119,23 @@ class NoteFragment : Fragment() {
     }
 
     fun updateRecyclerView() {
-        GlobalScope.launch(Dispatchers.Main) {
-            context?.let {
-                var notes = NotesDatabase.getDatabase(it).noteDao().getAllNotesSortedByDate().asReversed()
-                notesAdapter.updateData(notes)
+        if(sortType=="modifiedTime"){
+            GlobalScope.launch(Dispatchers.Main) {
+                context?.let {
+                    var notes = NotesDatabase.getDatabase(it).noteDao().getAllNotesSortedByDate().asReversed()
+                    notesAdapter.updateData(notes)
+                }
+            }
+        }else{
+            GlobalScope.launch(Dispatchers.Main) {
+                context?.let {
+                    var notes = NotesDatabase.getDatabase(it).noteDao().getAllNotesCreatedSortedByDate().asReversed()
+                    notesAdapter.updateData(notes)
+                }
             }
         }
     }
+
 
 
 }

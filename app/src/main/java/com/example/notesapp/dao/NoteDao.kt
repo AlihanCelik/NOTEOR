@@ -27,4 +27,9 @@ interface NoteDao {
 
     @Query("SELECT * FROM notes ORDER BY date_time ASC")
     suspend fun getAllNotesSortedByDate(): List<Notes>
+
+    @Query("SELECT * FROM notes ORDER BY create_date_time ASC")
+    suspend fun getAllNotesCreatedSortedByDate(): List<Notes>
+
+
 }

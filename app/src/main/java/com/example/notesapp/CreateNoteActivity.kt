@@ -97,7 +97,7 @@ class CreateNoteActivity : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_note)
-        tvDateTime.text=currentDate
+
         items = arrayListOf()
         items_link= arrayListOf()
         recyclerView = findViewById(R.id.rv_recyclerView)
@@ -109,7 +109,7 @@ class CreateNoteActivity : AppCompatActivity() {
 
         noteId = intent.getIntExtra("itemid",-1)
 
-
+        tvDateTime.text=currentDate
         if(noteId!=-1){
             GlobalScope.launch(Dispatchers.Main){
                 let {
@@ -134,6 +134,7 @@ class CreateNoteActivity : AppCompatActivity() {
                     notes_title.setText(notes.title)
                     notes_sub_title.setText(notes.subTitle)
                     notes_desc.setText(notes.noteText)
+                    tvDateTime.text=notes.dateTime
 
 
                     when (notes.color) {
@@ -1061,6 +1062,7 @@ class CreateNoteActivity : AppCompatActivity() {
                         notes.password=password
                         NotesDatabase.getDatabase(it).noteDao().updateNote(notes)
                         setResult(Activity.RESULT_OK)
+                        tvDateTime.text=notes.dateTime
                         Toast.makeText(this@CreateNoteActivity, "Note is updated", Toast.LENGTH_SHORT).show()
                     }
 

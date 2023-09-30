@@ -1,5 +1,7 @@
 package com.example.notesapp
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -24,7 +26,8 @@ import kotlin.collections.ArrayList
 class NoteFragment : Fragment() {
     var arrNotes = ArrayList<Notes>()
     var notesAdapter: NotesAdapter = NotesAdapter(0)
-    var sortType="modifiedTime"
+    private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var sortType: String
 
     override fun onResume() {
         super.onResume()
@@ -35,11 +38,14 @@ class NoteFragment : Fragment() {
         fun newInstance(): NoteFragment {
             return NoteFragment()
         }
+        private const val SORT_TYPE_KEY = "sortType"
     }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        sharedPreferences = requireContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+        sortType = sharedPreferences.getString(SORT_TYPE_KEY, "modifiedTime") ?: "modifiedTime"
 
     }
 
@@ -78,17 +84,15 @@ class NoteFragment : Fragment() {
             }
 
             bottomSheetView.findViewById<LinearLayout>(R.id.modified_sort).setOnClickListener {
-                sortType="modifiedTime"
                 bottomSheetView.findViewById<View>(R.id.modifed_done).visibility=View.VISIBLE
                 bottomSheetView.findViewById<View>(R.id.created_done).visibility=View.GONE
-                updateRecyclerView()
+                updateSortType("modifiedTime")
 
             }
             bottomSheetView.findViewById<LinearLayout>(R.id.created_sort).setOnClickListener {
-                sortType="createdTime"
                 bottomSheetView.findViewById<View>(R.id.modifed_done).visibility=View.GONE
                 bottomSheetView.findViewById<View>(R.id.created_done).visibility=View.VISIBLE
-                updateRecyclerView()
+                updateSortType("createdTime")
 
             }
             bottomSheet.setContentView(bottomSheetView)
@@ -116,6 +120,11 @@ class NoteFragment : Fragment() {
             }
 
         })
+    }
+    fun updateSortType(newSortType: String) {
+        sortType = newSortType
+        sharedPreferences.edit().putString(SORT_TYPE_KEY, sortType).apply()
+        updateRecyclerView()
     }
 
     fun updateRecyclerView() {

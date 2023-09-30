@@ -913,20 +913,12 @@ class CreateNoteActivity : AppCompatActivity() {
                         fontfamily="font12"
                         setBackgroundForFont(view.font12_btn)
                     }
-
                     bottomSheet.dismiss()
-
                 }
-
-
-
             }
             bottomSheet.setContentView(bottomSheetView)
             bottomSheet.show()
         }
-
-
-
         pictures_layout.setOnClickListener {
             if(picLay){
                 picLay=false
@@ -937,9 +929,7 @@ class CreateNoteActivity : AppCompatActivity() {
                 rv_recyclerView.visibility=View.VISIBLE
                 pictures_updown.setImageResource(R.drawable.uparrow)
             }
-
         }
-
         link_layout.setOnClickListener {
             if(linkLay==true){
                 linkLay=false
@@ -950,10 +940,7 @@ class CreateNoteActivity : AppCompatActivity() {
                 links_recyclerView.visibility=View.VISIBLE
                 link_updown.setImageResource(R.drawable.uparrow)
             }
-
         }
-
-
         initAdapter()
 
     }
@@ -970,8 +957,6 @@ class CreateNoteActivity : AppCompatActivity() {
         val itemSubTitle = notes.await().subTitle.toString()
         val itemDesc = notes.await().noteText.toString()
         val itemColor=notes.await().color.toString()
-
-
         return@coroutineScope (fav != itemFav || !itemsEquals(itemPictures, items) || !itemsEquals(itemLinks, items_link)
                 || password != itemPsw || notes_title.text.toString() != itemTitle ||
                 notes_sub_title.text.toString() != itemSubTitle || notes_desc.text.toString() != itemDesc || color!=itemColor)
@@ -980,13 +965,11 @@ class CreateNoteActivity : AppCompatActivity() {
         if (list1.size != list2.size) {
             return false
         }
-
         for (i in list1.indices) {
             if (list1[i] != list2[i]) {
                 return false
             }
         }
-
         return true
     }
     private fun hasPermissions(): Boolean {
@@ -999,7 +982,6 @@ class CreateNoteActivity : AppCompatActivity() {
         }
         return true
     }
-
     private fun requestPermissions() {
         ActivityCompat.requestPermissions(
             this,
@@ -1007,7 +989,6 @@ class CreateNoteActivity : AppCompatActivity() {
             PERMISSION_CODE
         )
     }
-
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -1038,11 +1019,9 @@ class CreateNoteActivity : AppCompatActivity() {
         }
         else if(notes_sub_title.text.toString().isNullOrEmpty()){
             Toast.makeText(this,"Note Sub Title is Required",Toast.LENGTH_SHORT).show()
-
         }
         else if(notes_desc.text.toString().isNullOrEmpty()){
             Toast.makeText(this,"Note Description is Required",Toast.LENGTH_SHORT).show()
-
         }
         else{
             if(noteId!=-1){
@@ -1065,9 +1044,7 @@ class CreateNoteActivity : AppCompatActivity() {
                         tvDateTime.text=notes.dateTime
                         Toast.makeText(this@CreateNoteActivity, "Note is updated", Toast.LENGTH_SHORT).show()
                     }
-
                 }
-
             }else{
                 val coroutineScope = CoroutineScope(Dispatchers.Main)
                 coroutineScope.launch{
@@ -1082,7 +1059,6 @@ class CreateNoteActivity : AppCompatActivity() {
                     notes.webLink=items_link
                     notes.favorite=fav
                     notes.password=password
-
                     applicationContext?.let {
 
                         val insertedId = NotesDatabase.getDatabase(it).noteDao().insertNotes(notes)
@@ -1094,15 +1070,9 @@ class CreateNoteActivity : AppCompatActivity() {
 
                 }
             }
-
-
-
-
-
         }
 
     }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -1127,9 +1097,6 @@ class CreateNoteActivity : AppCompatActivity() {
             }
 
     }
-
-
-
     private fun initAdapter() {
         imageAdapter = ImageAdapter(this, items,layout_img_preview)
         val ll = GridLayoutManager(this, 2)
@@ -1142,9 +1109,6 @@ class CreateNoteActivity : AppCompatActivity() {
 
 
     }
-
-
-
 
 }
 

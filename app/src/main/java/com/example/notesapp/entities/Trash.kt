@@ -22,6 +22,9 @@ data class Trash(
     @ColumnInfo(name = "date_time_t")
     var dateTime_t: String? = null,
 
+    @ColumnInfo(name = "create_date_time_t")
+    var create_dateTime_t: String? = null,
+
     @ColumnInfo(name = "note_text_t")
     var noteText_t: String? = null,
 

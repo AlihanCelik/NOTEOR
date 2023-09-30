@@ -52,9 +52,6 @@ class CreateNoteActivity : AppCompatActivity() {
     var fav=false
     var picLay=true
     var linkLay=true
-    var textBold=false
-    var textItalic=false
-    var textUnderline=false
     var password=""
     var passwordBoolean=false
     var PICK_IMAGES_CODE = 1
@@ -1056,6 +1053,7 @@ class CreateNoteActivity : AppCompatActivity() {
                         notes.subTitle=notes_sub_title.text.toString()
                         notes.noteText=notes_desc.text.toString()
                         notes.dateTime=currentDate
+                        notes.create_dateTime=notes.create_dateTime
                         notes.color=color
                         notes.imgPath=items
                         notes.webLink=items_link
@@ -1076,6 +1074,7 @@ class CreateNoteActivity : AppCompatActivity() {
                     notes.subTitle=notes_sub_title.text.toString()
                     notes.noteText=notes_desc.text.toString()
                     notes.dateTime=currentDate
+                    notes.create_dateTime=currentDate
                     notes.color=color
                     notes.imgPath=items
                     notes.webLink=items_link

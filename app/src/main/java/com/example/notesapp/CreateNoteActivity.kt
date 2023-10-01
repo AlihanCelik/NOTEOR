@@ -136,7 +136,6 @@ class CreateNoteActivity : AppCompatActivity() {
                     notes_desc.setText(notes.noteText)
                     tvDateTime.text=notes.dateTime
 
-
                     when (notes.color) {
                         "blue" -> {
                             color = "blue"

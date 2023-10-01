@@ -26,8 +26,8 @@ import kotlin.collections.ArrayList
 class NoteFragment : Fragment() {
     var arrNotes = ArrayList<Notes>()
     var notesAdapter: NotesAdapter = NotesAdapter(0)
-    private lateinit var sharedPreferences: SharedPreferences
-    private lateinit var sortType: String
+    lateinit var sharedPreferences: SharedPreferences
+    lateinit var sortType: String
 
     override fun onResume() {
         super.onResume()
@@ -58,18 +58,25 @@ class NoteFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         recycler_view.setHasFixedSize(true)
-
         recycler_view.layoutManager=StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL)
-        GlobalScope.launch(Dispatchers.Main){
-            context?.let {
-                var notes = NotesDatabase.getDatabase(it).noteDao().getAllNotesSortedByDate().asReversed()
 
-                val arrNotes = notes.toMutableList()
-                notesAdapter!!.setData(arrNotes)
-                recycler_view.adapter = notesAdapter
+            GlobalScope.launch(Dispatchers.Main){
+                context?.let {
+                    var notes: List<Notes> = emptyList()
+                    if (sortType=="modifiedTime"){
+                        notes = NotesDatabase.getDatabase(it).noteDao().getAllNotesSortedByDate().asReversed()
+                    }else{
+                        notes = NotesDatabase.getDatabase(it).noteDao().getAllNotesCreatedSortedByDate().asReversed()
+                    }
+
+                    val arrNotes = notes.toMutableList()
+                    notesAdapter!!.setData(arrNotes)
+                    recycler_view.adapter = notesAdapter
+                }
+
             }
 
-        }
+
         sortButton.setOnClickListener {
             val bottomSheet =
                 BottomSheetDialog(requireContext(), R.style.BottomSheetDialogTheme)
@@ -122,6 +129,7 @@ class NoteFragment : Fragment() {
 
         })
     }
+
     fun updateSortType(newSortType: String) {
         sortType = newSortType
         sharedPreferences.edit().putString(SORT_TYPE_KEY, sortType).apply()

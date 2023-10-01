@@ -59,8 +59,7 @@ class NoteFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         recycler_view.setHasFixedSize(true)
         recycler_view.layoutManager=StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL)
-
-            GlobalScope.launch(Dispatchers.Main){
+        GlobalScope.launch(Dispatchers.Main){
                 context?.let {
                     var notes: List<Notes> = emptyList()
                     if (sortType=="modifiedTime"){

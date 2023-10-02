@@ -40,13 +40,10 @@ class NoteFragment : Fragment() {
         }
         private const val SORT_TYPE_KEY = "sortType"
     }
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         sharedPreferences = requireContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
         sortType = sharedPreferences.getString(SORT_TYPE_KEY, "modifiedTime") ?: "modifiedTime"
-
     }
 
     override fun onCreateView(

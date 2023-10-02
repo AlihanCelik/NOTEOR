@@ -29,7 +29,10 @@ class TrashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_trash)
         backButton.setOnClickListener {
-            NoteFragment().updateRecyclerView()
+            val fragment = supportFragmentManager.findFragmentByTag(NoteFragment::class.java.simpleName)
+            if (fragment is NoteFragment) {
+                fragment.updateRecyclerView()
+            }
             finish()
         }
         allTrashDelete.setOnClickListener {

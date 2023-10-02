@@ -639,7 +639,7 @@ class NotesAdapter(val frag:Int) :
         }
 
         holder.itemView.item_title.text = arrList[position].title
-        holder.itemView.item_desc.text=arrList[position].title
+        holder.itemView.item_desc.text=arrList[position].noteText
         holder.itemView.item_date.text = arrList[position].dateTime
 
 

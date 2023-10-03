@@ -59,7 +59,6 @@ class CreateNoteActivity : AppCompatActivity() {
 
     var fontfamily="font1"
 
-
     private val PERMISSION_CODE = 1001
     private val permissionId=14
     private var permissionList=

@@ -5,9 +5,13 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
 import android.graphics.Typeface
+import android.media.MediaPlayer
+import android.media.MediaRecorder
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.SystemClock
 import android.text.*
 import android.view.LayoutInflater
 import android.view.View
@@ -44,6 +48,12 @@ import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 
+import android.transition.TransitionManager
+import android.util.Log
+import android.widget.SeekBar
+import kotlinx.android.synthetic.main.record_voice_dialog.*
+import java.io.IOException
+
 class CreateNoteActivity : AppCompatActivity() {
     var currentDate:String? = null
     var getFile: File? = null
@@ -59,13 +69,20 @@ class CreateNoteActivity : AppCompatActivity() {
 
     var fontfamily="font1"
 
+    private var mRecorder: MediaRecorder? = null
+    private var mPlayer: MediaPlayer? = null
+    private var fileName: String? = null
+    private var lastProgress = 0
+    private val mHandler = Handler()
+    private var isPlaying = false
+
     private val PERMISSION_CODE = 1001
     private val permissionId=14
     private var permissionList=
         if(Build.VERSION.SDK_INT>=33) {
-            arrayListOf(android.Manifest.permission.READ_MEDIA_IMAGES)
+            arrayListOf(android.Manifest.permission.READ_MEDIA_IMAGES,android.Manifest.permission.RECORD_AUDIO)
         }else{
-            arrayListOf(android.Manifest.permission.READ_EXTERNAL_STORAGE,android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            arrayListOf(android.Manifest.permission.READ_EXTERNAL_STORAGE,android.Manifest.permission.WRITE_EXTERNAL_STORAGE,android.Manifest.permission.RECORD_AUDIO)
         }
 
     lateinit var items: MutableList<Uri>
@@ -756,6 +773,130 @@ class CreateNoteActivity : AppCompatActivity() {
                     view.okeyMic.setOnClickListener {
                         dialog.dismiss()
                     }
+                    view.imgBtRecord.setOnClickListener {
+                        if(hasPermissions()){
+                            TransitionManager.beginDelayedTransition(view.llRecorder)
+                            view.imgBtRecord.visibility = View.GONE
+                            view.imgBtStop.visibility = View.VISIBLE
+                            view.llPlay.visibility = View.GONE
+
+                            mRecorder = MediaRecorder()
+                            mRecorder!!.setAudioSource(MediaRecorder.AudioSource.MIC)
+                            mRecorder!!.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
+                            val root = android.os.Environment.getExternalStorageDirectory()
+                            val file = File(root.absolutePath + "/AndroidCodility/Audios")
+                            if (!file.exists()) {
+                                file.mkdirs()
+                            }
+
+                            fileName = root.absolutePath + "/AndroidCodility/Audios/" + (System.currentTimeMillis().toString() + ".mp3")
+                            mRecorder!!.setOutputFile(fileName)
+                            mRecorder!!.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB)
+
+                            try {
+                                mRecorder!!.prepare()
+                                mRecorder!!.start()
+                            } catch (e: IOException) {
+                                e.printStackTrace()
+                            }
+                            lastProgress = 0
+                            view.seekBar.progress = 0
+                            //stop
+                            try {
+                                mPlayer!!.release()
+                            } catch (e: Exception) {
+                                e.printStackTrace()
+                            }
+
+                            mPlayer = null
+                            //showing the play button
+                            view.imgViewPlay.setImageResource(R.drawable.play)
+                            view.chronometer.stop()
+                            // making the imageView a stop button starting the chronometer
+                            view.chronometer.base = SystemClock.elapsedRealtime()
+                            view.chronometer.start()
+                        }
+                        else {
+                            requestPermissions()
+                        }
+                    }
+                    view.imgBtStop.setOnClickListener {
+                        TransitionManager.beginDelayedTransition(view.llRecorder)
+                        view.imgBtRecord.visibility = View.VISIBLE
+                        view.imgBtStop.visibility = View.GONE
+                        view.llPlay.visibility = View.VISIBLE
+
+                        try {
+                            mRecorder!!.stop()
+
+                            mRecorder!!.release()
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
+                        mRecorder = null
+                        //starting the chronometer
+                        view.chronometer.stop()
+                        view.chronometer.base = SystemClock.elapsedRealtime()
+                        //showing the play button
+                        Toast.makeText(this, "Recording saved successfully.", Toast.LENGTH_SHORT).show()
+
+                    }
+                    view.imgViewPlay.setOnClickListener {
+                        if (!isPlaying && fileName != null) {
+                            isPlaying = true
+                            mPlayer = MediaPlayer()
+                            try {
+                                mPlayer!!.setDataSource(fileName)
+                                mPlayer!!.prepare()
+                                mPlayer!!.start()
+                            } catch (e: IOException) {
+                                Log.e("LOG_TAG", "prepare() failed")
+                            }
+
+                            //making the imageView pause button
+                            view.imgViewPlay.setImageResource(R.drawable.pause)
+
+                            view.seekBar.progress = lastProgress
+                            mPlayer!!.seekTo(lastProgress)
+                            view.seekBar.max = mPlayer!!.duration
+                            seekBarUpdate(view.seekBar)
+                            view.chronometer.start()
+
+                            mPlayer!!.setOnCompletionListener(MediaPlayer.OnCompletionListener {
+                                view.imgViewPlay.setImageResource(R.drawable.play)
+                                isPlaying = false
+                                view.chronometer.stop()
+                                view.chronometer.base = SystemClock.elapsedRealtime()
+                                mPlayer!!.seekTo(0)
+                            })
+
+                            view.seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+                                override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
+                                    if (mPlayer != null && fromUser) {
+                                        mPlayer!!.seekTo(progress)
+                                        view.chronometer.base = SystemClock.elapsedRealtime() - mPlayer!!.currentPosition
+                                        lastProgress = progress
+                                    }
+                                }
+
+                                override fun onStartTrackingTouch(seekBar: SeekBar) {}
+
+                                override fun onStopTrackingTouch(seekBar: SeekBar) {}
+                            })
+                        } else {
+                            isPlaying = false
+                            try {
+                                mPlayer!!.release()
+                            } catch (e: Exception) {
+                                e.printStackTrace()
+                            }
+
+                            mPlayer = null
+                            //showing the play button
+                            view.imgViewPlay.setImageResource(R.drawable.play)
+                            view.chronometer.stop()
+                        }
+                    }
 
                     bottomSheet.dismiss()
                 }
@@ -941,6 +1082,16 @@ class CreateNoteActivity : AppCompatActivity() {
         }
         initAdapter()
 
+    }
+
+
+    private fun seekBarUpdate(a:SeekBar) {
+        if (mPlayer != null) {
+            val mCurrentPosition = mPlayer!!.currentPosition
+            a.progress = mCurrentPosition
+            lastProgress = mCurrentPosition
+        }
+        mHandler.postDelayed(Runnable { seekBarUpdate(a)}, 100)
     }
 
     private suspend fun isDifferent(): Boolean = coroutineScope {

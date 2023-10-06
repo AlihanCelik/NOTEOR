@@ -69,12 +69,13 @@ class CreateNoteActivity : AppCompatActivity() {
 
     var fontfamily="font1"
 
-    private var mRecorder: MediaRecorder? = null
-    private var mPlayer: MediaPlayer? = null
-    private var fileName: String? = null
-    private var lastProgress = 0
-    private val mHandler = Handler()
-    private var isPlaying = false
+    var lastProgress = 0
+    val mHandler = Handler()
+    var isPlaying = false
+    var mPlayer: MediaPlayer? = null
+
+
+    private val RECORD_AUDIO_REQUEST_CODE = 101
 
     private val PERMISSION_CODE = 1001
     private val permissionId=14
@@ -763,6 +764,8 @@ class CreateNoteActivity : AppCompatActivity() {
                 }
             }
             bottomSheetView.findViewById<View>(R.id.mic).setOnClickListener {
+                var mRecorder: MediaRecorder? = null
+                var fileName: String? = null
                 if (!isFinishing) {
                     val view = View.inflate(this, R.layout.record_voice_dialog, null)
                     val builder = AlertDialog.Builder(this)
@@ -775,6 +778,9 @@ class CreateNoteActivity : AppCompatActivity() {
                     }
                     view.imgBtRecord.setOnClickListener {
                         if(hasPermissions()){
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                getPermissionToRecordAudio()
+                            }
                             TransitionManager.beginDelayedTransition(view.llRecorder)
                             view.imgBtRecord.visibility = View.GONE
                             view.imgBtStop.visibility = View.VISIBLE
@@ -788,8 +794,7 @@ class CreateNoteActivity : AppCompatActivity() {
                             if (!file.exists()) {
                                 file.mkdirs()
                             }
-
-                            fileName = root.absolutePath + "/AndroidCodility/Audios/" + (System.currentTimeMillis().toString() + ".mp3")
+                            fileName = "${file.absolutePath}/${System.currentTimeMillis()}.mp3"
                             mRecorder!!.setOutputFile(fileName)
                             mRecorder!!.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB)
 
@@ -828,7 +833,6 @@ class CreateNoteActivity : AppCompatActivity() {
 
                         try {
                             mRecorder!!.stop()
-
                             mRecorder!!.release()
                         } catch (e: Exception) {
                             e.printStackTrace()
@@ -1137,6 +1141,15 @@ class CreateNoteActivity : AppCompatActivity() {
             permissionList.toTypedArray(),
             PERMISSION_CODE
         )
+    }
+    private fun getPermissionToRecordAudio() {
+        // 1) Use the support library version ContextCompat.checkSelfPermission(...) to avoid checking the build version since Context.checkSelfPermission(...) is only available in Marshmallow
+        // 2) Always check for permission (even if permission has already been granted) since the user can revoke permissions at any time through Settings
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED
+            || ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
+            || ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE, android.Manifest.permission.RECORD_AUDIO, android.Manifest.permission.WRITE_EXTERNAL_STORAGE), RECORD_AUDIO_REQUEST_CODE)
+        }
     }
     override fun onRequestPermissionsResult(
         requestCode: Int,

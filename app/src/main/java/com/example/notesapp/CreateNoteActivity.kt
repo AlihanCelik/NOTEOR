@@ -5,13 +5,9 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
 import android.graphics.Typeface
-import android.media.MediaPlayer
-import android.media.MediaRecorder
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.os.Handler
-import android.os.SystemClock
 import android.text.*
 import android.view.LayoutInflater
 import android.view.View
@@ -36,23 +32,14 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.android.synthetic.main.activity_create_note.*
 import kotlinx.android.synthetic.main.createactivty_permi_dialog.view.*
 import kotlinx.android.synthetic.main.dialog_url.view.*
-import kotlinx.android.synthetic.main.font_dialog.*
 import kotlinx.android.synthetic.main.font_dialog.view.*
-import kotlinx.android.synthetic.main.fragment_calendar.*
-import kotlinx.android.synthetic.main.item_notes.view.*
 import kotlinx.android.synthetic.main.locked_dialog.view.*
 import kotlinx.android.synthetic.main.password_remove_dialog.view.*
-import kotlinx.android.synthetic.main.record_voice_dialog.view.*
 import kotlinx.coroutines.*
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 
-import android.transition.TransitionManager
-import android.util.Log
-import android.widget.SeekBar
-import kotlinx.android.synthetic.main.record_voice_dialog.*
-import java.io.IOException
 
 class CreateNoteActivity : AppCompatActivity() {
     var currentDate:String? = null
@@ -69,19 +56,11 @@ class CreateNoteActivity : AppCompatActivity() {
 
     var fontfamily="font1"
 
-    var lastProgress = 0
-    val mHandler = Handler()
-    var isPlaying = false
-    var mPlayer: MediaPlayer? = null
-
-
-    private val RECORD_AUDIO_REQUEST_CODE = 101
-
     private val PERMISSION_CODE = 1001
     private val permissionId=14
     private var permissionList=
         if(Build.VERSION.SDK_INT>=33) {
-            arrayListOf(android.Manifest.permission.READ_MEDIA_IMAGES,android.Manifest.permission.RECORD_AUDIO)
+            arrayListOf(android.Manifest.permission.READ_MEDIA_IMAGES)
         }else{
             arrayListOf(android.Manifest.permission.READ_EXTERNAL_STORAGE,android.Manifest.permission.WRITE_EXTERNAL_STORAGE,android.Manifest.permission.RECORD_AUDIO)
         }
@@ -91,7 +70,6 @@ class CreateNoteActivity : AppCompatActivity() {
     lateinit var imageAdapter: ImageAdapter
     lateinit var linksAdapter: LinksAdapter
     lateinit var items_link:MutableList<String>
-
     lateinit var recyclerViewLink: RecyclerView
     override fun onCreate(savedInstanceState: Bundle?) {
         val moonBlue = resources.getColor(R.color.moonBlue)
@@ -368,7 +346,6 @@ class CreateNoteActivity : AppCompatActivity() {
             saveNote()
         }
 
-
         favButton.setOnClickListener {
             if(!fav){
                 fav=true
@@ -409,7 +386,6 @@ class CreateNoteActivity : AppCompatActivity() {
                         WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS
                     )
                 }
-
             }
             bottomSheetView.findViewById<View>(R.id.pink).setOnClickListener {
                 color = "pink"
@@ -429,7 +405,6 @@ class CreateNoteActivity : AppCompatActivity() {
                         WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS
                     )
                 }
-
             }
             bottomSheetView.findViewById<View>(R.id.purple).setOnClickListener {
                 color = "purple"
@@ -449,7 +424,6 @@ class CreateNoteActivity : AppCompatActivity() {
                         WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS
                     )
                 }
-
             }
             bottomSheetView.findViewById<View>(R.id.green).setOnClickListener {
                 color = "green"
@@ -469,7 +443,6 @@ class CreateNoteActivity : AppCompatActivity() {
                         WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS
                     )
                 }
-
             }
             bottomSheetView.findViewById<View>(R.id.yellow).setOnClickListener {
                 color = "yellow"
@@ -763,149 +736,7 @@ class CreateNoteActivity : AppCompatActivity() {
                     bottomSheet.dismiss()
                 }
             }
-            bottomSheetView.findViewById<View>(R.id.mic).setOnClickListener {
-                var mRecorder: MediaRecorder? = null
-                var fileName: String? = null
-                if (!isFinishing) {
-                    val view = View.inflate(this, R.layout.record_voice_dialog, null)
-                    val builder = AlertDialog.Builder(this)
-                    builder.setView(view)
-                    val dialog = builder.create()
-                    dialog.show()
-                    dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-                    view.okeyMic.setOnClickListener {
-                        dialog.dismiss()
-                    }
-                    view.imgBtRecord.setOnClickListener {
-                        if(hasPermissions()){
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                                getPermissionToRecordAudio()
-                            }
-                            TransitionManager.beginDelayedTransition(view.llRecorder)
-                            view.imgBtRecord.visibility = View.GONE
-                            view.imgBtStop.visibility = View.VISIBLE
-                            view.llPlay.visibility = View.GONE
 
-                            mRecorder = MediaRecorder()
-                            mRecorder!!.setAudioSource(MediaRecorder.AudioSource.MIC)
-                            mRecorder!!.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
-                            val root = android.os.Environment.getExternalStorageDirectory()
-                            val file = File(root.absolutePath + "/AndroidCodility/Audios")
-                            if (!file.exists()) {
-                                file.mkdirs()
-                            }
-                            fileName = "${file.absolutePath}/${System.currentTimeMillis()}.mp3"
-                            mRecorder!!.setOutputFile(fileName)
-                            mRecorder!!.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB)
-
-                            try {
-                                mRecorder!!.prepare()
-                                mRecorder!!.start()
-                            } catch (e: IOException) {
-                                e.printStackTrace()
-                            }
-                            lastProgress = 0
-                            view.seekBar.progress = 0
-                            //stop
-                            try {
-                                mPlayer!!.release()
-                            } catch (e: Exception) {
-                                e.printStackTrace()
-                            }
-
-                            mPlayer = null
-                            //showing the play button
-                            view.imgViewPlay.setImageResource(R.drawable.play)
-                            view.chronometer.stop()
-                            // making the imageView a stop button starting the chronometer
-                            view.chronometer.base = SystemClock.elapsedRealtime()
-                            view.chronometer.start()
-                        }
-                        else {
-                            requestPermissions()
-                        }
-                    }
-                    view.imgBtStop.setOnClickListener {
-                        TransitionManager.beginDelayedTransition(view.llRecorder)
-                        view.imgBtRecord.visibility = View.VISIBLE
-                        view.imgBtStop.visibility = View.GONE
-                        view.llPlay.visibility = View.VISIBLE
-
-                        try {
-                            mRecorder!!.stop()
-                            mRecorder!!.release()
-                        } catch (e: Exception) {
-                            e.printStackTrace()
-                        }
-                        mRecorder = null
-                        //starting the chronometer
-                        view.chronometer.stop()
-                        view.chronometer.base = SystemClock.elapsedRealtime()
-                        //showing the play button
-                        Toast.makeText(this, "Recording saved successfully.", Toast.LENGTH_SHORT).show()
-
-                    }
-                    view.imgViewPlay.setOnClickListener {
-                        if (!isPlaying && fileName != null) {
-                            isPlaying = true
-                            mPlayer = MediaPlayer()
-                            try {
-                                mPlayer!!.setDataSource(fileName)
-                                mPlayer!!.prepare()
-                                mPlayer!!.start()
-                            } catch (e: IOException) {
-                                Log.e("LOG_TAG", "prepare() failed")
-                            }
-
-                            //making the imageView pause button
-                            view.imgViewPlay.setImageResource(R.drawable.pause)
-
-                            view.seekBar.progress = lastProgress
-                            mPlayer!!.seekTo(lastProgress)
-                            view.seekBar.max = mPlayer!!.duration
-                            seekBarUpdate(view.seekBar)
-                            view.chronometer.start()
-
-                            mPlayer!!.setOnCompletionListener(MediaPlayer.OnCompletionListener {
-                                view.imgViewPlay.setImageResource(R.drawable.play)
-                                isPlaying = false
-                                view.chronometer.stop()
-                                view.chronometer.base = SystemClock.elapsedRealtime()
-                                mPlayer!!.seekTo(0)
-                            })
-
-                            view.seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-                                override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-                                    if (mPlayer != null && fromUser) {
-                                        mPlayer!!.seekTo(progress)
-                                        view.chronometer.base = SystemClock.elapsedRealtime() - mPlayer!!.currentPosition
-                                        lastProgress = progress
-                                    }
-                                }
-
-                                override fun onStartTrackingTouch(seekBar: SeekBar) {}
-
-                                override fun onStopTrackingTouch(seekBar: SeekBar) {}
-                            })
-                        } else {
-                            isPlaying = false
-                            try {
-                                mPlayer!!.release()
-                            } catch (e: Exception) {
-                                e.printStackTrace()
-                            }
-
-                            mPlayer = null
-                            //showing the play button
-                            view.imgViewPlay.setImageResource(R.drawable.play)
-                            view.chronometer.stop()
-                        }
-                    }
-
-                    bottomSheet.dismiss()
-                }
-
-            }
 
             bottomSheetView.findViewById<View>(R.id.font).setOnClickListener {
 
@@ -1087,17 +918,6 @@ class CreateNoteActivity : AppCompatActivity() {
         initAdapter()
 
     }
-
-
-    private fun seekBarUpdate(a:SeekBar) {
-        if (mPlayer != null) {
-            val mCurrentPosition = mPlayer!!.currentPosition
-            a.progress = mCurrentPosition
-            lastProgress = mCurrentPosition
-        }
-        mHandler.postDelayed(Runnable { seekBarUpdate(a)}, 100)
-    }
-
     private suspend fun isDifferent(): Boolean = coroutineScope {
         val notes = async(Dispatchers.IO) {
             NotesDatabase.getDatabase(this@CreateNoteActivity).noteDao().getSpecificNote(noteId)
@@ -1142,15 +962,7 @@ class CreateNoteActivity : AppCompatActivity() {
             PERMISSION_CODE
         )
     }
-    private fun getPermissionToRecordAudio() {
-        // 1) Use the support library version ContextCompat.checkSelfPermission(...) to avoid checking the build version since Context.checkSelfPermission(...) is only available in Marshmallow
-        // 2) Always check for permission (even if permission has already been granted) since the user can revoke permissions at any time through Settings
-        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED
-            || ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
-            || ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE, android.Manifest.permission.RECORD_AUDIO, android.Manifest.permission.WRITE_EXTERNAL_STORAGE), RECORD_AUDIO_REQUEST_CODE)
-        }
-    }
+
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,

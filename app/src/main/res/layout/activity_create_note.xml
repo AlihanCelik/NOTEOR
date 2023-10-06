@@ -183,60 +183,6 @@
             </LinearLayout>
 
             <FrameLayout
-                android:id="@+id/layout_record_preview"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="12dp"
-                android:visibility="gone"
-                android:layout_gravity="center"
-                android:background="@drawable/bg_background_frame"
-                android:layout_marginEnd="16dp">
-                <LinearLayout
-                    android:id="@+id/record_layout"
-                    android:layout_marginRight="25dp"
-                    android:layout_marginLeft="25dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginBottom="15dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_marginLeft="10dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Voice"
-                        android:textSize="15dp"
-                        android:textColor="@color/darkGrey"
-                        android:fontFamily="@font/ralewaybold1">
-                    </TextView>
-                    <Space
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1" />
-                    <ImageView
-                        android:id="@+id/voice_updown"
-                        android:layout_width="17dp"
-                        android:layout_height="17dp"
-                        android:src="@drawable/uparrow"
-                        android:layout_marginRight="10dp"
-                        app:tint="@color/darkGrey">
-                    </ImageView>
-                </LinearLayout>
-
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/records_recyclerView"
-                    android:layout_marginTop="70dp"
-                    android:layout_marginHorizontal="20dp"
-                    android:layout_marginBottom="15dp"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:listitem="@layout/item_recording"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-
-            </FrameLayout>
-            <FrameLayout
                 android:id="@+id/layout_img_preview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

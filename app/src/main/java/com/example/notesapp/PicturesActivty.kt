@@ -13,7 +13,7 @@ class PicturesActivty : AppCompatActivity() {
         setContentView(R.layout.activity_pictures_activty)
         val photoView: PhotoView = findViewById(R.id.photo_view)
         val imageUriString = intent.getStringExtra("image")
-        val imageUri = Uri.parse(imageUriString) // String'den URI oluşturun
+        val imageUri = Uri.parse(imageUriString)
         Glide.with(this).load(imageUri).into(photoView)
         backButton.setOnClickListener {
             finish()

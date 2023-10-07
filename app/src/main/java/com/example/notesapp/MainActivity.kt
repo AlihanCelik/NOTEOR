@@ -31,7 +31,6 @@ class MainActivity : AppCompatActivity() {
         val backgroundWhite = resources.getColor(R.color.white)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        createNotificationChannel()
 
         bottomNav.background = null
         bottomNav.menu.getItem(1).isEnabled = false
@@ -138,13 +137,7 @@ class MainActivity : AppCompatActivity() {
 
 
     }
-    private fun setAlarm(dateTimeInMillis: Long) {
-        val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        val alarmIntent = Intent(this, AlarmReceiver::class.java)
-        val pendingIntent = PendingIntent.getBroadcast(this, 0, alarmIntent, 0)
 
-        alarmManager.setExact(AlarmManager.RTC_WAKEUP, dateTimeInMillis, pendingIntent)
-    }
 
     fun CreateNoteButton(view: View) {
         val intent = Intent(this, CreateNoteActivity::class.java)
@@ -170,23 +163,10 @@ class MainActivity : AppCompatActivity() {
             noteFragment?.updateRecyclerView()
             val calendarFragment=viewPagerAdapter.fragmentList[1]as? CalendarFragment
             calendarFragment?.updateRecyclerView()
-            var tempArr = ArrayList<Notes>()
-            for(arr in tempArr){
-                arr.reminder?.let { setAlarm(it) }
-            }
+
         }
     }
-    private fun createNotificationChannel(){
-        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O){
-            val name :CharSequence="ReminderChannel"
-            val description="Channel for Alarm Manager"
-            val importance=NotificationManager.IMPORTANCE_HIGH
-            val channel=NotificationChannel("foxandroid",name,importance)
-            channel.description=description
-            val notificationManeger=getSystemService(NotificationManager::class.java)
-            notificationManeger.createNotificationChannel(channel)
-        }
-    }
+
 
 
 

@@ -1,8 +1,7 @@
 package com.example.notesapp
 
-import android.app.Activity
-import android.app.DatePickerDialog
-import android.app.TimePickerDialog
+import android.app.*
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
@@ -93,7 +92,7 @@ class CreateNoteActivity : AppCompatActivity() {
         val backgroundPurple=resources.getColor(R.color.background_purple)
         val backgroundOrange=resources.getColor(R.color.background_orange)
         currentDate=sdf.format(Date())
-
+        createNotificationChannel()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_note)
 
@@ -1054,6 +1053,7 @@ class CreateNoteActivity : AppCompatActivity() {
                         NotesDatabase.getDatabase(it).noteDao().updateNote(notes)
                         setResult(Activity.RESULT_OK)
                         tvDateTime.text=notes.dateTime
+                        reminder?.let { it1 -> setAlarm(it1,notes_title.text.toString()) }
                         Toast.makeText(this@CreateNoteActivity, "Note is updated", Toast.LENGTH_SHORT).show()
                     }
                 }
@@ -1071,6 +1071,7 @@ class CreateNoteActivity : AppCompatActivity() {
                     notes.imgPath=items
                     notes.webLink=items_link
                     notes.favorite=fav
+                    reminder?.let { it1 -> setAlarm(it1,notes_title.text.toString()) }
                     notes.password=password
                     applicationContext?.let {
 
@@ -1120,6 +1121,26 @@ class CreateNoteActivity : AppCompatActivity() {
         recyclerViewLink.adapter=linksAdapter
 
 
+
+    }
+    private fun createNotificationChannel(){
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O){
+            val name :CharSequence="ReminderChannel"
+            val description="Channel for Alarm Manager"
+            val importance= NotificationManager.IMPORTANCE_HIGH
+            val channel= NotificationChannel("foxandroid",name,importance)
+            channel.description=description
+            val notificationManeger=getSystemService(NotificationManager::class.java)
+            notificationManeger.createNotificationChannel(channel)
+        }
+    }
+    private fun setAlarm(dateTimeInMillis: Long, noteTitle: String) {
+        val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val alarmIntent = Intent(this, AlarmReceiver::class.java)
+        alarmIntent.putExtra("NOTE_TITLE", noteTitle)
+        val pendingIntent = PendingIntent.getBroadcast(this, 0, alarmIntent,  PendingIntent.FLAG_IMMUTABLE)
+
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, dateTimeInMillis, pendingIntent)
 
     }
 

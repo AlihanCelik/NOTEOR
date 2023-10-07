@@ -1,6 +1,8 @@
 package com.example.notesapp
 
 import android.app.Activity
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -29,6 +31,7 @@ class MainActivity : AppCompatActivity() {
         val backgroundWhite = resources.getColor(R.color.white)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        createNotificationChannel()
 
         bottomNav.background = null
         bottomNav.menu.getItem(1).isEnabled = false
@@ -158,6 +161,17 @@ class MainActivity : AppCompatActivity() {
             noteFragment?.updateRecyclerView()
             val calendarFragment=viewPagerAdapter.fragmentList[1]as? CalendarFragment
             calendarFragment?.updateRecyclerView()
+        }
+    }
+    private fun createNotificationChannel(){
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O){
+            val name :CharSequence="ReminderChannel"
+            val description="Channel for Alarm Manager"
+            val importance=NotificationManager.IMPORTANCE_HIGH
+            val channel=NotificationChannel("foxandroid",name,importance)
+            channel.description=description
+            val notificationManeger=getSystemService(NotificationManager::class.java)
+            notificationManeger.createNotificationChannel(channel)
         }
     }
 

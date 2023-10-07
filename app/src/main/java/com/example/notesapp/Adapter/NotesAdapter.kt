@@ -626,6 +626,11 @@ class NotesAdapter(val frag:Int) :
         }else{
             holder.itemView.item_date_l.visibility=View.GONE
         }
+         if(arrList[position].reminder!=null){
+             holder.itemView.item_rame.visibility=View.VISIBLE
+         }else{
+             holder.itemView.item_rame.visibility=View.GONE
+         }
 
         when (arrList[position].color) {
             "blue" -> holder.itemView.item_color.setBackgroundColor(ContextCompat.getColor(context, R.color.moonBlue))

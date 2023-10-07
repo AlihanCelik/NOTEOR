@@ -24,6 +24,9 @@ data class Notes(
     @ColumnInfo(name = "create_date_time")
     var create_dateTime: String? = null,
 
+    @ColumnInfo(name = "reminder")
+    var reminder: Long? = null,
+
     @ColumnInfo(name = "note_text")
     var noteText: String? = null,
 

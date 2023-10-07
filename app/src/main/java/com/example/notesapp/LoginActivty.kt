@@ -15,7 +15,7 @@ class LoginActivty : AppCompatActivity() {
     private val permissionId=14
     private var permissionList=
         if(Build.VERSION.SDK_INT>=33) {
-            arrayListOf(android.Manifest.permission.READ_MEDIA_IMAGES)
+            arrayListOf(android.Manifest.permission.READ_MEDIA_IMAGES,android.Manifest.permission.POST_NOTIFICATIONS)
         }else{
             arrayListOf(android.Manifest.permission.READ_EXTERNAL_STORAGE,android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
         }

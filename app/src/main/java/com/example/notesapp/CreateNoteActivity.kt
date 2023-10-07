@@ -56,6 +56,8 @@ class CreateNoteActivity : AppCompatActivity() {
     var PICK_IMAGES_CODE = 1
     var noteId=-1
 
+    var reminder: Long? =null
+
     var fontfamily="font1"
 
     private val PERMISSION_CODE = 1001
@@ -910,7 +912,7 @@ class CreateNoteActivity : AppCompatActivity() {
                                 // Kullanıcıdan seçilen saat
                                 calendar.set(Calendar.HOUR_OF_DAY, hourOfDay)
                                 calendar.set(Calendar.MINUTE, minute)
-
+                                reminder=calendar.timeInMillis
                             },
                             calendar.get(Calendar.HOUR_OF_DAY),
                             calendar.get(Calendar.MINUTE),
@@ -961,6 +963,7 @@ class CreateNoteActivity : AppCompatActivity() {
         val itemLinks = notes.await().webLink as MutableList<String>
         val itemPsw = notes.await().password.toString()
         val itemTitle = notes.await().title.toString()
+
         val itemSubTitle = notes.await().subTitle.toString()
         val itemDesc = notes.await().noteText.toString()
         val itemColor=notes.await().color.toString()
@@ -1043,6 +1046,7 @@ class CreateNoteActivity : AppCompatActivity() {
                         notes.dateTime=currentDate
                         notes.create_dateTime=notes.create_dateTime
                         notes.color=color
+                        notes.reminder=reminder
                         notes.imgPath=items
                         notes.webLink=items_link
                         notes.favorite=fav
@@ -1063,6 +1067,7 @@ class CreateNoteActivity : AppCompatActivity() {
                     notes.dateTime=currentDate
                     notes.create_dateTime=currentDate
                     notes.color=color
+                    notes.reminder=reminder
                     notes.imgPath=items
                     notes.webLink=items_link
                     notes.favorite=fav

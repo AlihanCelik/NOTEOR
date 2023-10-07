@@ -1,8 +1,7 @@
 package com.example.notesapp
 
-import android.app.Activity
-import android.app.NotificationChannel
-import android.app.NotificationManager
+import android.app.*
+import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -16,6 +15,7 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.viewpager2.widget.ViewPager2
 import com.example.notesapp.Adapter.VpAdapter
+import com.example.notesapp.entities.Notes
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
@@ -135,6 +135,15 @@ class MainActivity : AppCompatActivity() {
         viewPager.currentItem = 0
 
 
+
+
+    }
+    private fun setAlarm(dateTimeInMillis: Long) {
+        val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val alarmIntent = Intent(this, AlarmReceiver::class.java)
+        val pendingIntent = PendingIntent.getBroadcast(this, 0, alarmIntent, 0)
+
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, dateTimeInMillis, pendingIntent)
     }
 
     fun CreateNoteButton(view: View) {
@@ -161,6 +170,10 @@ class MainActivity : AppCompatActivity() {
             noteFragment?.updateRecyclerView()
             val calendarFragment=viewPagerAdapter.fragmentList[1]as? CalendarFragment
             calendarFragment?.updateRecyclerView()
+            var tempArr = ArrayList<Notes>()
+            for(arr in tempArr){
+                arr.reminder?.let { setAlarm(it) }
+            }
         }
     }
     private fun createNotificationChannel(){

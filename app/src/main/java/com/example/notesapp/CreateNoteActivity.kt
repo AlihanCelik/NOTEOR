@@ -913,9 +913,9 @@ class CreateNoteActivity : AppCompatActivity() {
             bottomSheetView.findViewById<View>(R.id.remainder).setOnClickListener {
                 if(reminder!=null){
                     reminder=null
-                    remainder.setImageResource(R.drawable.remindernotes)
+                    bottomSheetView.findViewById<ImageView>(R.id.remainder).setImageDrawable(ContextCompat.getDrawable(this,R.drawable.remindernotes))
                 }else{
-                    remainder.setImageResource(R.drawable.reminderonn)
+                    bottomSheetView.findViewById<ImageView>(R.id.remainder).setImageDrawable(ContextCompat.getDrawable(this,R.drawable.reminderonn))
                     val calendar = Calendar.getInstance()
                     val datePicker = DatePickerDialog(
                         this,

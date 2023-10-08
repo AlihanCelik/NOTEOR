@@ -913,9 +913,9 @@ class CreateNoteActivity : AppCompatActivity() {
             bottomSheetView.findViewById<View>(R.id.remainder).setOnClickListener {
                 if(reminder!=null){
                     reminder=null
+                    reminderlayout.visibility = View.GONE
                     bottomSheetView.findViewById<ImageView>(R.id.remainder).setImageDrawable(ContextCompat.getDrawable(this,R.drawable.remindernotes))
                 }else{
-                    bottomSheetView.findViewById<ImageView>(R.id.remainder).setImageDrawable(ContextCompat.getDrawable(this,R.drawable.reminderonn))
                     val calendar = Calendar.getInstance()
                     val datePicker = DatePickerDialog(
                         this,
@@ -938,6 +938,7 @@ class CreateNoteActivity : AppCompatActivity() {
                                         val formattedDate = sdf.format(reminderDate)
                                         reminderlayout.visibility = View.VISIBLE
                                         tvReminderTime.text = formattedDate
+                                        bottomSheetView.findViewById<ImageView>(R.id.remainder).setImageDrawable(ContextCompat.getDrawable(this,R.drawable.reminderonn))
                                     }
                                 },
                                 calendar.get(Calendar.HOUR_OF_DAY),

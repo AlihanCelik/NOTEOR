@@ -31,6 +31,7 @@ import com.example.notesapp.database.NotesDatabase
 import com.example.notesapp.entities.Notes
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.android.synthetic.main.activity_create_note.*
+import kotlinx.android.synthetic.main.bottom_sheet_note.*
 import kotlinx.android.synthetic.main.createactivty_permi_dialog.view.*
 import kotlinx.android.synthetic.main.dialog_url.view.*
 import kotlinx.android.synthetic.main.font_dialog.view.*
@@ -139,6 +140,7 @@ class CreateNoteActivity : AppCompatActivity() {
                         val reminderDateItem = Date(notes.reminder!!)
                         val formattedDateItem = sdf.format(reminderDateItem)
                         tvReminderTime.text=formattedDateItem
+                        reminder=notes.reminder
                     }else{
                         reminderlayout.visibility=View.GONE
                     }
@@ -379,6 +381,11 @@ class CreateNoteActivity : AppCompatActivity() {
                 bottomSheetView.findViewById<ImageView>(R.id.locked).setImageDrawable(ContextCompat.getDrawable(this,R.drawable.unlocked))
             } else {
                 bottomSheetView.findViewById<ImageView>(R.id.locked).setImageDrawable(ContextCompat.getDrawable(this,R.drawable.locked))
+            }
+            if(reminder!=null){
+                bottomSheetView.findViewById<ImageView>(R.id.remainder).setImageDrawable(ContextCompat.getDrawable(this,R.drawable.reminderonn))
+            }else{
+                bottomSheetView.findViewById<ImageView>(R.id.remainder).setImageDrawable(ContextCompat.getDrawable(this,R.drawable.remindernotes))
             }
             bottomSheetView.findViewById<View>(R.id.blue).setOnClickListener {
                 color = "blue"
@@ -904,41 +911,48 @@ class CreateNoteActivity : AppCompatActivity() {
                 }
             }
             bottomSheetView.findViewById<View>(R.id.remainder).setOnClickListener {
-                val calendar = Calendar.getInstance()
-                val datePicker = DatePickerDialog(
-                    this,
-                    { _, year, month, dayOfMonth ->
-                        // Kullanıcıdan seçilen tarih
-                        calendar.set(Calendar.YEAR, year)
-                        calendar.set(Calendar.MONTH, month)
-                        calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+                if(reminder!=null){
+                    reminder=null
+                    remainder.setImageResource(R.drawable.remindernotes)
+                }else{
+                    remainder.setImageResource(R.drawable.reminderonn)
+                    val calendar = Calendar.getInstance()
+                    val datePicker = DatePickerDialog(
+                        this,
+                        { _, year, month, dayOfMonth ->
+                            // Kullanıcıdan seçilen tarih
+                            calendar.set(Calendar.YEAR, year)
+                            calendar.set(Calendar.MONTH, month)
+                            calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
 
-                        // Saat seçimi için TimePickerDialog göster
-                        val timePicker = TimePickerDialog(
-                            this,
-                            { _, hourOfDay, minute ->
-                                // Kullanıcıdan seçilen saat
-                                calendar.set(Calendar.HOUR_OF_DAY, hourOfDay)
-                                calendar.set(Calendar.MINUTE, minute)
-                                reminder=calendar.timeInMillis
-                                reminder?.let {
-                                    val reminderDate = Date(it)
-                                    val formattedDate = sdf.format(reminderDate)
-                                    reminderlayout.visibility = View.VISIBLE
-                                    tvReminderTime.text = formattedDate
-                                }
-                            },
-                            calendar.get(Calendar.HOUR_OF_DAY),
-                            calendar.get(Calendar.MINUTE),
-                            true
-                        )
-                        timePicker.show()
-                    },
-                    calendar.get(Calendar.YEAR),
-                    calendar.get(Calendar.MONTH),
-                    calendar.get(Calendar.DAY_OF_MONTH)
-                )
-                datePicker.show()
+                            // Saat seçimi için TimePickerDialog göster
+                            val timePicker = TimePickerDialog(
+                                this,
+                                { _, hourOfDay, minute ->
+                                    // Kullanıcıdan seçilen saat
+                                    calendar.set(Calendar.HOUR_OF_DAY, hourOfDay)
+                                    calendar.set(Calendar.MINUTE, minute)
+                                    reminder=calendar.timeInMillis
+                                    reminder?.let {
+                                        val reminderDate = Date(it)
+                                        val formattedDate = sdf.format(reminderDate)
+                                        reminderlayout.visibility = View.VISIBLE
+                                        tvReminderTime.text = formattedDate
+                                    }
+                                },
+                                calendar.get(Calendar.HOUR_OF_DAY),
+                                calendar.get(Calendar.MINUTE),
+                                true
+                            )
+                            timePicker.show()
+                        },
+                        calendar.get(Calendar.YEAR),
+                        calendar.get(Calendar.MONTH),
+                        calendar.get(Calendar.DAY_OF_MONTH)
+                    )
+                    datePicker.show()
+
+                }
 
             }
             bottomSheet.setContentView(bottomSheetView)

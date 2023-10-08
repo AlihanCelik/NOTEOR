@@ -118,6 +118,47 @@
 
                 </TextView>
             </LinearLayout>
+            <LinearLayout
+                android:id="@+id/reminderlayout"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="1dp"
+                android:paddingBottom="1dp"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center"
+                android:gravity="end"
+                android:orientation="horizontal">
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="5dp"
+                    android:src="@drawable/reminderitem"
+                    app:tint="@color/grey2"></ImageView>
+
+                <TextView
+                    android:id="@+id/tvReminderTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="date"
+                    android:textColor="@color/grey2"
+                    android:gravity="center"
+                    android:textSize="13dp"
+                    android:textStyle="bold"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="10dp"
+                    >
+
+                </TextView>
+            </LinearLayout>
 
 
 

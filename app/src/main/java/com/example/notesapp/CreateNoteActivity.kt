@@ -106,6 +106,7 @@ class CreateNoteActivity : AppCompatActivity() {
         recyclerViewLink.layoutManager= StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
 
         noteId = intent.getIntExtra("itemid",-1)
+        println(noteId)
 
         tvDateTime.text=currentDate
         if(noteId!=-1){
@@ -924,6 +925,8 @@ class CreateNoteActivity : AppCompatActivity() {
                     calendar.get(Calendar.DAY_OF_MONTH)
                 )
                 datePicker.show()
+                reminderlayout.visibility=View.VISIBLE
+                tvReminderTime.text=reminder.toString()
             }
             bottomSheet.setContentView(bottomSheetView)
             bottomSheet.show()
@@ -1053,11 +1056,7 @@ class CreateNoteActivity : AppCompatActivity() {
                         NotesDatabase.getDatabase(it).noteDao().updateNote(notes)
                         setResult(Activity.RESULT_OK)
                         tvDateTime.text=notes.dateTime
-                        reminder?.let { it1 -> notes.id?.let { it2 ->
-                            setAlarm(it1,notes_title.text.toString(),
-                                it2
-                            )
-                        } }
+                        reminder?.let { it1 -> setAlarm(it1,notes_title.text.toString(),noteId) }
                         Toast.makeText(this@CreateNoteActivity, "Note is updated", Toast.LENGTH_SHORT).show()
                     }
                 }
@@ -1075,16 +1074,13 @@ class CreateNoteActivity : AppCompatActivity() {
                     notes.imgPath=items
                     notes.webLink=items_link
                     notes.favorite=fav
-                    reminder?.let { it1 -> notes.id?.let { it2 ->
-                        setAlarm(it1,notes_title.text.toString(),
-                            it2
-                        )
-                    } }
+
                     notes.password=password
                     applicationContext?.let {
 
                         val insertedId = NotesDatabase.getDatabase(it).noteDao().insertNotes(notes)
                         noteId = insertedId.toInt()
+                        reminder?.let { it1 -> setAlarm(it1,notes_title.text.toString(),noteId) }
                         setResult(Activity.RESULT_OK)
                         Toast.makeText(this@CreateNoteActivity, "Note is added", Toast.LENGTH_SHORT).show()
                     }

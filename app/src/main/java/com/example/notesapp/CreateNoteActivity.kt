@@ -134,6 +134,14 @@ class CreateNoteActivity : AppCompatActivity() {
                     notes_sub_title.setText(notes.subTitle)
                     notes_desc.setText(notes.noteText)
                     tvDateTime.text=notes.dateTime
+                    if(notes.reminder!=null){
+                        reminderlayout.visibility=View.VISIBLE
+                        val reminderDateItem = Date(notes.reminder!!)
+                        val formattedDateItem = sdf.format(reminderDateItem)
+                        tvReminderTime.text=formattedDateItem
+                    }else{
+                        reminderlayout.visibility=View.GONE
+                    }
 
                     when (notes.color) {
                         "blue" -> {
@@ -913,6 +921,12 @@ class CreateNoteActivity : AppCompatActivity() {
                                 calendar.set(Calendar.HOUR_OF_DAY, hourOfDay)
                                 calendar.set(Calendar.MINUTE, minute)
                                 reminder=calendar.timeInMillis
+                                reminder?.let {
+                                    val reminderDate = Date(it)
+                                    val formattedDate = sdf.format(reminderDate)
+                                    reminderlayout.visibility = View.VISIBLE
+                                    tvReminderTime.text = formattedDate
+                                }
                             },
                             calendar.get(Calendar.HOUR_OF_DAY),
                             calendar.get(Calendar.MINUTE),
@@ -925,8 +939,7 @@ class CreateNoteActivity : AppCompatActivity() {
                     calendar.get(Calendar.DAY_OF_MONTH)
                 )
                 datePicker.show()
-                reminderlayout.visibility=View.VISIBLE
-                tvReminderTime.text=reminder.toString()
+
             }
             bottomSheet.setContentView(bottomSheetView)
             bottomSheet.show()
@@ -1057,6 +1070,7 @@ class CreateNoteActivity : AppCompatActivity() {
                         setResult(Activity.RESULT_OK)
                         tvDateTime.text=notes.dateTime
                         reminder?.let { it1 -> setAlarm(it1,notes_title.text.toString(),noteId) }
+                        println(noteId)
                         Toast.makeText(this@CreateNoteActivity, "Note is updated", Toast.LENGTH_SHORT).show()
                     }
                 }
@@ -1081,6 +1095,7 @@ class CreateNoteActivity : AppCompatActivity() {
                         val insertedId = NotesDatabase.getDatabase(it).noteDao().insertNotes(notes)
                         noteId = insertedId.toInt()
                         reminder?.let { it1 -> setAlarm(it1,notes_title.text.toString(),noteId) }
+                        println(noteId)
                         setResult(Activity.RESULT_OK)
                         Toast.makeText(this@CreateNoteActivity, "Note is added", Toast.LENGTH_SHORT).show()
                     }
@@ -1138,11 +1153,11 @@ class CreateNoteActivity : AppCompatActivity() {
             notificationManeger.createNotificationChannel(channel)
         }
     }
-    private fun setAlarm(dateTimeInMillis: Long, noteTitle: String,noteId:Int) {
+    private fun setAlarm(dateTimeInMillis: Long, noteTitle: String,noteid:Int) {
         val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val alarmIntent = Intent(this, AlarmReceiver::class.java)
         alarmIntent.putExtra("NOTE_TITLE", noteTitle)
-        alarmIntent.putExtra("NOTE_ID",noteId)
+        alarmIntent.putExtra("NOTE_ID",noteid)
         val pendingIntent = PendingIntent.getBroadcast(this, 0, alarmIntent,  PendingIntent.FLAG_IMMUTABLE)
 
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, dateTimeInMillis, pendingIntent)

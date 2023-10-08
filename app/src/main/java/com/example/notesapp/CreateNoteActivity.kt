@@ -1053,7 +1053,11 @@ class CreateNoteActivity : AppCompatActivity() {
                         NotesDatabase.getDatabase(it).noteDao().updateNote(notes)
                         setResult(Activity.RESULT_OK)
                         tvDateTime.text=notes.dateTime
-                        reminder?.let { it1 -> setAlarm(it1,notes_title.text.toString()) }
+                        reminder?.let { it1 -> notes.id?.let { it2 ->
+                            setAlarm(it1,notes_title.text.toString(),
+                                it2
+                            )
+                        } }
                         Toast.makeText(this@CreateNoteActivity, "Note is updated", Toast.LENGTH_SHORT).show()
                     }
                 }
@@ -1071,7 +1075,11 @@ class CreateNoteActivity : AppCompatActivity() {
                     notes.imgPath=items
                     notes.webLink=items_link
                     notes.favorite=fav
-                    reminder?.let { it1 -> setAlarm(it1,notes_title.text.toString()) }
+                    reminder?.let { it1 -> notes.id?.let { it2 ->
+                        setAlarm(it1,notes_title.text.toString(),
+                            it2
+                        )
+                    } }
                     notes.password=password
                     applicationContext?.let {
 
@@ -1134,10 +1142,11 @@ class CreateNoteActivity : AppCompatActivity() {
             notificationManeger.createNotificationChannel(channel)
         }
     }
-    private fun setAlarm(dateTimeInMillis: Long, noteTitle: String) {
+    private fun setAlarm(dateTimeInMillis: Long, noteTitle: String,noteId:Int) {
         val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val alarmIntent = Intent(this, AlarmReceiver::class.java)
         alarmIntent.putExtra("NOTE_TITLE", noteTitle)
+        alarmIntent.putExtra("NOTE_ID",noteId)
         val pendingIntent = PendingIntent.getBroadcast(this, 0, alarmIntent,  PendingIntent.FLAG_IMMUTABLE)
 
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, dateTimeInMillis, pendingIntent)

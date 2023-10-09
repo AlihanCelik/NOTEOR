@@ -1085,7 +1085,6 @@ class CreateNoteActivity : AppCompatActivity() {
                         setResult(Activity.RESULT_OK)
                         tvDateTime.text=notes.dateTime
                         reminder?.let { it1 -> setAlarm(it1,notes_title.text.toString(),noteId) }
-                        println(noteId)
                         Toast.makeText(this@CreateNoteActivity, "Note is updated", Toast.LENGTH_SHORT).show()
                     }
                 }
@@ -1103,14 +1102,12 @@ class CreateNoteActivity : AppCompatActivity() {
                     notes.imgPath=items
                     notes.webLink=items_link
                     notes.favorite=fav
-
                     notes.password=password
                     applicationContext?.let {
 
                         val insertedId = NotesDatabase.getDatabase(it).noteDao().insertNotes(notes)
                         noteId = insertedId.toInt()
                         reminder?.let { it1 -> setAlarm(it1,notes_title.text.toString(),noteId) }
-                        println(noteId)
                         setResult(Activity.RESULT_OK)
                         Toast.makeText(this@CreateNoteActivity, "Note is added", Toast.LENGTH_SHORT).show()
                     }

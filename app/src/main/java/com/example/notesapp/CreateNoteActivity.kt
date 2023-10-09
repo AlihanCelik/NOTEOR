@@ -107,9 +107,6 @@ class CreateNoteActivity : AppCompatActivity() {
         recyclerViewLink.layoutManager= StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
 
         noteId = intent.getIntExtra("itemid",-1)
-
-        println("id3 : ${noteId}")
-
         tvDateTime.text=currentDate
         if(noteId!=-1){
             GlobalScope.launch(Dispatchers.Main){
@@ -1078,6 +1075,9 @@ class CreateNoteActivity : AppCompatActivity() {
                         notes.create_dateTime=notes.create_dateTime
                         notes.color=color
                         notes.reminder=reminder
+                        if(reminder!=null){
+                            reminder?.let { it1 -> setAlarm(it1,notes_title.text.toString(),noteId) }
+                        }
                         notes.imgPath=items
                         notes.webLink=items_link
                         notes.favorite=fav
@@ -1088,7 +1088,8 @@ class CreateNoteActivity : AppCompatActivity() {
                         println("id1 : ${noteId}")
                         Toast.makeText(this@CreateNoteActivity, "Note is updated", Toast.LENGTH_SHORT).show()
                     }
-                    reminder?.let { it1 -> setAlarm(it1,notes_title.text.toString(),noteId) }
+
+
                 }
             }else{
                 val coroutineScope = CoroutineScope(Dispatchers.Main)
@@ -1109,11 +1110,13 @@ class CreateNoteActivity : AppCompatActivity() {
 
                         val insertedId = NotesDatabase.getDatabase(it).noteDao().insertNotes(notes)
                         noteId = insertedId.toInt()
-
+                        if(reminder!=null){
+                            reminder?.let { it1 -> setAlarm(it1,notes_title.text.toString(),noteId) }
+                        }
                         setResult(Activity.RESULT_OK)
                         Toast.makeText(this@CreateNoteActivity, "Note is added", Toast.LENGTH_SHORT).show()
                     }
-                    reminder?.let { it1 -> setAlarm(it1,notes_title.text.toString(),noteId) }
+
 
 
                 }

@@ -19,7 +19,6 @@ class AlarmReceiver : BroadcastReceiver(){
         println(noteId)
         intent!!.flags=Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         val pendingintent=PendingIntent.getActivity(context,0,i,PendingIntent.FLAG_IMMUTABLE)
-
         val builder =NotificationCompat.Builder(context!!,"foxandroid")
             .setSmallIcon(R.mipmap.logo).setContentTitle("NOTEOR")
             .setContentText(noteTitle)
@@ -33,7 +32,6 @@ class AlarmReceiver : BroadcastReceiver(){
                 Manifest.permission.POST_NOTIFICATIONS
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-
             return
         }
         notificationManager.notify(123,builder.build())

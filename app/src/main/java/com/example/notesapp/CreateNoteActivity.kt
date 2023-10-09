@@ -107,7 +107,8 @@ class CreateNoteActivity : AppCompatActivity() {
         recyclerViewLink.layoutManager= StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
 
         noteId = intent.getIntExtra("itemid",-1)
-        println(noteId)
+
+        println("id3 : ${noteId}")
 
         tvDateTime.text=currentDate
         if(noteId!=-1){
@@ -1084,9 +1085,10 @@ class CreateNoteActivity : AppCompatActivity() {
                         NotesDatabase.getDatabase(it).noteDao().updateNote(notes)
                         setResult(Activity.RESULT_OK)
                         tvDateTime.text=notes.dateTime
-                        reminder?.let { it1 -> setAlarm(it1,notes_title.text.toString(),noteId) }
+                        println("id1 : ${noteId}")
                         Toast.makeText(this@CreateNoteActivity, "Note is updated", Toast.LENGTH_SHORT).show()
                     }
+                    reminder?.let { it1 -> setAlarm(it1,notes_title.text.toString(),noteId) }
                 }
             }else{
                 val coroutineScope = CoroutineScope(Dispatchers.Main)
@@ -1107,10 +1109,11 @@ class CreateNoteActivity : AppCompatActivity() {
 
                         val insertedId = NotesDatabase.getDatabase(it).noteDao().insertNotes(notes)
                         noteId = insertedId.toInt()
-                        reminder?.let { it1 -> setAlarm(it1,notes_title.text.toString(),noteId) }
+
                         setResult(Activity.RESULT_OK)
                         Toast.makeText(this@CreateNoteActivity, "Note is added", Toast.LENGTH_SHORT).show()
                     }
+                    reminder?.let { it1 -> setAlarm(it1,notes_title.text.toString(),noteId) }
 
 
                 }

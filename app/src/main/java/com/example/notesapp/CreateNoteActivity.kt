@@ -42,10 +42,12 @@ import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 
+import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlin.coroutines.suspendCoroutine
+
 
 class CreateNoteActivity : AppCompatActivity() {
     var currentDate:String? = null
-    var getFile: File? = null
     var color="blue"
     var webLink = ""
     var fav=false
@@ -55,6 +57,7 @@ class CreateNoteActivity : AppCompatActivity() {
     var passwordBoolean=false
     var PICK_IMAGES_CODE = 1
     var noteId=-1
+    var noteId2=-1
 
     var reminder: Long? =null
 
@@ -107,7 +110,10 @@ class CreateNoteActivity : AppCompatActivity() {
         recyclerViewLink.layoutManager= StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
 
         noteId = intent.getIntExtra("itemid",-1)
+        noteId2=intent.getIntExtra("itemid2",-1)
+        println("creative : $noteId2")
         tvDateTime.text=currentDate
+
         if(noteId!=-1){
             GlobalScope.launch(Dispatchers.Main){
                 let {
@@ -982,6 +988,69 @@ class CreateNoteActivity : AppCompatActivity() {
         initAdapter()
 
     }
+
+    override fun onBackPressed() {
+        GlobalScope.launch(Dispatchers.Main) {
+            val shouldExit = showExitDialog()
+            if (shouldExit) {
+                setResult(Activity.RESULT_OK)
+                finish()
+            }else{
+
+            }
+        }
+    }
+
+    private suspend fun showExitDialog(): Boolean {
+        return if (noteId == -1) {
+            if (fav || !items.isEmpty() || !items_link.isEmpty() || password != "" ||
+                !notes_title.text.toString().isNullOrEmpty() ||
+                !notes_sub_title.text.toString().isNullOrEmpty() ||
+                !notes_desc.text.toString().isNullOrEmpty()) {
+                displayExitDialog()
+            } else {
+                true
+            }
+        } else {
+            val different = isDifferent()
+            if (different) {
+                displayExitDialog()
+            } else {
+                true
+            }
+        }
+    }
+
+    private suspend fun displayExitDialog(): Boolean {
+        return suspendCancellableCoroutine { continuation ->
+            val view = View.inflate(this@CreateNoteActivity, R.layout.createactivty_permi_dialog, null)
+            val builder = AlertDialog.Builder(this@CreateNoteActivity)
+            builder.setView(view)
+            val dialog = builder.create()
+
+
+
+            dialog.show()
+            dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+
+            if (noteId != -1) {
+                view.permi_text.text = "Are you sure you want to exit without saving changes?"
+            } else {
+                view.permi_text.text = "Are you sure you want to exit without saving?"
+            }
+
+            view.cancel_permi.setOnClickListener {
+                dialog.dismiss()
+                continuation.resume(false, null)
+            }
+
+            view.yes_permi.setOnClickListener {
+                dialog.dismiss()
+                continuation.resume(true, null)
+            }
+        }
+    }
+
     private suspend fun isDifferent(): Boolean = coroutineScope {
         val notes = async(Dispatchers.IO) {
             NotesDatabase.getDatabase(this@CreateNoteActivity).noteDao().getSpecificNote(noteId)
@@ -1075,9 +1144,7 @@ class CreateNoteActivity : AppCompatActivity() {
                         notes.create_dateTime=notes.create_dateTime
                         notes.color=color
                         notes.reminder=reminder
-                        if(reminder!=null){
-                            reminder?.let { it1 -> setAlarm(it1,notes_title.text.toString(),noteId) }
-                        }
+
                         notes.imgPath=items
                         notes.webLink=items_link
                         notes.favorite=fav
@@ -1087,6 +1154,9 @@ class CreateNoteActivity : AppCompatActivity() {
                         tvDateTime.text=notes.dateTime
                         println("id1 : ${noteId}")
                         Toast.makeText(this@CreateNoteActivity, "Note is updated", Toast.LENGTH_SHORT).show()
+                    }
+                    if(reminder!=null){
+                        reminder?.let { it1 -> setAlarm(it1,notes_title.text.toString(),noteId) }
                     }
 
 
@@ -1110,11 +1180,12 @@ class CreateNoteActivity : AppCompatActivity() {
 
                         val insertedId = NotesDatabase.getDatabase(it).noteDao().insertNotes(notes)
                         noteId = insertedId.toInt()
-                        if(reminder!=null){
-                            reminder?.let { it1 -> setAlarm(it1,notes_title.text.toString(),noteId) }
-                        }
+
                         setResult(Activity.RESULT_OK)
                         Toast.makeText(this@CreateNoteActivity, "Note is added", Toast.LENGTH_SHORT).show()
+                    }
+                    if(reminder!=null){
+                        reminder?.let { it1 -> setAlarm(it1,notes_title.text.toString(),noteId) }
                     }
 
 

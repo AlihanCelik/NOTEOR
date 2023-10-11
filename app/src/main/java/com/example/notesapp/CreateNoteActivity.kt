@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
+import android.graphics.Paint
 import android.graphics.Typeface
 import android.net.Uri
 import android.os.Build
@@ -125,6 +126,19 @@ class CreateNoteActivity : AppCompatActivity() {
                         fav=false
                         favButton.setImageResource(R.drawable.favoriteoff)
                     }
+                    if(notes.reminder!=null){
+                        if(notes.reminder!! <System.currentTimeMillis()){
+                            reminderlayout.visibility=View.VISIBLE
+                            val reminderDateItem = Date(notes.reminder!!)
+                            val formattedDateItem = sdf.format(reminderDateItem)
+                            tvReminderTime.text=formattedDateItem
+                            reminder=notes.reminder
+                            tvReminderTime.paintFlags =Paint.STRIKE_THRU_TEXT_FLAG
+                        }
+                    }else{
+                        reminderlayout.visibility=View.GONE
+                    }
+
 
                     items= notes.imgPath as MutableList<Uri>
                     if(items.isNotEmpty()){
@@ -139,15 +153,7 @@ class CreateNoteActivity : AppCompatActivity() {
                     notes_sub_title.setText(notes.subTitle)
                     notes_desc.setText(notes.noteText)
                     tvDateTime.text=notes.dateTime
-                    if(notes.reminder!=null){
-                        reminderlayout.visibility=View.VISIBLE
-                        val reminderDateItem = Date(notes.reminder!!)
-                        val formattedDateItem = sdf.format(reminderDateItem)
-                        tvReminderTime.text=formattedDateItem
-                        reminder=notes.reminder
-                    }else{
-                        reminderlayout.visibility=View.GONE
-                    }
+
 
                     when (notes.color) {
                         "blue" -> {
@@ -530,11 +536,10 @@ class CreateNoteActivity : AppCompatActivity() {
 
             bottomSheetView.findViewById<View>(R.id.image).setOnClickListener {
                 if (hasPermissions()) {
-                    val intent = Intent(Intent.ACTION_OPEN_DOCUMENT_TREE)
+                    val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
                     intent.addCategory(Intent.CATEGORY_OPENABLE)
                     intent.type = "image/*"
                     intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
-                    intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                     intent.action = Intent.ACTION_GET_CONTENT
                     startActivityForResult(
                         Intent.createChooser(intent, "Select Image(s)"),
@@ -921,28 +926,32 @@ class CreateNoteActivity : AppCompatActivity() {
                     bottomSheetView.findViewById<ImageView>(R.id.remainder).setImageDrawable(ContextCompat.getDrawable(this,R.drawable.remindernotes))
                 }else{
                     val calendar = Calendar.getInstance()
+
                     val datePicker = DatePickerDialog(
                         this,
                         { _, year, month, dayOfMonth ->
-                            // Kullanıcıdan seçilen tarih
                             calendar.set(Calendar.YEAR, year)
                             calendar.set(Calendar.MONTH, month)
                             calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
 
-                            // Saat seçimi için TimePickerDialog göster
                             val timePicker = TimePickerDialog(
                                 this,
                                 { _, hourOfDay, minute ->
-                                    // Kullanıcıdan seçilen saat
                                     calendar.set(Calendar.HOUR_OF_DAY, hourOfDay)
                                     calendar.set(Calendar.MINUTE, minute)
-                                    reminder=calendar.timeInMillis
-                                    reminder?.let {
-                                        val reminderDate = Date(it)
+                                    val selectedTimeInMillis = calendar.timeInMillis
+
+                                    if (selectedTimeInMillis > System.currentTimeMillis()) {
+                                        reminder = selectedTimeInMillis
+                                        val reminderDate = Date(reminder!!)
                                         val formattedDate = sdf.format(reminderDate)
                                         reminderlayout.visibility = View.VISIBLE
                                         tvReminderTime.text = formattedDate
-                                        bottomSheetView.findViewById<ImageView>(R.id.remainder).setImageDrawable(ContextCompat.getDrawable(this,R.drawable.reminderonn))
+                                        bottomSheetView.findViewById<ImageView>(R.id.remainder).setImageDrawable(ContextCompat.getDrawable(this, R.drawable.reminderonn))
+                                    } else {
+                                        // Kullanıcı şu anki zamandan önceki bir tarih ve saat seçti
+                                        // Burada kullanıcıyı uyarabilir veya isteğinize göre başka bir işlem yapabilirsiniz
+                                        Toast.makeText(this, "Lütfen geçerli bir tarih ve saat seçin", Toast.LENGTH_SHORT).show()
                                     }
                                 },
                                 calendar.get(Calendar.HOUR_OF_DAY),
@@ -955,6 +964,9 @@ class CreateNoteActivity : AppCompatActivity() {
                         calendar.get(Calendar.MONTH),
                         calendar.get(Calendar.DAY_OF_MONTH)
                     )
+
+                    datePicker.datePicker.minDate = System.currentTimeMillis()
+
                     datePicker.show()
 
                 }
@@ -1105,7 +1117,6 @@ class CreateNoteActivity : AppCompatActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == PERMISSION_CODE) {
             if (grantResults.isNotEmpty() && grantResults.all { it == PackageManager.PERMISSION_GRANTED }) {
-                // İzinler verildiyse, işlemleri gerçekleştir
                 val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
                 intent.addCategory(Intent.CATEGORY_OPENABLE)
                 intent.type = "image/*"
@@ -1116,8 +1127,7 @@ class CreateNoteActivity : AppCompatActivity() {
                     PICK_IMAGES_CODE
                 )
             } else {
-                // İzinler reddedildiyse, kullanıcıya bir mesaj gösterin veya gerekli işlemleri yapın
-                // Örneğin, izinler reddedildiğinde bir açıklama gösterebilirsiniz.
+
             }
         }
     }

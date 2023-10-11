@@ -127,13 +127,15 @@ class CreateNoteActivity : AppCompatActivity() {
                         favButton.setImageResource(R.drawable.favoriteoff)
                     }
                     if(notes.reminder!=null){
+                        reminderlayout.visibility=View.VISIBLE
+                        val reminderDateItem = Date(notes.reminder!!)
+                        val formattedDateItem = sdf.format(reminderDateItem)
+                        tvReminderTime.text=formattedDateItem
+                        reminder=notes.reminder
                         if(notes.reminder!! <System.currentTimeMillis()){
-                            reminderlayout.visibility=View.VISIBLE
-                            val reminderDateItem = Date(notes.reminder!!)
-                            val formattedDateItem = sdf.format(reminderDateItem)
-                            tvReminderTime.text=formattedDateItem
-                            reminder=notes.reminder
                             tvReminderTime.paintFlags =Paint.STRIKE_THRU_TEXT_FLAG
+                        }else{
+                            tvReminderTime.paintFlags =0
                         }
                     }else{
                         reminderlayout.visibility=View.GONE
@@ -942,6 +944,7 @@ class CreateNoteActivity : AppCompatActivity() {
                                     val selectedTimeInMillis = calendar.timeInMillis
 
                                     if (selectedTimeInMillis > System.currentTimeMillis()) {
+                                        tvReminderTime.paintFlags =0
                                         reminder = selectedTimeInMillis
                                         val reminderDate = Date(reminder!!)
                                         val formattedDate = sdf.format(reminderDate)
@@ -949,8 +952,6 @@ class CreateNoteActivity : AppCompatActivity() {
                                         tvReminderTime.text = formattedDate
                                         bottomSheetView.findViewById<ImageView>(R.id.remainder).setImageDrawable(ContextCompat.getDrawable(this, R.drawable.reminderonn))
                                     } else {
-                                        // Kullanıcı şu anki zamandan önceki bir tarih ve saat seçti
-                                        // Burada kullanıcıyı uyarabilir veya isteğinize göre başka bir işlem yapabilirsiniz
                                         Toast.makeText(this, "Lütfen geçerli bir tarih ve saat seçin", Toast.LENGTH_SHORT).show()
                                     }
                                 },
@@ -1154,7 +1155,6 @@ class CreateNoteActivity : AppCompatActivity() {
                         notes.create_dateTime=notes.create_dateTime
                         notes.color=color
                         notes.reminder=reminder
-
                         notes.imgPath=items
                         notes.webLink=items_link
                         notes.favorite=fav
@@ -1162,12 +1162,12 @@ class CreateNoteActivity : AppCompatActivity() {
                         NotesDatabase.getDatabase(it).noteDao().updateNote(notes)
                         setResult(Activity.RESULT_OK)
                         tvDateTime.text=notes.dateTime
-                        println("id1 : ${noteId}")
                         Toast.makeText(this@CreateNoteActivity, "Note is updated", Toast.LENGTH_SHORT).show()
+                        if(reminder!=null && notes.reminder!! >System.currentTimeMillis()){
+                            reminder?.let { it1 -> setAlarm(it1,notes.title!!,noteId) }
+                        }
                     }
-                    if(reminder!=null){
-                        reminder?.let { it1 -> setAlarm(it1,notes_title.text.toString(),noteId) }
-                    }
+
 
 
                 }
@@ -1190,13 +1190,13 @@ class CreateNoteActivity : AppCompatActivity() {
 
                         val insertedId = NotesDatabase.getDatabase(it).noteDao().insertNotes(notes)
                         noteId = insertedId.toInt()
-
                         setResult(Activity.RESULT_OK)
+                        if(reminder!=null && notes.reminder!! >System.currentTimeMillis()){
+                            reminder?.let { it1 -> setAlarm(it1,notes.title!!,noteId) }
+                        }
                         Toast.makeText(this@CreateNoteActivity, "Note is added", Toast.LENGTH_SHORT).show()
                     }
-                    if(reminder!=null){
-                        reminder?.let { it1 -> setAlarm(it1,notes_title.text.toString(),noteId) }
-                    }
+
 
 
 

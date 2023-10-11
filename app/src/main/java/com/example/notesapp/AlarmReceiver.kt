@@ -16,10 +16,8 @@ class AlarmReceiver : BroadcastReceiver(){
         val noteId=intent?.getIntExtra("NOTE_ID",-1)
         val i=Intent(context,CreateNoteActivity::class.java)
         i.putExtra("itemid",noteId)
-        i.putExtra("itemid2",noteId)
-        println("alarm $noteId")
         intent!!.flags=Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        val pendingintent=PendingIntent.getActivity(context,0,i,PendingIntent.FLAG_IMMUTABLE)
+        val pendingintent=PendingIntent.getActivity(context,0,i,PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
         val builder =NotificationCompat.Builder(context!!,"foxandroid")
             .setSmallIcon(R.mipmap.logo).setContentTitle("NOTEOR")
             .setContentText(noteTitle)

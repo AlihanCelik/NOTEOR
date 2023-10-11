@@ -111,8 +111,6 @@ class CreateNoteActivity : AppCompatActivity() {
         recyclerViewLink.layoutManager= StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
 
         noteId = intent.getIntExtra("itemid",-1)
-        noteId2=intent.getIntExtra("itemid2",-1)
-        println("creative : $noteId2")
         tvDateTime.text=currentDate
 
         if(noteId!=-1){
@@ -1164,7 +1162,8 @@ class CreateNoteActivity : AppCompatActivity() {
                         tvDateTime.text=notes.dateTime
                         Toast.makeText(this@CreateNoteActivity, "Note is updated", Toast.LENGTH_SHORT).show()
                         if(reminder!=null && notes.reminder!! >System.currentTimeMillis()){
-                            reminder?.let { it1 -> setAlarm(it1,notes.title!!,noteId) }
+                            reminder?.let { it1 -> setAlarm(it1,notes.title!!,notes.id!!) }
+                            println("update : ${notes.title}" )
                         }
                     }
 
@@ -1192,14 +1191,11 @@ class CreateNoteActivity : AppCompatActivity() {
                         noteId = insertedId.toInt()
                         setResult(Activity.RESULT_OK)
                         if(reminder!=null && notes.reminder!! >System.currentTimeMillis()){
-                            reminder?.let { it1 -> setAlarm(it1,notes.title!!,noteId) }
+                            reminder?.let { it1 -> setAlarm(it1,notes.title!!,noteId!!) }
+                            println("save : ${notes.title}" )
                         }
                         Toast.makeText(this@CreateNoteActivity, "Note is added", Toast.LENGTH_SHORT).show()
                     }
-
-
-
-
                 }
             }
         }
@@ -1257,8 +1253,9 @@ class CreateNoteActivity : AppCompatActivity() {
         val alarmIntent = Intent(this, AlarmReceiver::class.java)
         alarmIntent.putExtra("NOTE_TITLE", noteTitle)
         alarmIntent.putExtra("NOTE_ID",noteid)
-        val pendingIntent = PendingIntent.getBroadcast(this, 0, alarmIntent,  PendingIntent.FLAG_IMMUTABLE)
-
+        println("Set : $noteid")
+        print("Set Title $noteTitle")
+        val pendingIntent = PendingIntent.getBroadcast(this, 0, alarmIntent,  PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, dateTimeInMillis, pendingIntent)
 
     }

@@ -371,12 +371,16 @@ class CreateNoteActivity : AppCompatActivity() {
             saveNote()
         }
         category_button.setOnClickListener {
+            category_updownarrow.setImageResource(R.drawable.uparrow)
             val bottomSheet =
                 BottomSheetDialog(this@CreateNoteActivity, R.style.BottomSheetDialogTheme)
             val bottomSheetView = LayoutInflater.from(applicationContext).inflate(
                 R.layout.bottom_sheet_category,
                 findViewById(R.id.bottomSheet_category)
             ) as ConstraintLayout
+            bottomSheet.setOnCancelListener {
+                category_updownarrow.setImageResource(R.drawable.arrowdown)
+            }
             bottomSheet.setContentView(bottomSheetView)
             bottomSheet.show()
 

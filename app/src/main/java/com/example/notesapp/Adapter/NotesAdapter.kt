@@ -201,10 +201,11 @@ class NotesAdapter(val frag:Int) :
                             context?.let {
                                 TrashDatabase.getDatabase(it).trashDao().insertTrash(trash)
                                 note.id?.let { it1 ->
-                                    NotesDatabase.getDatabase(it).noteDao().deleteSpecificNote(
+                                    NotesDatabase.getDatabase(it).noteDao().deleteSpecificNoteWithReminder(context,
                                         it1
                                     )
                                 }
+
                             }
                         }
                         arrList.removeAt(position)

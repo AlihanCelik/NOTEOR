@@ -1255,7 +1255,7 @@ class CreateNoteActivity : AppCompatActivity() {
         alarmIntent.putExtra("NOTE_ID",noteid)
         println("Set : $noteid")
         print("Set Title $noteTitle")
-        val pendingIntent = PendingIntent.getBroadcast(this, 0, alarmIntent,  PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
+        val pendingIntent = PendingIntent.getBroadcast(this, noteid, alarmIntent,  PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, dateTimeInMillis, pendingIntent)
 
     }

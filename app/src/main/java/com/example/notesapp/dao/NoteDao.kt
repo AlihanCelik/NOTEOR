@@ -31,7 +31,6 @@ interface NoteDao {
     suspend fun deleteSpecificNoteWithReminder(context : Context, noteId: Int) {
         val reminderTime = getReminderForNote(noteId)
         if (reminderTime != null) {
-            // İlgili alarmı iptal et
             val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
             val alarmIntent = Intent(context, AlarmReceiver::class.java)
             val pendingIntent = PendingIntent.getBroadcast(context, noteId, alarmIntent, PendingIntent.FLAG_CANCEL_CURRENT or PendingIntent.FLAG_IMMUTABLE)

@@ -12,12 +12,14 @@ import androidx.core.app.NotificationManagerCompat
 
 class AlarmReceiver : BroadcastReceiver(){
     override fun onReceive(context: Context?, intent: Intent?) {
+
         val noteTitle = intent?.getStringExtra("NOTE_TITLE")
         val noteId=intent?.getIntExtra("NOTE_ID",-1)
         val i=Intent(context,CreateNoteActivity::class.java)
         i.putExtra("itemid",noteId)
+        val requestCode = noteId ?: 0
         intent!!.flags=Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        val pendingintent=PendingIntent.getActivity(context,0,i,PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
+        val pendingintent=PendingIntent.getActivity(context,requestCode,i,PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
         val builder =NotificationCompat.Builder(context!!,"foxandroid")
             .setSmallIcon(R.mipmap.logo).setContentTitle("NOTEOR")
             .setContentText(noteTitle)

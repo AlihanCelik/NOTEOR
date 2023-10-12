@@ -315,6 +315,7 @@ class CreateNoteActivity : AppCompatActivity() {
         }
 
 
+
         backButton.setOnClickListener {
             GlobalScope.launch(Dispatchers.Main){
                 if (noteId != -1) {
@@ -368,6 +369,18 @@ class CreateNoteActivity : AppCompatActivity() {
         }
         saveButton.setOnClickListener {
             saveNote()
+        }
+        category_button.setOnClickListener {
+            val bottomSheet =
+                BottomSheetDialog(this@CreateNoteActivity, R.style.BottomSheetDialogTheme)
+            val bottomSheetView = LayoutInflater.from(applicationContext).inflate(
+                R.layout.bottom_sheet_category,
+                findViewById(R.id.bottomSheet_category)
+            ) as ConstraintLayout
+            bottomSheet.setContentView(bottomSheetView)
+            bottomSheet.show()
+
+
         }
 
         favButton.setOnClickListener {

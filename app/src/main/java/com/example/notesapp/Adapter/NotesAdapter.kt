@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.graphics.Paint
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
@@ -159,6 +160,17 @@ class NotesAdapter(val frag:Int) :
                 "red" -> holder.itemView.item_bg.setBackgroundColor(ContextCompat.getColor(context, R.color.background_red))
                 "orange" -> holder.itemView.item_bg.setBackgroundColor(ContextCompat.getColor(context, R.color.background_orange))
 
+            }
+            if(arrList[position].reminder!=null){
+                view.dialogReminderLayout.visibility=View.VISIBLE
+               view.dialogReminderDate.text= arrList[position].reminder.toString()
+                if(arrList[position].reminder!! <System.currentTimeMillis()){
+                    view.dialogReminderDate.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
+                }else{
+                    view.dialogReminderDate.paintFlags = 0
+                }
+            }else{
+                view.dialogReminderLayout.visibility=View.GONE
             }
             dialog.show()
             dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)

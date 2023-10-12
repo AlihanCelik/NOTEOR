@@ -28,6 +28,34 @@
             android:layout_marginBottom="45dp"
             android:layout_marginTop="45dp">
             <LinearLayout
+                android:id="@+id/dialogReminderLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="5dp"
+                    android:src="@drawable/remindernotes"
+                    app:tint="@color/AdvGrey2">
+                </ImageView>
+                <TextView
+                    android:layout_gravity="center"
+                    android:id="@+id/dialogReminderDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2023-10-20 16:20"
+                    android:textColor="@color/AdvGrey2"
+                    android:textSize="10dp">
+
+                </TextView>
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/add_remove_Favorites"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

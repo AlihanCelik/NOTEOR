@@ -37,11 +37,15 @@ import kotlinx.android.synthetic.main.notelongclick_dialog.view.*
 import kotlinx.android.synthetic.main.password_remove_dialog.view.*
 import kotlinx.coroutines.*
 import org.commonmark.node.SoftLineBreak
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class NotesAdapter(val frag:Int) :
     RecyclerView.Adapter<NotesAdapter.NotesViewHolder>() {
 
     var arrList = ArrayList<Notes>()
+    val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm")
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NotesViewHolder {
 
         return NotesViewHolder(
@@ -163,7 +167,8 @@ class NotesAdapter(val frag:Int) :
             }
             if(arrList[position].reminder!=null){
                 view.dialogReminderLayout.visibility=View.VISIBLE
-               view.dialogReminderDate.text= arrList[position].reminder.toString()
+                val formattedDateItem = sdf.format(Date(arrList[position].reminder!!))
+               view.dialogReminderDate.text= formattedDateItem
                 if(arrList[position].reminder!! <System.currentTimeMillis()){
                     view.dialogReminderDate.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
                 }else{

@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.notesapp.R
 import com.example.notesapp.entities.Category
+import com.example.notesapp.entities.Trash
 import kotlinx.android.synthetic.main.item_bottom_sheet_category.view.*
 
 class CategoryAdapter () :
@@ -13,6 +14,9 @@ class CategoryAdapter () :
     var arrList = ArrayList<Category>()
     class CategoryViewHolder(view:View) : RecyclerView.ViewHolder(view){
 
+    }
+    fun setData(arrCategoryList: List<Category>){
+        arrList = ArrayList(arrCategoryList)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {

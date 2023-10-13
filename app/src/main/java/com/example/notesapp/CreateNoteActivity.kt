@@ -396,7 +396,7 @@ class CreateNoteActivity : AppCompatActivity() {
             categoryAdapter = CategoryAdapter()
             val recv_category=bottomSheetView.findViewById<RecyclerView>(R.id.recycler_view_categorybottom)
             recv_category.setHasFixedSize(true)
-            recv_category.layoutManager= StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
+            recv_category.layoutManager= StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
 
             GlobalScope.launch(Dispatchers.Main) {
                 let {
@@ -423,7 +423,14 @@ class CreateNoteActivity : AppCompatActivity() {
                             category.name_category = view.category_name.text.toString()
                             applicationContext?.let {
                                 val insertedCategoryId = CategoryDatabase.getDatabase(it).CategoryDao().insertCategory(category)
-                                categoryAdapter.notifyDataSetChanged()
+                                GlobalScope.launch(Dispatchers.Main) {
+                                    let {
+                                        var category2 =
+                                            CategoryDatabase.getDatabase(this@CreateNoteActivity).CategoryDao()
+                                                .getAllCategory()
+                                        categoryAdapter.updateData(category2)
+                                    }
+                                }
                             }
                         }
                     }

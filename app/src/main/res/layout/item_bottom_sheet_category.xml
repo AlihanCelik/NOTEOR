@@ -9,7 +9,7 @@
         app:cardCornerRadius="15dp"
         app:cardElevation="5dp"
         android:layout_margin="5dp"
-        app:cardBackgroundColor="#E1E0E0"
+        app:cardBackgroundColor="#ececea"
         android:id="@+id/item_back"
         android:padding="5dp">
         <LinearLayout
@@ -29,7 +29,7 @@
                 android:textStyle="bold"
                 android:gravity="center"
                 android:background="@null"
-                android:textColor="@color/AdvGrey"></TextView>
+                android:textColor="@color/grey2"></TextView>
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>

@@ -11,6 +11,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.text.*
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowInsetsController
@@ -387,7 +388,10 @@ class CreateNoteActivity : AppCompatActivity() {
                 category_updownarrow.setImageResource(R.drawable.arrowdown)
             }
             categoryAdapter = CategoryAdapter()
-            bottomSheetView.findViewById<RecyclerView>(R.id.recycler_view_categorybottom).adapter=categoryAdapter
+            val recv_category=bottomSheetView.findViewById<RecyclerView>(R.id.recycler_view_categorybottom)
+            recv_category.setHasFixedSize(true)
+            recv_category.layoutManager= StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
+            recv_category.adapter=categoryAdapter
             bottomSheetView.findViewById<LinearLayout>(R.id.bottom_add_category).setOnClickListener {
                 val view = View.inflate(this, R.layout.dialog_add_category, null)
                 val builder = AlertDialog.Builder(this)
@@ -400,9 +404,10 @@ class CreateNoteActivity : AppCompatActivity() {
                         val coroutineScope = CoroutineScope(Dispatchers.Main)
                         coroutineScope.launch {
                             var category = Category()
-                            category.name_category = category_name.text.toString()
+                            category.name_category = view.category_name.text.toString()
                             applicationContext?.let {
-                                CategoryDatabase.getDatabase(it).CategoryDao().insertCategory(category)
+                                val insertedCategoryId = CategoryDatabase.getDatabase(it).CategoryDao().insertCategory(category)
+                                Log.d("CategoryInsertion", "Inserted category id: $insertedCategoryId")
                                 categoryAdapter.notifyDataSetChanged()
                             }
                         }

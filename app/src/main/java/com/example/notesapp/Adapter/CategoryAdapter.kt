@@ -11,8 +11,6 @@ import kotlinx.android.synthetic.main.item_bottom_sheet_category.view.*
 class CategoryAdapter () :
     RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>() {
     var arrList = ArrayList<Category>()
-
-
     class CategoryViewHolder(view:View) : RecyclerView.ViewHolder(view){
 
     }

@@ -26,14 +26,18 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.example.notesapp.Adapter.CategoryAdapter
 import com.example.notesapp.Adapter.ImageAdapter
 import com.example.notesapp.Adapter.LinksAdapter
+import com.example.notesapp.database.CategoryDatabase
 import com.example.notesapp.database.NotesDatabase
+import com.example.notesapp.entities.Category
 import com.example.notesapp.entities.Notes
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.android.synthetic.main.activity_create_note.*
 import kotlinx.android.synthetic.main.bottom_sheet_note.*
 import kotlinx.android.synthetic.main.createactivty_permi_dialog.view.*
+import kotlinx.android.synthetic.main.dialog_add_category.view.*
 import kotlinx.android.synthetic.main.dialog_url.view.*
 import kotlinx.android.synthetic.main.font_dialog.view.*
 import kotlinx.android.synthetic.main.locked_dialog.view.*
@@ -77,6 +81,7 @@ class CreateNoteActivity : AppCompatActivity() {
     lateinit var recyclerView: RecyclerView
     lateinit var imageAdapter: ImageAdapter
     lateinit var linksAdapter: LinksAdapter
+    lateinit var categoryAdapter: CategoryAdapter
     lateinit var items_link:MutableList<String>
     lateinit var recyclerViewLink: RecyclerView
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -381,6 +386,32 @@ class CreateNoteActivity : AppCompatActivity() {
             bottomSheet.setOnCancelListener {
                 category_updownarrow.setImageResource(R.drawable.arrowdown)
             }
+            categoryAdapter = CategoryAdapter()
+            bottomSheetView.findViewById<RecyclerView>(R.id.recycler_view_categorybottom).adapter=categoryAdapter
+            bottomSheetView.findViewById<LinearLayout>(R.id.bottom_add_category).setOnClickListener {
+                val view = View.inflate(this, R.layout.dialog_add_category, null)
+                val builder = AlertDialog.Builder(this)
+                builder.setView(view)
+                val dialog = builder.create()
+                dialog.show()
+                dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+                view.okeyCategory.setOnClickListener {
+                    if (view.category_name.text.toString() != "") {
+                        val coroutineScope = CoroutineScope(Dispatchers.Main)
+                        coroutineScope.launch {
+                            var category = Category()
+                            category.name_category = category_name.text.toString()
+                            applicationContext?.let {
+                                CategoryDatabase.getDatabase(it).CategoryDao().insertCategory(category)
+                                categoryAdapter.notifyDataSetChanged()
+                            }
+                        }
+                    }
+
+                    dialog.dismiss()
+                }
+            }
+
             bottomSheet.setContentView(bottomSheetView)
             bottomSheet.show()
 

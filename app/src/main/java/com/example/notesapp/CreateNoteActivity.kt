@@ -58,7 +58,7 @@ import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlin.coroutines.suspendCoroutine
 
 
-class CreateNoteActivity : AppCompatActivity() {
+class CreateNoteActivity : AppCompatActivity(),CategoryAdapter.CategoryClickListener {
     var currentDate:String? = null
     var color="blue"
     var webLink = ""
@@ -393,7 +393,7 @@ class CreateNoteActivity : AppCompatActivity() {
             bottomSheet.setOnCancelListener {
                 category_updownarrow.setImageResource(R.drawable.arrowdown)
             }
-            categoryAdapter = CategoryAdapter()
+            categoryAdapter = CategoryAdapter(this@CreateNoteActivity)
             val recv_category=bottomSheetView.findViewById<RecyclerView>(R.id.recycler_view_categorybottom)
             recv_category.setHasFixedSize(true)
             recv_category.layoutManager= StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
@@ -1332,6 +1332,10 @@ class CreateNoteActivity : AppCompatActivity() {
         val pendingIntent = PendingIntent.getBroadcast(this, noteid, alarmIntent,  PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, dateTimeInMillis, pendingIntent)
 
+    }
+
+    override fun onCategoryClick(category: Category) {
+        category_name.text=category.name_category
     }
 
 }

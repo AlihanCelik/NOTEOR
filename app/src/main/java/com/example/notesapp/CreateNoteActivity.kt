@@ -70,6 +70,7 @@ class CreateNoteActivity : AppCompatActivity(),CategoryAdapter.CategoryClickList
     var PICK_IMAGES_CODE = 1
     var noteId=-1
     var noteId2=-1
+    var categoryName ="All"
 
     var reminder: Long? =null
 
@@ -393,7 +394,7 @@ class CreateNoteActivity : AppCompatActivity(),CategoryAdapter.CategoryClickList
             bottomSheet.setOnCancelListener {
                 category_updownarrow.setImageResource(R.drawable.arrowdown)
             }
-            categoryAdapter = CategoryAdapter(this@CreateNoteActivity)
+            categoryAdapter = CategoryAdapter(this@CreateNoteActivity,categoryName)
             val recv_category=bottomSheetView.findViewById<RecyclerView>(R.id.recycler_view_categorybottom)
             recv_category.setHasFixedSize(true)
             recv_category.layoutManager= StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
@@ -416,26 +417,32 @@ class CreateNoteActivity : AppCompatActivity(),CategoryAdapter.CategoryClickList
                 dialog.show()
                 dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
                 view.okeyCategory.setOnClickListener {
-                    if (view.category_name.text.toString() != "") {
-                        val coroutineScope = CoroutineScope(Dispatchers.Main)
-                        coroutineScope.launch {
+                    val newCategoryName = view.category_name.text.toString()
+
+                    val coroutineScope = CoroutineScope(Dispatchers.Main)
+                    coroutineScope.launch {
+                        val existingCategories =
+                            CategoryDatabase.getDatabase(this@CreateNoteActivity).CategoryDao().getAllCategory()
+
+                        val isCategoryExists = existingCategories.any { it.name_category == newCategoryName }
+
+                        if (newCategoryName.isNotEmpty() && !isCategoryExists) {
                             var category = Category()
-                            category.name_category = view.category_name.text.toString()
+                            category.name_category = newCategoryName
                             applicationContext?.let {
-                                val insertedCategoryId = CategoryDatabase.getDatabase(it).CategoryDao().insertCategory(category)
-                                GlobalScope.launch(Dispatchers.Main) {
-                                    let {
-                                        var category2 =
-                                            CategoryDatabase.getDatabase(this@CreateNoteActivity).CategoryDao()
-                                                .getAllCategory()
-                                        categoryAdapter.updateData(category2)
-                                    }
-                                }
+                                val insertedCategoryId =
+                                    CategoryDatabase.getDatabase(it).CategoryDao().insertCategory(category)
+                                val category2 =
+                                    CategoryDatabase.getDatabase(this@CreateNoteActivity).CategoryDao()
+                                        .getAllCategory()
+                                categoryAdapter.updateData(category2)
                             }
+                            dialog.dismiss()
+                        } else {
+                            Toast.makeText(this@CreateNoteActivity,"This category already exists.", Toast.LENGTH_SHORT).show()
+                            dialog.dismiss()
                         }
                     }
-
-                    dialog.dismiss()
                 }
             }
 
@@ -1336,6 +1343,7 @@ class CreateNoteActivity : AppCompatActivity(),CategoryAdapter.CategoryClickList
 
     override fun onCategoryClick(category: Category) {
         category_name.text=category.name_category
+        categoryName=category.name_category.toString()
     }
 
 }

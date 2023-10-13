@@ -8,14 +8,11 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.notesapp.R
 import com.example.notesapp.entities.Category
-import com.example.notesapp.entities.Notes
-import com.example.notesapp.entities.Trash
 import kotlinx.android.synthetic.main.item_bottom_sheet_category.view.*
 
-class CategoryAdapter (private val clickListener: CategoryClickListener) :
+class CategoryAdapter (private val clickListener: CategoryClickListener,var adapterPosition: String ="All") :
     RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>() {
     var arrList = ArrayList<Category>()
-    var adapterPosition = -1
     class CategoryViewHolder(view:View) : RecyclerView.ViewHolder(view){
 
     }
@@ -41,13 +38,16 @@ class CategoryAdapter (private val clickListener: CategoryClickListener) :
         val model =arrList[position]
         holder.itemView.item_text_categories.text=model.name_category
         holder.itemView.setOnClickListener {
-            adapterPosition = position
+            adapterPosition = arrList[position].name_category.toString()
+            notifyDataSetChanged()
             clickListener.onCategoryClick(model)
         }
-        if (position == adapterPosition){
+        if (arrList[position].name_category == adapterPosition){
             holder.itemView.findViewById<CardView>(R.id.item_back_category).setCardBackgroundColor(ContextCompat.getColor(holder.itemView.context, R.color.blue1))
+            holder.itemView.item_text_categories.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.white))
         }else {
             holder.itemView.findViewById<CardView>(R.id.item_back_category).setCardBackgroundColor(ContextCompat.getColor(holder.itemView.context, R.color.grey3))
+            holder.itemView.item_text_categories.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.grey2))
         }
     }
     override fun getItemCount(): Int {

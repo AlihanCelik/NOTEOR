@@ -4,13 +4,18 @@ import android.graphics.Color
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.view.WindowInsetsController
 import android.widget.SearchView
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.notesapp.Adapter.CategoryActivtiyAdapter
 import com.example.notesapp.database.CategoryDatabase
 import com.example.notesapp.entities.Category
 import kotlinx.android.synthetic.main.activity_category_activtiy.*
+import kotlinx.android.synthetic.main.dialog_add_category.view.*
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -25,6 +30,44 @@ class CategoryActivtiy : AppCompatActivity() {
         setContentView(R.layout.activity_category_activtiy)
         backButton.setOnClickListener {
             finish()
+        }
+
+        category_add.setOnClickListener {
+            val view = View.inflate(this, R.layout.dialog_add_category, null)
+            val builder = AlertDialog.Builder(this)
+            builder.setView(view)
+            val dialog = builder.create()
+            dialog.show()
+            dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+            view.okeyCategory.setOnClickListener {
+                val newCategoryName = view.category_name.text.toString()
+
+                val coroutineScope = CoroutineScope(Dispatchers.Main)
+                coroutineScope.launch {
+                    val existingCategories =
+                        CategoryDatabase.getDatabase(this@CategoryActivtiy, ).CategoryDao().getAllCategory()
+
+                    val isCategoryExists = existingCategories.any { it.name_category == newCategoryName }
+
+                    if (newCategoryName.isNotEmpty() && !isCategoryExists) {
+                        var category = Category()
+                        category.name_category = newCategoryName
+                        applicationContext?.let {
+                            val insertedCategoryId =
+                                CategoryDatabase.getDatabase(it).CategoryDao().insertCategory(category)
+                            val category2 =
+                                CategoryDatabase.getDatabase(this@CategoryActivtiy, ).CategoryDao()
+                                    .getAllCategory()
+                            categoryAdapter.updateData(category2)
+                        }
+                        dialog.dismiss()
+                    } else {
+                        Toast.makeText(this@CategoryActivtiy,"This category already exists.", Toast.LENGTH_SHORT).show()
+                        dialog.dismiss()
+                    }
+                }
+            }
+
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             window.statusBarColor = Color.WHITE

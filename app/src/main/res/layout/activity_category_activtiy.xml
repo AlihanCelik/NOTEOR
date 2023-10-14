@@ -48,8 +48,16 @@
         <Space
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginRight="40dp"
             android:layout_weight="1" />
+        <ImageView
+            android:layout_gravity="center"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_marginRight="10dp"
+            app:tint="@color/darkGrey"
+            android:src="@drawable/addcategory">
+        </ImageView>
+
 
     </LinearLayout>
 

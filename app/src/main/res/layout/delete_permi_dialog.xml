@@ -36,7 +36,7 @@
                 android:layout_gravity="center"
                 android:gravity="center"
 
-                android:text="Are you sure you want to delete?"
+                android:text="Are you sure want to delete?"
                 android:textColor="@color/grey2"
                 android:textStyle="bold">
 

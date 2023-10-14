@@ -18,6 +18,8 @@ interface CategoryDao {
 
     @Delete
     suspend fun deleteCategory(category: Category)
+    @Query("DELETE FROM category WHERE id_category =:id_category")
+    suspend fun deleteSpecificCategory(id_category:Int)
 
     @Update
     suspend fun updateCategory(category: Category)

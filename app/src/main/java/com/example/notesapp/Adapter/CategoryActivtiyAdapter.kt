@@ -1,17 +1,21 @@
 package com.example.notesapp.Adapter
 
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import com.example.notesapp.R
 import com.example.notesapp.database.CategoryDatabase
 import com.example.notesapp.database.NotesDatabase
 import com.example.notesapp.entities.Category
+import kotlinx.android.synthetic.main.delete_permi_dialog.view.*
 import kotlinx.android.synthetic.main.dialog_add_category.view.*
 import kotlinx.android.synthetic.main.item_category_activtiy.view.*
+import kotlinx.android.synthetic.main.item_notes.view.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -64,6 +68,32 @@ class CategoryActivtiyAdapter() :
                 }
                 notifyDataSetChanged()
                 dialog.dismiss()
+            }
+
+        }
+        holder.itemView.category_delete.setOnClickListener {
+            val view3 = View.inflate(context, R.layout.delete_permi_dialog, null)
+            val builder3 = AlertDialog.Builder(context)
+            builder3.setView(view3)
+            val dialog3 = builder3.create()
+            dialog3.show()
+            dialog3.window?.setBackgroundDrawableResource(android.R.color.transparent)
+            view3.cancel_delete_permi.setOnClickListener{
+                dialog3.dismiss()
+            }
+            view3.yes_delete_permi.setOnClickListener {
+                GlobalScope.launch(Dispatchers.IO) {
+                    model.id_category?.let { it1 ->
+                        CategoryDatabase.getDatabase(context).CategoryDao().deleteSpecificCategory(
+                            it1
+                        )
+                    }
+                }
+                arrList.removeAt(position)
+                notifyItemRemoved(position)
+                notifyItemRangeChanged(position, itemCount)
+                Toast.makeText(context, "Category Deleted", Toast.LENGTH_SHORT).show()
+                dialog3.dismiss()
             }
         }
     }

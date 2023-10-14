@@ -20,7 +20,11 @@ abstract class CategoryDatabase : RoomDatabase() {
                     , CategoryDatabase::class.java
                     , "category.db"
                 ).build()
-                categoryDatabase!!.CategoryDao().insertCategory(Category(name_category = "All Notes"))
+                categoryDatabase!!.CategoryDao().run {
+                    if (getCategoryByName("All Notes") == null) {
+                        insertCategory(Category(name_category = "All Notes"))
+                    }
+                }
             }
 
             return categoryDatabase!!

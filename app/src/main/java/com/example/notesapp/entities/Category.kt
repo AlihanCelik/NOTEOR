@@ -9,7 +9,7 @@ data class Category (
     @PrimaryKey(autoGenerate = true)
     var id_category: Int? = null,
 
-    @ColumnInfo(name = "title")
+    @ColumnInfo(name = "name_category")
     var name_category: String? = null
 
 )

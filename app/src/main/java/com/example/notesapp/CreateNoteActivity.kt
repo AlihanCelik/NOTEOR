@@ -70,7 +70,7 @@ class CreateNoteActivity : AppCompatActivity(),CategoryAdapter.CategoryClickList
     var PICK_IMAGES_CODE = 1
     var noteId=-1
     var noteId2=-1
-    var categoryName ="All"
+    var categoryName=-1
 
     var reminder: Long? =null
 
@@ -1343,7 +1343,7 @@ class CreateNoteActivity : AppCompatActivity(),CategoryAdapter.CategoryClickList
 
     override fun onCategoryClick(category: Category) {
         category_name.text=category.name_category
-        categoryName=category.name_category.toString()
+        categoryName= category.id_category!!
     }
 
 }

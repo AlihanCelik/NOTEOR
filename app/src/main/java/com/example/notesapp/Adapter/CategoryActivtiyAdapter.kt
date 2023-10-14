@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.notesapp.R
 import com.example.notesapp.entities.Category
+import kotlinx.android.synthetic.main.item_category_activtiy.view.*
 
 class CategoryActivtiyAdapter() :
     RecyclerView.Adapter<CategoryActivtiyAdapter.CategoryActViewHolder>() {
@@ -32,6 +33,7 @@ class CategoryActivtiyAdapter() :
 
     override fun onBindViewHolder(holder: CategoryActViewHolder, position: Int) {
         val model =arrList[position]
+        holder.itemView.item_category_activty_name.text=model.name_category
     }
 
     override fun getItemCount(): Int {

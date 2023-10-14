@@ -59,6 +59,7 @@ class CategoryActivtiyAdapter() :
             builder.setView(view)
             val dialog = builder.create()
             dialog.show()
+            view.category_name.hint=model.name_category.toString()
             dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
             view.okeyCategory.setOnClickListener {
                 val newCategoryName = view.category_name.text.toString()

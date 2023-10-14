@@ -36,9 +36,9 @@
                 <EditText
                     android:id="@+id/category_name"
                     android:layout_width="match_parent"
+                    android:background="@drawable/category_stroke"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:background="@null"
                     android:hint="@string/add_category_text"
                     android:inputType="textMultiLine"
                     android:padding="10dp"

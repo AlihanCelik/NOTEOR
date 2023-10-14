@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.room.*
 import com.example.notesapp.AlarmReceiver
+import com.example.notesapp.entities.Category
 import com.example.notesapp.entities.Notes
 
 
@@ -43,7 +44,7 @@ interface NoteDao {
     suspend fun getReminderForNote(noteId: Int): Long?
 
     @Update
-    suspend fun updateNote(note:Notes)
+    suspend fun updateNote(notes:Notes)
 
     @Query("SELECT * FROM notes ORDER BY date_time ASC")
     suspend fun getAllNotesSortedByDate(): List<Notes>

@@ -11,7 +11,7 @@
     <LinearLayout
         android:id="@+id/ll"
         android:layout_width="312dp"
-        android:layout_height="180dp"
+        android:layout_height="150dp"
         android:layout_marginTop="50dp"
         android:layout_marginBottom="50dp"
         android:background="@drawable/bg_linear_layout"
@@ -23,7 +23,7 @@
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="110dp"
+            android:layout_height="70dp"
             android:layout_marginTop="45dp">
 
             <LinearLayout
@@ -42,6 +42,7 @@
                     android:hint="@string/add_category_text"
                     android:inputType="textMultiLine"
                     android:padding="10dp"
+                    android:maxLines="1"
                     android:text=""
                     android:gravity="center"
                     android:textColor="@color/black"

@@ -5,7 +5,7 @@ import com.example.notesapp.entities.Category
 
 @Dao
 interface CategoryDao {
-    @Query("SELECT * FROM category ORDER BY id_category DESC")
+    @Query("SELECT * FROM category ORDER BY id_category ASC")
     suspend fun getAllCategory() : List<Category>
 
     @Query("SELECT * FROM category WHERE id_category =:id_category")

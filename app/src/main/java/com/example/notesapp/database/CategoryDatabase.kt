@@ -13,16 +13,19 @@ abstract class CategoryDatabase : RoomDatabase() {
         var categoryDatabase: CategoryDatabase? = null
 
         @Synchronized
-        fun getDatabase(context: Context): CategoryDatabase {
+        suspend fun getDatabase(context: Context): CategoryDatabase {
             if (categoryDatabase == null) {
                 categoryDatabase = Room.databaseBuilder(
                     context
                     , CategoryDatabase::class.java
                     , "category.db"
                 ).build()
+                categoryDatabase!!.CategoryDao().insertCategory(Category(name_category = "All Notes"))
             }
+
             return categoryDatabase!!
         }
+
 
     }
 

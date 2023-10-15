@@ -61,7 +61,6 @@ class CreateNoteActivity : AppCompatActivity(),CategoryAdapter.CategoryClickList
     var passwordBoolean=false
     var PICK_IMAGES_CODE = 1
     var noteId=-1
-    var noteId2=-1
     var categoryName=-1
 
     var reminder: Long? =null

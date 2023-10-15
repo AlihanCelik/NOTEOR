@@ -1,7 +1,6 @@
 package com.example.notesapp.Adapter
 
 
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,12 +9,10 @@ import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import com.example.notesapp.R
 import com.example.notesapp.database.CategoryDatabase
-import com.example.notesapp.database.NotesDatabase
 import com.example.notesapp.entities.Category
 import kotlinx.android.synthetic.main.delete_permi_dialog.view.*
 import kotlinx.android.synthetic.main.dialog_add_category.view.*
 import kotlinx.android.synthetic.main.item_category_activtiy.view.*
-import kotlinx.android.synthetic.main.item_notes.view.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch

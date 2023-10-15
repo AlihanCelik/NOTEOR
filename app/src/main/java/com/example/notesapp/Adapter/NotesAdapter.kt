@@ -1,6 +1,5 @@
 package com.example.notesapp.Adapter
 
-import android.app.Activity
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
@@ -22,13 +21,6 @@ import com.example.notesapp.database.NotesDatabase
 import com.example.notesapp.database.TrashDatabase
 import com.example.notesapp.entities.Notes
 import com.example.notesapp.entities.Trash
-import io.noties.markwon.AbstractMarkwonPlugin
-import io.noties.markwon.Markwon
-import io.noties.markwon.MarkwonVisitor
-import io.noties.markwon.ext.strikethrough.StrikethroughPlugin
-import io.noties.markwon.ext.tasklist.TaskListPlugin
-import kotlinx.android.synthetic.main.activity_create_note.*
-import kotlinx.android.synthetic.main.createactivty_permi_dialog.view.*
 import kotlinx.android.synthetic.main.delete_permi_dialog.view.*
 import kotlinx.android.synthetic.main.enter_psw_dialog.view.*
 import kotlinx.android.synthetic.main.item_notes.view.*
@@ -36,7 +28,6 @@ import kotlinx.android.synthetic.main.locked_dialog.view.*
 import kotlinx.android.synthetic.main.notelongclick_dialog.view.*
 import kotlinx.android.synthetic.main.password_remove_dialog.view.*
 import kotlinx.coroutines.*
-import org.commonmark.node.SoftLineBreak
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList

@@ -6,7 +6,6 @@ import android.content.Context
 import android.content.Intent
 import androidx.room.*
 import com.example.notesapp.AlarmReceiver
-import com.example.notesapp.entities.Category
 import com.example.notesapp.entities.Notes
 
 

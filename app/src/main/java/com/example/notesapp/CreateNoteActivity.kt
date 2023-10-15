@@ -11,7 +11,6 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.text.*
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowInsetsController
@@ -32,30 +31,23 @@ import com.example.notesapp.Adapter.ImageAdapter
 import com.example.notesapp.Adapter.LinksAdapter
 import com.example.notesapp.database.CategoryDatabase
 import com.example.notesapp.database.NotesDatabase
-import com.example.notesapp.database.TrashDatabase
 import com.example.notesapp.entities.Category
 import com.example.notesapp.entities.Notes
-import com.example.notesapp.entities.Trash
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.android.synthetic.main.activity_create_note.*
 import kotlinx.android.synthetic.main.activity_create_note.backButton
 import kotlinx.android.synthetic.main.activity_create_note.createNote
-import kotlinx.android.synthetic.main.activity_trash.*
-import kotlinx.android.synthetic.main.bottom_sheet_note.*
 import kotlinx.android.synthetic.main.createactivty_permi_dialog.view.*
 import kotlinx.android.synthetic.main.dialog_add_category.view.*
 import kotlinx.android.synthetic.main.dialog_url.view.*
 import kotlinx.android.synthetic.main.font_dialog.view.*
-import kotlinx.android.synthetic.main.fragment_note.*
 import kotlinx.android.synthetic.main.locked_dialog.view.*
 import kotlinx.android.synthetic.main.password_remove_dialog.view.*
 import kotlinx.coroutines.*
-import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 
 import kotlinx.coroutines.suspendCancellableCoroutine
-import kotlin.coroutines.suspendCoroutine
 
 
 class CreateNoteActivity : AppCompatActivity(),CategoryAdapter.CategoryClickListener {

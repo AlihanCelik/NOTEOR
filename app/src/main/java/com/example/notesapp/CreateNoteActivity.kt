@@ -128,6 +128,10 @@ class CreateNoteActivity : AppCompatActivity(),CategoryAdapter.CategoryClickList
                         fav=false
                         favButton.setImageResource(R.drawable.favoriteoff)
                     }
+                    if(notes.noteCategoryId!=-1){
+                        categoryName= notes.noteCategoryId!!
+                    }
+
                     if(notes.reminder!=null){
                         reminderlayout.visibility=View.VISIBLE
                         val reminderDateItem = Date(notes.reminder!!)
@@ -1226,6 +1230,7 @@ class CreateNoteActivity : AppCompatActivity(),CategoryAdapter.CategoryClickList
                         notes.create_dateTime=notes.create_dateTime
                         notes.color=color
                         notes.reminder=reminder
+                        notes.noteCategoryId=categoryName
                         notes.imgPath=items
                         notes.webLink=items_link
                         notes.favorite=fav
@@ -1254,6 +1259,7 @@ class CreateNoteActivity : AppCompatActivity(),CategoryAdapter.CategoryClickList
                     notes.create_dateTime=currentDate
                     notes.color=color
                     notes.reminder=reminder
+                    notes.noteCategoryId=categoryName
                     notes.imgPath=items
                     notes.webLink=items_link
                     notes.favorite=fav
@@ -1284,9 +1290,7 @@ class CreateNoteActivity : AppCompatActivity(),CategoryAdapter.CategoryClickList
                     items.add(imageUri)
                     imageAdapter.notifyDataSetChanged()
                     layout_img_preview.visibility = View.VISIBLE
-
                 }
-
             }else if (data != null) {
                 val imageUri = data.data
                 if (imageUri != null) {
@@ -1295,7 +1299,6 @@ class CreateNoteActivity : AppCompatActivity(),CategoryAdapter.CategoryClickList
                     layout_img_preview.visibility = View.VISIBLE
                 }
             }
-
     }
     private fun initAdapter() {
         imageAdapter = ImageAdapter(this, items,layout_img_preview)
@@ -1305,7 +1308,6 @@ class CreateNoteActivity : AppCompatActivity(),CategoryAdapter.CategoryClickList
 
         linksAdapter= LinksAdapter(this,items_link,layout_link_preview)
         recyclerViewLink.adapter=linksAdapter
-
 
 
     }

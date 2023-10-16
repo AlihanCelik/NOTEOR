@@ -30,6 +30,9 @@ data class Notes(
     @ColumnInfo(name = "note_text")
     var noteText: String? = null,
 
+    @ColumnInfo(name = "note_category_id")
+    var noteCategoryId: Int? = null,
+
     @ColumnInfo(name = "img_path")
     var imgPath: List<Uri>? = null,
 

@@ -9,7 +9,11 @@ import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import com.example.notesapp.R
 import com.example.notesapp.database.CategoryDatabase
+import com.example.notesapp.database.NotesDatabase
 import com.example.notesapp.entities.Category
+import com.example.notesapp.entities.Notes
+import kotlinx.android.synthetic.main.activity_create_note.*
+import kotlinx.android.synthetic.main.activity_favorites_activtity.*
 import kotlinx.android.synthetic.main.delete_permi_dialog.view.*
 import kotlinx.android.synthetic.main.dialog_add_category.view.*
 import kotlinx.android.synthetic.main.item_category_activtiy.view.*
@@ -42,6 +46,26 @@ class CategoryActivtiyAdapter() :
     override fun onBindViewHolder(holder: CategoryActViewHolder, position: Int) {
         val context = holder.itemView.context
         val model = arrList[position]
+        GlobalScope.launch(Dispatchers.Main){
+            let {
+                var notes = NotesDatabase.getDatabase(context).noteDao().getAllNotes()
+                var arrNotes = notes as ArrayList<Notes>
+                var idArr = ArrayList<Notes>()
+                for (arr in arrNotes){
+                    if(arr.noteCategoryId==model.id_category){
+                        idArr.add(arr)
+                    }
+                }
+                if(model.name_category!="All Notes"){
+                    holder.itemView.item_category_activtiy_size.visibility=View.VISIBLE
+                    holder.itemView.item_category_activtiy_size.text="(${idArr.size})"
+                }else{
+                    holder.itemView.item_category_activtiy_size.visibility=View.GONE
+                }
+
+            }
+
+        }
         holder.itemView.item_category_activty_name.text = model.name_category
         if (arrList[position].name_category == "All Notes") {
             holder.itemView.category_rename.visibility = View.GONE
@@ -69,6 +93,7 @@ class CategoryActivtiyAdapter() :
             }
 
         }
+
         holder.itemView.category_delete.setOnClickListener {
             val view3 = View.inflate(context, R.layout.delete_permi_dialog, null)
             val builder3 = AlertDialog.Builder(context)

@@ -46,7 +46,9 @@
                             android:layout_height="20dp"
                             android:layout_gravity="center"
                             android:src="@drawable/equal"
-                            app:tint="@color/AdvGrey"></ImageView>
+                            app:tint="@color/AdvGrey">
+
+                        </ImageView>
 
                         <TextView
                             android:id="@+id/item_category_activty_name"

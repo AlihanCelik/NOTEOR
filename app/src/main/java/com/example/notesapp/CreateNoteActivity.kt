@@ -37,6 +37,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.android.synthetic.main.activity_create_note.*
 import kotlinx.android.synthetic.main.activity_create_note.backButton
 import kotlinx.android.synthetic.main.activity_create_note.createNote
+import kotlinx.android.synthetic.main.activity_favorites_activtity.*
 import kotlinx.android.synthetic.main.createactivty_permi_dialog.view.*
 import kotlinx.android.synthetic.main.dialog_add_category.view.*
 import kotlinx.android.synthetic.main.dialog_url.view.*
@@ -130,6 +131,20 @@ class CreateNoteActivity : AppCompatActivity(),CategoryAdapter.CategoryClickList
                     }
                     if(notes.noteCategoryId!=-1){
                         categoryName= notes.noteCategoryId!!
+                        GlobalScope.launch(Dispatchers.Main){
+                            let {
+                                var category=CategoryDatabase.getDatabase(this@CreateNoteActivity).CategoryDao().getAllCategory()
+                                var arrCategory = category as ArrayList<Category>
+                                for (arr in arrCategory){
+                                    if(arr.id_category==categoryName){
+                                        category_name.text=arr.name_category.toString()
+                                    }
+                                }
+                            }
+
+                        }
+                    }else{
+                        category_name.text="Categories"
                     }
 
                     if(notes.reminder!=null){

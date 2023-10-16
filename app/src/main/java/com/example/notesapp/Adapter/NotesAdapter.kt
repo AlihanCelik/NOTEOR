@@ -202,6 +202,7 @@ class NotesAdapter(val frag:Int) :
                             trash.dateTime_t = note.dateTime
                             trash.create_dateTime_t=note.create_dateTime
                             trash.color_t = note.color
+                            trash.noteCategory_t=note.noteCategoryId
                             trash.imgPath_t = note.imgPath
                             trash.webLink_t = note.webLink
                             trash.favorite_t = note.favorite

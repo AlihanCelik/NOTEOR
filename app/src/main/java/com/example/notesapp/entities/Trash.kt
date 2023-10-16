@@ -28,6 +28,9 @@ data class Trash(
     @ColumnInfo(name = "note_text_t")
     var noteText_t: String? = null,
 
+    @ColumnInfo(name = "note_category_t")
+    var noteCategory_t: Int? = null,
+
     @ColumnInfo(name = "img_path_t")
     var imgPath_t: List<Uri>? = null,
 

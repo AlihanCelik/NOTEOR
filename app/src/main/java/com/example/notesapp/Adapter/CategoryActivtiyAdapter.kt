@@ -10,13 +10,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.notesapp.R
 import com.example.notesapp.database.CategoryDatabase
 import com.example.notesapp.database.NotesDatabase
+import com.example.notesapp.database.TrashDatabase
 import com.example.notesapp.entities.Category
 import com.example.notesapp.entities.Notes
+import com.example.notesapp.entities.Trash
 import kotlinx.android.synthetic.main.activity_create_note.*
 import kotlinx.android.synthetic.main.activity_favorites_activtity.*
 import kotlinx.android.synthetic.main.delete_permi_dialog.view.*
 import kotlinx.android.synthetic.main.dialog_add_category.view.*
 import kotlinx.android.synthetic.main.item_category_activtiy.view.*
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -105,6 +108,28 @@ class CategoryActivtiyAdapter() :
                 dialog3.dismiss()
             }
             view3.yes_delete_permi.setOnClickListener {
+                CoroutineScope(Dispatchers.Main).launch {
+                    val notes = NotesDatabase.getDatabase(context).noteDao().getAllNotes()
+                    val arrNotes = notes as ArrayList<Notes>
+                    for (arr in arrNotes) {
+                        if (arr.noteCategoryId == model.id_category) {
+                            arr.noteCategoryId = -1
+                            NotesDatabase.getDatabase(context).noteDao().updateNote(arr)
+                        }
+                    }
+
+                }
+                CoroutineScope(Dispatchers.Main).launch {
+                    val trash = TrashDatabase.getDatabase(context).trashDao().getAllTrash()
+                    val arrTrash = trash as ArrayList<Trash>
+                    for (arr in arrTrash) {
+                        if (arr.noteCategory_t == model.id_category) {
+                            arr.noteCategory_t = -1
+                           TrashDatabase.getDatabase(context).trashDao().updateTrash(arr)
+                        }
+                    }
+
+                }
                 GlobalScope.launch(Dispatchers.IO) {
                     model.id_category?.let { it1 ->
                         CategoryDatabase.getDatabase(context).CategoryDao().deleteSpecificCategory(

@@ -51,5 +51,14 @@ interface NoteDao {
     @Query("SELECT * FROM notes ORDER BY create_date_time ASC")
     suspend fun getAllNotesCreatedSortedByDate(): List<Notes>
 
+    @Query("SELECT * FROM notes WHERE reminder IS NOT NULL ORDER BY reminder ASC")
+    suspend fun getAllNotesWithAllReminders(): List<Notes>
+
+    @Query("SELECT * FROM notes WHERE reminder IS NOT NULL AND reminder > :currentTimestamp ORDER BY reminder ASC")
+    suspend fun getAllNotesWithRemainingeReminders(currentTimestamp: Long): List<Notes>
+
+    @Query("SELECT * FROM notes WHERE reminder IS NOT NULL AND reminder < :currentTimestamp ORDER BY reminder ASC")
+    suspend fun getAllNotesWithDoneReminders(currentTimestamp: Long): List<Notes>
+
 
 }

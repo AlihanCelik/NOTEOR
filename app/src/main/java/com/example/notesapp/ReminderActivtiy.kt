@@ -1,7 +1,6 @@
 package com.example.notesapp
 
 import android.graphics.Color
-import android.graphics.Paint
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -44,12 +43,25 @@ class ReminderActivtiy : AppCompatActivity() {
         }
         recycler_view_reminders.setHasFixedSize(true)
         recycler_view_reminders.layoutManager= StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        GlobalScope.launch(Dispatchers.Main){
+            let {
+                var notes: List<Notes> = emptyList()
 
+                notes = NotesDatabase.getDatabase(this@ReminderActivtiy).noteDao().getAllNotesWithAllReminders().asReversed()
+                val arrNotes = notes.toMutableList()
+                notesAdapter!!.setData(arrNotes)
+                recycler_view_reminders.adapter = notesAdapter
+            }
+
+        }
         all_reminder.setOnClickListener {
             all_reminder.setBackgroundResource(R.drawable.background_blue_select)
             remaining_reminder.setBackgroundResource(R.drawable.background_font)
             done_reminder.setBackgroundResource(R.drawable.background_font)
-            typeReminder("all")
+            all_reminder_text.setTextColor(resources.getColor(R.color.white))
+            remaining_reminder_text.setTextColor(resources.getColor(R.color.grey2))
+            done_reminder_text.setTextColor(resources.getColor(R.color.grey2))
+            updateRecyclerView("all")
 
         }
 
@@ -57,45 +69,50 @@ class ReminderActivtiy : AppCompatActivity() {
             remaining_reminder.setBackgroundResource(R.drawable.background_blue_select)
             all_reminder.setBackgroundResource(R.drawable.background_font)
             done_reminder.setBackgroundResource(R.drawable.background_font)
-            typeReminder("remaining")
+            remaining_reminder_text.setTextColor(resources.getColor(R.color.white))
+            all_reminder_text.setTextColor(resources.getColor(R.color.grey2))
+            done_reminder_text.setTextColor(resources.getColor(R.color.grey2))
+            updateRecyclerView("remaining")
+
         }
         done_reminder.setOnClickListener {
             done_reminder.setBackgroundResource(R.drawable.background_blue_select)
             all_reminder.setBackgroundResource(R.drawable.background_font)
             remaining_reminder.setBackgroundResource(R.drawable.background_font)
-            typeReminder("done")
+            done_reminder_text.setTextColor(resources.getColor(R.color.white))
+            all_reminder_text.setTextColor(resources.getColor(R.color.grey2))
+            remaining_reminder_text.setTextColor(resources.getColor(R.color.grey2))
+            updateRecyclerView("done")
         }
 
     }
-    fun typeReminder(type:String){
-        GlobalScope.launch(Dispatchers.Main){
-            let {
-                var notes = NotesDatabase.getDatabase(this@ReminderActivtiy).noteDao().getAllNotes()
-                notesAdapter!!.setData(notes)
-                arrNotes = notes as ArrayList<Notes>
-                var ReArr = ArrayList<Notes>()
-                for (arr in arrNotes){
-                    if(arr.reminder!=null){
-                        if(type=="all"){
-                            ReArr.add(arr)
-                        }else if(type=="remaining"){
-                            if(arr.reminder!! >System.currentTimeMillis()){
-                                ReArr.add(arr)
-                            }
-                        }else{
-                            if(arr.reminder!! <System.currentTimeMillis()){
-                                ReArr.add(arr)
-                            }
-                        }
 
-                    }
+    fun updateRecyclerView(sortType:String) {
+        if(sortType=="all"){
+            GlobalScope.launch(Dispatchers.Main) {
+               let {
+                    var notes = NotesDatabase.getDatabase(this@ReminderActivtiy).noteDao().getAllNotesWithAllReminders().asReversed()
+                    notesAdapter.updateData(notes)
                 }
-                notesAdapter.setData(ReArr)
-                notesAdapter.notifyDataSetChanged()
-                recycler_view_reminders.adapter = notesAdapter
             }
-
+        }else if(sortType=="remaining"){
+            GlobalScope.launch(Dispatchers.Main) {
+                let {
+                    var notes = NotesDatabase.getDatabase(this@ReminderActivtiy).noteDao().getAllNotesWithRemainingeReminders(System.currentTimeMillis())
+                        .asReversed()
+                    notesAdapter.updateData(notes)
+                }
+            }
+        }else{
+            GlobalScope.launch(Dispatchers.Main) {
+                let {
+                    var notes = NotesDatabase.getDatabase(this@ReminderActivtiy).noteDao().getAllNotesWithDoneReminders(System.currentTimeMillis())
+                        .asReversed()
+                    notesAdapter.updateData(notes)
+                }
+            }
         }
     }
+
 
 }

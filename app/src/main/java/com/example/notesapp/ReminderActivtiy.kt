@@ -64,7 +64,6 @@ class ReminderActivtiy : AppCompatActivity() {
             updateRecyclerView("all")
 
         }
-
         remaining_reminder.setOnClickListener {
             remaining_reminder.setBackgroundResource(R.drawable.background_blue_select)
             all_reminder.setBackgroundResource(R.drawable.background_font)

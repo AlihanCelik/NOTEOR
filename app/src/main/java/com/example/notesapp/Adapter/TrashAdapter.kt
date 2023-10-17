@@ -270,11 +270,7 @@ class TrashAdapter() :
         holder.itemView.item_desc.text = arrList[position].noteText_t
         holder.itemView.item_date.text = arrList[position].dateTime_t
 
-
-
-
     }
-
     class NotesViewHolder(view:View) : RecyclerView.ViewHolder(view){
         var image: ImageView = itemView.findViewById(R.id.item_img)
     }

@@ -74,7 +74,7 @@
                     android:layout_height="23dp"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
-                    android:src="@drawable/trash"
+                    android:src="@drawable/trash2"
                     app:tint="@color/AdvGrey2" />
                 <TextView
                     android:layout_width="match_parent"

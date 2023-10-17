@@ -90,7 +90,6 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginRight="15dp"
-
                 app:itemIconTint="@color/color_item_bottom_nav"
                 app:labelVisibilityMode="unlabeled"
                 android:background="@android:color/transparent"

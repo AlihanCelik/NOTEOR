@@ -58,7 +58,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#2794959A"
-        app:layout_constraintBottom_toTopOf="@+id/layout1"
+        app:layout_constraintBottom_toTopOf="@+id/searchReminders"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -85,73 +85,87 @@
         app:layout_constraintTop_toBottomOf="@id/linearLayout"
         app:layout_constraintVertical_bias="0.0"
         app:queryBackground="@android:color/transparent" />
-
-    <LinearLayout
+    <HorizontalScrollView
         android:id="@+id/reminder_type_layout"
-        android:layout_marginTop="10dp"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        app:layout_constraintTop_toBottomOf="@+id/searchReminders"
+        android:layout_marginTop="15dp"
+        android:overScrollMode="never"
+        android:scrollbars="none"
+        app:layout_constraintTop_toBottomOf="@id/searchReminders"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/recycler_view_reminders"
-        android:orientation="horizontal">
+        app:layout_constraintBottom_toTopOf="@id/recycler_view_reminders"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="10dp">
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/background_font"
+                android:gravity="center">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingTop="4dp"
-                    android:paddingBottom="4dp"
-                    android:text="Remaining"
-                    android:textColor="@color/AdvGrey2"
-                    android:textStyle="bold">
-
-                </TextView>
+                    android:paddingStart="14dp"
+                    android:paddingTop="7dp"
+                    android:paddingEnd="14dp"
+                    android:paddingBottom="7dp"
+                    android:text="All"
+                    android:textColor="@color/grey2"
+                    android:textStyle="bold" />
             </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp">
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:paddingTop="4dp"
-                android:paddingBottom="4dp"
-                android:text="Remaining"
-                android:textColor="@color/AdvGrey2"
-                android:textStyle="bold">
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:background="@drawable/background_font"
+                android:gravity="center">
 
-            </TextView>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp">
-            <TextView
-                android:layout_width="wrap_content"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="14dp"
+                    android:paddingTop="7dp"
+                    android:paddingEnd="14dp"
+                    android:paddingBottom="7dp"
+                    android:text="Remaining"
+                    android:textColor="@color/grey2"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:paddingTop="4dp"
-                android:paddingBottom="4dp"
-                android:text="Remaining"
-                android:textColor="@color/AdvGrey2"
-                android:textStyle="bold">
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/background_font"
+                android:gravity="center">
 
-            </TextView>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="14dp"
+                    android:paddingTop="7dp"
+                    android:paddingEnd="14dp"
+                    android:paddingBottom="7dp"
+                    android:text="Done"
+                    android:textColor="@color/grey2"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
         </LinearLayout>
+    </HorizontalScrollView>
 
 
-    </LinearLayout>
 
 
     <androidx.recyclerview.widget.RecyclerView

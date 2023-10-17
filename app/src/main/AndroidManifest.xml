@@ -20,6 +20,9 @@
         android:theme="@style/Theme.NotesApp"
         tools:targetApi="31">
         <activity
+            android:name=".ReminderActivtiy"
+            android:exported="false" />
+        <activity
             android:name=".CategoryActivtiy"
             android:exported="false" />
         <activity

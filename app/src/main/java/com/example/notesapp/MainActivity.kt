@@ -68,6 +68,7 @@ class MainActivity : AppCompatActivity() {
                     drawerLayout.closeDrawer(GravityCompat.START)
                     true
                 }
+
                 R.id.nav_note -> {
                     viewPager.currentItem = 0
                     drawerLayout.closeDrawer(GravityCompat.START)
@@ -82,6 +83,12 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.nav_favorites -> {
                     val intent=Intent(applicationContext,FavoritesActivtity::class.java)
+                    startActivity(intent)
+                    drawerLayout.closeDrawer(GravityCompat.START)
+                    true
+                }
+                R.id.nav_reminders ->{
+                    val intent=Intent(applicationContext,ReminderActivtiy::class.java)
                     startActivity(intent)
                     drawerLayout.closeDrawer(GravityCompat.START)
                     true

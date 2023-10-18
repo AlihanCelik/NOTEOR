@@ -21,6 +21,7 @@ import com.example.notesapp.database.NotesDatabase
 import com.example.notesapp.database.TrashDatabase
 import com.example.notesapp.entities.Notes
 import com.example.notesapp.entities.Trash
+import kotlinx.android.synthetic.main.activity_create_note.*
 import kotlinx.android.synthetic.main.delete_permi_dialog.view.*
 import kotlinx.android.synthetic.main.enter_psw_dialog.view.*
 import kotlinx.android.synthetic.main.item_notes.view.*
@@ -633,11 +634,22 @@ class NotesAdapter(val frag:Int) :
         }
         if(frag==0){
             holder.itemView.item_date_l.visibility=View.VISIBLE
+            holder.itemView.item_reminder_l.visibility=View.GONE
+
+        }else if(frag==1){
+            holder.itemView.item_date_l.visibility=View.GONE
+            holder.itemView.item_reminder_l.visibility=View.GONE
         }else{
             holder.itemView.item_date_l.visibility=View.GONE
+            holder.itemView.item_reminder_l.visibility=View.VISIBLE
         }
+
          if(arrList[position].reminder!=null){
              holder.itemView.item_rame.visibility=View.VISIBLE
+             val reminderDateItem = Date(arrList[position].reminder!!)
+             val formattedDateItem = sdf.format(reminderDateItem)
+             holder.itemView.item_reminder.text=formattedDateItem
+
          }else{
              holder.itemView.item_rame.visibility=View.GONE
          }

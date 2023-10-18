@@ -20,7 +20,7 @@ import kotlin.collections.ArrayList
 class ReminderActivtiy : AppCompatActivity() {
 
     var arrNotes = ArrayList<Notes>()
-    var notesAdapter: NotesAdapter = NotesAdapter(0)
+    var notesAdapter: NotesAdapter = NotesAdapter(2)
     val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

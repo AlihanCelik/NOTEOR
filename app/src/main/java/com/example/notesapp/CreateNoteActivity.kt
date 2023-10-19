@@ -172,6 +172,9 @@ class CreateNoteActivity : AppCompatActivity(),CategoryAdapter.CategoryClickList
                         layout_link_preview.visibility = View.VISIBLE
                     }
                     password= notes.password.toString()
+                    if(!password.isNullOrEmpty()){
+                        passwordBoolean=true
+                    }
                     notes_title.setText(notes.title)
                     notes_sub_title.setText(notes.subTitle)
                     notes_desc.setText(notes.noteText)

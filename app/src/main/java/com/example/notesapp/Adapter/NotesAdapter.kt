@@ -17,8 +17,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.notesapp.CreateNoteActivity
 import com.example.notesapp.R
+import com.example.notesapp.database.CategoryDatabase
 import com.example.notesapp.database.NotesDatabase
 import com.example.notesapp.database.TrashDatabase
+import com.example.notesapp.entities.Category
 import com.example.notesapp.entities.Notes
 import com.example.notesapp.entities.Trash
 import kotlinx.android.synthetic.main.activity_create_note.*
@@ -643,8 +645,26 @@ class NotesAdapter(val frag:Int) :
             holder.itemView.item_date_l.visibility=View.GONE
             holder.itemView.item_reminder_l.visibility=View.VISIBLE
         }
+        if(arrList[position].noteCategoryId!=-1){
+            GlobalScope.launch(Dispatchers.Main){
+                let {
+                    var category=
+                        CategoryDatabase.getDatabase(context).CategoryDao().getAllCategory()
+                    var arrCategory = category as java.util.ArrayList<Category>
+                    for (arr in arrCategory){
+                        if(arr.id_category==arrList[position].noteCategoryId){
+                            holder.itemView.item_category_name.text=arr.name_category.toString()
+                        }
+                    }
+                }
 
-         if(arrList[position].reminder!=null){
+            }
+        }else{
+            holder.itemView.item_category_name.text="All Notes"
+        }
+
+
+        if(arrList[position].reminder!=null){
              holder.itemView.item_rame.visibility=View.VISIBLE
              val reminderDateItem = Date(arrList[position].reminder!!)
              val formattedDateItem = sdf.format(reminderDateItem)

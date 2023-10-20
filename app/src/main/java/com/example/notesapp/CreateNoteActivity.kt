@@ -60,7 +60,7 @@ class CreateNoteActivity : AppCompatActivity(),CategoryAdapter.CategoryClickList
     var linkLay=true
     var password=""
     var passwordBoolean=false
-    var PICK_IMAGES_CODE = 1
+    var PICK_IMAGES_CODE = 1002
     var noteId=-1
     var categoryName=-1
 

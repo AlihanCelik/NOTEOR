@@ -646,6 +646,7 @@ class NotesAdapter(val frag:Int) :
             holder.itemView.item_reminder_l.visibility=View.VISIBLE
         }
         if(arrList[position].noteCategoryId!=-1){
+            holder.itemView.item_category_ly.visibility=View.VISIBLE
             GlobalScope.launch(Dispatchers.Main){
                 let {
                     var category=
@@ -660,7 +661,7 @@ class NotesAdapter(val frag:Int) :
 
             }
         }else{
-            holder.itemView.item_category_name.text="All Notes"
+            holder.itemView.item_category_ly.visibility=View.GONE
         }
 
 

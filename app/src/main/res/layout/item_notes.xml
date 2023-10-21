@@ -284,7 +284,9 @@
                         android:layout_gravity="center"
                         android:layout_marginRight="5dp"
                         android:src="@drawable/reminderonn"
-                        app:tint="@color/grey"></ImageView>
+                        app:tint="@color/grey">
+
+                    </ImageView>
 
                     <TextView
                         android:id="@+id/item_reminder"

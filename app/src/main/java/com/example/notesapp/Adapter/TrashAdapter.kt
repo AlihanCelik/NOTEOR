@@ -3,6 +3,7 @@ package com.example.notesapp.Adapter
 
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.opengl.Visibility
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -240,6 +241,7 @@ class TrashAdapter() :
             }
 
         }
+        holder.itemView.item_reminder_l.visibility=View.GONE
 
         if(arrList[position].favorite_t==true){
             holder.itemView.item_fav.visibility=View.VISIBLE

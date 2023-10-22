@@ -646,7 +646,6 @@ class NotesAdapter(val frag:Int) :
             holder.itemView.item_reminder_l.visibility=View.VISIBLE
         }
         if(arrList[position].noteCategoryId!=-1){
-            holder.itemView.item_category_ly.visibility=View.VISIBLE
             GlobalScope.launch(Dispatchers.Main){
                 let {
                     var category=
@@ -654,20 +653,14 @@ class NotesAdapter(val frag:Int) :
                     var arrCategory = category as java.util.ArrayList<Category>
                     for (arr in arrCategory){
                         if(arr.id_category==arrList[position].noteCategoryId){
-                            if(arr.name_category=="All Notes"){
-                                holder.itemView.item_category_ly.visibility=View.GONE
-                            }else{
-                                holder.itemView.item_category_ly.visibility=View.VISIBLE
-                                holder.itemView.item_category_name.text=arr.name_category.toString()
-                            }
-
+                            holder.itemView.item_category_name.text=arr.name_category.toString()
                         }
                     }
                 }
 
             }
         }else{
-            holder.itemView.item_category_ly.visibility=View.GONE
+            holder.itemView.item_category_name.text="All Notes"
         }
 
 

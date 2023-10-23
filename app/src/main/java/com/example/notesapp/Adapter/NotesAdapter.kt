@@ -657,7 +657,6 @@ class NotesAdapter(val frag:Int) :
                         }
                     }
                 }
-
             }
         }else{
             holder.itemView.item_category_name.text="All Notes"

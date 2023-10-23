@@ -662,7 +662,6 @@ class NotesAdapter(val frag:Int) :
             holder.itemView.item_category_name.text="All Notes"
         }
 
-
         if(arrList[position].reminder!=null){
              holder.itemView.item_rame.visibility=View.VISIBLE
              val reminderDateItem = Date(arrList[position].reminder!!)

@@ -628,7 +628,6 @@ class CreateNoteActivity : AppCompatActivity(),CategoryAdapter.CategoryClickList
                 }
 
             }
-
             bottomSheetView.findViewById<View>(R.id.image).setOnClickListener {
                 if (hasPermissions()) {
                     val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)

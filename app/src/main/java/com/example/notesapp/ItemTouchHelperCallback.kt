@@ -33,20 +33,23 @@ class ItemTouchHelperCallback(private val context: Context, private val adapter:
     ): Boolean {
         val fromPosition = viewHolder.adapterPosition
         val toPosition = target.adapterPosition
-        val movedItem = adapter.arrList[fromPosition]
-        adapter.arrList.removeAt(fromPosition)
-        adapter.arrList.add(toPosition, movedItem)
+        val copiedList = ArrayList(adapter.arrList)
+
+        val movedItem = copiedList[fromPosition]
+        copiedList.removeAt(fromPosition)
+        copiedList.add(toPosition, movedItem)
 
         // Yer değiştirdikten sonra sıralamayı güncelle
         adapter.notifyItemMoved(fromPosition, toPosition)
 
-        for (i in 0 until adapter.arrList.size) {
-            adapter.arrList[i].order_category = i
+        // Liste üzerinde sıralamayı güncelle
+        for (i in 0 until copiedList.size) {
+            copiedList[i].order_category = i
         }
 
         // Veritabanını güncelle
         GlobalScope.launch(Dispatchers.IO) {
-            for (category in adapter.arrList) {
+            for (category in copiedList) {
                 CategoryDatabase.getDatabase(context).CategoryDao().updateCategory(category)
             }
         }

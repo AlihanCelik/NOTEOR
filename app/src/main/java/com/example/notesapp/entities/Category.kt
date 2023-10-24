@@ -10,6 +10,9 @@ data class Category (
     var id_category: Int? = null,
 
     @ColumnInfo(name = "name_category")
-    var name_category: String? = null
+    var name_category: String? = null,
+
+    @ColumnInfo(name = "order_category")
+    var order_category: Int? = null
 
 )

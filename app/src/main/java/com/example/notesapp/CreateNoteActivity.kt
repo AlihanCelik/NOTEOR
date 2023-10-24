@@ -442,6 +442,7 @@ class CreateNoteActivity : AppCompatActivity(),CategoryAdapter.CategoryClickList
                         if (newCategoryName.isNotEmpty() && !isCategoryExists) {
                             var category = Category()
                             category.name_category = newCategoryName
+                            category.order_category=existingCategories.size
                             applicationContext?.let {
                                 val insertedCategoryId =
                                     CategoryDatabase.getDatabase(it).CategoryDao().insertCategory(category)

@@ -33,7 +33,7 @@ class CategoryActivtiy : AppCompatActivity() {
         backButton.setOnClickListener {
             finish()
         }
-        val itemTouchHelperCallback = ItemTouchHelperCallback(categoryAdapter)
+        val itemTouchHelperCallback = ItemTouchHelperCallback(this@CategoryActivtiy,categoryAdapter)
         val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
         itemTouchHelper.attachToRecyclerView(recycler_view_category)
 
@@ -57,6 +57,7 @@ class CategoryActivtiy : AppCompatActivity() {
                     if (newCategoryName.isNotEmpty() && !isCategoryExists) {
                         var category = Category()
                         category.name_category = newCategoryName
+                        category.order_category=existingCategories.size
                         applicationContext?.let {
                             val insertedCategoryId =
                                 CategoryDatabase.getDatabase(it).CategoryDao().insertCategory(category)

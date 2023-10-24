@@ -22,7 +22,7 @@ abstract class CategoryDatabase : RoomDatabase() {
                 ).build()
                 categoryDatabase!!.CategoryDao().run {
                     if (getCategoryByName("All Notes") == null) {
-                        insertCategory(Category(name_category = "All Notes"))
+                        insertCategory(Category(name_category = "All Notes", order_category = 0))
                     }
                 }
             }

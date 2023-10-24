@@ -9,12 +9,14 @@ import android.view.WindowInsetsController
 import android.widget.SearchView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.notesapp.Adapter.CategoryActivtiyAdapter
 import com.example.notesapp.database.CategoryDatabase
 import com.example.notesapp.entities.Category
 import kotlinx.android.synthetic.main.activity_category_activtiy.*
 import kotlinx.android.synthetic.main.dialog_add_category.view.*
+import kotlinx.android.synthetic.main.fragment_calendar.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -31,6 +33,9 @@ class CategoryActivtiy : AppCompatActivity() {
         backButton.setOnClickListener {
             finish()
         }
+        val itemTouchHelperCallback = ItemTouchHelperCallback(categoryAdapter)
+        val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
+        itemTouchHelper.attachToRecyclerView(recycler_view_category)
 
         category_add.setOnClickListener {
             val view = View.inflate(this, R.layout.dialog_add_category, null)
@@ -82,6 +87,7 @@ class CategoryActivtiy : AppCompatActivity() {
                 WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS
             )
         }
+
         recycler_view_category.setHasFixedSize(true)
         recycler_view_category.layoutManager= StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
         GlobalScope.launch(Dispatchers.Main){

@@ -170,13 +170,11 @@ class TrashAdapter() :
                     holder.itemView.item_bg.setBackgroundColor(Color.WHITE)
                 }
                 dialog.dismiss()
-
             }
             view.restore.setOnClickListener {
                 dialog.dismiss()
                 var trash=arrList[position]
                 GlobalScope.launch {
-
                     var notes = Notes()
                     notes.title = trash.title_t
                     notes.subTitle = trash.subTitle_t
@@ -189,7 +187,6 @@ class TrashAdapter() :
                     notes.webLink = trash.webLink_t
                     notes.favorite = trash.favorite_t
                     notes.password = trash.password_t
-
                     context?.let {
                         trash.id?.let { it1 ->
                             TrashDatabase.getDatabase(it).trashDao().deleteSpecificTrash(
@@ -204,8 +201,6 @@ class TrashAdapter() :
                 notifyItemRangeChanged(position, itemCount)
                 Toast.makeText(context, "Note Restored", Toast.LENGTH_SHORT).show()
                 holder.itemView.item_bg.setBackgroundColor(Color.WHITE)
-
-
             }
             dialog.setOnCancelListener {
                 holder.itemView.item_bg.setBackgroundColor(Color.WHITE)
@@ -242,7 +237,6 @@ class TrashAdapter() :
 
         }
         holder.itemView.item_reminder_l.visibility=View.GONE
-
         if(arrList[position].favorite_t==true){
             holder.itemView.item_fav.visibility=View.VISIBLE
         }else{

@@ -34,6 +34,8 @@ class CategoryAdapter (private val clickListener: CategoryClickListener,var adap
                 .inflate(R.layout.item_bottom_sheet_category, parent, false))
     }
 
+
+
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
         val model =arrList[position]
         holder.itemView.item_text_categories.text=model.name_category

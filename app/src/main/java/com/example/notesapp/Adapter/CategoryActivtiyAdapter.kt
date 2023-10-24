@@ -145,6 +145,12 @@ class CategoryActivtiyAdapter() :
             }
         }
     }
+    fun onItemMove(fromPosition: Int, toPosition: Int) {
+        val fromItem = arrList[fromPosition]
+        arrList.removeAt(fromPosition)
+        arrList.add(toPosition, fromItem)
+        notifyItemMoved(fromPosition, toPosition)
+    }
 
     override fun getItemCount(): Int {
         return arrList.size

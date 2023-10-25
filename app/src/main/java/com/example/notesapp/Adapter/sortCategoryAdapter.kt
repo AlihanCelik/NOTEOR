@@ -20,6 +20,12 @@ class sortCategoryAdapter() :
                 .inflate(R.layout.item_category_sort,parent, false)
         )
     }
+    interface SortCategoryClickListener {
+        fun onSortCategoryClick(category: Category)
+    }
+    fun setData(arrCategoryList: List<Category>){
+        arrList = ArrayList(arrCategoryList)
+    }
 
     override fun getItemCount(): Int {
         return arrList.size

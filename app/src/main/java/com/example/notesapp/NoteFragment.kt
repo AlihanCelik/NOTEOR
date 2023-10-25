@@ -10,9 +10,13 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.SearchView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.notesapp.Adapter.NotesAdapter
+import com.example.notesapp.Adapter.sortCategoryAdapter
+import com.example.notesapp.database.CategoryDatabase
 import com.example.notesapp.database.NotesDatabase
+import com.example.notesapp.entities.Category
 import com.example.notesapp.entities.Notes
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.android.synthetic.main.fragment_note.*
@@ -26,6 +30,7 @@ import kotlin.collections.ArrayList
 class NoteFragment : Fragment() {
     var arrNotes = ArrayList<Notes>()
     var notesAdapter: NotesAdapter = NotesAdapter(0)
+    var categoryAdapter :sortCategoryAdapter=sortCategoryAdapter()
     lateinit var sharedPreferences: SharedPreferences
     lateinit var sortType: String
 
@@ -79,6 +84,19 @@ class NoteFragment : Fragment() {
             val bottomSheetView = LayoutInflater.from(context).inflate(
                 R.layout.bottom_sheet_short,null
             ) as ConstraintLayout
+            var recyclerView_ct_sort=bottomSheetView.findViewById<RecyclerView>(R.id.bottom_sheet_category_sort)
+            recyclerView_ct_sort.setHasFixedSize(true)
+            recyclerView_ct_sort.layoutManager=StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL)
+            GlobalScope.launch(Dispatchers.Main){
+                context?.let {
+                    var category: List<Category> = emptyList()
+                        category = CategoryDatabase.getDatabase(it).CategoryDao().getAllCategory()
+                    val arrCategory =category.toMutableList()
+                    categoryAdapter!!.setData(arrCategory)
+                    recyclerView_ct_sort.adapter = categoryAdapter
+                }
+
+            }
             if(sortType=="modifiedTime"){
                 bottomSheetView.findViewById<View>(R.id.modifed_done).visibility=View.VISIBLE
                 bottomSheetView.findViewById<View>(R.id.created_done).visibility=View.GONE
@@ -131,7 +149,6 @@ class NoteFragment : Fragment() {
         sharedPreferences.edit().putString(SORT_TYPE_KEY, sortType).apply()
         updateRecyclerView()
     }
-
     fun updateRecyclerView() {
         if(sortType=="modifiedTime"){
             GlobalScope.launch(Dispatchers.Main) {

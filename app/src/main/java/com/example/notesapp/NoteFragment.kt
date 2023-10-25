@@ -27,12 +27,13 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
-class NoteFragment : Fragment() {
+class NoteFragment : Fragment(), sortCategoryAdapter.SortCategoryClickListener{
     var arrNotes = ArrayList<Notes>()
     var notesAdapter: NotesAdapter = NotesAdapter(0)
-    var categoryAdapter :sortCategoryAdapter=sortCategoryAdapter()
+    var categoryAdapter:sortCategoryAdapter=sortCategoryAdapter(this)
     lateinit var sharedPreferences: SharedPreferences
     lateinit var sortType: String
+    var sortCategory=1
 
     override fun onResume() {
         super.onResume()
@@ -59,6 +60,7 @@ class NoteFragment : Fragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        categoryAdapter = sortCategoryAdapter(this)
         recycler_view.setHasFixedSize(true)
         recycler_view.layoutManager=StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL)
         GlobalScope.launch(Dispatchers.Main){
@@ -100,21 +102,25 @@ class NoteFragment : Fragment() {
             if(sortType=="modifiedTime"){
                 bottomSheetView.findViewById<View>(R.id.modifed_done).visibility=View.VISIBLE
                 bottomSheetView.findViewById<View>(R.id.created_done).visibility=View.GONE
+                sortType="createdTime"
             }else{
                 bottomSheetView.findViewById<View>(R.id.modifed_done).visibility=View.GONE
                 bottomSheetView.findViewById<View>(R.id.created_done).visibility=View.VISIBLE
+                sortType="modifiedTime"
             }
 
             bottomSheetView.findViewById<LinearLayout>(R.id.modified_sort).setOnClickListener {
                 bottomSheetView.findViewById<View>(R.id.modifed_done).visibility=View.VISIBLE
                 bottomSheetView.findViewById<View>(R.id.created_done).visibility=View.GONE
                 updateSortType("modifiedTime")
+                loadNotesByCategoryId(sortCategory)
 
             }
             bottomSheetView.findViewById<LinearLayout>(R.id.created_sort).setOnClickListener {
                 bottomSheetView.findViewById<View>(R.id.modifed_done).visibility=View.GONE
                 bottomSheetView.findViewById<View>(R.id.created_done).visibility=View.VISIBLE
                 updateSortType("createdTime")
+                loadNotesByCategoryId(sortCategory)
 
             }
             bottomSheet.setContentView(bottomSheetView)
@@ -167,6 +173,29 @@ class NoteFragment : Fragment() {
         }
     }
 
+    override fun onSortCategoryClick(category: Category) {
+        sortCategory= category.id_category!!
+        loadNotesByCategoryId(sortCategory)
+    }
+    fun loadNotesByCategoryId(categoryId: Int) {
+        GlobalScope.launch(Dispatchers.Main) {
+            context?.let {
+                if (categoryId == 1) {
+                    val sortType = sharedPreferences.getString(SORT_TYPE_KEY, "modifiedTime") ?: "modifiedTime"
+                    val notes = if (sortType == "modifiedTime") {
+                        NotesDatabase.getDatabase(it).noteDao().getAllNotesSortedByDate().asReversed()
+                    } else {
+                        NotesDatabase.getDatabase(it).noteDao().getAllNotesCreatedSortedByDate().asReversed()
+                    }
+                    notesAdapter.updateData(notes)
+                } else {
+                    val sortType = sharedPreferences.getString(SORT_TYPE_KEY, "modifiedTime") ?: "modifiedTime"
+                    val notes = NotesDatabase.getDatabase(it).noteDao().getNotesByCategoryIdSorted(categoryId, sortType).asReversed()
+                    notesAdapter.updateData(notes)
+                }
+            }
+        }
+    }
 
 
 }

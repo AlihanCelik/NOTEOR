@@ -8,9 +8,10 @@ import com.example.notesapp.R
 import com.example.notesapp.entities.Category
 import kotlinx.android.synthetic.main.item_category_sort.view.*
 
-class sortCategoryAdapter() :
+class sortCategoryAdapter(private var listener: SortCategoryClickListener) :
     RecyclerView.Adapter<sortCategoryAdapter.SortCategoryViewHolder>() {
     var arrList = ArrayList<Category>()
+    var selectedCategory: Category? = null
     class SortCategoryViewHolder(view: View) : RecyclerView.ViewHolder(view){
 
     }
@@ -39,6 +40,13 @@ class sortCategoryAdapter() :
     override fun onBindViewHolder(holder: SortCategoryViewHolder, position: Int) {
         val model =arrList[position]
         holder.itemView.item_sortCategory_text.text=model.name_category
+
+        holder.itemView.setOnClickListener {
+            selectedCategory = model
+            notifyDataSetChanged()
+            listener.onSortCategoryClick(model)
+
+        }
 
 
 

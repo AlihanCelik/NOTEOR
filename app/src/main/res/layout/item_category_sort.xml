@@ -16,9 +16,10 @@
         <ImageView
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:src="@drawable/edit">
+            android:src="@drawable/categoryItem">
         </ImageView>
         <TextView
+            android:id="@+id/item_sortCategory_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Modified Time"
@@ -26,7 +27,6 @@
             android:textColor="@color/grey2"
             android:textStyle="bold"
             android:layout_gravity="center">
-
         </TextView>
         <Space
             android:layout_width="0dp"

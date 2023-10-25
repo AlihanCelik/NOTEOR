@@ -40,7 +40,11 @@ class sortCategoryAdapter(private var listener: SortCategoryClickListener) :
     override fun onBindViewHolder(holder: SortCategoryViewHolder, position: Int) {
         val model =arrList[position]
         holder.itemView.item_sortCategory_text.text=model.name_category
-
+        if (selectedCategory != null && selectedCategory == model) {
+            holder.itemView.item_sort_category.visibility = View.VISIBLE
+        } else {
+            holder.itemView.item_sort_category.visibility = View.GONE
+        }
         holder.itemView.setOnClickListener {
             selectedCategory = model
             notifyDataSetChanged()

@@ -34,6 +34,7 @@
             android:layout_weight="1" />
         <ImageView
             android:id="@+id/item_sort_category"
+            android:visibility="gone"
             android:layout_width="18dp"
             android:layout_height="18dp"
             android:layout_gravity="center"

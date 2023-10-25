@@ -102,25 +102,21 @@ class NoteFragment : Fragment(), sortCategoryAdapter.SortCategoryClickListener{
             if(sortType=="modifiedTime"){
                 bottomSheetView.findViewById<View>(R.id.modifed_done).visibility=View.VISIBLE
                 bottomSheetView.findViewById<View>(R.id.created_done).visibility=View.GONE
-                sortType="createdTime"
             }else{
                 bottomSheetView.findViewById<View>(R.id.modifed_done).visibility=View.GONE
                 bottomSheetView.findViewById<View>(R.id.created_done).visibility=View.VISIBLE
-                sortType="modifiedTime"
             }
 
             bottomSheetView.findViewById<LinearLayout>(R.id.modified_sort).setOnClickListener {
                 bottomSheetView.findViewById<View>(R.id.modifed_done).visibility=View.VISIBLE
                 bottomSheetView.findViewById<View>(R.id.created_done).visibility=View.GONE
                 updateSortType("modifiedTime")
-                loadNotesByCategoryId(sortCategory)
 
             }
             bottomSheetView.findViewById<LinearLayout>(R.id.created_sort).setOnClickListener {
                 bottomSheetView.findViewById<View>(R.id.modifed_done).visibility=View.GONE
                 bottomSheetView.findViewById<View>(R.id.created_done).visibility=View.VISIBLE
                 updateSortType("createdTime")
-                loadNotesByCategoryId(sortCategory)
 
             }
             bottomSheet.setContentView(bottomSheetView)
@@ -153,7 +149,7 @@ class NoteFragment : Fragment(), sortCategoryAdapter.SortCategoryClickListener{
     fun updateSortType(newSortType: String) {
         sortType = newSortType
         sharedPreferences.edit().putString(SORT_TYPE_KEY, sortType).apply()
-        updateRecyclerView()
+        loadNotesByCategoryId(sortCategory)
     }
     fun updateRecyclerView() {
         if(sortType=="modifiedTime"){

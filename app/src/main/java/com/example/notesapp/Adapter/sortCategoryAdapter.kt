@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.item_category_sort.view.*
 class sortCategoryAdapter(private var listener: SortCategoryClickListener) :
     RecyclerView.Adapter<sortCategoryAdapter.SortCategoryViewHolder>() {
     var arrList = ArrayList<Category>()
-    var selectedCategory: Category? = null
+    var selectedCategory=1;
     class SortCategoryViewHolder(view: View) : RecyclerView.ViewHolder(view){
 
     }
@@ -40,16 +40,17 @@ class sortCategoryAdapter(private var listener: SortCategoryClickListener) :
     override fun onBindViewHolder(holder: SortCategoryViewHolder, position: Int) {
         val model =arrList[position]
         holder.itemView.item_sortCategory_text.text=model.name_category
-        if (selectedCategory != null && selectedCategory == model) {
-            holder.itemView.item_sort_category.visibility = View.VISIBLE
-        } else {
-            holder.itemView.item_sort_category.visibility = View.GONE
-        }
+
         holder.itemView.setOnClickListener {
-            selectedCategory = model
+            selectedCategory = model.id_category!!
             notifyDataSetChanged()
             listener.onSortCategoryClick(model)
 
+        }
+        if (arrList[position].id_category==selectedCategory) {
+            holder.itemView.item_sort_category.visibility = View.VISIBLE
+        } else {
+            holder.itemView.item_sort_category.visibility = View.GONE
         }
 
 

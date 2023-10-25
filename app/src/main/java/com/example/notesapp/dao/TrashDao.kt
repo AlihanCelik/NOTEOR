@@ -27,4 +27,6 @@ interface TrashDao {
 
     @Query("SELECT * FROM trash ORDER BY strftime('%d/%m/%Y %H:%M:%S', date_time_t) DESC")
     suspend fun getAllTrashSortedByDate(): List<Trash>
+
+
 }

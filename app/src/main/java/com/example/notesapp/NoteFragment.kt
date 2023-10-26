@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.SearchView
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -78,8 +79,6 @@ class NoteFragment : Fragment(), sortCategoryAdapter.SortCategoryClickListener{
                 }
 
             }
-
-
         sortButton.setOnClickListener {
             val bottomSheet =
                 BottomSheetDialog(requireContext(), R.style.BottomSheetDialogTheme)
@@ -118,8 +117,14 @@ class NoteFragment : Fragment(), sortCategoryAdapter.SortCategoryClickListener{
                 bottomSheetView.findViewById<View>(R.id.created_done).visibility=View.VISIBLE
                 updateSortType("createdTime")
 
+
+            }
+            bottomSheetView.findViewById<ImageView>(R.id.cancel_bottom_button).setOnClickListener {
+                bottomSheet.dismiss()
             }
             bottomSheet.setContentView(bottomSheetView)
+            bottomSheet.setCancelable(false)
+            bottomSheet.setCanceledOnTouchOutside(true)
             bottomSheet.show()
         }
 

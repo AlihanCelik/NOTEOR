@@ -1096,13 +1096,12 @@ class CreateNoteActivity : AppCompatActivity(),CategoryAdapter.CategoryClickList
     }
 
     override fun onBackPressed() {
+        println("back")
         GlobalScope.launch(Dispatchers.Main) {
             val shouldExit = showExitDialog()
             if (shouldExit) {
                 setResult(Activity.RESULT_OK)
                 finish()
-            }else{
-
             }
         }
     }
@@ -1138,7 +1137,6 @@ class CreateNoteActivity : AppCompatActivity(),CategoryAdapter.CategoryClickList
 
             dialog.show()
             dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-
             if (noteId != -1) {
                 view.permi_text.text = "Are you sure you want to exit without saving changes?"
             } else {

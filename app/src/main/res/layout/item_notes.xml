@@ -109,7 +109,7 @@
                         android:id="@+id/item_category_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Category Name"
+                        android:text=""
                         android:textColor="@color/grey"
                         android:textStyle="bold"
                         android:layout_marginRight="15dp"

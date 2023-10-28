@@ -63,7 +63,7 @@ class CategoryActivtiyAdapter() :
                     holder.itemView.item_category_activtiy_size.visibility=View.VISIBLE
                     holder.itemView.item_category_activtiy_size.text="(${idArr.size})"
                 }else{
-                    holder.itemView.item_category_activtiy_size.visibility=View.GONE
+                    holder.itemView.item_category_activtiy_size.text="(${arrNotes.size})"
                 }
 
             }

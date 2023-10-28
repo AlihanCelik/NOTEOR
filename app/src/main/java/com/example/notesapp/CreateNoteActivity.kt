@@ -1096,12 +1096,13 @@ class CreateNoteActivity : AppCompatActivity(),CategoryAdapter.CategoryClickList
     }
 
     override fun onBackPressed() {
-        println("back")
+
         GlobalScope.launch(Dispatchers.Main) {
             val shouldExit = showExitDialog()
             if (shouldExit) {
                 setResult(Activity.RESULT_OK)
                 finish()
+                println("back")
             }
         }
     }
@@ -1257,7 +1258,6 @@ class CreateNoteActivity : AppCompatActivity(),CategoryAdapter.CategoryClickList
                         Toast.makeText(this@CreateNoteActivity, "Note is updated", Toast.LENGTH_SHORT).show()
                         if(reminder!=null && notes.reminder!! >System.currentTimeMillis()){
                             reminder?.let { it1 -> setAlarm(it1,notes.title!!,notes.id!!) }
-                            println("update : ${notes.title}" )
                         }
                     }
 
@@ -1287,7 +1287,6 @@ class CreateNoteActivity : AppCompatActivity(),CategoryAdapter.CategoryClickList
                         setResult(Activity.RESULT_OK)
                         if(reminder!=null && notes.reminder!! >System.currentTimeMillis()){
                             reminder?.let { it1 -> setAlarm(it1,notes.title!!,noteId!!) }
-                            println("save : ${notes.title}" )
                         }
                         Toast.makeText(this@CreateNoteActivity, "Note is added", Toast.LENGTH_SHORT).show()
                     }

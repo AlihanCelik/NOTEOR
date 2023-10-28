@@ -14,8 +14,6 @@ import com.example.notesapp.database.TrashDatabase
 import com.example.notesapp.entities.Category
 import com.example.notesapp.entities.Notes
 import com.example.notesapp.entities.Trash
-import kotlinx.android.synthetic.main.activity_create_note.*
-import kotlinx.android.synthetic.main.activity_favorites_activtity.*
 import kotlinx.android.synthetic.main.delete_permi_dialog.view.*
 import kotlinx.android.synthetic.main.dialog_add_category.view.*
 import kotlinx.android.synthetic.main.item_category_activtiy.view.*

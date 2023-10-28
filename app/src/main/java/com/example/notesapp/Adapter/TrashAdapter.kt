@@ -14,8 +14,10 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.notesapp.R
+import com.example.notesapp.database.CategoryDatabase
 import com.example.notesapp.database.NotesDatabase
 import com.example.notesapp.database.TrashDatabase
+import com.example.notesapp.entities.Category
 import com.example.notesapp.entities.Notes
 import com.example.notesapp.entities.Trash
 import kotlinx.android.synthetic.main.delete_permi_dialog.view.*
@@ -184,6 +186,7 @@ class TrashAdapter() :
                     notes.color = trash.color_t
                     notes.noteCategoryId=trash.noteCategory_t
                     notes.imgPath = trash.imgPath_t
+                    notes.noteCategoryId=trash.noteCategory_t
                     notes.webLink = trash.webLink_t
                     notes.favorite = trash.favorite_t
                     notes.password = trash.password_t
@@ -219,6 +222,24 @@ class TrashAdapter() :
 
             }
 
+        }
+        if(arrList[position].noteCategory_t!=-1){
+            holder.itemView.item_category_ly.visibility=View.VISIBLE
+            GlobalScope.launch(Dispatchers.Main){
+                let {
+                    var category=
+                        CategoryDatabase.getDatabase(context).CategoryDao().getAllCategory()
+                    var arrCategory = category as java.util.ArrayList<Category>
+                    for (arr in arrCategory){
+                        if(arr.id_category==arrList[position].noteCategory_t){
+                            holder.itemView.item_category_name.text=arr.name_category.toString()
+                        }
+                    }
+                }
+            }
+        }else{
+            holder.itemView.item_category_ly.visibility=View.GONE
+            holder.itemView.item_category_name.text="All Notes"
         }
         if(arrList[position].imgPath_t.isNullOrEmpty()){
             holder.itemView.item_layout_img.visibility=View.GONE

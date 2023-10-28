@@ -31,11 +31,11 @@ import kotlin.collections.ArrayList
 class NoteFragment : Fragment(), sortCategoryAdapter.SortCategoryClickListener{
     var arrNotes = ArrayList<Notes>()
     var notesAdapter: NotesAdapter = NotesAdapter(0)
-    var categoryAdapter:sortCategoryAdapter=sortCategoryAdapter(this)
+
     lateinit var sharedPreferences: SharedPreferences
     lateinit var sortType: String
     var sortCategory: Int=1
-
+    lateinit var categoryAdapter:sortCategoryAdapter
     override fun onResume() {
         super.onResume()
         loadNotesByCategoryId()
@@ -53,6 +53,8 @@ class NoteFragment : Fragment(), sortCategoryAdapter.SortCategoryClickListener{
         sharedPreferences = requireContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
         sortType = sharedPreferences.getString(SORT_TYPE_KEY, "modifiedTime") ?: "modifiedTime"
         sortCategory = sharedPreferences.getInt(SORT_TYPE_KEY2, 1)
+        categoryAdapter = sortCategoryAdapter(this, sortCategory)
+
     }
 
     override fun onCreateView(
@@ -63,24 +65,29 @@ class NoteFragment : Fragment(), sortCategoryAdapter.SortCategoryClickListener{
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        categoryAdapter = sortCategoryAdapter(this)
+        categoryAdapter = sortCategoryAdapter(this, sortCategory)
         recycler_view.setHasFixedSize(true)
         recycler_view.layoutManager=StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL)
-        GlobalScope.launch(Dispatchers.Main){
-                context?.let {
-                    var notes: List<Notes> = emptyList()
-                    if (sortType=="modifiedTime"){
-                        notes = NotesDatabase.getDatabase(it).noteDao().getAllNotesSortedByDate().asReversed()
-                    }else{
-                        notes = NotesDatabase.getDatabase(it).noteDao().getAllNotesCreatedSortedByDate().asReversed()
+        GlobalScope.launch(Dispatchers.Main) {
+            context?.let {
+                if (sortCategory == 1) {
+                    val sortType = sharedPreferences.getString(SORT_TYPE_KEY, "modifiedTime") ?: "modifiedTime"
+                    val notes = if (sortType == "modifiedTime") {
+                        NotesDatabase.getDatabase(it).noteDao().getAllNotesSortedByDate().asReversed()
+                    } else {
+                        NotesDatabase.getDatabase(it).noteDao().getAllNotesCreatedSortedByDate().asReversed()
                     }
-
-                    val arrNotes = notes.toMutableList()
-                    notesAdapter!!.setData(arrNotes)
-                    recycler_view.adapter = notesAdapter
+                    notesAdapter!!.setData(notes)
+                } else {
+                    val sortType = sharedPreferences.getString(SORT_TYPE_KEY, "modifiedTime") ?: "modifiedTime"
+                    val notes = NotesDatabase.getDatabase(it).noteDao().getNotesByCategoryIdSorted(sortCategory, sortType).asReversed()
+                    notesAdapter.setData(notes)
                 }
-
+                recycler_view.adapter = notesAdapter
             }
+        }
+
+
         sortButton.setOnClickListener {
             val bottomSheet =
                 BottomSheetDialog(requireContext(), R.style.BottomSheetDialogTheme)
@@ -183,8 +190,7 @@ class NoteFragment : Fragment(), sortCategoryAdapter.SortCategoryClickListener{
     }
 
     override fun onSortCategoryClick(category: Category) {
-        sortCategory= category.id_category!!
-        updateSortCategory(sortCategory)
+        updateSortCategory(category.id_category!!)
         loadNotesByCategoryId()
     }
     fun loadNotesByCategoryId() {

@@ -170,7 +170,7 @@ class MainActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == CREATE_NOTE_REQUEST && resultCode == Activity.RESULT_OK) {
             val noteFragment = viewPagerAdapter.fragmentList[0] as? NoteFragment
-            noteFragment?.updateRecyclerView()
+            noteFragment?.loadNotesByCategoryId()
             val calendarFragment=viewPagerAdapter.fragmentList[1]as? CalendarFragment
             calendarFragment?.updateRecyclerView()
 

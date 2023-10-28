@@ -31,7 +31,7 @@ class TrashActivity : AppCompatActivity() {
         backButton.setOnClickListener {
             val fragment = supportFragmentManager.findFragmentByTag(NoteFragment::class.java.simpleName)
             if (fragment is NoteFragment) {
-                fragment.updateRecyclerView()
+                fragment.loadNotesByCategoryId()
             }
             finish()
         }

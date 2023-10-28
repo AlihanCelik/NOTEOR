@@ -34,11 +34,11 @@ class NoteFragment : Fragment(), sortCategoryAdapter.SortCategoryClickListener{
     var categoryAdapter:sortCategoryAdapter=sortCategoryAdapter(this)
     lateinit var sharedPreferences: SharedPreferences
     lateinit var sortType: String
-    var sortCategory=1
+    var sortCategory: Int=1
 
     override fun onResume() {
         super.onResume()
-        updateRecyclerView()
+        loadNotesByCategoryId()
     }
 
     companion object {
@@ -46,11 +46,13 @@ class NoteFragment : Fragment(), sortCategoryAdapter.SortCategoryClickListener{
             return NoteFragment()
         }
         private const val SORT_TYPE_KEY = "sortType"
+        private const val SORT_TYPE_KEY2 = "sortCategory"
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         sharedPreferences = requireContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
         sortType = sharedPreferences.getString(SORT_TYPE_KEY, "modifiedTime") ?: "modifiedTime"
+        sortCategory = sharedPreferences.getInt(SORT_TYPE_KEY2, 1)
     }
 
     override fun onCreateView(
@@ -154,8 +156,14 @@ class NoteFragment : Fragment(), sortCategoryAdapter.SortCategoryClickListener{
     fun updateSortType(newSortType: String) {
         sortType = newSortType
         sharedPreferences.edit().putString(SORT_TYPE_KEY, sortType).apply()
-        loadNotesByCategoryId(sortCategory)
+        loadNotesByCategoryId()
     }
+    fun updateSortCategory(newSortCategory: Int) {
+        sortCategory = newSortCategory
+        sharedPreferences.edit().putInt(SORT_TYPE_KEY2, sortCategory).apply()
+        loadNotesByCategoryId()
+    }
+
     fun updateRecyclerView() {
         if(sortType=="modifiedTime"){
             GlobalScope.launch(Dispatchers.Main) {
@@ -176,12 +184,13 @@ class NoteFragment : Fragment(), sortCategoryAdapter.SortCategoryClickListener{
 
     override fun onSortCategoryClick(category: Category) {
         sortCategory= category.id_category!!
-        loadNotesByCategoryId(sortCategory)
+        updateSortCategory(sortCategory)
+        loadNotesByCategoryId()
     }
-    fun loadNotesByCategoryId(categoryId: Int) {
+    fun loadNotesByCategoryId() {
         GlobalScope.launch(Dispatchers.Main) {
             context?.let {
-                if (categoryId == 1) {
+                if (sortCategory == 1) {
                     val sortType = sharedPreferences.getString(SORT_TYPE_KEY, "modifiedTime") ?: "modifiedTime"
                     val notes = if (sortType == "modifiedTime") {
                         NotesDatabase.getDatabase(it).noteDao().getAllNotesSortedByDate().asReversed()
@@ -191,7 +200,7 @@ class NoteFragment : Fragment(), sortCategoryAdapter.SortCategoryClickListener{
                     notesAdapter.updateData(notes)
                 } else {
                     val sortType = sharedPreferences.getString(SORT_TYPE_KEY, "modifiedTime") ?: "modifiedTime"
-                    val notes = NotesDatabase.getDatabase(it).noteDao().getNotesByCategoryIdSorted(categoryId, sortType).asReversed()
+                    val notes = NotesDatabase.getDatabase(it).noteDao().getNotesByCategoryIdSorted(sortCategory, sortType).asReversed()
                     notesAdapter.updateData(notes)
                 }
             }

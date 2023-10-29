@@ -171,6 +171,23 @@ class NotesAdapter(val frag:Int) :
             }else{
                 view.dialogReminderLayout.visibility=View.GONE
             }
+            if(arrList[position].noteCategoryId!=-1){
+                view.dialog_category_ly.visibility=View.VISIBLE
+                GlobalScope.launch(Dispatchers.Main){
+                    let {
+                        var category=
+                            CategoryDatabase.getDatabase(context).CategoryDao().getAllCategory()
+                        var arrCategory = category as java.util.ArrayList<Category>
+                        for (arr in arrCategory){
+                            if(arr.id_category==arrList[position].noteCategoryId){
+                                view.dialog_category_name.text=arr.name_category.toString()
+                            }
+                        }
+                    }
+                }
+            }else{
+               view.dialog_category_ly.visibility=View.GONE
+            }
             dialog.show()
             dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
             view.cancelLong.setOnClickListener {
@@ -646,24 +663,7 @@ class NotesAdapter(val frag:Int) :
             holder.itemView.item_date_l.visibility=View.GONE
             holder.itemView.item_reminder_l.visibility=View.VISIBLE
         }
-        if(arrList[position].noteCategoryId!=-1){
-            holder.itemView.item_category_ly.visibility=View.VISIBLE
-            GlobalScope.launch(Dispatchers.Main){
-                let {
-                    var category=
-                        CategoryDatabase.getDatabase(context).CategoryDao().getAllCategory()
-                    var arrCategory = category as java.util.ArrayList<Category>
-                    for (arr in arrCategory){
-                        if(arr.id_category==arrList[position].noteCategoryId){
-                            holder.itemView.item_category_name.text=arr.name_category.toString()
-                        }
-                    }
-                }
-            }
-        }else{
-            holder.itemView.item_category_ly.visibility=View.GONE
-            holder.itemView.item_category_name.text="All Notes"
-        }
+
 
         if(arrList[position].reminder!=null){
              holder.itemView.item_rame.visibility=View.VISIBLE

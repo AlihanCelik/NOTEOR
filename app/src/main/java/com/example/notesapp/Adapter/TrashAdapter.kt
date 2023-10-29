@@ -223,24 +223,7 @@ class TrashAdapter() :
             }
 
         }
-        if(arrList[position].noteCategory_t!=-1){
-            holder.itemView.item_category_ly.visibility=View.VISIBLE
-            GlobalScope.launch(Dispatchers.Main){
-                let {
-                    var category=
-                        CategoryDatabase.getDatabase(context).CategoryDao().getAllCategory()
-                    var arrCategory = category as java.util.ArrayList<Category>
-                    for (arr in arrCategory){
-                        if(arr.id_category==arrList[position].noteCategory_t){
-                            holder.itemView.item_category_name.text=arr.name_category.toString()
-                        }
-                    }
-                }
-            }
-        }else{
-            holder.itemView.item_category_ly.visibility=View.GONE
-            holder.itemView.item_category_name.text="All Notes"
-        }
+
         if(arrList[position].imgPath_t.isNullOrEmpty()){
             holder.itemView.item_layout_img.visibility=View.GONE
         }else{

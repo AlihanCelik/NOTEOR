@@ -143,16 +143,26 @@ class NoteFragment : Fragment(), sortCategoryAdapter.SortCategoryClickListener{
             }
 
             override fun onQueryTextChange(p0: String?): Boolean {
-
                 var tempArr = ArrayList<Notes>()
-
+                var tempArr2=ArrayList<Notes>()
                 for (arr in arrNotes){
-                    if (arr.title!!.toLowerCase(Locale.getDefault()).contains(p0.toString())){
-                        tempArr.add(arr)
+                    if(arr.noteCategoryId==sortCategory&& sortCategory!=1){
+                        if (arr.title!!.toLowerCase(Locale.getDefault()).contains(p0.toString())){
+                            tempArr.add(arr)
+                        }
+                    }
+                    if(sortCategory==1){
+                        if (arr.title!!.toLowerCase(Locale.getDefault()).contains(p0.toString())){
+                            tempArr2.add(arr)
+                        }
                     }
                 }
+                if(sortCategory==1){
+                    notesAdapter.setData(tempArr2)
+                }else{
+                    notesAdapter.setData(tempArr)
+                }
 
-                notesAdapter.setData(tempArr)
                 notesAdapter.notifyDataSetChanged()
                 return true
             }
@@ -203,10 +213,14 @@ class NoteFragment : Fragment(), sortCategoryAdapter.SortCategoryClickListener{
                     } else {
                         NotesDatabase.getDatabase(it).noteDao().getAllNotesCreatedSortedByDate().asReversed()
                     }
+                    arrNotes.clear()
+                    arrNotes.addAll(notes)
                     notesAdapter.updateData(notes)
                 } else {
                     val sortType = sharedPreferences.getString(SORT_TYPE_KEY, "modifiedTime") ?: "modifiedTime"
                     val notes = NotesDatabase.getDatabase(it).noteDao().getNotesByCategoryIdSorted(sortCategory, sortType).asReversed()
+                    arrNotes.clear()
+                    arrNotes.addAll(notes)
                     notesAdapter.updateData(notes)
                 }
             }

@@ -16,4 +16,11 @@
     <string name="enterconfirm_password">Enter Confirm Password</string>
     <string name="password">Password</string>
     <string name="confirm_password">Confirm Password</string>
+    <string name="bold">Bold</string>
+    <string name="link">Link</string>
+    <string name="italic">Italic</string>
+    <string name="strikethrough">Strikethrough</string>
+    <string name="clear_formatting">Clear formatting</string>
+    <string name="monospace">Monospace</string>
+
 </resources>

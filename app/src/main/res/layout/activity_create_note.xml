@@ -412,7 +412,7 @@
 
 
 
-            <EditText
+            <com.example.notesapp.OverflowEditText
                 android:id="@+id/notes_desc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -427,7 +427,7 @@
                 android:background="@null"
                 >
 
-            </EditText>
+            </com.example.notesapp.OverflowEditText>
 
         </LinearLayout>
 

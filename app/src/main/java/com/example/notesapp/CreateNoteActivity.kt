@@ -7,13 +7,13 @@ import android.content.pm.PackageManager
 import android.content.res.ColorStateList
 import android.graphics.Paint
 import android.graphics.Typeface
+
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.text.*
-import android.view.LayoutInflater
-import android.view.View
-import android.view.WindowInsetsController
+import android.text.style.*
+import android.view.*
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Toast
@@ -23,6 +23,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.text.getSpans
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
@@ -49,6 +50,9 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 import kotlinx.coroutines.suspendCancellableCoroutine
+
+import android.view.Menu
+import android.view.MenuItem
 
 
 class CreateNoteActivity : AppCompatActivity(),CategoryAdapter.CategoryClickListener {
@@ -117,6 +121,58 @@ class CreateNoteActivity : AppCompatActivity(),CategoryAdapter.CategoryClickList
 
         noteId = intent.getIntExtra("itemid",-1)
         tvDateTime.text=currentDate
+        notes_desc.customSelectionActionModeCallback = object : ActionMode.Callback {
+            override fun onPrepareActionMode(mode: ActionMode?, menu: Menu?) = false
+
+            override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?) = false
+
+            override fun onCreateActionMode(mode: ActionMode?, menu: Menu?): Boolean {
+                notes_desc.isActionModeOn = true
+                try {
+                    if (menu != null) {
+                        menu.add(0, R.string.bold, 0, getString(R.string.bold)).setOnMenuItemClickListener {
+                            applySpan(StyleSpan(Typeface.BOLD))
+                            mode?.finish()
+                            true
+                        }
+                        menu.add(0, R.string.link, 0, getString(R.string.link)).setOnMenuItemClickListener {
+                            applySpan(URLSpan(null))
+                            mode?.finish()
+                            true
+                        }
+                        menu.add(0, R.string.italic, 0, getString(R.string.italic)).setOnMenuItemClickListener {
+                            applySpan(StyleSpan(Typeface.ITALIC))
+                            mode?.finish()
+                            true
+                        }
+                        menu.add(0, R.string.monospace, 0, getString(R.string.monospace)).setOnMenuItemClickListener {
+                            applySpan(TypefaceSpan("monospace"))
+                            mode?.finish()
+                            true
+                        }
+                        menu.add(0, R.string.strikethrough, 0, getString(R.string.strikethrough)).setOnMenuItemClickListener {
+                            applySpan(StrikethroughSpan())
+                            mode?.finish()
+                            true
+                        }
+                        menu.add(0, R.string.clear_formatting, 0, getString(R.string.clear_formatting)).setOnMenuItemClickListener {
+                            removeSpans()
+                            mode?.finish()
+                            true
+                        }
+                    }
+                } catch (exception: Exception) {
+                    exception.printStackTrace()
+                }
+                return true
+            }
+
+            override fun onDestroyActionMode(mode: ActionMode?) {
+                notes_desc.isActionModeOn = false
+            }
+        }
+
+
 
         if(noteId!=-1){
             GlobalScope.launch(Dispatchers.Main){
@@ -465,6 +521,7 @@ class CreateNoteActivity : AppCompatActivity(),CategoryAdapter.CategoryClickList
 
 
         }
+
 
         favButton.setOnClickListener {
             if(!fav){
@@ -874,7 +931,6 @@ class CreateNoteActivity : AppCompatActivity(),CategoryAdapter.CategoryClickList
                     view.okeyFont.setOnClickListener {
                         dialog.dismiss()
                     }
-
                     fun setBackgroundForFont(button: LinearLayout) {
                         val allButtons = arrayOf(
                             view.font1_btn, view.font2_btn, view.font3_btn, view.font4_btn,
@@ -902,6 +958,8 @@ class CreateNoteActivity : AppCompatActivity(),CategoryAdapter.CategoryClickList
                         "font11"->setBackgroundForFont(view.font11_btn)
                         "font12"->setBackgroundForFont(view.font12_btn)
 
+                    }
+                    view.font_bold_btn.setOnClickListener {
                     }
                     view.font1_btn.setOnClickListener {
                         notes_desc.textSize = 17f
@@ -1093,6 +1151,30 @@ class CreateNoteActivity : AppCompatActivity(),CategoryAdapter.CategoryClickList
         }
         initAdapter()
 
+    }
+    private fun removeSpans() {
+        val selectionEnd = notes_desc.selectionEnd
+        val selectionStart = notes_desc.selectionStart
+
+        ifBothNotNullAndInvalid(selectionStart, selectionEnd) { start, end ->
+            notes_desc.text?.getSpans<CharacterStyle>(start, end)?.forEach { span ->
+                notes_desc.text?.removeSpan(span)
+            }
+        }
+    }
+    private fun applySpan(span: Any) {
+        val selectionEnd = notes_desc.selectionEnd
+        val selectionStart = notes_desc.selectionStart
+
+        ifBothNotNullAndInvalid(selectionStart, selectionEnd) { start, end ->
+            notes_desc.text?.setSpan(span, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        }
+    }
+
+    private fun ifBothNotNullAndInvalid(start: Int?, end: Int?, function: (start: Int, end: Int) -> Unit) {
+        if (start != null && start != -1 && end != null && end != -1) {
+            function.invoke(start, end)
+        }
     }
 
     override fun onBackPressed() {

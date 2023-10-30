@@ -5,6 +5,7 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.WindowInsetsController
+import android.widget.SearchView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.notesapp.Adapter.NotesAdapter
 import com.example.notesapp.database.NotesDatabase
@@ -15,6 +16,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
+import java.util.*
 import kotlin.collections.ArrayList
 
 class ReminderActivtiy : AppCompatActivity() {
@@ -83,8 +85,20 @@ class ReminderActivtiy : AppCompatActivity() {
             remaining_reminder_text.setTextColor(resources.getColor(R.color.grey2))
             updateRecyclerView("done")
         }
+        searchReminders.setOnQueryTextListener( object : SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(p0: String?): Boolean {
+                return true
+            }
+
+            override fun onQueryTextChange(p0: String?): Boolean {
+
+                return true
+            }
+
+        })
 
     }
+
 
     fun updateRecyclerView(sortType:String) {
         if(sortType=="all"){

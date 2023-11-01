@@ -162,7 +162,6 @@ class NoteFragment : Fragment(), sortCategoryAdapter.SortCategoryClickListener{
                 }else{
                     notesAdapter.setData(tempArr)
                 }
-
                 notesAdapter.notifyDataSetChanged()
                 return true
             }

@@ -165,7 +165,6 @@ class NoteFragment : Fragment(), sortCategoryAdapter.SortCategoryClickListener{
                 notesAdapter.notifyDataSetChanged()
                 return true
             }
-
         })
     }
 

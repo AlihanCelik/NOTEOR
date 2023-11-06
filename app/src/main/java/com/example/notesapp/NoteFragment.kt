@@ -225,5 +225,4 @@ class NoteFragment : Fragment(), sortCategoryAdapter.SortCategoryClickListener{
         }
     }
 
-
 }

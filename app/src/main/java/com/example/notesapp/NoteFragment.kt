@@ -196,7 +196,6 @@ class NoteFragment : Fragment(), sortCategoryAdapter.SortCategoryClickListener{
             }
         }
     }
-
     override fun onSortCategoryClick(category: Category) {
         updateSortCategory(category.id_category!!)
         loadNotesByCategoryId()

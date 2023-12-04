@@ -201,6 +201,7 @@ class NoteFragment : Fragment(), sortCategoryAdapter.SortCategoryClickListener{
         updateSortCategory(category.id_category!!)
         loadNotesByCategoryId()
     }
+
     fun loadNotesByCategoryId() {
         GlobalScope.launch(Dispatchers.Main) {
             context?.let {

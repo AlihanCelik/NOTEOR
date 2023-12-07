@@ -194,6 +194,14 @@ class NotesAdapter(val frag:Int) :
                 holder.itemView.item_bg.setBackgroundColor(Color.WHITE)
                 dialog.dismiss()
             }
+            view.share.setOnClickListener {
+                val intent=Intent(Intent.ACTION_SEND)
+                val text=arrList[position].title+"\n"+arrList[position].subTitle+"\n"+arrList[position].noteText
+                intent.type="text/plain"
+                intent.putExtra("Share This",text)
+                val chooser=Intent.createChooser(intent,"Share using ...")
+                context.startActivity(chooser)
+            }
             view.delete.setOnClickListener {
                 dialog.dismiss()
 

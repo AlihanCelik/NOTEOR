@@ -195,12 +195,22 @@ class NotesAdapter(val frag:Int) :
                 dialog.dismiss()
             }
             view.share.setOnClickListener {
-                val intent=Intent(Intent.ACTION_SEND)
+                val intent=Intent()
+                intent.action=Intent.ACTION_SEND_MULTIPLE
                 val text=arrList[position].title+"\n"+arrList[position].subTitle+"\n"+arrList[position].noteText
-                intent.type="text/plain"
-                intent.putExtra("Share This",text)
-                val chooser=Intent.createChooser(intent,"Share using ...")
-                context.startActivity(chooser)
+                intent.putExtra(Intent.EXTRA_TEXT,text)
+                val uriList = arrList[position].imgPath
+                // Add your URIs to the uriList (e.g., uriList.add(Uri.parse("content://...")))
+
+                if (uriList != null) {
+                    if (uriList.isNotEmpty()) {
+                        intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, ArrayList(uriList))
+                        intent.type = "image/*"
+                        val chooser = Intent.createChooser(intent, "Share using ...")
+                        context.startActivity(chooser)
+                    }
+                }
+
             }
             view.delete.setOnClickListener {
                 dialog.dismiss()

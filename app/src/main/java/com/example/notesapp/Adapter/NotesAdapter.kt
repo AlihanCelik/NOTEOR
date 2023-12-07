@@ -1,9 +1,11 @@
 package com.example.notesapp.Adapter
 
+import android.content.ClipData
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.Paint
+import android.net.Uri
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
@@ -195,22 +197,34 @@ class NotesAdapter(val frag:Int) :
                 dialog.dismiss()
             }
             view.share.setOnClickListener {
-                val intent=Intent()
-                intent.action=Intent.ACTION_SEND_MULTIPLE
-                val text=arrList[position].title+"\n"+arrList[position].subTitle+"\n"+arrList[position].noteText
-                intent.putExtra(Intent.EXTRA_TEXT,text)
-                val uriList = arrList[position].imgPath
-                // Add your URIs to the uriList (e.g., uriList.add(Uri.parse("content://...")))
+                val intent = Intent()
+                intent.action = Intent.ACTION_SEND_MULTIPLE
 
-                if (uriList != null) {
-                    if (uriList.isNotEmpty()) {
-                        intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, ArrayList(uriList))
-                        intent.type = "image/*"
-                        val chooser = Intent.createChooser(intent, "Share using ...")
-                        context.startActivity(chooser)
+                // Metin verileri
+                val text = arrList[position].title + "\n" + arrList[position].subTitle + "\n" + arrList[position].noteText
+                intent.putExtra(Intent.EXTRA_TEXT, text)
+
+                // Resim verileri
+                val imgPaths = arrList[position].imgPath
+
+                if (imgPaths != null && imgPaths.isNotEmpty()) {
+                    val imageUris = ArrayList<Uri>(imgPaths)
+
+                    // Set the ClipData to include both text and images
+                    val clipData = ClipData.newPlainText("text", text)
+
+                    // Add multiple image URIs to ClipData
+                    for (uri in imageUris) {
+                        clipData.addItem(ClipData.Item(uri))
                     }
+
+                    intent.clipData = clipData
+                    intent.type = "image/*"
                 }
 
+                // Create a chooser
+                val chooser = Intent.createChooser(intent, "Share using ...")
+                context.startActivity(chooser)
             }
             view.delete.setOnClickListener {
                 dialog.dismiss()

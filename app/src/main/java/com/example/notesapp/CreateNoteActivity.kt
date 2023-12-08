@@ -688,7 +688,7 @@ class CreateNoteActivity : AppCompatActivity(),CategoryAdapter.CategoryClickList
             }
             bottomSheetView.findViewById<View>(R.id.image).setOnClickListener {
                 if (hasPermissions()) {
-                    val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+                    val intent = Intent(Intent.ACTION_GET_CONTENT)
                     intent.addCategory(Intent.CATEGORY_OPENABLE)
                     intent.type = "image/*"
                     intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)

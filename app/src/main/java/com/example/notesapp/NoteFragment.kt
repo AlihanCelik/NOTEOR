@@ -11,6 +11,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.SearchView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.notesapp.Adapter.NotesAdapter
@@ -68,7 +69,7 @@ class NoteFragment : Fragment(), sortCategoryAdapter.SortCategoryClickListener{
         categoryAdapter = sortCategoryAdapter(this, sortCategory)
         recycler_view.setHasFixedSize(true)
         recycler_view.layoutManager=StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL)
-        GlobalScope.launch(Dispatchers.Main) {
+        lifecycleScope.launch(Dispatchers.Main) {
             context?.let {
                 if (sortCategory == 1) {
                     val sortType = sharedPreferences.getString(SORT_TYPE_KEY, "modifiedTime") ?: "modifiedTime"
@@ -97,7 +98,7 @@ class NoteFragment : Fragment(), sortCategoryAdapter.SortCategoryClickListener{
             var recyclerView_ct_sort=bottomSheetView.findViewById<RecyclerView>(R.id.bottom_sheet_category_sort)
             recyclerView_ct_sort.setHasFixedSize(true)
             recyclerView_ct_sort.layoutManager=StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL)
-            GlobalScope.launch(Dispatchers.Main){
+           lifecycleScope.launch(Dispatchers.Main){
                 context?.let {
                     var category: List<Category> = emptyList()
                         category = CategoryDatabase.getDatabase(it).CategoryDao().getAllCategory()
@@ -203,7 +204,7 @@ class NoteFragment : Fragment(), sortCategoryAdapter.SortCategoryClickListener{
     }
 
     fun loadNotesByCategoryId() {
-        GlobalScope.launch(Dispatchers.Main) {
+        lifecycleScope.launch(Dispatchers.Main) {
             context?.let {
                 if (sortCategory == 1) {
                     val sortType = sharedPreferences.getString(SORT_TYPE_KEY, "modifiedTime") ?: "modifiedTime"

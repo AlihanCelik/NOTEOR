@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.*
 import com.example.notesapp.Adapter.CalendarAdapter
 import com.example.notesapp.Adapter.NotesAdapter
@@ -179,7 +180,7 @@ class CalendarFragment : Fragment() , CalendarAdapter.onItemClickListener{
 
     }
     fun updateRecyclerView() {
-        GlobalScope.launch(Dispatchers.Main) {
+        lifecycleScope.launch(Dispatchers.Main) {
             context?.let {
                 val notes = NotesDatabase.getDatabase(it).noteDao().getAllNotes()
                 notesAdapter.updateData(notes)

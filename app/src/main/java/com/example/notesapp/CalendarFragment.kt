@@ -148,7 +148,7 @@ class CalendarFragment : Fragment() , CalendarAdapter.onItemClickListener{
         view?.findViewById<TextView>(R.id.date_text)?.text=text
         view?.findViewById<TextView>(R.id.date)?.text=text
 
-        GlobalScope.launch(Dispatchers.Main){
+        lifecycleScope.launch(Dispatchers.Main){
             context?.let {
                 var notes = NotesDatabase.getDatabase(it).noteDao().getAllNotesSortedByDate().asReversed()
                 val arrNotes = notes.toMutableList()

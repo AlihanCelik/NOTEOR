@@ -71,7 +71,11 @@ class CreateNoteActivity : AppCompatActivity(),CategoryAdapter.CategoryClickList
 
     var reminder: Long? =null
 
+    private var isBold = false
+    private var isItalic = false
     var fontfamily="font1"
+
+    private var previousStyle: Int = Typeface.NORMAL
 
     private val PERMISSION_CODE = 1001
     private val permissionId=14
@@ -122,56 +126,7 @@ class CreateNoteActivity : AppCompatActivity(),CategoryAdapter.CategoryClickList
 
         noteId = intent.getIntExtra("itemid",-1)
         tvDateTime.text=currentDate
-        notes_desc.customSelectionActionModeCallback = object : ActionMode.Callback {
-            override fun onPrepareActionMode(mode: ActionMode?, menu: Menu?) = false
 
-            override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?) = false
-
-            override fun onCreateActionMode(mode: ActionMode?, menu: Menu?): Boolean {
-                notes_desc.isActionModeOn = true
-                try {
-                    if (menu != null) {
-                        menu.add(0, R.string.bold, 0, getString(R.string.bold)).setOnMenuItemClickListener {
-                            applySpan(StyleSpan(Typeface.BOLD))
-                            mode?.finish()
-                            true
-                        }
-                        menu.add(0, R.string.link, 0, getString(R.string.link)).setOnMenuItemClickListener {
-                            applySpan(URLSpan(null))
-                            mode?.finish()
-                            true
-                        }
-                        menu.add(0, R.string.italic, 0, getString(R.string.italic)).setOnMenuItemClickListener {
-                            applySpan(StyleSpan(Typeface.ITALIC))
-                            mode?.finish()
-                            true
-                        }
-                        menu.add(0, R.string.monospace, 0, getString(R.string.monospace)).setOnMenuItemClickListener {
-                            applySpan(TypefaceSpan("monospace"))
-                            mode?.finish()
-                            true
-                        }
-                        menu.add(0, R.string.strikethrough, 0, getString(R.string.strikethrough)).setOnMenuItemClickListener {
-                            applySpan(StrikethroughSpan())
-                            mode?.finish()
-                            true
-                        }
-                        menu.add(0, R.string.clear_formatting, 0, getString(R.string.clear_formatting)).setOnMenuItemClickListener {
-                            removeSpans()
-                            mode?.finish()
-                            true
-                        }
-                    }
-                } catch (exception: Exception) {
-                    exception.printStackTrace()
-                }
-                return true
-            }
-
-            override fun onDestroyActionMode(mode: ActionMode?) {
-                notes_desc.isActionModeOn = false
-            }
-        }
 
 
 
@@ -962,6 +917,12 @@ class CreateNoteActivity : AppCompatActivity(),CategoryAdapter.CategoryClickList
 
                     }
                     view.font_bold_btn.setOnClickListener {
+                        isBold = !isBold
+                        applyTextStyle()
+                    }
+                    view.font_italic_btn.setOnClickListener {
+                        isItalic = !isItalic
+                        applyTextStyle()
                     }
                     view.font1_btn.setOnClickListener {
                         notes_desc.textSize = 17f
@@ -1153,31 +1114,40 @@ class CreateNoteActivity : AppCompatActivity(),CategoryAdapter.CategoryClickList
         }
         initAdapter()
 
-    }
-    private fun removeSpans() {
-        val selectionEnd = notes_desc.selectionEnd
-        val selectionStart = notes_desc.selectionStart
-
-        ifBothNotNullAndInvalid(selectionStart, selectionEnd) { start, end ->
-            notes_desc.text?.getSpans<CharacterStyle>(start, end)?.forEach { span ->
-                notes_desc.text?.removeSpan(span)
+        notes_desc.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                // Nothing to do here
             }
-        }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                // Nothing to do here
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                // Kullanıcının yazdığı metni sürekli olarak kontrol edelim
+                applyTextStyle()
+            }
+        })
+
     }
-    private fun applySpan(span: Any) {
-        val selectionEnd = notes_desc.selectionEnd
+
+    private fun applyTextStyle() {
+        val editableText = notes_desc.text
         val selectionStart = notes_desc.selectionStart
+        val selectionEnd = notes_desc.selectionEnd
 
-        ifBothNotNullAndInvalid(selectionStart, selectionEnd) { start, end ->
-            notes_desc.text?.setSpan(span, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        editableText?.let {
+            val style = when {
+                isBold && isItalic -> Typeface.BOLD_ITALIC
+                isBold -> Typeface.BOLD
+                isItalic -> Typeface.ITALIC
+                else -> Typeface.NORMAL
+            }
+
+            it.setSpan(StyleSpan(style), selectionStart, selectionEnd, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         }
     }
 
-    private fun ifBothNotNullAndInvalid(start: Int?, end: Int?, function: (start: Int, end: Int) -> Unit) {
-        if (start != null && start != -1 && end != null && end != -1) {
-            function.invoke(start, end)
-        }
-    }
 
     override fun onBackPressed() {
 
@@ -1294,11 +1264,10 @@ class CreateNoteActivity : AppCompatActivity(),CategoryAdapter.CategoryClickList
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == PERMISSION_CODE) {
             if (grantResults.isNotEmpty() && grantResults.all { it == PackageManager.PERMISSION_GRANTED }) {
-                val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+                val intent = Intent(Intent.ACTION_GET_CONTENT)
                 intent.addCategory(Intent.CATEGORY_OPENABLE)
                 intent.type = "image/*"
                 intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
-                intent.action = Intent.ACTION_GET_CONTENT
                 startActivityForResult(
                     Intent.createChooser(intent, "Select Image(s)"),
                     PICK_IMAGES_CODE

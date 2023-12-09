@@ -54,5 +54,13 @@
 
 
 </group>
+    <group>
+        <item
+            android:id="@+id/nav_setting"
+            android:title="Setting"
+            android:icon="@drawable/setting">
+
+        </item>
+    </group>
 
 </menu>

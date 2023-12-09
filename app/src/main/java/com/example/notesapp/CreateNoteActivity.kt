@@ -692,7 +692,6 @@ class CreateNoteActivity : AppCompatActivity(),CategoryAdapter.CategoryClickList
                     intent.addCategory(Intent.CATEGORY_OPENABLE)
                     intent.type = "image/*"
                     intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
-                    intent.action = Intent.ACTION_GET_CONTENT
                     startActivityForResult(
                         Intent.createChooser(intent, "Select Image(s)"),
                         PICK_IMAGES_CODE

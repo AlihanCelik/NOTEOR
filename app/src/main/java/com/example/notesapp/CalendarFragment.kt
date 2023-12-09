@@ -16,7 +16,6 @@ import com.example.notesapp.Adapter.NotesAdapter
 import com.example.notesapp.database.NotesDatabase
 import com.example.notesapp.entities.Notes
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*

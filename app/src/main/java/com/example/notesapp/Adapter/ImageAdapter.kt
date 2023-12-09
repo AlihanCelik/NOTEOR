@@ -56,10 +56,7 @@ class ImageAdapter constructor(
             context.startActivity(intent)
         }
 
-
-
     }
-
     override fun getItemCount(): Int {
         return items.size
     }

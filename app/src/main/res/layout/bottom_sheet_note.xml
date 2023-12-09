@@ -30,39 +30,63 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/ll2"
         app:layout_constraintTop_toBottomOf="@+id/remo_image">
-
-        <ImageView
+        <LinearLayout
             android:id="@+id/image"
-            android:layout_width="29dp"
-            android:layout_height="29dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_gravity="center"
-            android:src="@drawable/addpictures">
+            android:layout_marginBottom="10dp">
 
-        </ImageView>
+            <ImageView
+                android:layout_width="29dp"
+                android:layout_height="29dp"
+                android:layout_gravity="center"
+                android:src="@drawable/addpictures">
 
-        <ImageView
+            </ImageView>
+            <TextView
+                android:layout_marginTop="2dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add Image"
+                android:textColor="@color/AdvGrey2"
+                android:textSize="10dp"
+                android:textStyle="bold">
+
+            </TextView>
+        </LinearLayout>
+        <LinearLayout
             android:id="@+id/link"
-            android:layout_width="29dp"
-            android:layout_height="29dp"
-            android:layout_margin="10dp"
-            android:layout_gravity="center"
-            android:src="@drawable/addlink">
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="10dp">
 
-        </ImageView>
+            <ImageView
+                android:layout_width="29dp"
+                android:layout_height="29dp"
+                android:layout_gravity="center"
+                android:src="@drawable/addlink">
 
-        <ImageView
-            android:id="@+id/mic"
-            android:layout_width="29dp"
-            android:layout_height="29dp"
-            android:layout_margin="10dp"
-            android:layout_gravity="center"
-            android:src="@drawable/mic">
+            </ImageView>
+            <TextView
+                android:layout_marginTop="2dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add Link"
+                android:textColor="@color/AdvGrey2"
+                android:textSize="10dp"
+                android:textStyle="bold">
 
-        </ImageView>
+            </TextView>
+        </LinearLayout>
+
+
+
+
 
         <ImageView
             android:id="@+id/font"
@@ -91,44 +115,96 @@
         app:layout_constraintBottom_toTopOf="@+id/ll3"
         app:layout_constraintTop_toBottomOf="@+id/ll1">
 
-        <ImageView
+        <LinearLayout
             android:id="@+id/remainder"
-            android:layout_width="29dp"
-            android:layout_height="29dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_gravity="center"
-            android:src="@drawable/remindernotes">
+            android:layout_marginBottom="10dp">
 
-        </ImageView>
+            <ImageView
+                android:id="@+id/remainder_img"
+                android:layout_width="29dp"
+                android:layout_height="29dp"
+                android:layout_gravity="center"
+                android:src="@drawable/remindernotes">
 
-        <ImageView
+            </ImageView>
+            <TextView
+                android:layout_marginTop="2dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Remainder"
+                android:textColor="@color/AdvGrey2"
+                android:textSize="10dp"
+                android:textStyle="bold">
+
+            </TextView>
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/locked"
-            android:layout_width="29dp"
-            android:layout_height="29dp"
-            android:layout_gravity="center"
-            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:layout_marginTop="10dp"
-            android:layout_marginRight="10dp"
             android:layout_marginBottom="10dp"
-            android:src="@drawable/locked">
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp">
 
-        </ImageView>
-        <ImageView
+            <ImageView
+                android:id="@+id/locked_img"
+                android:layout_width="29dp"
+                android:layout_height="29dp"
+                android:layout_gravity="center"
+                android:src="@drawable/locked">
+
+            </ImageView>
+            <TextView
+                android:id="@+id/locked_text"
+                android:layout_marginTop="2dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Locked"
+                android:textColor="@color/AdvGrey2"
+                android:textSize="10dp"
+                android:textStyle="bold">
+
+            </TextView>
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/delete"
-            android:layout_width="29dp"
-            android:layout_height="29dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginBottom="10dp"
-            android:src="@drawable/trash2"
-            android:layout_gravity="center"
-            app:tint="@color/AdvGrey2">
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="10dp">
 
-        </ImageView>
+            <ImageView
+                android:layout_width="29dp"
+                android:layout_height="29dp"
+                android:src="@drawable/trash2"
+                android:layout_gravity="center"
+                app:tint="@color/AdvGrey2">
+
+            </ImageView>
+            <TextView
+                android:layout_marginTop="2dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Delete"
+                android:textColor="@color/AdvGrey2"
+                android:textSize="10dp"
+                android:textStyle="bold">
+
+            </TextView>
+        </LinearLayout>
+
+
+
 
     </LinearLayout>
 

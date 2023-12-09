@@ -53,6 +53,7 @@ import kotlinx.coroutines.suspendCancellableCoroutine
 
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.TextView
 
 
 class CreateNoteActivity : AppCompatActivity(),CategoryAdapter.CategoryClickListener {
@@ -541,14 +542,16 @@ class CreateNoteActivity : AppCompatActivity(),CategoryAdapter.CategoryClickList
                 findViewById(R.id.bottomSheet)
             ) as ConstraintLayout
             if (passwordBoolean || !password.isNullOrEmpty()) {
-                bottomSheetView.findViewById<ImageView>(R.id.locked).setImageDrawable(ContextCompat.getDrawable(this,R.drawable.unlocked))
+                bottomSheetView.findViewById<ImageView>(R.id.locked_img).setImageDrawable(ContextCompat.getDrawable(this,R.drawable.unlocked))
+                bottomSheetView.findViewById<TextView>(R.id.locked_text).text="Unlocked"
             } else {
-                bottomSheetView.findViewById<ImageView>(R.id.locked).setImageDrawable(ContextCompat.getDrawable(this,R.drawable.locked))
+                bottomSheetView.findViewById<ImageView>(R.id.locked_img).setImageDrawable(ContextCompat.getDrawable(this,R.drawable.locked))
+                bottomSheetView.findViewById<TextView>(R.id.locked_text).text="Locked"
             }
             if(reminder!=null){
-                bottomSheetView.findViewById<ImageView>(R.id.remainder).setImageDrawable(ContextCompat.getDrawable(this,R.drawable.reminderonn))
+                bottomSheetView.findViewById<ImageView>(R.id.remainder_img).setImageDrawable(ContextCompat.getDrawable(this,R.drawable.reminderonn))
             }else{
-                bottomSheetView.findViewById<ImageView>(R.id.remainder).setImageDrawable(ContextCompat.getDrawable(this,R.drawable.remindernotes))
+                bottomSheetView.findViewById<ImageView>(R.id.remainder_img).setImageDrawable(ContextCompat.getDrawable(this,R.drawable.remindernotes))
             }
             bottomSheetView.findViewById<View>(R.id.blue).setOnClickListener {
                 color = "blue"

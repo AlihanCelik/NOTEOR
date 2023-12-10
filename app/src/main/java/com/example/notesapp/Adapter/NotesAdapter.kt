@@ -695,7 +695,8 @@ class NotesAdapter(val frag:Int) :
 
         }else if(frag==1){
             holder.itemView.item_date_l.visibility=View.GONE
-            holder.itemView.item_image_img.visibility=View.GONE
+            holder.itemView.item_layout_img.visibility=View.GONE
+            holder.itemView.itemLinkLayout.visibility=View.GONE
             holder.itemView.item_reminder_l.visibility=View.GONE
         }else{
             holder.itemView.item_date_l.visibility=View.GONE

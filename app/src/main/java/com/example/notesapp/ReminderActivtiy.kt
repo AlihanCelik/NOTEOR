@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.WindowInsetsController
 import android.widget.SearchView
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.notesapp.Adapter.NotesAdapter
 import com.example.notesapp.database.NotesDatabase
@@ -20,7 +21,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class ReminderActivtiy : AppCompatActivity() {
-
+    var select="all"
     var arrNotes = ArrayList<Notes>()
     var notesAdapter: NotesAdapter = NotesAdapter(2)
     val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm")
@@ -64,6 +65,7 @@ class ReminderActivtiy : AppCompatActivity() {
             remaining_reminder_text.setTextColor(resources.getColor(R.color.grey2))
             done_reminder_text.setTextColor(resources.getColor(R.color.grey2))
             updateRecyclerView("all")
+            select="all"
 
         }
         remaining_reminder.setOnClickListener {
@@ -74,6 +76,7 @@ class ReminderActivtiy : AppCompatActivity() {
             all_reminder_text.setTextColor(resources.getColor(R.color.grey2))
             done_reminder_text.setTextColor(resources.getColor(R.color.grey2))
             updateRecyclerView("remaining")
+            select="remaining"
 
         }
         done_reminder.setOnClickListener {
@@ -84,14 +87,46 @@ class ReminderActivtiy : AppCompatActivity() {
             all_reminder_text.setTextColor(resources.getColor(R.color.grey2))
             remaining_reminder_text.setTextColor(resources.getColor(R.color.grey2))
             updateRecyclerView("done")
+            select="done"
         }
+        var notes: List<Notes> = emptyList()
         searchReminders.setOnQueryTextListener( object : SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(p0: String?): Boolean {
                 return true
             }
 
             override fun onQueryTextChange(p0: String?): Boolean {
+                var tempArr = ArrayList<Notes>()
+                if(select=="all"){
+                    lifecycleScope.launch(Dispatchers.Main) {
+                        let {
+                            notes = NotesDatabase.getDatabase(this@ReminderActivtiy).noteDao().getAllNotesWithAllReminders().asReversed()
 
+                        }
+                    }
+                }else if(select=="remaining"){
+                    lifecycleScope.launch(Dispatchers.Main) {
+                        let {
+                            notes = NotesDatabase.getDatabase(this@ReminderActivtiy).noteDao().getAllNotesWithRemainingeReminders(System.currentTimeMillis())
+                                .asReversed()
+                        }
+                    }
+                }else{
+                    lifecycleScope.launch(Dispatchers.Main) {
+                        let {
+                            notes = NotesDatabase.getDatabase(this@ReminderActivtiy).noteDao().getAllNotesWithDoneReminders(System.currentTimeMillis())
+                                .asReversed()
+                        }
+                    }
+                }
+                for (arr in notes){
+                        if (arr.title!!.toLowerCase(Locale.getDefault()).contains(p0.toString())){
+                           tempArr.add(arr)
+                        }
+                }
+
+                notesAdapter.setData(tempArr)
+                notesAdapter.notifyDataSetChanged()
                 return true
             }
 

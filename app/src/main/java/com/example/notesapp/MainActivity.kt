@@ -171,8 +171,8 @@ class MainActivity : AppCompatActivity() {
         if (requestCode == CREATE_NOTE_REQUEST && resultCode == Activity.RESULT_OK) {
             val noteFragment = viewPagerAdapter.fragmentList[0] as? NoteFragment
             noteFragment?.loadNotesByCategoryId()
-            val calendarFragment=viewPagerAdapter.fragmentList[1]as? CalendarFragment
-            calendarFragment?.updateRecyclerView()
+            //val calendarFragment=viewPagerAdapter.fragmentList[1]as? CalendarFragment
+            //calendarFragment?.updateRecyclerView()
 
         }
     }

@@ -133,8 +133,6 @@ class ReminderActivtiy : AppCompatActivity() {
         })
 
     }
-
-
     fun updateRecyclerView(sortType:String) {
         if(sortType=="all"){
             GlobalScope.launch(Dispatchers.Main) {

@@ -1039,7 +1039,7 @@ class CreateNoteActivity : AppCompatActivity(),CategoryAdapter.CategoryClickList
                 if(reminder!=null){
                     reminder=null
                     reminderlayout.visibility = View.GONE
-                    bottomSheetView.findViewById<ImageView>(R.id.remainder).setImageDrawable(ContextCompat.getDrawable(this,R.drawable.remindernotes))
+                    bottomSheetView.findViewById<ImageView>(R.id.remainder_img).setImageDrawable(ContextCompat.getDrawable(this,R.drawable.remindernotes))
                 }else{
                     val calendar = Calendar.getInstance()
 
@@ -1064,7 +1064,7 @@ class CreateNoteActivity : AppCompatActivity(),CategoryAdapter.CategoryClickList
                                         val formattedDate = sdf.format(reminderDate)
                                         reminderlayout.visibility = View.VISIBLE
                                         tvReminderTime.text = formattedDate
-
+                                        bottomSheetView.findViewById<ImageView>(R.id.remainder_img).setImageDrawable(ContextCompat.getDrawable(this, R.drawable.remindernotes))
                                     } else {
                                         Toast.makeText(this, "Lütfen geçerli bir tarih ve saat seçin", Toast.LENGTH_SHORT).show()
                                     }

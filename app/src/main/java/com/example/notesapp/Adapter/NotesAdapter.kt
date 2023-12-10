@@ -28,7 +28,9 @@ import com.example.notesapp.entities.Trash
 import kotlinx.android.synthetic.main.activity_create_note.*
 import kotlinx.android.synthetic.main.delete_permi_dialog.view.*
 import kotlinx.android.synthetic.main.enter_psw_dialog.view.*
+import kotlinx.android.synthetic.main.item_images.view.*
 import kotlinx.android.synthetic.main.item_notes.view.*
+import kotlinx.android.synthetic.main.item_notes.view.item_layout_img
 import kotlinx.android.synthetic.main.locked_dialog.view.*
 import kotlinx.android.synthetic.main.notelongclick_dialog.view.*
 import kotlinx.android.synthetic.main.password_remove_dialog.view.*
@@ -659,14 +661,17 @@ class NotesAdapter(val frag:Int) :
             if(!arrList[position].password.isNullOrEmpty()){
                 holder.itemView.item_layout_img.visibility=View.GONE
             }else{
-                var picture=arrList[position].imgPath?.get(0)
-                holder.itemView.item_layout_img.visibility=View.VISIBLE
-                Glide.with(context).load(picture).into(holder.image)
-                if(arrList[position].imgPath?.size == 1){
-                    holder.itemView.multiple_img_icon.visibility=View.GONE
-                }else{
-                    holder.itemView.multiple_img_icon.visibility=View.VISIBLE
+                if(frag!=1){
+                    var picture=arrList[position].imgPath?.get(0)
+                    holder.itemView.item_layout_img.visibility=View.VISIBLE
+                    Glide.with(context).load(picture).into(holder.image)
+                    if(arrList[position].imgPath?.size == 1){
+                        holder.itemView.multiple_img_icon.visibility=View.GONE
+                    }else{
+                        holder.itemView.multiple_img_icon.visibility=View.VISIBLE
+                    }
                 }
+
             }
 
         }
@@ -690,6 +695,7 @@ class NotesAdapter(val frag:Int) :
 
         }else if(frag==1){
             holder.itemView.item_date_l.visibility=View.GONE
+            holder.itemView.item_image_img.visibility=View.GONE
             holder.itemView.item_reminder_l.visibility=View.GONE
         }else{
             holder.itemView.item_date_l.visibility=View.GONE

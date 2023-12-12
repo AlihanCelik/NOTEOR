@@ -144,10 +144,7 @@ class MainActivity : AppCompatActivity() {
         viewPager.currentItem = 0
 
 
-
-
     }
-
 
     fun CreateNoteButton(view: View) {
         val intent = Intent(this, CreateNoteActivity::class.java)

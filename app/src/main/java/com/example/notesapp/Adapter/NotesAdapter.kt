@@ -675,6 +675,7 @@ class NotesAdapter(val frag:Int) :
             }
 
         }
+
         if(arrList[position].favorite==true){
             holder.itemView.item_fav.visibility=View.VISIBLE
         }else{

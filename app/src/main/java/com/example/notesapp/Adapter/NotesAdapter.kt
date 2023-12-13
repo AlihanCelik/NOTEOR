@@ -25,10 +25,8 @@ import com.example.notesapp.database.TrashDatabase
 import com.example.notesapp.entities.Category
 import com.example.notesapp.entities.Notes
 import com.example.notesapp.entities.Trash
-import kotlinx.android.synthetic.main.activity_create_note.*
 import kotlinx.android.synthetic.main.delete_permi_dialog.view.*
 import kotlinx.android.synthetic.main.enter_psw_dialog.view.*
-import kotlinx.android.synthetic.main.item_images.view.*
 import kotlinx.android.synthetic.main.item_notes.view.*
 import kotlinx.android.synthetic.main.item_notes.view.item_layout_img
 import kotlinx.android.synthetic.main.locked_dialog.view.*
@@ -325,7 +323,6 @@ class NotesAdapter(val frag:Int) :
                             var note=arrList[position]
                             view3.yes_delete_permi.setOnClickListener {
                                 GlobalScope.launch {
-                                    println(note.noteText)
                                     var trash = Trash()
                                     trash.title_t = note.title
                                     trash.subTitle_t = note.subTitle
@@ -675,7 +672,6 @@ class NotesAdapter(val frag:Int) :
             }
 
         }
-
         if(arrList[position].favorite==true){
             holder.itemView.item_fav.visibility=View.VISIBLE
         }else{

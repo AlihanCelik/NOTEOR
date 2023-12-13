@@ -3,7 +3,6 @@ package com.example.notesapp.Adapter
 
 import android.content.res.ColorStateList
 import android.graphics.Color
-import android.opengl.Visibility
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,10 +13,8 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.notesapp.R
-import com.example.notesapp.database.CategoryDatabase
 import com.example.notesapp.database.NotesDatabase
 import com.example.notesapp.database.TrashDatabase
-import com.example.notesapp.entities.Category
 import com.example.notesapp.entities.Notes
 import com.example.notesapp.entities.Trash
 import kotlinx.android.synthetic.main.delete_permi_dialog.view.*

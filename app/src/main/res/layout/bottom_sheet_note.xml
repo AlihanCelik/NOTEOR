@@ -85,18 +85,6 @@
         </LinearLayout>
 
 
-
-
-
-        <ImageView
-            android:id="@+id/font"
-            android:layout_width="29dp"
-            android:layout_height="29dp"
-            android:layout_margin="10dp"
-            android:layout_gravity="center"
-            android:src="@drawable/font">
-
-        </ImageView>
         <Space
             android:layout_width="0dp"
             android:layout_height="match_parent"

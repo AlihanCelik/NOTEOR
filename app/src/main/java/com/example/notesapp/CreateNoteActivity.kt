@@ -22,8 +22,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
-import androidx.core.text.getSpans
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
@@ -38,11 +36,9 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.android.synthetic.main.activity_create_note.*
 import kotlinx.android.synthetic.main.activity_create_note.backButton
 import kotlinx.android.synthetic.main.activity_create_note.createNote
-import kotlinx.android.synthetic.main.activity_favorites_activtity.*
 import kotlinx.android.synthetic.main.createactivty_permi_dialog.view.*
 import kotlinx.android.synthetic.main.dialog_add_category.view.*
 import kotlinx.android.synthetic.main.dialog_url.view.*
-import kotlinx.android.synthetic.main.font_dialog.view.*
 import kotlinx.android.synthetic.main.locked_dialog.view.*
 import kotlinx.android.synthetic.main.password_remove_dialog.view.*
 import kotlinx.coroutines.*
@@ -51,9 +47,10 @@ import java.util.*
 
 import kotlinx.coroutines.suspendCancellableCoroutine
 
-import android.view.Menu
-import android.view.MenuItem
 import android.widget.TextView
+import com.example.notesapp.database.TrashDatabase
+import com.example.notesapp.entities.Trash
+import kotlinx.android.synthetic.main.delete_permi_dialog.view.*
 
 
 class CreateNoteActivity : AppCompatActivity(),CategoryAdapter.CategoryClickListener {
@@ -874,165 +871,61 @@ class CreateNoteActivity : AppCompatActivity(),CategoryAdapter.CategoryClickList
                     bottomSheet.dismiss()
                 }
             }
-
-
-            bottomSheetView.findViewById<View>(R.id.font).setOnClickListener {
-
-                if (!isFinishing) {
-                    val view = View.inflate(this, R.layout.font_dialog, null)
-                    val builder = AlertDialog.Builder(this)
-                    builder.setView(view)
-                    val dialog = builder.create()
-                    dialog.show()
-                    dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-                    view.okeyFont.setOnClickListener {
-                        dialog.dismiss()
+            bottomSheetView.findViewById<View>(R.id.delete).setOnClickListener {
+                if(noteId!=-1) {
+                    val view3 = View.inflate(this@CreateNoteActivity, R.layout.delete_permi_dialog, null)
+                    val builder3 = AlertDialog.Builder(this@CreateNoteActivity)
+                    builder3.setView(view3)
+                    val dialog3 = builder3.create()
+                    dialog3.show()
+                    dialog3.window?.setBackgroundDrawableResource(android.R.color.transparent)
+                    view3.cancel_delete_permi.setOnClickListener{
+                        dialog3.dismiss()
                     }
-                    fun setBackgroundForFont(button: LinearLayout) {
-                        val allButtons = arrayOf(
-                            view.font1_btn, view.font2_btn, view.font3_btn, view.font4_btn,
-                            view.font5_btn, view.font6_btn, view.font7_btn, view.font8_btn,
-                            view.font9_btn, view.font10_btn, view.font11_btn, view.font12_btn
-                        )
+                    dialog3.setOnCancelListener {
+                        dialog3.dismiss()
+                    }
+                    view3.yes_delete_permi.setOnClickListener {
+                        var notes:Notes
+                        var trash:Trash
+                        GlobalScope.launch(Dispatchers.Main) {
+                                notes = NotesDatabase.getDatabase(this@CreateNoteActivity).noteDao()
+                                    .getSpecificNote(noteId)
+                                trash = Trash()
+                                trash.title_t = notes.title
+                                trash.subTitle_t = notes.subTitle
+                                trash.noteText_t = notes.noteText
+                                trash.dateTime_t = notes.dateTime
+                                trash.create_dateTime_t=notes.create_dateTime
+                                trash.color_t = notes.color
+                                trash.noteCategory_t=notes.noteCategoryId
+                                trash.imgPath_t = notes.imgPath
+                                trash.webLink_t = notes.webLink
+                                trash.favorite_t = notes.favorite
+                                trash.password_t = notes.password
+                                let {
+                                TrashDatabase.getDatabase(this@CreateNoteActivity).trashDao().insertTrash(trash)
+                                notes.id?.let { it1 ->
+                                    NotesDatabase.getDatabase(this@CreateNoteActivity).noteDao().deleteSpecificNote(
+                                        it1
+                                    )
 
-                        for (btn in allButtons) {
-                            btn.setBackgroundResource(R.drawable.bg_background_frame)
+
+                                }
+                            }
+
                         }
+                        Toast.makeText(this@CreateNoteActivity, "Note deleted", Toast.LENGTH_SHORT).show()
+                        setResult(Activity.RESULT_OK)
 
-                        button.setBackgroundResource(R.drawable.bg_background_frame_click)
-                    }
-                    when(fontfamily){
-                        "font1"->setBackgroundForFont(view.font1_btn)
-                        "font2"->setBackgroundForFont(view.font2_btn)
-                        "font3"->setBackgroundForFont(view.font3_btn)
-                        "font4"->setBackgroundForFont(view.font4_btn)
-                        "font5"->setBackgroundForFont(view.font5_btn)
-                        "font6"->setBackgroundForFont(view.font6_btn)
-                        "font7"->setBackgroundForFont(view.font7_btn)
-                        "font8"->setBackgroundForFont(view.font8_btn)
-                        "font9"->setBackgroundForFont(view.font9_btn)
-                        "font10"->setBackgroundForFont(view.font10_btn)
-                        "font11"->setBackgroundForFont(view.font11_btn)
-                        "font12"->setBackgroundForFont(view.font12_btn)
+                        dialog3.dismiss()
+                        finish()
+
 
                     }
-                    view.font_bold_btn.setOnClickListener {
-                        isBold = !isBold
-                        applyTextStyle()
-                    }
-                    view.font_italic_btn.setOnClickListener {
-                        isItalic = !isItalic
-                        applyTextStyle()
-                    }
-                    view.font1_btn.setOnClickListener {
-                        notes_desc.textSize = 17f
-                        notes_desc.setTypeface(
-                            ResourcesCompat.getFont(this, R.font.ralewaymedium),
-                            Typeface.NORMAL
-                        )
-                        fontfamily="font1"
-                        setBackgroundForFont(view.font1_btn)
-                    }
-                    view.font2_btn.setOnClickListener {
-                        notes_desc.textSize = 17f
-                        notes_desc.setTypeface(
-                            ResourcesCompat.getFont(this, R.font.font4),
-                            Typeface.NORMAL
-                        )
-                        fontfamily="font2"
-                        setBackgroundForFont(view.font2_btn)
-                    }
-                    view.font3_btn.setOnClickListener {
-                        notes_desc.textSize = 17f
-                        notes_desc.setTypeface(
-                            ResourcesCompat.getFont(this, R.font.font3),
-                            Typeface.NORMAL
-                        )
-                        fontfamily="font3"
-                        setBackgroundForFont(view.font3_btn)
-                    }
-                    view.font4_btn.setOnClickListener {
-                        notes_desc.textSize = 17f
-                        notes_desc.setTypeface(
-                            ResourcesCompat.getFont(this, R.font.font4),
-                            Typeface.NORMAL
-                        )
-                        fontfamily="font4"
-                        setBackgroundForFont(view.font4_btn)
-                    }
-                    view.font5_btn.setOnClickListener {
-                        notes_desc.textSize = 20f
-                        notes_desc.setTypeface(
-                            ResourcesCompat.getFont(this, R.font.font5),
-                            Typeface.NORMAL
-                        )
-                        fontfamily="font5"
-                        setBackgroundForFont(view.font5_btn)
-                    }
-                    view.font6_btn.setOnClickListener {
-                        notes_desc.textSize = 22f
-                        notes_desc.setTypeface(
-                            ResourcesCompat.getFont(this, R.font.font6),
-                            Typeface.NORMAL
-                        )
-                        fontfamily="font6"
-                        setBackgroundForFont(view.font6_btn)
-                    }
-                    view.font7_btn.setOnClickListener {
-                        notes_desc.textSize = 22f
-                        notes_desc.setTypeface(
-                            ResourcesCompat.getFont(this, R.font.font7),
-                            Typeface.NORMAL
-                        )
-                        fontfamily="font7"
-                        setBackgroundForFont(view.font7_btn)
-                    }
-                    view.font8_btn.setOnClickListener {
-                        notes_desc.textSize = 22f
-                        notes_desc.setTypeface(
-                            ResourcesCompat.getFont(this, R.font.font8),
-                            Typeface.NORMAL
-                        )
-                        fontfamily="font8"
-                        setBackgroundForFont(view.font8_btn)
-                    }
-                    view.font9_btn.setOnClickListener {
-                        notes_desc.textSize = 20f
-                        notes_desc.setTypeface(
-                            ResourcesCompat.getFont(this, R.font.font9),
-                            Typeface.NORMAL
-                        )
-                        fontfamily="font9"
-                        setBackgroundForFont(view.font9_btn)
-                    }
-                    view.font10_btn.setOnClickListener {
-                        notes_desc.textSize = 17f
-                        notes_desc.setTypeface(
-                            ResourcesCompat.getFont(this, R.font.font10),
-                            Typeface.NORMAL
-                        )
-                        fontfamily="font10"
-                        setBackgroundForFont(view.font10_btn)
-                    }
-                    view.font11_btn.setOnClickListener {
-                        notes_desc.textSize = 17f
-                        notes_desc.setTypeface(
-                            ResourcesCompat.getFont(this, R.font.font11),
-                            Typeface.NORMAL
-                        )
-                        fontfamily="font11"
-                        setBackgroundForFont(view.font11_btn)
-                    }
-                    view.font12_btn.setOnClickListener {
-                        notes_desc.textSize = 17f
-                        notes_desc.setTypeface(
-                            ResourcesCompat.getFont(this, R.font.font12),
-                            Typeface.NORMAL
-                        )
-                        fontfamily="font12"
-                        setBackgroundForFont(view.font12_btn)
-                    }
-                    bottomSheet.dismiss()
+
+
+
                 }
             }
             bottomSheetView.findViewById<View>(R.id.remainder).setOnClickListener {

@@ -1,10 +1,22 @@
 package com.example.notesapp
 
+import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.net.Uri
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import androidx.constraintlayout.widget.ConstraintLayout
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.android.synthetic.main.activity_setting.*
+import kotlinx.android.synthetic.main.delete_permi_dialog.view.*
+import kotlinx.android.synthetic.main.item_notes.view.*
 
 class SettingActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,5 +49,49 @@ class SettingActivity : AppCompatActivity() {
             val chooser = Intent.createChooser(shareIntent, "Share using")
             startActivity(chooser)
         }
+        report.setOnClickListener {
+            val bottomSheet =
+                BottomSheetDialog(this@SettingActivity, R.style.BottomSheetDialogTheme)
+            val bottomSheetView = LayoutInflater.from(applicationContext).inflate(
+                R.layout.bottomsheet_report,
+                findViewById(R.id.bottomSheetReport)
+            ) as ConstraintLayout
+            bottomSheetView.findViewById<View>(R.id.email_send).setOnClickListener {
+                sendEmail(this@SettingActivity)
+            }
+            bottomSheet.setContentView(bottomSheetView)
+            bottomSheet.show()
+
+        }
+    }
+    fun sendEmail(context: Context) {
+        val email = "alihancelikk03@gmail.com"
+        val subject = "App Feedback"
+        val body = "Android Version: ${Build.VERSION.RELEASE}\n" +
+                "SDK Version: ${Build.VERSION.SDK_INT}\n" +
+                "App Version: ${getAppVersion(context)}"
+
+        val intent = Intent(Intent.ACTION_SEND)
+        intent.type = "plain/text"
+        intent.putExtra(Intent.EXTRA_EMAIL, arrayOf(email))
+        intent.putExtra(Intent.EXTRA_SUBJECT, subject)
+        intent.putExtra(Intent.EXTRA_TEXT, body)
+
+        try {
+            context.startActivity(Intent.createChooser(intent, "Send mail..."))
+        } catch (e: Exception) {
+            Log.e("Email", "Error sending email", e)
+            Toast.makeText(context, "Error sending email", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun getAppVersion(context: Context): String {
+        try {
+            val pInfo = context.packageManager.getPackageInfo(context.packageName, 0)
+            return pInfo.versionName
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return "N/A"
     }
 }

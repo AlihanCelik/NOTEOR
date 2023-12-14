@@ -65,19 +65,12 @@ class CreateNoteActivity : AppCompatActivity(),CategoryAdapter.CategoryClickList
     var PICK_IMAGES_CODE = 1002
     var noteId=-1
     var categoryName=-1
-
     var reminder: Long? =null
-
-    private var isBold = false
-    private var isItalic = false
-    var fontfamily="font1"
-
-    private var previousStyle: Int = Typeface.NORMAL
 
     private val PERMISSION_CODE = 1001
     private val permissionId=14
     private var permissionList=
-        if(Build.VERSION.SDK_INT>=33) {
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.Q) {
             arrayListOf(android.Manifest.permission.READ_MEDIA_IMAGES)
         }else{
             arrayListOf(android.Manifest.permission.READ_EXTERNAL_STORAGE,android.Manifest.permission.WRITE_EXTERNAL_STORAGE,android.Manifest.permission.RECORD_AUDIO)
@@ -1008,39 +1001,8 @@ class CreateNoteActivity : AppCompatActivity(),CategoryAdapter.CategoryClickList
         }
         initAdapter()
 
-        notes_desc.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                // Nothing to do here
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                // Nothing to do here
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-                // Kullanıcının yazdığı metni sürekli olarak kontrol edelim
-                applyTextStyle()
-            }
-        })
-
     }
 
-    private fun applyTextStyle() {
-        val editableText = notes_desc.text
-        val selectionStart = notes_desc.selectionStart
-        val selectionEnd = notes_desc.selectionEnd
-
-        editableText?.let {
-            val style = when {
-                isBold && isItalic -> Typeface.BOLD_ITALIC
-                isBold -> Typeface.BOLD
-                isItalic -> Typeface.ITALIC
-                else -> Typeface.NORMAL
-            }
-
-            it.setSpan(StyleSpan(style), selectionStart, selectionEnd, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-        }
-    }
 
 
     override fun onBackPressed() {

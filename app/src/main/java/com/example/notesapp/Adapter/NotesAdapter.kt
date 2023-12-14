@@ -659,7 +659,7 @@ class NotesAdapter(val frag:Int) :
                 holder.itemView.item_layout_img.visibility=View.GONE
             }else{
                 if(frag!=1){
-                    var picture=arrList[position].imgPath?.get(0)
+                    var picture= arrList[position].imgPath?.get(0)
                     holder.itemView.item_layout_img.visibility=View.VISIBLE
                     Glide.with(context).load(picture).into(holder.image)
                     if(arrList[position].imgPath?.size == 1){

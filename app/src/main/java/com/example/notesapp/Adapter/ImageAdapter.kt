@@ -44,14 +44,14 @@ class ImageAdapter constructor(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
             LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_images, parent, false))
+                .inflate(R.layout.item_images, parent, false))
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val model = items[position]
         Glide.with(context).load(model).into(holder.image)
         holder.itemView.setOnClickListener{
-            val intent= Intent(context,PicturesActivty::class.java)
+            val intent= Intent(context, PicturesActivty::class.java)
             intent.putExtra("image",model.toString())
             context.startActivity(intent)
         }

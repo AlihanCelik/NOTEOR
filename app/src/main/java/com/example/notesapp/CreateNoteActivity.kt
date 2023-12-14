@@ -917,7 +917,6 @@ class CreateNoteActivity : AppCompatActivity(),CategoryAdapter.CategoryClickList
                         }
                         Toast.makeText(this@CreateNoteActivity, "Note deleted", Toast.LENGTH_SHORT).show()
                         setResult(Activity.RESULT_OK)
-
                         dialog3.dismiss()
                         finish()
 
@@ -925,6 +924,8 @@ class CreateNoteActivity : AppCompatActivity(),CategoryAdapter.CategoryClickList
                     }
 
 
+
+                }else{
 
                 }
             }

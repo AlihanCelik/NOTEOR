@@ -911,6 +911,7 @@ class CreateNoteActivity : AppCompatActivity(),CategoryAdapter.CategoryClickList
                         Toast.makeText(this@CreateNoteActivity, "Note deleted", Toast.LENGTH_SHORT).show()
                         setResult(Activity.RESULT_OK)
                         dialog3.dismiss()
+                        bottomSheet.dismiss()
                         finish()
 
 
@@ -919,7 +920,23 @@ class CreateNoteActivity : AppCompatActivity(),CategoryAdapter.CategoryClickList
 
 
                 }else{
-
+                    val view3 = View.inflate(this@CreateNoteActivity, R.layout.delete_permi_dialog, null)
+                    val builder3 = AlertDialog.Builder(this@CreateNoteActivity)
+                    builder3.setView(view3)
+                    val dialog3 = builder3.create()
+                    dialog3.show()
+                    dialog3.window?.setBackgroundDrawableResource(android.R.color.transparent)
+                    view3.cancel_delete_permi.setOnClickListener{
+                        dialog3.dismiss()
+                    }
+                    dialog3.setOnCancelListener {
+                        dialog3.dismiss()
+                    }
+                    view3.yes_delete_permi.setOnClickListener {
+                        dialog3.dismiss()
+                        finish()
+                        bottomSheet.dismiss()
+                    }
                 }
             }
             bottomSheetView.findViewById<View>(R.id.remainder).setOnClickListener {

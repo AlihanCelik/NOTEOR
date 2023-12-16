@@ -4,16 +4,21 @@ import android.app.*
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.WindowInsetsController
+import android.widget.LinearLayout
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.viewpager2.widget.ViewPager2
+import com.example.notesapp.Adapter.ListNoteAdapter
 import com.example.notesapp.Adapter.VpAdapter
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -63,8 +68,22 @@ class MainActivity : AppCompatActivity() {
         navigationView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.nav_add -> {
-                    val intent=Intent(applicationContext,CreateNoteActivity::class.java)
-                    startActivity(intent)
+                    val bottomSheet =
+                        BottomSheetDialog(this@MainActivity, R.style.BottomSheetDialogTheme)
+                    val bottomSheetView = LayoutInflater.from(applicationContext).inflate(
+                        R.layout.bottom_sheet_create,
+                        findViewById(R.id.bottomSheetCreate)
+                    ) as ConstraintLayout
+                    bottomSheetView.findViewById<LinearLayout>(R.id.writing_create).setOnClickListener {
+                        val intent=Intent(applicationContext,CreateNoteActivity::class.java)
+                        startActivity(intent)
+                    }
+                    bottomSheetView.findViewById<LinearLayout>(R.id.list_create).setOnClickListener {
+                        val intent=Intent(applicationContext,CreateListActivity::class.java)
+                        startActivity(intent)
+                    }
+                    bottomSheet.setContentView(bottomSheetView)
+                    bottomSheet.show()
                     drawerLayout.closeDrawer(GravityCompat.START)
                     true
                 }
@@ -153,8 +172,23 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun CreateNoteButton(view: View) {
-        val intent = Intent(this, CreateNoteActivity::class.java)
-        startActivityForResult(intent, CREATE_NOTE_REQUEST)
+        val bottomSheet =
+            BottomSheetDialog(this@MainActivity, R.style.BottomSheetDialogTheme)
+        val bottomSheetView = LayoutInflater.from(applicationContext).inflate(
+            R.layout.bottom_sheet_create,
+            findViewById(R.id.bottomSheetCreate)
+        ) as ConstraintLayout
+        bottomSheetView.findViewById<LinearLayout>(R.id.writing_create).setOnClickListener {
+            val intent=Intent(applicationContext,CreateNoteActivity::class.java)
+            startActivityForResult(intent, CREATE_NOTE_REQUEST)
+        }
+        bottomSheetView.findViewById<LinearLayout>(R.id.list_create).setOnClickListener {
+            val intent=Intent(applicationContext,CreateListActivity::class.java)
+            startActivityForResult(intent, CREATE_NOTE_REQUEST)
+        }
+        bottomSheet.setContentView(bottomSheetView)
+        bottomSheet.show()
+
 
     }
 

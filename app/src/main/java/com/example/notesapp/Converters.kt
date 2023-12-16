@@ -2,6 +2,7 @@ package com.example.notesapp
 
 import android.net.Uri
 import androidx.room.TypeConverter
+import com.example.notesapp.entities.Item
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
@@ -9,6 +10,17 @@ class Converters {
     @TypeConverter
     fun fromUriList(uriList: List<Uri>?): String? {
         return if (uriList == null) null else Gson().toJson(uriList.map { it.toString() })
+    }
+
+    @TypeConverter
+    fun fromItemList(itemList: List<Item>?): String? {
+        return Gson().toJson(itemList)
+    }
+
+    @TypeConverter
+    fun toItemList(itemListString: String?): List<Item>? {
+        val type = object : TypeToken<List<Item>>() {}.type
+        return Gson().fromJson(itemListString, type)
     }
 
     @TypeConverter

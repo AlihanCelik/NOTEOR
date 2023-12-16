@@ -6,7 +6,10 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.io.Serializable
 
-
+data class Item(
+    val isChecked: Boolean,
+    val text: String
+) : Serializable
 @Entity(tableName = "Notes")
 data class Notes(
     @PrimaryKey(autoGenerate = true)
@@ -30,6 +33,9 @@ data class Notes(
     @ColumnInfo(name = "note_text")
     var noteText: String? = null,
 
+    @ColumnInfo(name = "item_list")
+    var itemList: List<Item>? = null,
+
     @ColumnInfo(name = "note_category_id")
     var noteCategoryId: Int? = null,
 
@@ -47,6 +53,8 @@ data class Notes(
 
     @ColumnInfo(name = "password")
     var password: String? = null
+
+
 
 
 

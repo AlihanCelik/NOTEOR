@@ -181,6 +181,7 @@ class TrashAdapter() :
                     notes.dateTime = trash.dateTime_t
                     notes.create_dateTime = trash.create_dateTime_t
                     notes.color = trash.color_t
+                    notes.itemList=trash.itemList_t
                     notes.noteCategoryId=trash.noteCategory_t
                     notes.imgPath = trash.imgPath_t
                     notes.noteCategoryId=trash.noteCategory_t

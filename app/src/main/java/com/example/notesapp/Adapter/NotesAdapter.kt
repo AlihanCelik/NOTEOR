@@ -252,6 +252,7 @@ class NotesAdapter(val frag:Int) :
                             trash.subTitle_t = note.subTitle
                             trash.noteText_t = note.noteText
                             trash.dateTime_t = note.dateTime
+                            trash.itemList_t=note.itemList
                             trash.create_dateTime_t=note.create_dateTime
                             trash.color_t = note.color
                             trash.noteCategory_t=note.noteCategoryId
@@ -330,6 +331,7 @@ class NotesAdapter(val frag:Int) :
                                     trash.dateTime_t = note.dateTime
                                     trash.create_dateTime_t=note.create_dateTime
                                     trash.color_t = note.color
+                                    trash.itemList_t=note.itemList
                                     trash.noteCategory_t=note.noteCategoryId
                                     trash.imgPath_t = note.imgPath
                                     trash.webLink_t = note.webLink

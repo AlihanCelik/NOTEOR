@@ -7,7 +7,10 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.io.Serializable
 
-
+data class Item_t(
+    val isChecked: Boolean,
+    val text: String
+) : Serializable
 @Entity(tableName = "Trash")
 data class Trash(
     @PrimaryKey(autoGenerate = true)
@@ -28,6 +31,9 @@ data class Trash(
     @ColumnInfo(name = "note_text_t")
     var noteText_t: String? = null,
 
+    @ColumnInfo(name = "item_list_t")
+    var itemList_t: List<Item>? = null,
+
     @ColumnInfo(name = "note_category_t")
     var noteCategory_t: Int? = null,
 
@@ -45,8 +51,6 @@ data class Trash(
 
     @ColumnInfo(name = "password_t")
     var password_t: String? = null
-
-
 
 
 ) : Serializable {

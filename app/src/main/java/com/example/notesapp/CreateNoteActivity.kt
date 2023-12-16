@@ -1172,6 +1172,7 @@ class CreateNoteActivity : AppCompatActivity(),CategoryAdapter.CategoryClickList
                         notes.dateTime=currentDate
                         notes.create_dateTime=notes.create_dateTime
                         notes.color=color
+                        notes.itemList=null
                         notes.reminder=reminder
                         notes.noteCategoryId=categoryName
                         notes.imgPath=items
@@ -1200,6 +1201,7 @@ class CreateNoteActivity : AppCompatActivity(),CategoryAdapter.CategoryClickList
                     notes.dateTime=currentDate
                     notes.create_dateTime=currentDate
                     notes.color=color
+                    notes.itemList=null
                     notes.reminder=reminder
                     notes.noteCategoryId=categoryName
                     notes.imgPath=items

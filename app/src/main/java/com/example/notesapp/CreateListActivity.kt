@@ -435,6 +435,8 @@ class CreateListActivity : AppCompatActivity(),CategoryAdapter.CategoryClickList
                 R.layout.bottom_sheet_note,
                 findViewById(R.id.bottomSheet)
             ) as ConstraintLayout
+            bottomSheetView.findViewById<LinearLayout>(R.id.ll1).visibility=View.GONE
+            bottomSheetView.findViewById<View>(R.id.view2).visibility=View.GONE
             if (passwordBoolean || !password.isNullOrEmpty()) {
                 bottomSheetView.findViewById<ImageView>(R.id.locked_img).setImageDrawable(
                     ContextCompat.getDrawable(this,R.drawable.unlocked))
@@ -451,7 +453,7 @@ class CreateListActivity : AppCompatActivity(),CategoryAdapter.CategoryClickList
                 bottomSheetView.findViewById<ImageView>(R.id.remainder_img).setImageDrawable(
                     ContextCompat.getDrawable(this,R.drawable.remindernotes))
             }
-            bottomSheetView.findViewById<LinearLayout>(R.id.ll1).visibility=View.GONE
+
             bottomSheetView.findViewById<View>(R.id.blue).setOnClickListener {
                 color = "blue"
                 colorView.setBackgroundColor(moonBlue)

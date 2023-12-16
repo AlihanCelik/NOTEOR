@@ -331,6 +331,7 @@
                         android:layout_gravity="center"
                         android:layout_marginLeft="10dp"
                         android:text="Add Item"
+                        android:textStyle="bold"
                         android:textColor="@color/AdvGrey2">
 
                     </TextView>

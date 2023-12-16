@@ -74,6 +74,95 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@drawable/background_font"
+                    android:padding="20dp"
+                    android:layout_marginRight="10dp"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:src="@drawable/notes"
+                        android:layout_marginRight="30dp"
+                        app:tint="@color/AdvGrey2" />
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="All Notes"
+                            android:textSize="15dp"
+                            android:layout_gravity="center"
+                            android:textStyle="bold"
+                            android:textColor="@color/AdvGrey2">
+                        </TextView>
+                        <TextView
+                            android:id="@+id/allNotes_size"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="(0)"
+                            android:textSize="12dp"
+                            android:textStyle="bold"
+                            android:textColor="@color/grey">
+
+                        </TextView>
+                    </LinearLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/background_font"
+                    android:padding="20dp"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:src="@drawable/trash"
+                        android:layout_marginRight="30dp"
+                        app:tint="@color/AdvGrey2" />
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Trash"
+                            android:textSize="15dp"
+                            android:layout_gravity="center"
+                            android:textStyle="bold"
+                            android:textColor="@color/AdvGrey2">
+                        </TextView>
+                        <TextView
+                            android:id="@+id/trash_size"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="(0)"
+                            android:textSize="12dp"
+                            android:textStyle="bold"
+                            android:textColor="@color/grey">
+
+                        </TextView>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
             <TextView
                 android:layout_marginTop="20dp"
                 android:layout_marginLeft="10dp"

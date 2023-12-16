@@ -13,8 +13,15 @@ import android.view.View
 import android.view.WindowInsetsController
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
+import com.example.notesapp.database.NotesDatabase
+import com.example.notesapp.database.TrashDatabase
+import com.example.notesapp.entities.Notes
+import com.example.notesapp.entities.Trash
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.android.synthetic.main.activity_setting.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class SettingActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -74,6 +81,21 @@ class SettingActivity : AppCompatActivity() {
             bottomSheet.show()
 
         }
+        var notes: List<Notes> = emptyList()
+        GlobalScope.launch(Dispatchers.Main) {
+            let {
+               notes = NotesDatabase.getDatabase(this@SettingActivity).noteDao().getAllNotes()
+            }
+        }
+        allNotes_size.text="(${notes.size})"
+
+        var trash: List<Trash> = emptyList()
+        GlobalScope.launch(Dispatchers.Main) {
+            let {
+                trash = TrashDatabase.getDatabase(this@SettingActivity).trashDao().getAllTrash()
+            }
+        }
+        trash_size.text="(${trash.size})"
     }
     fun sendEmail(context: Context) {
         val email = "alihancelikk03@gmail.com"

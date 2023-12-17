@@ -105,6 +105,10 @@ class CreateListActivity : AppCompatActivity(),CategoryAdapter.CategoryClickList
         noteId = intent.getIntExtra("itemid",-1)
         tvDateTime.text=currentDate
 
+        saveButton.setOnClickListener {
+            saveNote()
+        }
+
         if(noteId!=-1){
             GlobalScope.launch(Dispatchers.Main){
                 let {
@@ -939,71 +943,70 @@ class CreateListActivity : AppCompatActivity(),CategoryAdapter.CategoryClickList
         }
 
     }
-    private fun saveNote(){
-        if(notes_title.text.toString().isNullOrEmpty()){
-            Toast.makeText(this,"Note Title is Required", Toast.LENGTH_SHORT).show()
-        }
-        else if(notes_sub_title.text.toString().isNullOrEmpty()){
-            Toast.makeText(this,"Note Sub Title is Required",Toast.LENGTH_SHORT).show()
-        }
-        else if(items_list.isNullOrEmpty()){
-            Toast.makeText(this,"List is Empty",Toast.LENGTH_SHORT).show()
-        }
-        else{
-            if(noteId!=-1){
+    private fun saveNote() {
+        if (notes_title.text.toString().isNullOrEmpty()) {
+            Toast.makeText(this, "Note Title is Required", Toast.LENGTH_SHORT).show()
+        } else if (notes_sub_title.text.toString().isNullOrEmpty()) {
+            Toast.makeText(this, "Note Sub Title is Required", Toast.LENGTH_SHORT).show()
+        } else {
+            // Filter out items with empty text from the list
+            items_list.removeAll { it.text.isNullOrEmpty() }
+
+            if (items_list.isNullOrEmpty()) {
+                Toast.makeText(this, "List is Empty", Toast.LENGTH_SHORT).show()
+            } else {
                 val coroutineScope = CoroutineScope(Dispatchers.Main)
                 coroutineScope.launch {
-                    applicationContext?.let{
-                        var notes = NotesDatabase.getDatabase(it).noteDao().getSpecificNote(noteId)
-                        notes.title=notes_title.text.toString()
-                        notes.subTitle=notes_sub_title.text.toString()
-                        notes.dateTime=currentDate
-                        notes.create_dateTime=notes.create_dateTime
-                        notes.color=color
-                        notes.itemList=null
-                        notes.reminder=reminder
-                        notes.noteCategoryId=categoryName
-                        notes.imgPath=null
-                        notes.webLink=null
-                        notes.favorite=fav
-                        notes.password=password
-                        NotesDatabase.getDatabase(it).noteDao().updateNote(notes)
-                        setResult(Activity.RESULT_OK)
-                        tvDateTime.text=notes.dateTime
-                        Toast.makeText(this@CreateListActivity, "Note is updated", Toast.LENGTH_SHORT).show()
-                        if(reminder!=null && notes.reminder!! >System.currentTimeMillis()){
-                            reminder?.let { it1 -> setAlarm(it1,notes.title!!,notes.id!!) }
-                        }
-                    }
-
-
-
-                }
-            }else{
-                val coroutineScope = CoroutineScope(Dispatchers.Main)
-                coroutineScope.launch{
-                    var notes = Notes()
-                    notes.title=notes_title.text.toString()
-                    notes.subTitle=notes_sub_title.text.toString()
-                    notes.dateTime=currentDate
-                    notes.create_dateTime=currentDate
-                    notes.color=color
-                    notes.itemList=items_list
-                    notes.reminder=reminder
-                    notes.noteCategoryId=categoryName
-                    notes.imgPath=null
-                    notes.webLink=null
-                    notes.favorite=fav
-                    notes.password=password
                     applicationContext?.let {
+                        if (noteId != -1) {
+                            // Update existing note
+                            var notes = NotesDatabase.getDatabase(it).noteDao().getSpecificNote(noteId)
+                            notes.title = notes_title.text.toString()
+                            notes.subTitle = notes_sub_title.text.toString()
+                            notes.dateTime = currentDate
+                            notes.create_dateTime = notes.create_dateTime
+                            notes.color = color
+                            notes.itemList = items_list
+                            notes.reminder = reminder
+                            notes.noteCategoryId = categoryName
+                            notes.imgPath = null
+                            notes.webLink = null
+                            notes.favorite = fav
+                            notes.password = password
 
-                        val insertedId = NotesDatabase.getDatabase(it).noteDao().insertNotes(notes)
-                        noteId = insertedId.toInt()
-                        setResult(Activity.RESULT_OK)
-                        if(reminder!=null && notes.reminder!! >System.currentTimeMillis()){
-                            reminder?.let { it1 -> setAlarm(it1,notes.title!!,noteId!!) }
+                            NotesDatabase.getDatabase(it).noteDao().updateNote(notes)
+                            setResult(Activity.RESULT_OK)
+                            tvDateTime.text = notes.dateTime
+                            Toast.makeText(this@CreateListActivity, "Note is updated", Toast.LENGTH_SHORT).show()
+
+                            if (reminder != null && notes.reminder!! > System.currentTimeMillis()) {
+                                reminder?.let { it1 -> setAlarm(it1, notes.title!!, notes.id!!) }
+                            }
+                        } else {
+                            // Add a new note
+                            var notes = Notes()
+                            notes.title = notes_title.text.toString()
+                            notes.subTitle = notes_sub_title.text.toString()
+                            notes.dateTime = currentDate
+                            notes.create_dateTime = currentDate
+                            notes.color = color
+                            notes.itemList = items_list
+                            notes.reminder = reminder
+                            notes.noteCategoryId = categoryName
+                            notes.imgPath = null
+                            notes.webLink = null
+                            notes.favorite = fav
+                            notes.password = password
+
+                            val insertedId = NotesDatabase.getDatabase(it).noteDao().insertNotes(notes)
+                            noteId = insertedId.toInt()
+                            setResult(Activity.RESULT_OK)
+
+                            if (reminder != null && notes.reminder!! > System.currentTimeMillis()) {
+                                reminder?.let { it1 -> setAlarm(it1, notes.title!!, noteId!!) }
+                            }
+                            Toast.makeText(this@CreateListActivity, "Note is added", Toast.LENGTH_SHORT).show()
                         }
-                        Toast.makeText(this@CreateListActivity, "Note is added", Toast.LENGTH_SHORT).show()
                     }
                 }
             }

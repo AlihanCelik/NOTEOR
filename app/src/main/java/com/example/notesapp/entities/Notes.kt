@@ -7,8 +7,8 @@ import androidx.room.PrimaryKey
 import java.io.Serializable
 
 data class Item(
-    val isChecked: Boolean,
-    val text: String
+    var isChecked: Boolean,
+    var text: String
 ) : Serializable
 @Entity(tableName = "Notes")
 data class Notes(

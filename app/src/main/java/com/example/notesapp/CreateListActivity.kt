@@ -77,7 +77,7 @@ class CreateListActivity : AppCompatActivity(),CategoryAdapter.CategoryClickList
         currentDate=sdf.format(Date())
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_list)
-
+        items_list= arrayListOf()
         recyclerView = findViewById(R.id.recycler_view_itemlist)
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager= StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)

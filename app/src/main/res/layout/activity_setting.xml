@@ -300,7 +300,7 @@
                     android:textColor="@color/AdvGrey2"
                     android:textStyle="bold"
                     android:textSize="15dp"
-                    android:text="Linkedin"></TextView>
+                    android:text="Linkedln"></TextView>
             </LinearLayout>
 
             <TextView

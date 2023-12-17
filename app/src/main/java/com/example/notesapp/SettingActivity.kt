@@ -86,16 +86,18 @@ class SettingActivity : AppCompatActivity() {
             let {
                notes = NotesDatabase.getDatabase(this@SettingActivity).noteDao().getAllNotes()
             }
+            allNotes_size.text="(${notes.size})"
         }
-        allNotes_size.text="(${notes.size})"
+
 
         var trash: List<Trash> = emptyList()
         GlobalScope.launch(Dispatchers.Main) {
             let {
                 trash = TrashDatabase.getDatabase(this@SettingActivity).trashDao().getAllTrash()
             }
+            trash_size.text="(${trash.size})"
         }
-        trash_size.text="(${trash.size})"
+
     }
     fun sendEmail(context: Context) {
         val email = "alihancelikk03@gmail.com"

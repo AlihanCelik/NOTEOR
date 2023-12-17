@@ -5,10 +5,12 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.io.Serializable
+import java.nio.ByteOrder
 
 data class Item(
     var isChecked: Boolean,
-    var text: String
+    var text: String,
+    var order: Int
 ) : Serializable
 @Entity(tableName = "Notes")
 data class Notes(

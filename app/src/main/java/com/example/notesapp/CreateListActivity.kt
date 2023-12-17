@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Paint
-import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -22,10 +21,10 @@ import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.notesapp.Adapter.CategoryAdapter
-import com.example.notesapp.Adapter.ImageAdapter
 import com.example.notesapp.Adapter.ListNoteAdapter
 import com.example.notesapp.database.CategoryDatabase
 import com.example.notesapp.database.NotesDatabase
@@ -50,7 +49,6 @@ import kotlinx.android.synthetic.main.activity_create_list.reminderlayout
 import kotlinx.android.synthetic.main.activity_create_list.saveButton
 import kotlinx.android.synthetic.main.activity_create_list.tvDateTime
 import kotlinx.android.synthetic.main.activity_create_list.tvReminderTime
-import kotlinx.android.synthetic.main.activity_create_note.*
 import kotlinx.android.synthetic.main.createactivty_permi_dialog.view.*
 import kotlinx.android.synthetic.main.delete_permi_dialog.view.*
 import kotlinx.android.synthetic.main.dialog_add_category.view.*
@@ -60,7 +58,7 @@ import kotlinx.coroutines.*
 import java.text.SimpleDateFormat
 import java.util.*
 
-class CreateListActivity : AppCompatActivity(),CategoryAdapter.CategoryClickListener {
+class CreateListActivity : AppCompatActivity(), CategoryAdapter.CategoryClickListener {
     var currentDate:String? = null
     var color="blue"
     var fav=false
@@ -101,6 +99,11 @@ class CreateListActivity : AppCompatActivity(),CategoryAdapter.CategoryClickList
         recyclerView = findViewById(R.id.recycler_view_itemlist)
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager= StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
+
+
+        val itemTouchHelperCallbackNoteList = ItemTouchHelperCallbackNoteList(listNoteAdapter)
+        val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallbackNoteList)
+        itemTouchHelper.attachToRecyclerView(recyclerView)
 
         noteId = intent.getIntExtra("itemid",-1)
         tvDateTime.text=currentDate
@@ -449,7 +452,7 @@ class CreateListActivity : AppCompatActivity(),CategoryAdapter.CategoryClickList
             }
         }
         addItem_button.setOnClickListener {
-            val newItem = Item(isChecked = false, text = "")
+            val newItem = Item(isChecked = false, text = "",items_list.size)
             listNoteAdapter.addItem(newItem)
             initAdapter()
         }
@@ -939,7 +942,9 @@ class CreateListActivity : AppCompatActivity(),CategoryAdapter.CategoryClickList
             bottomSheet.setContentView(bottomSheetView)
             bottomSheet.show()
 
-            saveButton.setOnClickListener {  }
+            saveButton.setOnClickListener {
+                saveNote()
+            }
         }
 
     }
@@ -1064,10 +1069,12 @@ class CreateListActivity : AppCompatActivity(),CategoryAdapter.CategoryClickList
         }
     }
     private fun initAdapter() {
+        items_list.sortBy { it.order }
         listNoteAdapter =ListNoteAdapter(items_list)
         val ll = GridLayoutManager(this, 1)
         recyclerView.layoutManager = ll
         recyclerView.adapter = listNoteAdapter
+
 
     }
 

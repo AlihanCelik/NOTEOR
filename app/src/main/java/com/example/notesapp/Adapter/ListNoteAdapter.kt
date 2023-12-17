@@ -8,17 +8,27 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.EditText
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.notesapp.R
+import com.example.notesapp.entities.Category
 import com.example.notesapp.entities.Item
 import kotlinx.android.synthetic.main.item_notelist.view.*
 
 class ListNoteAdapter constructor(
-    private var items: MutableList<Item>
+   var items: MutableList<Item>
 ) : RecyclerView.Adapter<ListNoteAdapter.ViewHolder>() {
+
+    fun updateData(newList: List<Item>) {
+        items.clear()
+        items.addAll(newList)
+        notifyDataSetChanged()
+    }
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val editTextItem: EditText = itemView.EditText_item
         val checkBoxItem: CheckBox = itemView.checkBox_item
+
+
 
         init {
             editTextItem.addTextChangedListener(object : TextWatcher {

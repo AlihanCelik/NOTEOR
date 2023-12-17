@@ -9,7 +9,8 @@ import java.io.Serializable
 
 data class Item_t(
     val isChecked: Boolean,
-    val text: String
+    val text: String,
+    var order: Int
 ) : Serializable
 @Entity(tableName = "Trash")
 data class Trash(

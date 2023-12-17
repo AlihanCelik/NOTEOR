@@ -27,6 +27,11 @@ class ListNoteAdapter constructor(
         holder.itemView.EditText_item.setText(items[position].text)
     }
 
+    fun addItem(newItem: Item) {
+        items.add(newItem)
+        notifyDataSetChanged()
+    }
+
 
 
 

@@ -21,9 +21,12 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.notesapp.Adapter.CategoryAdapter
+import com.example.notesapp.Adapter.ImageAdapter
+import com.example.notesapp.Adapter.ListNoteAdapter
 import com.example.notesapp.database.CategoryDatabase
 import com.example.notesapp.database.NotesDatabase
 import com.example.notesapp.database.TrashDatabase
@@ -33,6 +36,21 @@ import com.example.notesapp.entities.Notes
 import com.example.notesapp.entities.Trash
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.android.synthetic.main.activity_create_list.*
+import kotlinx.android.synthetic.main.activity_create_list.backButton
+import kotlinx.android.synthetic.main.activity_create_list.category_button
+import kotlinx.android.synthetic.main.activity_create_list.category_name
+import kotlinx.android.synthetic.main.activity_create_list.category_updownarrow
+import kotlinx.android.synthetic.main.activity_create_list.colorView
+import kotlinx.android.synthetic.main.activity_create_list.createNote
+import kotlinx.android.synthetic.main.activity_create_list.favButton
+import kotlinx.android.synthetic.main.activity_create_list.more
+import kotlinx.android.synthetic.main.activity_create_list.notes_sub_title
+import kotlinx.android.synthetic.main.activity_create_list.notes_title
+import kotlinx.android.synthetic.main.activity_create_list.reminderlayout
+import kotlinx.android.synthetic.main.activity_create_list.saveButton
+import kotlinx.android.synthetic.main.activity_create_list.tvDateTime
+import kotlinx.android.synthetic.main.activity_create_list.tvReminderTime
+import kotlinx.android.synthetic.main.activity_create_note.*
 import kotlinx.android.synthetic.main.createactivty_permi_dialog.view.*
 import kotlinx.android.synthetic.main.delete_permi_dialog.view.*
 import kotlinx.android.synthetic.main.dialog_add_category.view.*
@@ -54,6 +72,7 @@ class CreateListActivity : AppCompatActivity(),CategoryAdapter.CategoryClickList
     lateinit var recyclerView: RecyclerView
     lateinit var items_list:MutableList<Item>
     lateinit var categoryAdapter: CategoryAdapter
+    lateinit var listNoteAdapter : ListNoteAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
 
 
@@ -78,6 +97,7 @@ class CreateListActivity : AppCompatActivity(),CategoryAdapter.CategoryClickList
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_list)
         items_list= arrayListOf()
+        listNoteAdapter = ListNoteAdapter(items_list)
         recyclerView = findViewById(R.id.recycler_view_itemlist)
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager= StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
@@ -425,7 +445,9 @@ class CreateListActivity : AppCompatActivity(),CategoryAdapter.CategoryClickList
             }
         }
         addItem_button.setOnClickListener {
-            items_list.size
+            val newItem = Item(isChecked = false, text = "")
+            listNoteAdapter.addItem(newItem)
+            initAdapter()
         }
 
         more.setOnClickListener {
@@ -1039,6 +1061,10 @@ class CreateListActivity : AppCompatActivity(),CategoryAdapter.CategoryClickList
         }
     }
     private fun initAdapter() {
+        listNoteAdapter =ListNoteAdapter(items_list)
+        val ll = GridLayoutManager(this, 1)
+        recyclerView.layoutManager = ll
+        recyclerView.adapter = listNoteAdapter
 
     }
 

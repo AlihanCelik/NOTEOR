@@ -17,7 +17,7 @@ class sortCategoryAdapter(private var listener: SortCategoryClickListener,privat
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SortCategoryViewHolder {
         return SortCategoryViewHolder(
             LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_category_sort,parent, false)
+                .inflate(R.layout.item_category_sort,parent ,false)
         )
     }
     interface SortCategoryClickListener {

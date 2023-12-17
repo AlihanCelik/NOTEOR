@@ -340,11 +340,12 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler_view_itemlist"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="10dp"
                     tools:listitem="@layout/item_notelist"
+                    android:nestedScrollingEnabled="false"
                     android:clipToPadding="false"
                     android:paddingBottom="150dp">
 

@@ -104,10 +104,8 @@ class CreateListActivity : AppCompatActivity(), CategoryAdapter.CategoryClickLis
         val itemTouchHelperCallbackNoteList = ItemTouchHelperCallbackNoteList(listNoteAdapter)
         val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallbackNoteList)
         itemTouchHelper.attachToRecyclerView(recyclerView)
-
         noteId = intent.getIntExtra("itemid",-1)
         tvDateTime.text=currentDate
-
         saveButton.setOnClickListener {
             saveNote()
         }
@@ -1068,7 +1066,7 @@ class CreateListActivity : AppCompatActivity(), CategoryAdapter.CategoryClickLis
             notificationManeger.createNotificationChannel(channel)
         }
     }
-    private fun initAdapter() {
+    fun initAdapter() {
         items_list.sortBy { it.order }
         listNoteAdapter =ListNoteAdapter(items_list)
         val ll = GridLayoutManager(this, 1)

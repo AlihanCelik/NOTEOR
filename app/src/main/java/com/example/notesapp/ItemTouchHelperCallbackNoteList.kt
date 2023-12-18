@@ -1,5 +1,5 @@
 package com.example.notesapp
-import android.content.Context
+
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.notesapp.Adapter.ListNoteAdapter
@@ -43,7 +43,6 @@ class ItemTouchHelperCallbackNoteList( private val adapter:ListNoteAdapter) : It
             copiedList[i].order = i
         }
         adapter.updateData(copiedList)
-
 
         return true
     }

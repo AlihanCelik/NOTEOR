@@ -1066,7 +1066,7 @@ class CreateListActivity : AppCompatActivity(), CategoryAdapter.CategoryClickLis
             notificationManeger.createNotificationChannel(channel)
         }
     }
-    fun initAdapter() {
+    private fun initAdapter() {
         items_list.sortBy { it.order }
         listNoteAdapter =ListNoteAdapter(items_list)
         val ll = GridLayoutManager(this, 1)

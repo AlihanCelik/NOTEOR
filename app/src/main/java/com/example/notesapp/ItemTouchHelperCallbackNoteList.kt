@@ -49,5 +49,7 @@ class ItemTouchHelperCallbackNoteList( private val adapter:ListNoteAdapter) : It
 
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+
     }
+
 }

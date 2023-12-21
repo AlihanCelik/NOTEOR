@@ -35,6 +35,8 @@ class ItemTouchHelperCallbackNoteList( private val adapter:ListNoteAdapter) : It
         copiedList.removeAt(fromPosition)
         copiedList.add(toPosition, movedItem)
 
+
+        
         // Yer değiştirdikten sonra sıralamayı güncelle
         adapter.notifyItemMoved(fromPosition, toPosition)
 

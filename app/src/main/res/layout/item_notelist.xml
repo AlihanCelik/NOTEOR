@@ -40,6 +40,14 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
+                        <ImageView
+                            android:id="@+id/item_sort"
+                            android:layout_width="17dp"
+                            android:layout_height="17dp"
+                            android:layout_marginRight="15dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/equal"
+                            app:tint="@color/AdvGrey2"></ImageView>
 
                         <CheckBox
                             android:id="@+id/checkBox_item"
@@ -69,15 +77,16 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1" />
-
                         <ImageView
-                            android:id="@+id/item_sort"
+                            android:id="@+id/item_delete"
                             android:layout_width="20dp"
                             android:layout_height="20dp"
-                            android:layout_marginRight="5dp"
+                            android:layout_marginRight="10dp"
                             android:layout_gravity="center"
-                            android:src="@drawable/equal"
+                            android:src="@drawable/cancel"
                             app:tint="@color/AdvGrey2"></ImageView>
+
+
 
 
                     </LinearLayout>

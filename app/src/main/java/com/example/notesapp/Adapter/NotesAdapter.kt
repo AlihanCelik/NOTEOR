@@ -17,6 +17,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.notesapp.CreateListActivity
 import com.example.notesapp.CreateNoteActivity
 import com.example.notesapp.R
 import com.example.notesapp.database.CategoryDatabase
@@ -121,9 +122,13 @@ class NotesAdapter(val frag:Int) :
                             )
                         )
                         view.enter_passwordContainer.helperText="Successful"
-                        val intent=Intent(context,CreateNoteActivity::class.java)
+                        var intent:Intent
+                        if(!arrList[position].itemList.isNullOrEmpty()){
+                            intent=Intent(context,CreateListActivity::class.java)
+                        }else{
+                            intent=Intent(context,CreateNoteActivity::class.java)
+                        }
                         intent.putExtra("itemid",arrList[position].id)
-                        println(arrList[position].id)
                         dialog.dismiss()
                         context.startActivity(intent)
                         holder.itemView.item_bg.setBackgroundColor(Color.WHITE)
@@ -684,18 +689,30 @@ class NotesAdapter(val frag:Int) :
                 if(arrList[position].itemList!!.get(0).isChecked){
                     holder.itemView.list1_check.setImageResource(R.drawable.baseline_check_box_24)
                 }else{
+                    holder.itemView.list1_check.setImageResource(R.drawable.baseline_check_box_outline_blank_24)
+                }
 
+                if(arrList[position].itemList!!.get(1).isChecked){
+                    holder.itemView.list2_check.setImageResource(R.drawable.baseline_check_box_24)
+                }else{
+                    holder.itemView.list2_check.setImageResource(R.drawable.baseline_check_box_outline_blank_24)
+                }
+
+                if(arrList[position].itemList!!.get(2).isChecked){
+                    holder.itemView.list3_check.setImageResource(R.drawable.baseline_check_box_24)
+                }else{
+                    holder.itemView.list3_check.setImageResource(R.drawable.baseline_check_box_outline_blank_24)
                 }
 
             }
         }
-
         if(arrList[position].favorite==true){
             holder.itemView.item_fav.visibility=View.VISIBLE
         }else{
             holder.itemView.item_fav.visibility=View.INVISIBLE
         }
         if(arrList[position].password.isNullOrEmpty()){
+            holder.itemView.list_layout.visibility=View.GONE
             holder.itemView.item_desc.visibility=View.VISIBLE
             holder.itemView.hidden.visibility=View.GONE
             holder.itemView.item_psw.visibility=View.GONE

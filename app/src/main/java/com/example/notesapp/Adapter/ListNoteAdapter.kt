@@ -58,6 +58,11 @@ class ListNoteAdapter constructor(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.itemView.checkBox_item.isChecked=items[position].isChecked
         holder.itemView.EditText_item.setText(items[position].text)
+        holder.itemView.item_delete.setOnClickListener {
+            items.removeAt(position)
+            notifyDataSetChanged()
+
+        }
     }
 
     fun addItem(newItem: Item) {

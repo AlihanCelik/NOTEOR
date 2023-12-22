@@ -674,6 +674,22 @@ class NotesAdapter(val frag:Int) :
             }
 
         }
+        if(arrList[position].itemList.isNullOrEmpty()){
+            holder.itemView.list_layout.visibility=View.GONE
+        }else{
+            if(arrList[position].itemList!!.size>=3){
+                holder.itemView.list1_text.text=arrList[position].itemList!!.get(0).text
+                holder.itemView.list2_text.text=arrList[position].itemList!!.get(1).text
+                holder.itemView.list3_text.text=arrList[position].itemList!!.get(2).text
+                if(arrList[position].itemList!!.get(0).isChecked){
+                    holder.itemView.list1_check.setImageResource(R.drawable.baseline_check_box_24)
+                }else{
+
+                }
+
+            }
+        }
+
         if(arrList[position].favorite==true){
             holder.itemView.item_fav.visibility=View.VISIBLE
         }else{

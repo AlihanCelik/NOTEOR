@@ -1,10 +1,15 @@
 package com.example.notesapp
-
+import android.content.Context
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.example.notesapp.Adapter.CategoryActivtiyAdapter
 import com.example.notesapp.Adapter.ListNoteAdapter
+import com.example.notesapp.database.CategoryDatabase
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
-class ItemTouchHelperCallbackNoteList( private val adapter:ListNoteAdapter) : ItemTouchHelper.Callback() {
+class ItemTouchHelperCallbackNoteList(private val context: Context, private val adapter: ListNoteAdapter) : ItemTouchHelper.Callback() {
 
     override fun isLongPressDragEnabled(): Boolean {
         return true
@@ -35,8 +40,6 @@ class ItemTouchHelperCallbackNoteList( private val adapter:ListNoteAdapter) : It
         copiedList.removeAt(fromPosition)
         copiedList.add(toPosition, movedItem)
 
-
-        
         // Yer değiştirdikten sonra sıralamayı güncelle
         adapter.notifyItemMoved(fromPosition, toPosition)
 
@@ -45,13 +48,10 @@ class ItemTouchHelperCallbackNoteList( private val adapter:ListNoteAdapter) : It
             copiedList[i].order = i
         }
         adapter.updateData(copiedList)
-
         return true
     }
 
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-
     }
-
 }

@@ -36,7 +36,8 @@ class ItemTouchHelperCallbackNoteList(private val context: Context, private val 
         val toPosition = target.adapterPosition
         val copiedList = ArrayList(adapter.items)
 
-        if (fromPosition != RecyclerView.NO_POSITION && toPosition != RecyclerView.NO_POSITION) {
+        // Check if fromPosition is a valid index
+        if (fromPosition >= 0 && fromPosition < copiedList.size) {
             val movedItem = copiedList[fromPosition]
             copiedList.removeAt(fromPosition)
             copiedList.add(toPosition, movedItem)
@@ -48,7 +49,6 @@ class ItemTouchHelperCallbackNoteList(private val context: Context, private val 
             for (i in 0 until copiedList.size) {
                 copiedList[i].order = i
             }
-            adapter.updateData(copiedList)
             return true
         }
         return false

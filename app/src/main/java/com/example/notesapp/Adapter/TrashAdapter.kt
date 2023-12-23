@@ -1,7 +1,6 @@
 package com.example.notesapp.Adapter
 
 
-import android.content.res.ColorStateList
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
@@ -18,7 +17,6 @@ import com.example.notesapp.database.TrashDatabase
 import com.example.notesapp.entities.Notes
 import com.example.notesapp.entities.Trash
 import kotlinx.android.synthetic.main.delete_permi_dialog.view.*
-import kotlinx.android.synthetic.main.enter_psw_dialog.view.*
 import kotlinx.android.synthetic.main.item_notes.view.*
 import kotlinx.android.synthetic.main.trashlongclick_dialog.view.*
 import kotlinx.coroutines.*
@@ -54,68 +52,6 @@ class TrashAdapter() :
         holder.itemView.item_bg.setBackgroundColor(Color.WHITE)
         val context = holder.itemView.context
         holder.itemView.setOnClickListener {
-            if(arrList[position].password_t.isNullOrEmpty()){
-
-            }else{
-                val view = View.inflate(holder.itemView.context, R.layout.enter_psw_dialog,null)
-                val builder = AlertDialog.Builder(holder.itemView.context)
-                builder.setView(view)
-                val dialog = builder.create()
-                when (arrList[position].color_t) {
-                    "blue" -> holder.itemView.item_bg.setBackgroundColor(ContextCompat.getColor(context, R.color.background_blue))
-                    "pink" -> holder.itemView.item_bg.setBackgroundColor(ContextCompat.getColor(context, R.color.background_pink))
-                    "purple" -> holder.itemView.item_bg.setBackgroundColor(ContextCompat.getColor(context, R.color.background_purple))
-                    "yellow" -> holder.itemView.item_bg.setBackgroundColor(ContextCompat.getColor(context, R.color.background_yellow))
-                    "green" -> holder.itemView.item_bg.setBackgroundColor(ContextCompat.getColor(context, R.color.background_green))
-                    "red" -> holder.itemView.item_bg.setBackgroundColor(ContextCompat.getColor(context, R.color.background_red))
-                    "orange" -> holder.itemView.item_bg.setBackgroundColor(ContextCompat.getColor(context, R.color.background_orange))
-
-                }
-
-                dialog.show()
-                dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-                view.enter_passwordContainer.setHelperTextColor(
-                    ColorStateList.valueOf(
-                        ContextCompat.getColor(
-                            context,
-                            android.R.color.holo_green_dark
-                        )
-                    )
-                )
-                view.enter_passwordContainer.helperText="Enter Password"
-                view.enter_okeylock.setOnClickListener {
-                    if(arrList[position].password_t==view.enter_passwordEditText.text.toString()){
-                        view.enter_passwordContainer.setHelperTextColor(
-                            ColorStateList.valueOf(
-                                ContextCompat.getColor(
-                                    context,
-                                    android.R.color.holo_green_dark
-                                )
-                            )
-                        )
-                        view.enter_passwordContainer.helperText="Successful"
-                        dialog.dismiss()
-                        holder.itemView.item_bg.setBackgroundColor(Color.WHITE)
-                    }else{
-                        view.enter_passwordContainer.helperText="Wrong Password"
-                        view.enter_passwordContainer.setHelperTextColor(
-                            ColorStateList.valueOf(
-                                ContextCompat.getColor(
-                                    context,
-                                    android.R.color.holo_red_dark
-                                )
-                            )
-                        )
-                    }
-                }
-                dialog.setOnCancelListener {
-                    holder.itemView.item_bg.setBackgroundColor(Color.WHITE)
-                }
-            }
-
-
-        }
-        holder.itemView.setOnLongClickListener {
             val view = View.inflate(holder.itemView.context, R.layout.trashlongclick_dialog, null)
             val builder = AlertDialog.Builder(holder.itemView.context)
             builder.setView(view)
@@ -222,6 +158,68 @@ class TrashAdapter() :
 
         }
 
+        if(arrList[position].itemList_t.isNullOrEmpty()){
+            holder.itemView.list_layout.visibility=View.GONE
+            holder.itemView.item_desc.visibility=View.VISIBLE
+        }else{
+            holder.itemView.list_layout.visibility=View.VISIBLE
+            holder.itemView.item_desc.visibility=View.GONE
+            if(arrList[position].itemList_t!!.size>=3){
+                holder.itemView.list3_layout.visibility=View.VISIBLE
+                holder.itemView.list2_layout.visibility=View.VISIBLE
+                holder.itemView.list1_layout.visibility=View.VISIBLE
+                holder.itemView.list1_text.text=arrList[position].itemList_t!!.get(0).text
+                holder.itemView.list2_text.text=arrList[position].itemList_t!!.get(1).text
+                holder.itemView.list3_text.text=arrList[position].itemList_t!!.get(2).text
+                if(arrList[position].itemList_t!!.get(0).isChecked){
+                    holder.itemView.list1_check.setImageResource(R.drawable.baseline_check_box_24)
+                }else{
+                    holder.itemView.list1_check.setImageResource(R.drawable.baseline_check_box_outline_blank_24)
+                }
+
+                if(arrList[position].itemList_t!!.get(1).isChecked){
+                    holder.itemView.list2_check.setImageResource(R.drawable.baseline_check_box_24)
+                }else{
+                    holder.itemView.list2_check.setImageResource(R.drawable.baseline_check_box_outline_blank_24)
+                }
+
+                if(arrList[position].itemList_t!!.get(2).isChecked){
+                    holder.itemView.list3_check.setImageResource(R.drawable.baseline_check_box_24)
+                }else{
+                    holder.itemView.list3_check.setImageResource(R.drawable.baseline_check_box_outline_blank_24)
+                }
+
+            }else if(arrList[position].itemList_t!!.size==2){
+                holder.itemView.list3_layout.visibility=View.GONE
+                holder.itemView.list2_layout.visibility=View.VISIBLE
+                holder.itemView.list1_layout.visibility=View.VISIBLE
+                holder.itemView.list1_text.text=arrList[position].itemList_t!!.get(0).text
+                holder.itemView.list2_text.text=arrList[position].itemList_t!!.get(1).text
+                if(arrList[position].itemList_t!!.get(0).isChecked){
+                    holder.itemView.list1_check.setImageResource(R.drawable.baseline_check_box_24)
+                }else{
+                    holder.itemView.list1_check.setImageResource(R.drawable.baseline_check_box_outline_blank_24)
+                }
+
+                if(arrList[position].itemList_t!!.get(1).isChecked){
+                    holder.itemView.list2_check.setImageResource(R.drawable.baseline_check_box_24)
+                }else{
+                    holder.itemView.list2_check.setImageResource(R.drawable.baseline_check_box_outline_blank_24)
+                }
+            }else{
+                holder.itemView.list3_layout.visibility=View.GONE
+                holder.itemView.list2_layout.visibility=View.GONE
+                holder.itemView.list1_layout.visibility=View.VISIBLE
+                holder.itemView.list1_text.text=arrList[position].itemList_t!!.get(0).text
+                if(arrList[position].itemList_t!!.get(0).isChecked){
+                    holder.itemView.list1_check.setImageResource(R.drawable.baseline_check_box_24)
+                }else{
+                    holder.itemView.list1_check.setImageResource(R.drawable.baseline_check_box_outline_blank_24)
+                }
+
+            }
+        }
+
         if(arrList[position].imgPath_t.isNullOrEmpty()){
             holder.itemView.item_layout_img.visibility=View.GONE
         }else{
@@ -249,6 +247,7 @@ class TrashAdapter() :
             holder.itemView.hidden.visibility=View.GONE
             holder.itemView.item_psw.visibility=View.GONE
         }else{
+            holder.itemView.list_layout.visibility=View.GONE
             holder.itemView.item_desc.visibility=View.GONE
             holder.itemView.hidden.visibility=View.VISIBLE
             holder.itemView.item_psw.visibility=View.VISIBLE

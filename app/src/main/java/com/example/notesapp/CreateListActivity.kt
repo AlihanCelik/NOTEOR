@@ -101,6 +101,7 @@ class CreateListActivity : AppCompatActivity(), CategoryAdapter.CategoryClickLis
         val itemTouchHelperCallback = ItemTouchHelperCallbackNoteList(this@CreateListActivity,listNoteAdapter)
         val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
         itemTouchHelper.attachToRecyclerView(recycler_view_itemlist)
+
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager= StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
 

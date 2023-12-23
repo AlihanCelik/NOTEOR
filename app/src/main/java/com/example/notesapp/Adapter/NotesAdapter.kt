@@ -79,9 +79,13 @@ class NotesAdapter(val frag:Int) :
 
             }
             if(arrList[position].password.isNullOrEmpty()){
-                val intent=Intent(context,CreateNoteActivity::class.java)
+                var intent:Intent
+                if(!arrList[position].itemList.isNullOrEmpty()){
+                    intent=Intent(context,CreateListActivity::class.java)
+                }else{
+                    intent=Intent(context,CreateNoteActivity::class.java)
+                }
                 intent.putExtra("itemid",arrList[position].id)
-                println(arrList[position].id)
                 context.startActivity(intent)
                 holder.itemView.item_bg.setBackgroundColor(Color.WHITE)
             }else{
@@ -681,7 +685,10 @@ class NotesAdapter(val frag:Int) :
         }
         if(arrList[position].itemList.isNullOrEmpty()){
             holder.itemView.list_layout.visibility=View.GONE
+            holder.itemView.item_desc.visibility=View.VISIBLE
         }else{
+            holder.itemView.list_layout.visibility=View.VISIBLE
+            holder.itemView.item_desc.visibility=View.GONE
             if(arrList[position].itemList!!.size>=3){
                 holder.itemView.list1_text.text=arrList[position].itemList!!.get(0).text
                 holder.itemView.list2_text.text=arrList[position].itemList!!.get(1).text
@@ -712,11 +719,11 @@ class NotesAdapter(val frag:Int) :
             holder.itemView.item_fav.visibility=View.INVISIBLE
         }
         if(arrList[position].password.isNullOrEmpty()){
-            holder.itemView.list_layout.visibility=View.GONE
             holder.itemView.item_desc.visibility=View.VISIBLE
             holder.itemView.hidden.visibility=View.GONE
             holder.itemView.item_psw.visibility=View.GONE
         }else{
+            holder.itemView.list_layout.visibility=View.GONE
             holder.itemView.item_desc.visibility=View.GONE
             holder.itemView.hidden.visibility=View.VISIBLE
             holder.itemView.item_psw.visibility=View.VISIBLE

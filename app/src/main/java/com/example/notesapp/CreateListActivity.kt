@@ -835,6 +835,7 @@ class CreateListActivity : AppCompatActivity(), CategoryAdapter.CategoryClickLis
                             trash.dateTime_t = notes.dateTime
                             trash.create_dateTime_t=notes.create_dateTime
                             trash.color_t = notes.color
+                            trash.itemList_t=notes.itemList
                             trash.noteCategory_t=notes.noteCategoryId
                             trash.imgPath_t = notes.imgPath
                             trash.webLink_t = notes.webLink

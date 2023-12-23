@@ -847,11 +847,8 @@ class CreateListActivity : AppCompatActivity(), CategoryAdapter.CategoryClickLis
                                     NotesDatabase.getDatabase(this@CreateListActivity).noteDao().deleteSpecificNote(
                                         it1
                                     )
-
-
                                 }
                             }
-
                         }
                         Toast.makeText(this@CreateListActivity, "Note deleted", Toast.LENGTH_SHORT).show()
                         setResult(Activity.RESULT_OK)

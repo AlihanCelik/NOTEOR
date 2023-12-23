@@ -690,6 +690,9 @@ class NotesAdapter(val frag:Int) :
             holder.itemView.list_layout.visibility=View.VISIBLE
             holder.itemView.item_desc.visibility=View.GONE
             if(arrList[position].itemList!!.size>=3){
+                holder.itemView.list3_layout.visibility=View.VISIBLE
+                holder.itemView.list2_layout.visibility=View.VISIBLE
+                holder.itemView.list1_layout.visibility=View.VISIBLE
                 holder.itemView.list1_text.text=arrList[position].itemList!!.get(0).text
                 holder.itemView.list2_text.text=arrList[position].itemList!!.get(1).text
                 holder.itemView.list3_text.text=arrList[position].itemList!!.get(2).text
@@ -709,6 +712,34 @@ class NotesAdapter(val frag:Int) :
                     holder.itemView.list3_check.setImageResource(R.drawable.baseline_check_box_24)
                 }else{
                     holder.itemView.list3_check.setImageResource(R.drawable.baseline_check_box_outline_blank_24)
+                }
+
+            }else if(arrList[position].itemList!!.size==2){
+                holder.itemView.list3_layout.visibility=View.GONE
+                holder.itemView.list2_layout.visibility=View.VISIBLE
+                holder.itemView.list1_layout.visibility=View.VISIBLE
+                holder.itemView.list1_text.text=arrList[position].itemList!!.get(0).text
+                holder.itemView.list2_text.text=arrList[position].itemList!!.get(1).text
+                if(arrList[position].itemList!!.get(0).isChecked){
+                    holder.itemView.list1_check.setImageResource(R.drawable.baseline_check_box_24)
+                }else{
+                    holder.itemView.list1_check.setImageResource(R.drawable.baseline_check_box_outline_blank_24)
+                }
+
+                if(arrList[position].itemList!!.get(1).isChecked){
+                    holder.itemView.list2_check.setImageResource(R.drawable.baseline_check_box_24)
+                }else{
+                    holder.itemView.list2_check.setImageResource(R.drawable.baseline_check_box_outline_blank_24)
+                }
+            }else{
+                holder.itemView.list3_layout.visibility=View.GONE
+                holder.itemView.list2_layout.visibility=View.GONE
+                holder.itemView.list1_layout.visibility=View.VISIBLE
+                holder.itemView.list1_text.text=arrList[position].itemList!!.get(0).text
+                if(arrList[position].itemList!!.get(0).isChecked){
+                    holder.itemView.list1_check.setImageResource(R.drawable.baseline_check_box_24)
+                }else{
+                    holder.itemView.list1_check.setImageResource(R.drawable.baseline_check_box_outline_blank_24)
                 }
 
             }
@@ -733,6 +764,7 @@ class NotesAdapter(val frag:Int) :
             holder.itemView.item_reminder_l.visibility=View.GONE
 
         }else if(frag==1){
+            holder.itemView.list_layout.visibility=View.GONE
             holder.itemView.item_date_l.visibility=View.GONE
             holder.itemView.item_layout_img.visibility=View.GONE
             holder.itemView.itemLinkLayout.visibility=View.GONE

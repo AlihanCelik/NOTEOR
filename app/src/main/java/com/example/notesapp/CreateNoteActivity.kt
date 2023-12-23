@@ -164,7 +164,6 @@ class CreateNoteActivity : AppCompatActivity(),CategoryAdapter.CategoryClickList
                         reminderlayout.visibility=View.GONE
                     }
 
-
                     items= notes.imgPath as MutableList<Uri>
                     if(items.isNotEmpty()){
                         layout_img_preview.visibility = View.VISIBLE

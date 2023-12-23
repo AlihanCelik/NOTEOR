@@ -1268,6 +1268,7 @@ class CreateNoteActivity : AppCompatActivity(),CategoryAdapter.CategoryClickList
         val alarmIntent = Intent(this, AlarmReceiver::class.java)
         alarmIntent.putExtra("NOTE_TITLE", noteTitle)
         alarmIntent.putExtra("NOTE_ID",noteid)
+        alarmIntent.putExtra("list","Note")
         println("Set : $noteid")
         print("Set Title $noteTitle")
         val pendingIntent = PendingIntent.getBroadcast(this, noteid, alarmIntent,  PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)

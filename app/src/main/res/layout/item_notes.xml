@@ -205,7 +205,7 @@
 
                     </LinearLayout>
                     <TextView
-                        id
+                        android:id="@+id/list_more_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="2 more items"

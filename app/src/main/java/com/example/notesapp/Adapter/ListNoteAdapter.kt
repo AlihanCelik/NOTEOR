@@ -4,10 +4,12 @@ package com.example.notesapp.Adapter
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.EditText
+import android.widget.ImageView
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.notesapp.R
@@ -27,8 +29,7 @@ class ListNoteAdapter constructor(
         notifyDataSetChanged()
     }
     val onItemMoveListener = object : ItemTouchHelper.SimpleCallback(
-        ItemTouchHelper.UP or ItemTouchHelper.DOWN,
-        ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
+        ItemTouchHelper.UP or ItemTouchHelper.DOWN,0
     ) {
         override fun onMove(
             recyclerView: RecyclerView,
@@ -62,6 +63,7 @@ class ListNoteAdapter constructor(
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val editTextItem: EditText = itemView.EditText_item
         val checkBoxItem: CheckBox = itemView.checkBox_item
+        val itemSortImageView: ImageView = itemView.findViewById(R.id.item_sort)
 
 
 
@@ -79,6 +81,15 @@ class ListNoteAdapter constructor(
             })
             checkBoxItem.setOnCheckedChangeListener { _, isChecked ->
                 items[adapterPosition].isChecked = isChecked
+            }
+            itemSortImageView.setOnTouchListener { _, event ->
+                when (event.action) {
+                    MotionEvent.ACTION_DOWN -> {
+                        itemTouchHelper.startDrag(this@ViewHolder)
+                        true
+                    }
+                    else -> false
+                }
             }
         }
     }

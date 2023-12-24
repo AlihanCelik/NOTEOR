@@ -95,16 +95,10 @@ class CreateListActivity : AppCompatActivity(), CategoryAdapter.CategoryClickLis
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_list)
         items_list= arrayListOf()
-        listNoteAdapter = ListNoteAdapter(items_list)
         recyclerView = findViewById(R.id.recycler_view_itemlist)
-
-        val itemTouchHelperCallback = ItemTouchHelperCallbackNoteList(this@CreateListActivity,listNoteAdapter)
-        val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
-        itemTouchHelper.attachToRecyclerView(recycler_view_itemlist)
-
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager= StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
-
+        listNoteAdapter = ListNoteAdapter(items_list,recyclerView)
         noteId = intent.getIntExtra("itemid",-1)
         tvDateTime.text=currentDate
         saveButton.setOnClickListener {
@@ -1067,7 +1061,7 @@ class CreateListActivity : AppCompatActivity(), CategoryAdapter.CategoryClickLis
         }
     }
     private fun initAdapter() {
-        listNoteAdapter =ListNoteAdapter(items_list)
+        listNoteAdapter =ListNoteAdapter(items_list,recyclerView)
         val ll = GridLayoutManager(this, 1)
         recyclerView.layoutManager = ll
         recyclerView.adapter = listNoteAdapter

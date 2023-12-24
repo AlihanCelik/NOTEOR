@@ -14,15 +14,50 @@ import com.example.notesapp.R
 import com.example.notesapp.entities.Category
 import com.example.notesapp.entities.Item
 import kotlinx.android.synthetic.main.item_notelist.view.*
+import java.util.*
 
 class ListNoteAdapter constructor(
-   var items: MutableList<Item>
+   var items: MutableList<Item>,
+   var rcw:RecyclerView
 ) : RecyclerView.Adapter<ListNoteAdapter.ViewHolder>() {
 
     fun updateData(newList: List<Item>) {
         items.clear()
         items.addAll(newList)
         notifyDataSetChanged()
+    }
+    val onItemMoveListener = object : ItemTouchHelper.SimpleCallback(
+        ItemTouchHelper.UP or ItemTouchHelper.DOWN,
+        ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
+    ) {
+        override fun onMove(
+            recyclerView: RecyclerView,
+            viewHolder: RecyclerView.ViewHolder,
+            target: RecyclerView.ViewHolder
+        ): Boolean {
+            val fromPosition = viewHolder.adapterPosition
+            val toPosition = target.adapterPosition
+
+            // Check if positions are valid before swapping
+            if (fromPosition != RecyclerView.NO_POSITION && toPosition != RecyclerView.NO_POSITION
+                && fromPosition < items.size && toPosition < items.size
+            ) {
+                Collections.swap(items, fromPosition, toPosition)
+                notifyItemMoved(fromPosition, toPosition)
+                rcw.requestFocus()
+                return true
+            }
+            return false
+        }
+
+        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+            // Swipe logic
+        }
+    }
+    val itemTouchHelper = ItemTouchHelper(onItemMoveListener)
+
+    init {
+        itemTouchHelper.attachToRecyclerView(rcw)
     }
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val editTextItem: EditText = itemView.EditText_item

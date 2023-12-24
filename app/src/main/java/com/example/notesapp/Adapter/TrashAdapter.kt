@@ -161,13 +161,15 @@ class TrashAdapter() :
         if(arrList[position].itemList_t.isNullOrEmpty()){
             holder.itemView.list_layout.visibility=View.GONE
             holder.itemView.item_desc.visibility=View.VISIBLE
+
         }else{
             holder.itemView.list_layout.visibility=View.VISIBLE
             holder.itemView.item_desc.visibility=View.GONE
-            if(arrList[position].itemList_t!!.size>=3){
+            if(arrList[position].itemList_t!!.size==3){
                 holder.itemView.list3_layout.visibility=View.VISIBLE
                 holder.itemView.list2_layout.visibility=View.VISIBLE
                 holder.itemView.list1_layout.visibility=View.VISIBLE
+                holder.itemView.list_more_text.visibility=View.GONE
                 holder.itemView.list1_text.text=arrList[position].itemList_t!!.get(0).text
                 holder.itemView.list2_text.text=arrList[position].itemList_t!!.get(1).text
                 holder.itemView.list3_text.text=arrList[position].itemList_t!!.get(2).text
@@ -193,6 +195,7 @@ class TrashAdapter() :
                 holder.itemView.list3_layout.visibility=View.GONE
                 holder.itemView.list2_layout.visibility=View.VISIBLE
                 holder.itemView.list1_layout.visibility=View.VISIBLE
+                holder.itemView.list_more_text.visibility=View.GONE
                 holder.itemView.list1_text.text=arrList[position].itemList_t!!.get(0).text
                 holder.itemView.list2_text.text=arrList[position].itemList_t!!.get(1).text
                 if(arrList[position].itemList_t!!.get(0).isChecked){
@@ -206,10 +209,37 @@ class TrashAdapter() :
                 }else{
                     holder.itemView.list2_check.setImageResource(R.drawable.baseline_check_box_outline_blank_24)
                 }
+            }else if(arrList[position].itemList_t!!.size>3){
+                holder.itemView.list3_layout.visibility=View.VISIBLE
+                holder.itemView.list2_layout.visibility=View.VISIBLE
+                holder.itemView.list1_layout.visibility=View.VISIBLE
+                holder.itemView.list_more_text.visibility=View.VISIBLE
+                holder.itemView.list_more_text.text= "${(arrList[position].itemList_t!!.size)-3} more items"
+                holder.itemView.list1_text.text=arrList[position].itemList_t!!.get(0).text
+                holder.itemView.list2_text.text=arrList[position].itemList_t!!.get(1).text
+                holder.itemView.list3_text.text=arrList[position].itemList_t!!.get(2).text
+                if(arrList[position].itemList_t!!.get(0).isChecked){
+                    holder.itemView.list1_check.setImageResource(R.drawable.baseline_check_box_24)
+                }else{
+                    holder.itemView.list1_check.setImageResource(R.drawable.baseline_check_box_outline_blank_24)
+                }
+
+                if(arrList[position].itemList_t!!.get(1).isChecked){
+                    holder.itemView.list2_check.setImageResource(R.drawable.baseline_check_box_24)
+                }else{
+                    holder.itemView.list2_check.setImageResource(R.drawable.baseline_check_box_outline_blank_24)
+                }
+
+                if(arrList[position].itemList_t!!.get(2).isChecked){
+                    holder.itemView.list3_check.setImageResource(R.drawable.baseline_check_box_24)
+                }else{
+                    holder.itemView.list3_check.setImageResource(R.drawable.baseline_check_box_outline_blank_24)
+                }
             }else{
                 holder.itemView.list3_layout.visibility=View.GONE
                 holder.itemView.list2_layout.visibility=View.GONE
                 holder.itemView.list1_layout.visibility=View.VISIBLE
+                holder.itemView.list_more_text.visibility=View.GONE
                 holder.itemView.list1_text.text=arrList[position].itemList_t!!.get(0).text
                 if(arrList[position].itemList_t!!.get(0).isChecked){
                     holder.itemView.list1_check.setImageResource(R.drawable.baseline_check_box_24)
@@ -224,7 +254,9 @@ class TrashAdapter() :
             holder.itemView.item_layout_img.visibility=View.GONE
         }else{
             if(!arrList[position].password_t.isNullOrEmpty()){
-                holder.itemView.item_layout_img.visibility=View.GONE
+                if(!arrList[position].noteText_t.isNullOrEmpty()){
+                    holder.itemView.item_desc.visibility=View.VISIBLE
+                }
             }else{
                 holder.itemView.item_layout_img.visibility=View.VISIBLE
                 Glide.with(context).load(arrList[position].imgPath_t?.get(0)).into(holder.image)

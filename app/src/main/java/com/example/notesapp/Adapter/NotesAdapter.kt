@@ -686,13 +686,15 @@ class NotesAdapter(val frag:Int) :
         if(arrList[position].itemList.isNullOrEmpty()){
             holder.itemView.list_layout.visibility=View.GONE
             holder.itemView.item_desc.visibility=View.VISIBLE
+
         }else{
             holder.itemView.list_layout.visibility=View.VISIBLE
             holder.itemView.item_desc.visibility=View.GONE
-            if(arrList[position].itemList!!.size>=3){
+            if(arrList[position].itemList!!.size==3){
                 holder.itemView.list3_layout.visibility=View.VISIBLE
                 holder.itemView.list2_layout.visibility=View.VISIBLE
                 holder.itemView.list1_layout.visibility=View.VISIBLE
+                holder.itemView.list_more_text.visibility=View.GONE
                 holder.itemView.list1_text.text=arrList[position].itemList!!.get(0).text
                 holder.itemView.list2_text.text=arrList[position].itemList!!.get(1).text
                 holder.itemView.list3_text.text=arrList[position].itemList!!.get(2).text
@@ -718,6 +720,7 @@ class NotesAdapter(val frag:Int) :
                 holder.itemView.list3_layout.visibility=View.GONE
                 holder.itemView.list2_layout.visibility=View.VISIBLE
                 holder.itemView.list1_layout.visibility=View.VISIBLE
+                holder.itemView.list_more_text.visibility=View.GONE
                 holder.itemView.list1_text.text=arrList[position].itemList!!.get(0).text
                 holder.itemView.list2_text.text=arrList[position].itemList!!.get(1).text
                 if(arrList[position].itemList!!.get(0).isChecked){
@@ -731,10 +734,37 @@ class NotesAdapter(val frag:Int) :
                 }else{
                     holder.itemView.list2_check.setImageResource(R.drawable.baseline_check_box_outline_blank_24)
                 }
+            }else if(arrList[position].itemList!!.size>3){
+                holder.itemView.list3_layout.visibility=View.VISIBLE
+                holder.itemView.list2_layout.visibility=View.VISIBLE
+                holder.itemView.list1_layout.visibility=View.VISIBLE
+                holder.itemView.list_more_text.visibility=View.VISIBLE
+                holder.itemView.list_more_text.text= "${(arrList[position].itemList!!.size)-3} more items"
+                holder.itemView.list1_text.text=arrList[position].itemList!!.get(0).text
+                holder.itemView.list2_text.text=arrList[position].itemList!!.get(1).text
+                holder.itemView.list3_text.text=arrList[position].itemList!!.get(2).text
+                if(arrList[position].itemList!!.get(0).isChecked){
+                    holder.itemView.list1_check.setImageResource(R.drawable.baseline_check_box_24)
+                }else{
+                    holder.itemView.list1_check.setImageResource(R.drawable.baseline_check_box_outline_blank_24)
+                }
+
+                if(arrList[position].itemList!!.get(1).isChecked){
+                    holder.itemView.list2_check.setImageResource(R.drawable.baseline_check_box_24)
+                }else{
+                    holder.itemView.list2_check.setImageResource(R.drawable.baseline_check_box_outline_blank_24)
+                }
+
+                if(arrList[position].itemList!!.get(2).isChecked){
+                    holder.itemView.list3_check.setImageResource(R.drawable.baseline_check_box_24)
+                }else{
+                    holder.itemView.list3_check.setImageResource(R.drawable.baseline_check_box_outline_blank_24)
+                }
             }else{
                 holder.itemView.list3_layout.visibility=View.GONE
                 holder.itemView.list2_layout.visibility=View.GONE
                 holder.itemView.list1_layout.visibility=View.VISIBLE
+                holder.itemView.list_more_text.visibility=View.GONE
                 holder.itemView.list1_text.text=arrList[position].itemList!!.get(0).text
                 if(arrList[position].itemList!!.get(0).isChecked){
                     holder.itemView.list1_check.setImageResource(R.drawable.baseline_check_box_24)
@@ -750,7 +780,9 @@ class NotesAdapter(val frag:Int) :
             holder.itemView.item_fav.visibility=View.INVISIBLE
         }
         if(arrList[position].password.isNullOrEmpty()){
-            holder.itemView.item_desc.visibility=View.VISIBLE
+            if(!arrList[position].noteText.isNullOrEmpty()){
+                holder.itemView.item_desc.visibility=View.VISIBLE
+            }
             holder.itemView.hidden.visibility=View.GONE
             holder.itemView.item_psw.visibility=View.GONE
         }else{

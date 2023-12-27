@@ -94,6 +94,8 @@ class ListNoteAdapter constructor(
         }
     }
 
+
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
             LayoutInflater.from(parent.context)

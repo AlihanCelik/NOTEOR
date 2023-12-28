@@ -37,7 +37,7 @@ class ListNoteAdapter constructor(
             viewHolder: RecyclerView.ViewHolder,
             target: RecyclerView.ViewHolder
         ): Boolean {
-            //rcw.itemAnimator?.changeDuration = 0
+            rcw.itemAnimator?.changeDuration = 0
             val fromPosition = viewHolder.adapterPosition
             val toPosition = target.adapterPosition
 
@@ -52,7 +52,7 @@ class ListNoteAdapter constructor(
 
                 return true
             }
-            //rcw.itemAnimator?.changeDuration = 250
+            rcw.itemAnimator?.changeDuration = 250
             return false
         }
 

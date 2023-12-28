@@ -45,7 +45,6 @@ class ListNoteAdapter constructor(
             ) {
                 Collections.swap(items, fromPosition, toPosition)
                 notifyItemMoved(fromPosition, toPosition)
-                rcw.requestFocus()
                 return true
             }
             return false
@@ -53,6 +52,13 @@ class ListNoteAdapter constructor(
 
         override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
             // Swipe logic
+        }
+        override fun clearView(
+            recyclerView: RecyclerView,
+            viewHolder: RecyclerView.ViewHolder
+        ) {
+            super.clearView(recyclerView, viewHolder)
+            rcw.requestFocus()
         }
     }
     val itemTouchHelper = ItemTouchHelper(onItemMoveListener)

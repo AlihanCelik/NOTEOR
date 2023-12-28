@@ -37,7 +37,6 @@ class ListNoteAdapter constructor(
             viewHolder: RecyclerView.ViewHolder,
             target: RecyclerView.ViewHolder
         ): Boolean {
-            rcw.itemAnimator?.changeDuration = 0
             val fromPosition = viewHolder.adapterPosition
             val toPosition = target.adapterPosition
 
@@ -52,12 +51,19 @@ class ListNoteAdapter constructor(
 
                 return true
             }
-            rcw.itemAnimator?.changeDuration = 250
             return false
         }
 
         override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
 
+        }
+        override fun clearView(
+            recyclerView: RecyclerView,
+            viewHolder: RecyclerView.ViewHolder
+        ) {
+            super.clearView(recyclerView, viewHolder)
+            // Reset the changeDuration when the item is no longer being dragged
+            rcw.itemAnimator?.changeDuration = 250
         }
 
     }

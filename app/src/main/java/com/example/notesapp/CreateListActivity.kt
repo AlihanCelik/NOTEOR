@@ -302,7 +302,7 @@ class CreateListActivity : AppCompatActivity(), CategoryAdapter.CategoryClickLis
                     initAdapter()
                 }
             }
-        }
+        }else{initAdapter()}
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             window.statusBarColor = backgroundBlue
         }
@@ -445,9 +445,8 @@ class CreateListActivity : AppCompatActivity(), CategoryAdapter.CategoryClickLis
             }
         }
         addItem_button.setOnClickListener {
-            val newItem = Item(isChecked = false, text = "",items_list.size)
-            listNoteAdapter.addItem(newItem)
-            initAdapter()
+
+            listNoteAdapter.addItem()
         }
 
         more.setOnClickListener {

@@ -16,6 +16,7 @@ import com.example.notesapp.R
 import com.example.notesapp.entities.Category
 import com.example.notesapp.entities.Item
 import kotlinx.android.synthetic.main.item_notelist.view.*
+import java.lang.Math.abs
 import java.util.*
 
 class ListNoteAdapter constructor(
@@ -36,6 +37,7 @@ class ListNoteAdapter constructor(
             viewHolder: RecyclerView.ViewHolder,
             target: RecyclerView.ViewHolder
         ): Boolean {
+            //rcw.itemAnimator?.changeDuration = 0
             val fromPosition = viewHolder.adapterPosition
             val toPosition = target.adapterPosition
 
@@ -43,23 +45,21 @@ class ListNoteAdapter constructor(
             if (fromPosition != RecyclerView.NO_POSITION && toPosition != RecyclerView.NO_POSITION
                 && fromPosition < items.size && toPosition < items.size
             ) {
-                Collections.swap(items, fromPosition, toPosition)
+                val movedItem = items[fromPosition]
+                items.removeAt(fromPosition)
+                items.add(toPosition, movedItem)
                 notifyItemMoved(fromPosition, toPosition)
+
                 return true
             }
+            //rcw.itemAnimator?.changeDuration = 250
             return false
         }
 
         override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-            // Swipe logic
+
         }
-        override fun clearView(
-            recyclerView: RecyclerView,
-            viewHolder: RecyclerView.ViewHolder
-        ) {
-            super.clearView(recyclerView, viewHolder)
-            rcw.requestFocus()
-        }
+
     }
     val itemTouchHelper = ItemTouchHelper(onItemMoveListener)
 
@@ -119,9 +119,11 @@ class ListNoteAdapter constructor(
         }
     }
 
-    fun addItem(newItem: Item) {
+    fun addItem() {
+        val newItem = Item(isChecked = false, text = "", items.size)
         items.add(newItem)
-        notifyDataSetChanged()
+        notifyItemInserted(items.size - 1)
+        rcw.scrollToPosition(items.size - 1)
     }
 
 

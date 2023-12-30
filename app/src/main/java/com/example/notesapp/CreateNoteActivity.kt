@@ -633,22 +633,7 @@ class CreateNoteActivity : AppCompatActivity(),CategoryAdapter.CategoryClickList
                 }
 
             }
-            bottomSheetView.findViewById<View>(R.id.image).setOnClickListener {
-                if (hasPermissions()) {
-                    val intent = Intent(Intent.ACTION_GET_CONTENT)
-                    intent.addCategory(Intent.CATEGORY_OPENABLE)
-                    intent.type = "image/*"
-                    intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
-                    startActivityForResult(
-                        Intent.createChooser(intent, "Select Image(s)"),
-                        PICK_IMAGES_CODE
-                    )
-                    bottomSheet.dismiss()
-                } else {
-                    requestPermissions()
-                }
 
-            }
             bottomSheetView.findViewById<View>(R.id.link).setOnClickListener {
                 if (!isFinishing) {
                     val view = View.inflate(this, R.layout.dialog_url, null)
@@ -993,7 +978,8 @@ class CreateNoteActivity : AppCompatActivity(),CategoryAdapter.CategoryClickList
             bottomSheet.setContentView(bottomSheetView)
             bottomSheet.show()
         }
-        pictures_layout.setOnClickListener {
+        rv_recyclerView.visibility=View.GONE
+        /*pictures_layout.setOnClickListener {
             if(picLay){
                 picLay=false
                 rv_recyclerView.visibility=View.GONE
@@ -1004,6 +990,7 @@ class CreateNoteActivity : AppCompatActivity(),CategoryAdapter.CategoryClickList
                 pictures_updown.setImageResource(R.drawable.uparrow)
             }
         }
+        */
         link_layout.setOnClickListener {
             if(linkLay==true){
                 linkLay=false
@@ -1221,7 +1208,7 @@ class CreateNoteActivity : AppCompatActivity(),CategoryAdapter.CategoryClickList
             }
         }
     }
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    /*override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
             if (data != null && data.clipData != null) {
 
@@ -1241,6 +1228,7 @@ class CreateNoteActivity : AppCompatActivity(),CategoryAdapter.CategoryClickList
                 }
             }
     }
+    */
     private fun initAdapter() {
         imageAdapter = ImageAdapter(this, items,layout_img_preview)
         val ll = GridLayoutManager(this, 2)

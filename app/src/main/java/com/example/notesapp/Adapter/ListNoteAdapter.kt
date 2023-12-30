@@ -40,7 +40,6 @@ class ListNoteAdapter constructor(
             val fromPosition = viewHolder.adapterPosition
             val toPosition = target.adapterPosition
 
-            // Check if positions are valid before swapping
             if (fromPosition != RecyclerView.NO_POSITION && toPosition != RecyclerView.NO_POSITION
                 && fromPosition < items.size && toPosition < items.size
             ) {

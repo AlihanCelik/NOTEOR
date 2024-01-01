@@ -206,27 +206,98 @@ class NotesAdapter(val frag:Int) :
                 dialog.dismiss()
             }
             view.share.setOnClickListener {
-                val shareIntent = Intent(Intent.ACTION_SEND)
-                shareIntent.type = "text/plain"
+                dialog.dismiss()
+                if(arrList[position].password.isNullOrEmpty()){
+                    val shareIntent = Intent(Intent.ACTION_SEND)
+                    shareIntent.type = "text/plain"
 
-                val currentListItem = arrList[position]
-                var text = "${currentListItem.title}\n${currentListItem.subTitle}\n"
+                    val currentListItem = arrList[position]
+                    var text = "${currentListItem.title}\n${currentListItem.subTitle}\n"
 
-                if (currentListItem.itemList.isNullOrEmpty()) {
-                    text += currentListItem.noteText
-                } else {
-                    text += currentListItem.itemList?.joinToString(separator = "\n") {
-                        if (it.isChecked) {
-                            "[✓] ${it.text}"
-                        } else {
-                            "[ ] ${it.text}"
+                    if (currentListItem.itemList.isNullOrEmpty()) {
+                        text += currentListItem.noteText
+                    } else {
+                        text += currentListItem.itemList?.joinToString(separator = "\n") {
+                            if (it.isChecked) {
+                                "[✓] ${it.text}"
+                            } else {
+                                "[   ] ${it.text}"
+                            }
                         }
+                    }
+                    shareIntent.putExtra(Intent.EXTRA_TEXT, text)
+                    val chooser = Intent.createChooser(shareIntent, "Share using")
+                    context.startActivity(chooser)
+                }else{
+                    val view4 = View.inflate(context, R.layout.enter_psw_dialog, null)
+                    val builder4 = AlertDialog.Builder(context)
+                    builder4.setView(view4)
+                    val dialog4 = builder4.create()
+                    dialog4.show()
+                    dialog4.window?.setBackgroundDrawableResource(android.R.color.transparent)
+                    view4.enter_passwordContainer.setHelperTextColor(
+                        ColorStateList.valueOf(
+                            ContextCompat.getColor(
+                                context,
+                                android.R.color.holo_green_dark
+                            )
+                        )
+                    )
+                    dialog4.setOnCancelListener {
+                        holder.itemView.item_bg.setBackgroundColor(Color.WHITE)
+                    }
+                    view4.enter_passwordContainer.helperText="Enter Password"
+                    view4.enter_okeylock.setOnClickListener {
+                        if(arrList[position].password==view4.enter_passwordEditText.text.toString()){
+                            view4.enter_passwordContainer.setHelperTextColor(
+                                ColorStateList.valueOf(
+                                    ContextCompat.getColor(
+                                        context,
+                                        android.R.color.holo_green_dark
+                                    )
+                                )
+                            )
+                            view4.enter_passwordContainer.helperText="Successful"
+                            dialog4.dismiss()
+                            val shareIntent = Intent(Intent.ACTION_SEND)
+                            shareIntent.type = "text/plain"
+
+                            val currentListItem = arrList[position]
+                            var text = "${currentListItem.title}\n${currentListItem.subTitle}\n"
+
+                            if (currentListItem.itemList.isNullOrEmpty()) {
+                                text += currentListItem.noteText
+                            } else {
+                                text += currentListItem.itemList?.joinToString(separator = "\n") {
+                                    if (it.isChecked) {
+                                        "[✓] ${it.text}"
+                                    } else {
+                                        "[   ] ${it.text}"
+                                    }
+                                }
+                            }
+
+                            shareIntent.putExtra(Intent.EXTRA_TEXT, text)
+                            val chooser = Intent.createChooser(shareIntent, "Share using")
+                            context.startActivity(chooser)
+
+                        }else{
+                            view4.enter_passwordContainer.helperText="Wrong Password"
+                            view4.enter_passwordContainer.setHelperTextColor(
+                                ColorStateList.valueOf(
+                                    ContextCompat.getColor(
+                                        context,
+                                        android.R.color.holo_red_dark
+                                    )
+                                )
+                            )
+
+
+                        }
+
                     }
                 }
 
-                shareIntent.putExtra(Intent.EXTRA_TEXT, text)
-                val chooser = Intent.createChooser(shareIntent, "Share using")
-                context.startActivity(chooser)
             }
             view.delete.setOnClickListener {
                 dialog.dismiss()

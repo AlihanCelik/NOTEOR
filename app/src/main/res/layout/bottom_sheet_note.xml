@@ -90,6 +90,7 @@
 
             </TextView>
         </LinearLayout>
+
         <!--<LinearLayout
             android:id="@+id/mic"
             android:layout_width="wrap_content"
@@ -224,6 +225,36 @@
 
             </TextView>
         </LinearLayout>
+        <LinearLayout
+            android:id="@+id/share_bs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp">
+
+            <ImageView
+                android:layout_width="29dp"
+                android:layout_height="29dp"
+                android:src="@drawable/share_bs"
+                android:layout_gravity="center"
+                app:tint="@color/AdvGrey2">
+
+            </ImageView>
+            <TextView
+                android:layout_marginTop="2dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Share"
+                android:textColor="@color/AdvGrey2"
+                android:textSize="10dp"
+                android:textStyle="bold">
+
+            </TextView>
+        </LinearLayout>
+
 
 
 

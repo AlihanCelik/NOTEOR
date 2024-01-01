@@ -929,6 +929,15 @@ class CreateNoteActivity : AppCompatActivity(),CategoryAdapter.CategoryClickList
                     }
                 }
             }
+            bottomSheetView.findViewById<View>(R.id.share_bs).setOnClickListener {
+                val shareIntent = Intent(Intent.ACTION_SEND)
+                shareIntent.type = "text/plain"
+                var text = "${notes_title.text}\n${notes_sub_title.text}\n${notes_desc.text}"
+
+                shareIntent.putExtra(Intent.EXTRA_TEXT, text)
+                val chooser = Intent.createChooser(shareIntent, "Share using")
+                startActivity(chooser)
+            }
             bottomSheetView.findViewById<View>(R.id.remainder).setOnClickListener {
                 if(reminder!=null){
                     reminder=null

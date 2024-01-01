@@ -49,6 +49,7 @@ import kotlinx.android.synthetic.main.activity_create_list.reminderlayout
 import kotlinx.android.synthetic.main.activity_create_list.saveButton
 import kotlinx.android.synthetic.main.activity_create_list.tvDateTime
 import kotlinx.android.synthetic.main.activity_create_list.tvReminderTime
+import kotlinx.android.synthetic.main.activity_create_note.*
 import kotlinx.android.synthetic.main.createactivty_permi_dialog.view.*
 import kotlinx.android.synthetic.main.delete_permi_dialog.view.*
 import kotlinx.android.synthetic.main.dialog_add_category.view.*
@@ -875,6 +876,23 @@ class CreateListActivity : AppCompatActivity(), CategoryAdapter.CategoryClickLis
                     }
                 }
             }
+            bottomSheetView.findViewById<View>(R.id.share_bs).setOnClickListener {
+                val shareIntent = Intent(Intent.ACTION_SEND)
+                shareIntent.type = "text/plain"
+                var text = "${notes_title.text}\n${notes_sub_title.text}\n"
+                var items_list2: MutableList<Item> = items_list.toMutableList()
+                items_list2.removeAll { it.text.isNullOrEmpty() }
+                text += items_list2.joinToString(separator = "\n") {
+                    if (it.isChecked) {
+                        "[✓] ${it.text}"
+                    } else {
+                        "[   ] ${it.text}"
+                    }
+                }
+                shareIntent.putExtra(Intent.EXTRA_TEXT, text)
+                val chooser = Intent.createChooser(shareIntent, "Share using")
+                startActivity(chooser)
+            }
             bottomSheetView.findViewById<View>(R.id.remainder).setOnClickListener {
                 if(reminder!=null){
                     reminder=null
@@ -939,13 +957,14 @@ class CreateListActivity : AppCompatActivity(), CategoryAdapter.CategoryClickLis
 
     }
     private fun saveNote() {
+        var items_list2: MutableList<Item> = items_list.toMutableList()
         if (notes_title.text.toString().isNullOrEmpty()) {
             Toast.makeText(this, "Note Title is Required", Toast.LENGTH_SHORT).show()
         } else if (notes_sub_title.text.toString().isNullOrEmpty()) {
             Toast.makeText(this, "Note Sub Title is Required", Toast.LENGTH_SHORT).show()
         } else {
-            // Filter out items with empty text from the list
-            items_list.removeAll { it.text.isNullOrEmpty() }
+
+            items_list2.removeAll { it.text.isNullOrEmpty() }
 
             if (items_list.isNullOrEmpty()) {
                 Toast.makeText(this, "List is Empty", Toast.LENGTH_SHORT).show()
@@ -961,7 +980,7 @@ class CreateListActivity : AppCompatActivity(), CategoryAdapter.CategoryClickLis
                             notes.dateTime = currentDate
                             notes.create_dateTime = notes.create_dateTime
                             notes.color = color
-                            notes.itemList = items_list
+                            notes.itemList = items_list2
                             notes.reminder = reminder
                             notes.noteCategoryId = categoryName
                             notes.imgPath = null
@@ -985,7 +1004,7 @@ class CreateListActivity : AppCompatActivity(), CategoryAdapter.CategoryClickLis
                             notes.dateTime = currentDate
                             notes.create_dateTime = currentDate
                             notes.color = color
-                            notes.itemList = items_list
+                            notes.itemList = items_list2
                             notes.reminder = reminder
                             notes.noteCategoryId = categoryName
                             notes.imgPath = null

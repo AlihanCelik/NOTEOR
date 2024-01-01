@@ -46,6 +46,8 @@ class ListNoteAdapter constructor(
                 Collections.swap(items, fromPosition, toPosition)
                 notifyItemMoved(fromPosition, toPosition)
 
+
+
                 return true
             }
             return false
@@ -61,6 +63,7 @@ class ListNoteAdapter constructor(
             super.clearView(recyclerView, viewHolder)
             // Reset the changeDuration when the item is no longer being dragged
             rcw.itemAnimator?.changeDuration = 250
+            notifyDataSetChanged()
         }
 
     }
@@ -118,6 +121,7 @@ class ListNoteAdapter constructor(
         holder.itemView.item_delete.setOnClickListener {
             items.removeAt(position)
             notifyDataSetChanged()
+            notifyItemRangeChanged(position, items.size)
 
         }
     }

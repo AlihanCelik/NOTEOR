@@ -43,9 +43,7 @@ class ListNoteAdapter constructor(
             if (fromPosition != RecyclerView.NO_POSITION && toPosition != RecyclerView.NO_POSITION
                 && fromPosition < items.size && toPosition < items.size
             ) {
-                val movedItem = items[fromPosition]
-                items.removeAt(fromPosition)
-                items.add(toPosition, movedItem)
+                Collections.swap(items, fromPosition, toPosition)
                 notifyItemMoved(fromPosition, toPosition)
 
                 return true

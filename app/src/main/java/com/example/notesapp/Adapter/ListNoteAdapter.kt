@@ -127,7 +127,7 @@ class ListNoteAdapter constructor(
     }
 
     fun addItem() {
-        val newItem = Item(isChecked = false, text = "", items.size)
+        val newItem = Item(isChecked = false, text = "")
         items.add(newItem)
         notifyItemInserted(items.size - 1)
         rcw.scrollToPosition(items.size - 1)

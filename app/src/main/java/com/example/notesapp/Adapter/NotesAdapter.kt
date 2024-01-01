@@ -209,8 +209,20 @@ class NotesAdapter(val frag:Int) :
                 val shareIntent = Intent(Intent.ACTION_SEND)
                 shareIntent.type = "text/plain"
 
-                val text = arrList[position].title + "\n" + arrList[position].subTitle + "\n" + arrList[position].noteText
+                val currentListItem = arrList[position]
+                var text = "${currentListItem.title}\n${currentListItem.subTitle}\n"
 
+                if (currentListItem.itemList.isNullOrEmpty()) {
+                    text += currentListItem.noteText
+                } else {
+                    text += currentListItem.itemList?.joinToString(separator = "\n") {
+                        if (it.isChecked) {
+                            "[✓] ${it.text}"
+                        } else {
+                            "[ ] ${it.text}"
+                        }
+                    }
+                }
 
                 shareIntent.putExtra(Intent.EXTRA_TEXT, text)
                 val chooser = Intent.createChooser(shareIntent, "Share using")

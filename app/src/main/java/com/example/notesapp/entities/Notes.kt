@@ -9,8 +9,7 @@ import java.nio.ByteOrder
 
 data class Item(
     var isChecked: Boolean,
-    var text: String,
-    var order: Int
+    var text: String
 ) : Serializable
 @Entity(tableName = "Notes")
 data class Notes(

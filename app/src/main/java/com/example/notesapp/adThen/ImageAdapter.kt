@@ -1,4 +1,4 @@
-package com.example.notesapp.Adapter
+package com.example.notesapp.adThen
 
 import android.content.Context
 import android.content.Intent
@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.notesapp.PicturesActivty
 import com.example.notesapp.R
 import kotlinx.android.synthetic.main.item_images.view.*
 

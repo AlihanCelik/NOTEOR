@@ -1,4 +1,4 @@
-package com.example.notesapp
+package com.example.notesapp.adThen
 
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -14,7 +14,7 @@ import android.view.View
 import android.widget.SeekBar
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
+import com.example.notesapp.R
 import kotlinx.android.synthetic.main.activity_voice.*
 import java.io.File
 import java.io.IOException

@@ -20,7 +20,7 @@
         android:theme="@style/Theme.NotesApp"
         tools:targetApi="31">
         <activity
-            android:name=".VoiceActivity"
+            android:name=".adThen.VoiceActivity"
             android:exported="false" />
         <activity
             android:name=".CreateListActivity"
@@ -38,7 +38,7 @@
             android:name=".TrashActivity"
             android:exported="false" />
         <activity
-            android:name=".PicturesActivty"
+            android:name=".adThen.PicturesActivty"
             android:exported="false" />
         <activity
             android:name=".FavoritesActivtity"

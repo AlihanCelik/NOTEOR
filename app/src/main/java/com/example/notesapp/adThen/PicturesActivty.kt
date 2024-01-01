@@ -1,9 +1,10 @@
-package com.example.notesapp
+package com.example.notesapp.adThen
 
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.bumptech.glide.Glide
+import com.example.notesapp.R
 import com.github.chrisbanes.photoview.PhotoView
 import kotlinx.android.synthetic.main.activity_create_note.*
 

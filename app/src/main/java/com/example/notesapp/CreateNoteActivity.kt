@@ -6,13 +6,11 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
 import android.graphics.Paint
-import android.graphics.Typeface
 
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.text.*
-import android.text.style.*
 import android.util.Log
 import android.view.*
 import android.widget.ImageView
@@ -27,7 +25,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.notesapp.Adapter.CategoryAdapter
-import com.example.notesapp.Adapter.ImageAdapter
+import com.example.notesapp.adThen.ImageAdapter
 import com.example.notesapp.Adapter.LinksAdapter
 import com.example.notesapp.database.CategoryDatabase
 import com.example.notesapp.database.NotesDatabase

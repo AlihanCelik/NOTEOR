@@ -13,10 +13,7 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowInsetsController
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
@@ -107,6 +104,7 @@ class CreateListActivity : AppCompatActivity(), CategoryAdapter.CategoryClickLis
         }
 
         if(noteId!=-1){
+
             GlobalScope.launch(Dispatchers.Main){
                 let {
                     var notes = NotesDatabase.getDatabase(this@CreateListActivity).noteDao().getSpecificNote(noteId)

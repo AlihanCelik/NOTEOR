@@ -181,10 +181,12 @@ class MainActivity : AppCompatActivity() {
         bottomSheetView.findViewById<LinearLayout>(R.id.writing_create).setOnClickListener {
             val intent=Intent(applicationContext,CreateNoteActivity::class.java)
             startActivityForResult(intent, CREATE_NOTE_REQUEST)
+            bottomSheet.dismiss()
         }
         bottomSheetView.findViewById<LinearLayout>(R.id.list_create).setOnClickListener {
             val intent=Intent(applicationContext,CreateListActivity::class.java)
             startActivityForResult(intent, CREATE_NOTE_REQUEST)
+            bottomSheet.dismiss()
         }
         bottomSheet.setContentView(bottomSheetView)
         if (!isFinishing) {

@@ -13,9 +13,7 @@ import android.os.Bundle
 import android.text.*
 import android.util.Log
 import android.view.*
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -46,7 +44,6 @@ import java.util.*
 
 import kotlinx.coroutines.suspendCancellableCoroutine
 
-import android.widget.TextView
 import androidx.lifecycle.lifecycleScope
 import com.example.notesapp.database.TrashDatabase
 import com.example.notesapp.entities.Trash
@@ -121,6 +118,15 @@ class CreateNoteActivity : AppCompatActivity(),CategoryAdapter.CategoryClickList
 
 
         if(noteId!=-1){
+            editNote.visibility=View.VISIBLE
+            more.visibility=View.GONE
+            category_updownarrow.visibility=View.GONE
+            favButton.visibility=View.GONE
+            saveButton.visibility=View.GONE
+            notes_desc.isEnabled = false
+            notes_title.isEnabled=false
+            notes_sub_title.isEnabled=false
+            category_button.isEnabled=false
             GlobalScope.launch(Dispatchers.Main){
                 let {
                     var notes = NotesDatabase.getDatabase(this@CreateNoteActivity).noteDao().getSpecificNote(noteId)
@@ -339,6 +345,17 @@ class CreateNoteActivity : AppCompatActivity(),CategoryAdapter.CategoryClickList
                 WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS,
                 WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS
             )
+        }
+        editNote.setOnClickListener {
+            notes_desc.isEnabled = true
+            notes_title.isEnabled=true
+            notes_sub_title.isEnabled=true
+            category_button.isEnabled=true
+            editNote.visibility=View.GONE
+            more.visibility=View.VISIBLE
+            category_updownarrow.visibility=View.VISIBLE
+            favButton.visibility=View.VISIBLE
+            saveButton.visibility=View.VISIBLE
         }
 
 

@@ -35,6 +35,17 @@
         android:layout_height="match_parent"
         android:layout_weight="1" />
         <ImageView
+            android:id="@+id/editNote"
+            android:layout_width="27dp"
+            android:layout_height="27dp"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            android:layout_marginRight="25dp"
+            android:src="@drawable/editnote">
+
+        </ImageView>
+
+        <ImageView
             android:id="@+id/favButton"
             android:layout_width="27dp"
             android:layout_height="27dp"

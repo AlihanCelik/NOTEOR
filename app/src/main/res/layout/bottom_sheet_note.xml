@@ -90,6 +90,34 @@
 
             </TextView>
         </LinearLayout>
+        <!--<LinearLayout
+            android:id="@+id/mic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp">
+
+            <ImageView
+                android:layout_width="29dp"
+                android:layout_height="29dp"
+                android:layout_gravity="center"
+                android:src="@drawable/mic">
+
+            </ImageView>
+            <TextView
+                android:layout_marginTop="2dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add Voice"
+                android:textColor="@color/AdvGrey2"
+                android:textSize="10dp"
+                android:textStyle="bold">
+
+            </TextView>
+        </LinearLayout>-->
 
 
         <Space

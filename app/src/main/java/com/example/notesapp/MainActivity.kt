@@ -187,7 +187,9 @@ class MainActivity : AppCompatActivity() {
             startActivityForResult(intent, CREATE_NOTE_REQUEST)
         }
         bottomSheet.setContentView(bottomSheetView)
-        bottomSheet.show()
+        if (!isFinishing) {
+            bottomSheet.show()
+        }
 
 
     }

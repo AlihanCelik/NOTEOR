@@ -13,6 +13,7 @@ import android.os.Build
 import android.os.Bundle
 import android.text.*
 import android.text.style.*
+import android.util.Log
 import android.view.*
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -48,6 +49,7 @@ import java.util.*
 import kotlinx.coroutines.suspendCancellableCoroutine
 
 import android.widget.TextView
+import androidx.lifecycle.lifecycleScope
 import com.example.notesapp.database.TrashDatabase
 import com.example.notesapp.entities.Trash
 import kotlinx.android.synthetic.main.delete_permi_dialog.view.*
@@ -656,6 +658,12 @@ class CreateNoteActivity : AppCompatActivity(),CategoryAdapter.CategoryClickList
                 bottomSheet.dismiss()
 
             }
+            /*
+            bottomSheetView.findViewById<View>(R.id.mic).setOnClickListener {
+                val intent=Intent(applicationContext,VoiceActivity::class.java)
+                startActivity(intent)
+            }
+             */
 
             bottomSheetView.findViewById<View>(R.id.locked).setOnClickListener {
                 if (!isFinishing) {
@@ -1009,8 +1017,8 @@ class CreateNoteActivity : AppCompatActivity(),CategoryAdapter.CategoryClickList
 
 
     override fun onBackPressed() {
-
-        GlobalScope.launch(Dispatchers.Main) {
+        Log.d("CreateNoteActivity", "onBackPressed() called")
+       lifecycleScope.launch(Dispatchers.Main) {
             val shouldExit = showExitDialog()
             if (shouldExit) {
                 setResult(Activity.RESULT_OK)

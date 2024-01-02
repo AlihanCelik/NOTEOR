@@ -308,6 +308,62 @@
                 android:layout_marginLeft="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="Default"
+                android:textColor="@color/grey">
+
+            </TextView>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_margin="5dp"
+                android:background="#2794959A" />
+            <LinearLayout
+                android:id="@+id/default_bg"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="4dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:background="@drawable/background_font"
+                android:orientation="horizontal">
+                <ImageView
+                    android:id="@+id/bg_color"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:src="@drawable/moonblue" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="25dp"
+                    android:textColor="@color/AdvGrey2"
+                    android:textStyle="bold"
+                    android:textSize="15dp"
+                    android:text="Default Background Color"
+                    ></TextView>
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+                <ImageView
+                    android:id="@+id/updownarrow"
+                    android:layout_width="8dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/arrowdown"
+                    app:tint="@color/grey2"></ImageView>
+
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="Report"
                 android:textColor="@color/grey">
 
@@ -364,7 +420,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
-                android:layout_marginBottom="4dp"
+                android:layout_marginBottom="100dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"

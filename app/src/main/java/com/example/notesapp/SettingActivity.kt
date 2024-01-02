@@ -11,6 +11,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowInsetsController
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.notesapp.database.NotesDatabase
@@ -24,12 +25,15 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class SettingActivity : AppCompatActivity() {
+    var bgColor="blue"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_setting)
          backButton.setOnClickListener {
              finish()
          }
+        bgColor = getSelectedColorFromSharedPreferences()
+        setInitialBackgroundColor(bgColor)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             window.statusBarColor = Color.WHITE
         }
@@ -66,6 +70,66 @@ class SettingActivity : AppCompatActivity() {
             shareIntent.putExtra(Intent.EXTRA_TEXT, url)
             val chooser = Intent.createChooser(shareIntent, "Share using")
             startActivity(chooser)
+        }
+        default_bg.setOnClickListener {
+            updownarrow.setImageResource(R.drawable.uparrow)
+            val bottomSheet =
+                BottomSheetDialog(this@SettingActivity, R.style.BottomSheetDialogTheme)
+            val bottomSheetView = LayoutInflater.from(applicationContext).inflate(
+                R.layout.bottom_sheet_bg_color,
+                findViewById(R.id.bottomSheetReport)
+            ) as ConstraintLayout
+            bottomSheetView.findViewById<ImageView>(R.id.blue).setOnClickListener {
+                bg_color.setImageResource(R.drawable.moonblue)
+                bgColor="blue"
+                saveColorToSharedPreferences(bgColor)
+                bottomSheet.dismiss()
+                updownarrow.setImageResource(R.drawable.arrowdown)
+            }
+            bottomSheetView.findViewById<ImageView>(R.id.pink).setOnClickListener {
+                bg_color.setImageResource(R.drawable.moonpink)
+                bgColor="pink"
+                saveColorToSharedPreferences(bgColor)
+                bottomSheet.dismiss()
+                updownarrow.setImageResource(R.drawable.arrowdown)
+            }
+            bottomSheetView.findViewById<ImageView>(R.id.purple).setOnClickListener {
+                bg_color.setImageResource(R.drawable.moonpurple)
+                bgColor="purple"
+                saveColorToSharedPreferences(bgColor)
+                bottomSheet.dismiss()
+                updownarrow.setImageResource(R.drawable.arrowdown)
+            }
+            bottomSheetView.findViewById<ImageView>(R.id.yellow).setOnClickListener {
+                bg_color.setImageResource(R.drawable.moonyellow)
+                bgColor="yellow"
+                saveColorToSharedPreferences(bgColor)
+                bottomSheet.dismiss()
+                updownarrow.setImageResource(R.drawable.arrowdown)
+            }
+            bottomSheetView.findViewById<ImageView>(R.id.red).setOnClickListener {
+                bg_color.setImageResource(R.drawable.moonred)
+                bgColor="red"
+                saveColorToSharedPreferences(bgColor)
+                bottomSheet.dismiss()
+                updownarrow.setImageResource(R.drawable.arrowdown)
+            }
+            bottomSheetView.findViewById<ImageView>(R.id.orange).setOnClickListener {
+                bg_color.setImageResource(R.drawable.moonorange)
+                bgColor="orange"
+                saveColorToSharedPreferences(bgColor)
+                bottomSheet.dismiss()
+                updownarrow.setImageResource(R.drawable.arrowdown)
+            }
+            bottomSheetView.findViewById<ImageView>(R.id.green).setOnClickListener {
+                bg_color.setImageResource(R.drawable.moongreen)
+                bgColor="green"
+                saveColorToSharedPreferences(bgColor)
+                bottomSheet.dismiss()
+                updownarrow.setImageResource(R.drawable.arrowdown)
+            }
+            bottomSheet.setContentView(bottomSheetView)
+            bottomSheet.show()
         }
         report.setOnClickListener {
             val bottomSheet =
@@ -128,5 +192,28 @@ class SettingActivity : AppCompatActivity() {
             e.printStackTrace()
         }
         return "N/A"
+    }
+    private fun saveColorToSharedPreferences(color: String) {
+        val sharedPreferences = getSharedPreferences("NoteorPrefs", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.putString("selectedColor", color)
+        editor.apply()
+    }
+    private fun setInitialBackgroundColor(color: String) {
+        when (color) {
+            "blue" -> bg_color.setImageResource(R.drawable.moonblue)
+            "pink" -> bg_color.setImageResource(R.drawable.moonpink)
+            "purple" -> bg_color.setImageResource(R.drawable.moonpurple)
+            "yellow" -> bg_color.setImageResource(R.drawable.moongreen)
+            "red" -> bg_color.setImageResource(R.drawable.moonred)
+            "orange" -> bg_color.setImageResource(R.drawable.moonorange)
+            "green" -> bg_color.setImageResource(R.drawable.moongreen)
+            // Add more cases if needed
+            else -> bg_color.setImageResource(R.drawable.moonblue) // Default to blue if unknown color
+        }
+    }
+    private fun getSelectedColorFromSharedPreferences(): String {
+        val sharedPreferences = getSharedPreferences("NoteorPrefs", Context.MODE_PRIVATE)
+        return sharedPreferences.getString("selectedColor", "blue") ?: "blue"
     }
 }

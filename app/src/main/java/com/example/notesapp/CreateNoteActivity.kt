@@ -47,6 +47,7 @@ import kotlinx.coroutines.suspendCancellableCoroutine
 import androidx.lifecycle.lifecycleScope
 import com.example.notesapp.database.TrashDatabase
 import com.example.notesapp.entities.Trash
+import kotlinx.android.synthetic.main.bottom_sheet_note.*
 import kotlinx.android.synthetic.main.delete_permi_dialog.view.*
 
 
@@ -97,6 +98,8 @@ class CreateNoteActivity : AppCompatActivity(),CategoryAdapter.CategoryClickList
         val backgroundPink=resources.getColor(R.color.background_pink)
         val backgroundPurple=resources.getColor(R.color.background_purple)
         val backgroundOrange=resources.getColor(R.color.background_orange)
+        val sharedPreferences = getSharedPreferences("NoteorPrefs", Context.MODE_PRIVATE)
+        color = sharedPreferences.getString("selectedColor", "blue") ?: "blue"
         currentDate=sdf.format(Date())
         createNotificationChannel()
         super.onCreate(savedInstanceState)
@@ -113,6 +116,36 @@ class CreateNoteActivity : AppCompatActivity(),CategoryAdapter.CategoryClickList
 
         noteId = intent.getIntExtra("itemid",-1)
         tvDateTime.text=currentDate
+
+        when (color) {
+            "blue" -> {
+                setThemeColors(moonBlue,backgroundBlue)
+            }
+            "pink" -> {
+                setThemeColors(moonPink,backgroundPink)
+
+            }
+            "purple" -> {
+                setThemeColors(moonPurple,backgroundPurple)
+
+            }
+            "yellow" -> {
+                setThemeColors(moonYellow,backgroundYellow)
+
+            }
+            "green" -> {
+                setThemeColors(moonGreen,backgroundGreen)
+
+            }
+            "red" -> {
+                setThemeColors(moonRed,backgroundRed)
+
+            }
+            "orange" -> {
+                setThemeColors(moonOrange,backgroundOrange)
+            }
+
+        }
 
 
 
@@ -187,165 +220,41 @@ class CreateNoteActivity : AppCompatActivity(),CategoryAdapter.CategoryClickList
                     notes_desc.setText(notes.noteText)
                     tvDateTime.text=notes.dateTime
 
-
-                    when (notes.color) {
-                        "blue" -> {
-                            color = "blue"
-                            colorView.setBackgroundColor(moonBlue)
-                            createNote.setBackgroundColor(backgroundBlue)
-
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                                window.statusBarColor = backgroundBlue
-                            }
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                                window.navigationBarColor = backgroundBlue
-                            }
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                                val controller = window.insetsController
-                                controller?.setSystemBarsAppearance(
-                                    WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS,
-                                    WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS
-                                )
-                            }
-                        }
-                        "pink" -> {
-                            color = "pink"
-                            colorView.setBackgroundColor(moonPink)
-                            createNote.setBackgroundColor(backgroundPink)
-
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                                window.statusBarColor = backgroundPink
-                            }
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                                window.navigationBarColor = backgroundPink
-                            }
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                                val controller = window.insetsController
-                                controller?.setSystemBarsAppearance(
-                                    WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS,
-                                    WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS
-                                )
-                            }
-
-                        }
-                        "purple" -> {
-                            color = "purple"
-                            colorView.setBackgroundColor(moonPurple)
-                            createNote.setBackgroundColor(backgroundPurple)
-
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                                window.statusBarColor = backgroundPurple
-                            }
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                                window.navigationBarColor = backgroundPurple
-                            }
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                                val controller = window.insetsController
-                                controller?.setSystemBarsAppearance(
-                                    WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS,
-                                    WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS
-                                )
-                            }
-
-                        }
-                        "yellow" -> {
-                            color = "yellow"
-                            colorView.setBackgroundColor(moonYellow)
-                            createNote.setBackgroundColor(backgroundYellow)
-
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                                window.statusBarColor = backgroundYellow
-                            }
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                                window.navigationBarColor = backgroundYellow
-                            }
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                                val controller = window.insetsController
-                                controller?.setSystemBarsAppearance(
-                                    WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS,
-                                    WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS
-                                )
-                            }
-
-                        }
-                        "green" -> {
-                            color = "green"
-                            colorView.setBackgroundColor(moonGreen)
-                            createNote.setBackgroundColor(backgroundGreen)
-
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                                window.statusBarColor = backgroundGreen
-                            }
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                                window.navigationBarColor = backgroundGreen
-                            }
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                                val controller = window.insetsController
-                                controller?.setSystemBarsAppearance(
-                                    WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS,
-                                    WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS
-                                )
-                            }
-
-                        }
-                        "red" -> {
-                            color = "red"
-                            colorView.setBackgroundColor(moonRed)
-                            createNote.setBackgroundColor(backgroundRed)
-
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                                window.statusBarColor = backgroundRed
-                            }
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                                window.navigationBarColor = backgroundRed
-                            }
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                                val controller = window.insetsController
-                                controller?.setSystemBarsAppearance(
-                                    WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS,
-                                    WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS
-                                )
-                            }
-
-                        }
-                        "orange" -> {
-                            color = "orange"
-                            colorView.setBackgroundColor(moonOrange)
-                            createNote.setBackgroundColor(backgroundOrange)
-
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                                window.statusBarColor = backgroundOrange
-                            }
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                                window.navigationBarColor = backgroundOrange
-                            }
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                                val controller = window.insetsController
-                                controller?.setSystemBarsAppearance(
-                                    WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS,
-                                    WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS
-                                )
-                            }
-                        }
+                    color=notes.color.toString()
+                    when (color) {
+                    "blue" -> {
+                        setThemeColors(moonBlue,backgroundBlue)
+                    }
+                    "pink" -> {
+                        setThemeColors(moonPink,backgroundPink)
 
                     }
+                    "purple" -> {
+                        setThemeColors(moonPurple,backgroundPurple)
+
+                    }
+                    "yellow" -> {
+                        setThemeColors(moonYellow,backgroundYellow)
+
+                    }
+                    "green" -> {
+                        setThemeColors(moonGreen,backgroundGreen)
+
+                    }
+                    "red" -> {
+                        setThemeColors(moonRed,backgroundRed)
+
+                    }
+                    "orange" -> {
+                        setThemeColors(moonOrange,backgroundOrange)
+                    }
+
+                }
                     initAdapter()
                 }
             }
         }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            window.statusBarColor = backgroundBlue
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            window.navigationBarColor = backgroundBlue
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            val controller = window.insetsController
-            controller?.setSystemBarsAppearance(
-                WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS,
-                WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS
-            )
-        }
+
         editNote.setOnClickListener {
             notes_desc.isEnabled = true
             notes_title.isEnabled=true
@@ -1300,6 +1209,24 @@ class CreateNoteActivity : AppCompatActivity(),CategoryAdapter.CategoryClickList
         category_name.text=category.name_category
         categoryName= category.id_category!!
     }
+    private fun setThemeColors(buttonColor: Int, backgroundColor: Int) {
+        colorView.setBackgroundColor(buttonColor)
+        createNote.setBackgroundColor(backgroundColor)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.statusBarColor = backgroundColor
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            window.navigationBarColor = backgroundColor
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            val controller = window.insetsController
+            controller?.setSystemBarsAppearance(
+                WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS,
+                WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS
+            )
+        }
+    }
+
 
 }
 

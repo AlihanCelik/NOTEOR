@@ -13,18 +13,20 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.notesapp.R
-import com.example.notesapp.entities.Category
 import com.example.notesapp.entities.Item
-import kotlinx.android.synthetic.main.fragment_note.view.*
 import kotlinx.android.synthetic.main.item_notelist.view.*
-import java.lang.Math.abs
 import java.util.*
 
 class ListNoteAdapter constructor(
    var items: MutableList<Item>,
    var rcw:RecyclerView
 ) : RecyclerView.Adapter<ListNoteAdapter.ViewHolder>() {
+
     var isItemMoveEnabled = true
+        set(value) {
+            field = value
+            notifyDataSetChanged() // Ensure views are updated when isItemMoveEnabled changes
+        }
     fun updateData(newList: List<Item>) {
         items.clear()
         items.addAll(newList)
@@ -156,5 +158,6 @@ class ListNoteAdapter constructor(
     override fun getItemCount(): Int {
         return items.size
     }
+
 
 }

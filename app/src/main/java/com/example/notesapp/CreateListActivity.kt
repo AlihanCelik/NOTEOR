@@ -1035,11 +1035,15 @@ class CreateListActivity : AppCompatActivity(), CategoryAdapter.CategoryClickLis
     private fun disableDragAndDrop() {
         // Set isItemMoveEnabled to false to disable drag-and-drop
         listNoteAdapter.isItemMoveEnabled = false
+        println("shbkhvajhbvjkhbsjkh "+listNoteAdapter.isItemMoveEnabled)
+        listNoteAdapter.notifyDataSetChanged()
     }
 
     private fun enableDragAndDrop() {
         // Set isItemMoveEnabled to true to enable drag-and-drop
         listNoteAdapter.isItemMoveEnabled = true
+        println("shbkhvajhbvjkhbsjkh "+listNoteAdapter.isItemMoveEnabled)
+        listNoteAdapter.notifyDataSetChanged()
     }
 
 }

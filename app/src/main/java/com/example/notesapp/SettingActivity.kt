@@ -85,42 +85,49 @@ class SettingActivity : AppCompatActivity() {
                 bg_color.setImageResource(R.drawable.moonblue)
                 bgColor="blue"
                 saveColorToSharedPreferences(bgColor)
+                updownarrow.setImageResource(R.drawable.arrowdown)
                 bottomSheet.dismiss()
             }
             bottomSheetView.findViewById<ImageView>(R.id.pink).setOnClickListener {
                 bg_color.setImageResource(R.drawable.moonpink)
                 bgColor="pink"
                 saveColorToSharedPreferences(bgColor)
+                updownarrow.setImageResource(R.drawable.arrowdown)
                 bottomSheet.dismiss()
             }
             bottomSheetView.findViewById<ImageView>(R.id.purple).setOnClickListener {
                 bg_color.setImageResource(R.drawable.moonpurple)
                 bgColor="purple"
                 saveColorToSharedPreferences(bgColor)
+                updownarrow.setImageResource(R.drawable.arrowdown)
                 bottomSheet.dismiss()
             }
             bottomSheetView.findViewById<ImageView>(R.id.yellow).setOnClickListener {
                 bg_color.setImageResource(R.drawable.moonyellow)
                 bgColor="yellow"
                 saveColorToSharedPreferences(bgColor)
+                updownarrow.setImageResource(R.drawable.arrowdown)
                 bottomSheet.dismiss()
             }
             bottomSheetView.findViewById<ImageView>(R.id.red).setOnClickListener {
                 bg_color.setImageResource(R.drawable.moonred)
                 bgColor="red"
                 saveColorToSharedPreferences(bgColor)
+                updownarrow.setImageResource(R.drawable.arrowdown)
                 bottomSheet.dismiss()
             }
             bottomSheetView.findViewById<ImageView>(R.id.orange).setOnClickListener {
                 bg_color.setImageResource(R.drawable.moonorange)
                 bgColor="orange"
                 saveColorToSharedPreferences(bgColor)
+                updownarrow.setImageResource(R.drawable.arrowdown)
                 bottomSheet.dismiss()
             }
             bottomSheetView.findViewById<ImageView>(R.id.green).setOnClickListener {
                 bg_color.setImageResource(R.drawable.moongreen)
                 bgColor="green"
                 saveColorToSharedPreferences(bgColor)
+                updownarrow.setImageResource(R.drawable.arrowdown)
                 bottomSheet.dismiss()
             }
             bottomSheet.setOnCancelListener {

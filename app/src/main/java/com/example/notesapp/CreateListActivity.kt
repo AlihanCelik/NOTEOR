@@ -104,6 +104,7 @@ class CreateListActivity : AppCompatActivity(), CategoryAdapter.CategoryClickLis
             saveNote()
         }
         editNote.setOnClickListener {
+            enableDragAndDrop()
             addItem_button.visibility=View.VISIBLE
             notes_title.isEnabled=true
             notes_sub_title.isEnabled=true
@@ -145,6 +146,7 @@ class CreateListActivity : AppCompatActivity(), CategoryAdapter.CategoryClickLis
         }
 
         if(noteId!=-1){
+            disableDragAndDrop()
             editNote.visibility=View.VISIBLE
             more.visibility=View.GONE
             category_updownarrow.visibility=View.GONE
@@ -1029,6 +1031,15 @@ class CreateListActivity : AppCompatActivity(), CategoryAdapter.CategoryClickLis
                 WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS
             )
         }
+    }
+    private fun disableDragAndDrop() {
+        // Set isItemMoveEnabled to false to disable drag-and-drop
+        listNoteAdapter.isItemMoveEnabled = false
+    }
+
+    private fun enableDragAndDrop() {
+        // Set isItemMoveEnabled to true to enable drag-and-drop
+        listNoteAdapter.isItemMoveEnabled = true
     }
 
 }

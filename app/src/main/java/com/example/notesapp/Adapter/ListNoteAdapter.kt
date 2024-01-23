@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.notesapp.R
 import com.example.notesapp.entities.Category
 import com.example.notesapp.entities.Item
+import kotlinx.android.synthetic.main.fragment_note.view.*
 import kotlinx.android.synthetic.main.item_notelist.view.*
 import java.lang.Math.abs
 import java.util.*
@@ -23,7 +24,7 @@ class ListNoteAdapter constructor(
    var items: MutableList<Item>,
    var rcw:RecyclerView
 ) : RecyclerView.Adapter<ListNoteAdapter.ViewHolder>() {
-
+    var isItemMoveEnabled = true
     fun updateData(newList: List<Item>) {
         items.clear()
         items.addAll(newList)
@@ -37,19 +38,22 @@ class ListNoteAdapter constructor(
             viewHolder: RecyclerView.ViewHolder,
             target: RecyclerView.ViewHolder
         ): Boolean {
-            val fromPosition = viewHolder.adapterPosition
-            val toPosition = target.adapterPosition
+            if (isItemMoveEnabled) {
+                val fromPosition = viewHolder.adapterPosition
+                val toPosition = target.adapterPosition
 
-            if (fromPosition != RecyclerView.NO_POSITION && toPosition != RecyclerView.NO_POSITION
-                && fromPosition < items.size && toPosition < items.size
-            ) {
-                Collections.swap(items, fromPosition, toPosition)
-                notifyItemMoved(fromPosition, toPosition)
+                if (fromPosition != RecyclerView.NO_POSITION && toPosition != RecyclerView.NO_POSITION
+                    && fromPosition < items.size && toPosition < items.size
+                ) {
+                    Collections.swap(items, fromPosition, toPosition)
+                    notifyItemMoved(fromPosition, toPosition)
 
 
 
-                return true
+                    return true
+                }
             }
+
             return false
         }
 
@@ -91,9 +95,13 @@ class ListNoteAdapter constructor(
                 override fun afterTextChanged(s: Editable?) {
                 }
             })
-            checkBoxItem.setOnCheckedChangeListener { _, isChecked ->
-                items[adapterPosition].isChecked = isChecked
+            if (isItemMoveEnabled) {
+                checkBoxItem.setOnCheckedChangeListener { _, isChecked ->
+                    items[adapterPosition].isChecked = isChecked
+                }
             }
+
+
             itemSortImageView.setOnTouchListener { _, event ->
                 when (event.action) {
                     MotionEvent.ACTION_DOWN -> {
@@ -116,6 +124,15 @@ class ListNoteAdapter constructor(
 
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        if (isItemMoveEnabled) {
+            holder.itemView.item_delete.visibility=View.VISIBLE
+            holder.itemView.EditText_item.isEnabled=true
+            holder.itemView.item_sort.visibility=View.VISIBLE
+        }else{
+            holder.itemView.item_delete.visibility=View.GONE
+            holder.itemView.EditText_item.isEnabled=false
+            holder.itemView.item_sort.visibility=View.GONE
+        }
         holder.itemView.checkBox_item.isChecked=items[position].isChecked
         holder.itemView.EditText_item.setText(items[position].text)
         holder.itemView.item_delete.setOnClickListener {
@@ -139,4 +156,5 @@ class ListNoteAdapter constructor(
     override fun getItemCount(): Int {
         return items.size
     }
+
 }

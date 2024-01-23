@@ -1,5 +1,7 @@
 package com.example.notesapp
 
+import android.app.Activity
+import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -18,7 +20,9 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class FavoritesActivtity : AppCompatActivity() {
+    private val CREATE_NOTE_REQUEST = 1
     var arrNotes = ArrayList<Notes>()
+    var FavArr = ArrayList<Notes>()
     var notesAdapter: NotesAdapter = NotesAdapter(0)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,7 +50,7 @@ class FavoritesActivtity : AppCompatActivity() {
                 var notes = NotesDatabase.getDatabase(this@FavoritesActivtity).noteDao().getAllNotes()
                 notesAdapter!!.setData(notes)
                 arrNotes = notes as ArrayList<Notes>
-                var FavArr = ArrayList<Notes>()
+
                 for (arr in arrNotes){
                     if(arr.favorite==true){
                         FavArr.add(arr)
@@ -84,4 +88,5 @@ class FavoritesActivtity : AppCompatActivity() {
         })
 
     }
+
 }

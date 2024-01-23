@@ -18,7 +18,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.notesapp.Adapter.CategoryAdapter
@@ -38,6 +37,7 @@ import kotlinx.android.synthetic.main.activity_create_list.category_name
 import kotlinx.android.synthetic.main.activity_create_list.category_updownarrow
 import kotlinx.android.synthetic.main.activity_create_list.colorView
 import kotlinx.android.synthetic.main.activity_create_list.createNote
+import kotlinx.android.synthetic.main.activity_create_list.editNote
 import kotlinx.android.synthetic.main.activity_create_list.favButton
 import kotlinx.android.synthetic.main.activity_create_list.more
 import kotlinx.android.synthetic.main.activity_create_list.notes_sub_title
@@ -46,7 +46,6 @@ import kotlinx.android.synthetic.main.activity_create_list.reminderlayout
 import kotlinx.android.synthetic.main.activity_create_list.saveButton
 import kotlinx.android.synthetic.main.activity_create_list.tvDateTime
 import kotlinx.android.synthetic.main.activity_create_list.tvReminderTime
-import kotlinx.android.synthetic.main.activity_create_note.*
 import kotlinx.android.synthetic.main.createactivty_permi_dialog.view.*
 import kotlinx.android.synthetic.main.delete_permi_dialog.view.*
 import kotlinx.android.synthetic.main.dialog_add_category.view.*
@@ -104,6 +103,17 @@ class CreateListActivity : AppCompatActivity(), CategoryAdapter.CategoryClickLis
         saveButton.setOnClickListener {
             saveNote()
         }
+        editNote.setOnClickListener {
+            addItem_button.visibility=View.VISIBLE
+            notes_title.isEnabled=true
+            notes_sub_title.isEnabled=true
+            category_button.isEnabled=true
+            editNote.visibility=View.GONE
+            more.visibility=View.VISIBLE
+            category_updownarrow.visibility=View.VISIBLE
+            favButton.visibility=View.VISIBLE
+            saveButton.visibility=View.VISIBLE
+        }
         when (color) {
             "blue" -> {
                 setThemeColors(moonBlue,backgroundBlue)
@@ -135,7 +145,15 @@ class CreateListActivity : AppCompatActivity(), CategoryAdapter.CategoryClickLis
         }
 
         if(noteId!=-1){
-
+            editNote.visibility=View.VISIBLE
+            more.visibility=View.GONE
+            category_updownarrow.visibility=View.GONE
+            favButton.visibility=View.GONE
+            saveButton.visibility=View.GONE
+            notes_title.isEnabled=false
+            notes_sub_title.isEnabled=false
+            category_button.isEnabled=false
+            addItem_button.visibility=View.GONE
             GlobalScope.launch(Dispatchers.Main){
                 let {
                     var notes = NotesDatabase.getDatabase(this@CreateListActivity).noteDao().getSpecificNote(noteId)

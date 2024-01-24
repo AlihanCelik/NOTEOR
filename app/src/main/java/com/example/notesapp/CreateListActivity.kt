@@ -105,6 +105,7 @@ class CreateListActivity : AppCompatActivity(), CategoryAdapter.CategoryClickLis
         }
         editNote.setOnClickListener {
             enableDragAndDrop()
+            readNote.visibility=View.VISIBLE
             addItem_button.visibility=View.VISIBLE
             notes_title.isEnabled=true
             notes_sub_title.isEnabled=true
@@ -147,6 +148,8 @@ class CreateListActivity : AppCompatActivity(), CategoryAdapter.CategoryClickLis
 
         if(noteId!=-1){
             disableDragAndDrop()
+            readNote.visibility=View.GONE
+            listNoteAdapter.notifyDataSetChanged()
             editNote.visibility=View.VISIBLE
             more.visibility=View.GONE
             category_updownarrow.visibility=View.GONE
@@ -1034,14 +1037,14 @@ class CreateListActivity : AppCompatActivity(), CategoryAdapter.CategoryClickLis
     }
     private fun disableDragAndDrop() {
         // Set isItemMoveEnabled to false to disable drag-and-drop
-        listNoteAdapter.isItemMoveEnabled = false
+        listNoteAdapter.disableItemMove()
         println("shbkhvajhbvjkhbsjkh "+listNoteAdapter.isItemMoveEnabled)
         listNoteAdapter.notifyDataSetChanged()
     }
 
     private fun enableDragAndDrop() {
         // Set isItemMoveEnabled to true to enable drag-and-drop
-        listNoteAdapter.isItemMoveEnabled = true
+        listNoteAdapter.enableItemMove()
         println("shbkhvajhbvjkhbsjkh "+listNoteAdapter.isItemMoveEnabled)
         listNoteAdapter.notifyDataSetChanged()
     }

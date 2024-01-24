@@ -22,16 +22,35 @@ class ListNoteAdapter constructor(
    var rcw:RecyclerView
 ) : RecyclerView.Adapter<ListNoteAdapter.ViewHolder>() {
 
-    var isItemMoveEnabled = true
-        set(value) {
-            field = value
-            notifyDataSetChanged() // Ensure views are updated when isItemMoveEnabled changes
+    private var _isItemMoveEnabled = true
+    var isItemMoveEnabled: Boolean
+        get() = _isItemMoveEnabled
+        private set(value) {
+            _isItemMoveEnabled = value
+            notifyDataSetChanged()
         }
+
+
+    // Change the function name to avoid the clash
+    fun enableItemMove() {
+        isItemMoveEnabled = true
+        itemTouchHelper.attachToRecyclerView(rcw)
+        notifyDataSetChanged()
+    }
+
+    // Change the function name to avoid the clash
+    fun disableItemMove() {
+        isItemMoveEnabled = false
+        itemTouchHelper.attachToRecyclerView(null)
+        notifyDataSetChanged()
+    }
+
     fun updateData(newList: List<Item>) {
         items.clear()
         items.addAll(newList)
         notifyDataSetChanged()
     }
+
     val onItemMoveListener = object : ItemTouchHelper.SimpleCallback(
         ItemTouchHelper.UP or ItemTouchHelper.DOWN,0
     ) {
@@ -79,13 +98,16 @@ class ListNoteAdapter constructor(
         itemTouchHelper.attachToRecyclerView(rcw)
     }
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
+
         val editTextItem: EditText = itemView.EditText_item
         val checkBoxItem: CheckBox = itemView.checkBox_item
         val itemSortImageView: ImageView = itemView.findViewById(R.id.item_sort)
 
 
-
         init {
+
+            updateItemView()
             editTextItem.addTextChangedListener(object : TextWatcher {
                 override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
                 }
@@ -114,6 +136,23 @@ class ListNoteAdapter constructor(
                 }
             }
         }
+        private fun updateItemView() {
+            if (isItemMoveEnabled) {
+                itemView.item_delete.visibility = View.VISIBLE
+                itemView.EditText_item.isEnabled = true
+                itemView.item_sort.visibility = View.VISIBLE
+            } else {
+                itemView.item_delete.visibility = View.GONE
+                itemView.EditText_item.isEnabled = false
+                itemView.item_sort.visibility = View.GONE
+            }
+
+            if (isItemMoveEnabled) {
+                checkBoxItem.setOnCheckedChangeListener { _, isChecked ->
+                    items[adapterPosition].isChecked = isChecked
+                }
+            }
+        }
     }
 
 
@@ -126,15 +165,7 @@ class ListNoteAdapter constructor(
 
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        if (isItemMoveEnabled) {
-            holder.itemView.item_delete.visibility=View.VISIBLE
-            holder.itemView.EditText_item.isEnabled=true
-            holder.itemView.item_sort.visibility=View.VISIBLE
-        }else{
-            holder.itemView.item_delete.visibility=View.GONE
-            holder.itemView.EditText_item.isEnabled=false
-            holder.itemView.item_sort.visibility=View.GONE
-        }
+
         holder.itemView.checkBox_item.isChecked=items[position].isChecked
         holder.itemView.EditText_item.setText(items[position].text)
         holder.itemView.item_delete.setOnClickListener {

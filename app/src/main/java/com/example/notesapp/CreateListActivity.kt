@@ -103,6 +103,20 @@ class CreateListActivity : AppCompatActivity(), CategoryAdapter.CategoryClickLis
         saveButton.setOnClickListener {
             saveNote()
         }
+        readNote.setOnClickListener {
+            disableDragAndDrop()
+            readNote.visibility=View.GONE
+            listNoteAdapter.notifyDataSetChanged()
+            editNote.visibility=View.VISIBLE
+            more.visibility=View.GONE
+            category_updownarrow.visibility=View.GONE
+            favButton.visibility=View.GONE
+            saveButton.visibility=View.GONE
+            notes_title.isEnabled=false
+            notes_sub_title.isEnabled=false
+            category_button.isEnabled=false
+            addItem_button.visibility=View.GONE
+        }
         editNote.setOnClickListener {
             enableDragAndDrop()
             readNote.visibility=View.VISIBLE

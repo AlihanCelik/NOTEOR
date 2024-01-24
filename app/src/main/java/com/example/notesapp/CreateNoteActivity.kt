@@ -47,6 +47,21 @@ import kotlinx.coroutines.suspendCancellableCoroutine
 import androidx.lifecycle.lifecycleScope
 import com.example.notesapp.database.TrashDatabase
 import com.example.notesapp.entities.Trash
+import kotlinx.android.synthetic.main.activity_create_list.*
+import kotlinx.android.synthetic.main.activity_create_note.category_button
+import kotlinx.android.synthetic.main.activity_create_note.category_name
+import kotlinx.android.synthetic.main.activity_create_note.category_updownarrow
+import kotlinx.android.synthetic.main.activity_create_note.colorView
+import kotlinx.android.synthetic.main.activity_create_note.editNote
+import kotlinx.android.synthetic.main.activity_create_note.favButton
+import kotlinx.android.synthetic.main.activity_create_note.more
+import kotlinx.android.synthetic.main.activity_create_note.notes_sub_title
+import kotlinx.android.synthetic.main.activity_create_note.notes_title
+import kotlinx.android.synthetic.main.activity_create_note.readNote
+import kotlinx.android.synthetic.main.activity_create_note.reminderlayout
+import kotlinx.android.synthetic.main.activity_create_note.saveButton
+import kotlinx.android.synthetic.main.activity_create_note.tvDateTime
+import kotlinx.android.synthetic.main.activity_create_note.tvReminderTime
 import kotlinx.android.synthetic.main.bottom_sheet_note.*
 import kotlinx.android.synthetic.main.delete_permi_dialog.view.*
 
@@ -151,6 +166,7 @@ class CreateNoteActivity : AppCompatActivity(),CategoryAdapter.CategoryClickList
 
 
         if(noteId!=-1){
+            readNote.visibility=View.GONE
             editNote.visibility=View.VISIBLE
             more.visibility=View.GONE
             category_updownarrow.visibility=View.GONE
@@ -256,6 +272,7 @@ class CreateNoteActivity : AppCompatActivity(),CategoryAdapter.CategoryClickList
         }
 
         editNote.setOnClickListener {
+            readNote.visibility=View.VISIBLE
             notes_desc.isEnabled = true
             notes_title.isEnabled=true
             notes_sub_title.isEnabled=true
@@ -265,6 +282,18 @@ class CreateNoteActivity : AppCompatActivity(),CategoryAdapter.CategoryClickList
             category_updownarrow.visibility=View.VISIBLE
             favButton.visibility=View.VISIBLE
             saveButton.visibility=View.VISIBLE
+        }
+        readNote.setOnClickListener {
+            readNote.visibility=View.GONE
+            editNote.visibility=View.VISIBLE
+            more.visibility=View.GONE
+            category_updownarrow.visibility=View.GONE
+            favButton.visibility=View.GONE
+            saveButton.visibility=View.GONE
+            notes_desc.isEnabled = false
+            notes_title.isEnabled=false
+            notes_sub_title.isEnabled=false
+            category_button.isEnabled=false
         }
 
 

@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.WindowInsetsController
 import android.widget.SearchView
+import androidx.activity.viewModels
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.notesapp.Adapter.NotesAdapter
 import com.example.notesapp.database.NotesDatabase
@@ -20,10 +21,10 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class FavoritesActivtity : AppCompatActivity() {
-    private val CREATE_NOTE_REQUEST = 1
     var arrNotes = ArrayList<Notes>()
     var FavArr = ArrayList<Notes>()
     var notesAdapter: NotesAdapter = NotesAdapter(0)
+    val FAVORITES_ACTIVITY_REQUEST_CODE = 123
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_favorites_activtity)
@@ -44,15 +45,17 @@ class FavoritesActivtity : AppCompatActivity() {
             )
         }
         recycler_view_fav.setHasFixedSize(true)
-        recycler_view_fav.layoutManager= StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-        GlobalScope.launch(Dispatchers.Main){
+        recycler_view_fav.layoutManager =
+            StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        GlobalScope.launch(Dispatchers.Main) {
             let {
-                var notes = NotesDatabase.getDatabase(this@FavoritesActivtity).noteDao().getAllNotes()
+                var notes =
+                    NotesDatabase.getDatabase(this@FavoritesActivtity).noteDao().getAllNotes()
                 notesAdapter!!.setData(notes)
                 arrNotes = notes as ArrayList<Notes>
 
-                for (arr in arrNotes){
-                    if(arr.favorite==true){
+                for (arr in arrNotes) {
+                    if (arr.favorite == true) {
                         FavArr.add(arr)
                     }
                 }
@@ -62,7 +65,28 @@ class FavoritesActivtity : AppCompatActivity() {
             }
 
         }
-        searchFavorites.setOnQueryTextListener( object : SearchView.OnQueryTextListener{
+        val sharedViewModel: SharedViewModel by viewModels()
+
+        sharedViewModel.refreshList.observe(this) { shouldRefresh ->
+            if (shouldRefresh) {
+                GlobalScope.launch(Dispatchers.Main) {
+                    val notes =
+                        NotesDatabase.getDatabase(this@FavoritesActivtity).noteDao().getAllNotes()
+                    arrNotes.clear()
+                    FavArr.clear()
+
+                    for (arr in notes) {
+                        if (arr.favorite == true) {
+                            FavArr.add(arr)
+                        }
+                    }
+
+                    notesAdapter.setData(FavArr)
+                    notesAdapter.notifyDataSetChanged()
+                }
+            }
+        }
+        searchFavorites.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(p0: String?): Boolean {
                 return true
             }
@@ -71,9 +95,9 @@ class FavoritesActivtity : AppCompatActivity() {
 
                 var tempArr = ArrayList<Notes>()
 
-                for (arr in arrNotes){
-                    if(arr.favorite==true){
-                        if (arr.title!!.toLowerCase(Locale.getDefault()).contains(p0.toString())){
+                for (arr in arrNotes) {
+                    if (arr.favorite == true) {
+                        if (arr.title!!.toLowerCase(Locale.getDefault()).contains(p0.toString())) {
                             tempArr.add(arr)
                         }
                     }
@@ -88,5 +112,9 @@ class FavoritesActivtity : AppCompatActivity() {
         })
 
     }
+
+
+
+
 
 }

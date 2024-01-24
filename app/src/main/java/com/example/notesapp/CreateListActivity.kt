@@ -14,6 +14,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowInsetsController
 import android.widget.*
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
@@ -897,6 +898,7 @@ class CreateListActivity : AppCompatActivity(), CategoryAdapter.CategoryClickLis
         }
 
     }
+    val sharedViewModel: SharedViewModel by viewModels()
     private fun saveNote() {
         var items_list2: MutableList<Item> = items_list.toMutableList()
         if (notes_title.text.toString().isNullOrEmpty()) {
@@ -930,6 +932,7 @@ class CreateListActivity : AppCompatActivity(), CategoryAdapter.CategoryClickLis
                             notes.password = password
 
                             NotesDatabase.getDatabase(it).noteDao().updateNote(notes)
+                            sharedViewModel.refreshList.value = true
                             setResult(Activity.RESULT_OK)
                             tvDateTime.text = notes.dateTime
                             Toast.makeText(this@CreateListActivity, "Note is updated", Toast.LENGTH_SHORT).show()
@@ -955,6 +958,7 @@ class CreateListActivity : AppCompatActivity(), CategoryAdapter.CategoryClickLis
 
                             val insertedId = NotesDatabase.getDatabase(it).noteDao().insertNotes(notes)
                             noteId = insertedId.toInt()
+                            sharedViewModel.refreshList.value = true
                             setResult(Activity.RESULT_OK)
 
                             if (reminder != null && notes.reminder!! > System.currentTimeMillis()) {

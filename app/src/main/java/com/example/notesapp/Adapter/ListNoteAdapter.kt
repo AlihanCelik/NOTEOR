@@ -90,7 +90,6 @@ class ListNoteAdapter constructor(
 
         init {
 
-            updateItemView()
             editTextItem.addTextChangedListener(object : TextWatcher {
                 override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
                 }
@@ -102,11 +101,9 @@ class ListNoteAdapter constructor(
                 override fun afterTextChanged(s: Editable?) {
                 }
             })
-            if (isItemMoveEnabled) {
                 checkBoxItem.setOnCheckedChangeListener { _, isChecked ->
                     items[adapterPosition].isChecked = isChecked
                 }
-            }
 
 
             itemSortImageView.setOnTouchListener { _, event ->
@@ -124,23 +121,7 @@ class ListNoteAdapter constructor(
                 }
             }
         }
-        private fun updateItemView() {
-            if (isItemMoveEnabled) {
-                itemView.item_delete.visibility = View.VISIBLE
-                itemView.EditText_item.isEnabled = true
-                itemView.item_sort.visibility = View.VISIBLE
-            } else {
-                itemView.item_delete.visibility = View.GONE
-                itemView.EditText_item.isEnabled = false
-                itemView.item_sort.visibility = View.GONE
-            }
 
-            if (isItemMoveEnabled) {
-                checkBoxItem.setOnCheckedChangeListener { _, isChecked ->
-                    items[adapterPosition].isChecked = isChecked
-                }
-            }
-        }
     }
 
 

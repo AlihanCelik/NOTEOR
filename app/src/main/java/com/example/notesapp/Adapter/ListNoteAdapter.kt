@@ -19,7 +19,7 @@ import java.util.*
 
 class ListNoteAdapter constructor(
    var items: MutableList<Item>,
-   var rcw:RecyclerView,var isItemMoveEnabled:Boolean=true
+   var rcw:RecyclerView,var isItemMoveEnabled:Boolean
 ) : RecyclerView.Adapter<ListNoteAdapter.ViewHolder>() {
 
     fun updateEnabled(isItemEnabled: Boolean){
@@ -112,8 +112,13 @@ class ListNoteAdapter constructor(
             itemSortImageView.setOnTouchListener { _, event ->
                 when (event.action) {
                     MotionEvent.ACTION_DOWN -> {
-                        itemTouchHelper.startDrag(this@ViewHolder)
-                        true
+                        // Start drag only when isItemMoveEnabled is true
+                        if (isItemMoveEnabled) {
+                            itemTouchHelper.startDrag(this@ViewHolder)
+                            true
+                        } else {
+                            false
+                        }
                     }
                     else -> false
                 }

@@ -161,9 +161,8 @@ class CreateListActivity : AppCompatActivity(), CategoryAdapter.CategoryClickLis
         }
 
         if(noteId!=-1){
-            listNoteAdapter.updateEnabled(false)
+
             readNote.visibility=View.GONE
-            listNoteAdapter.notifyDataSetChanged()
             editNote.visibility=View.VISIBLE
             more.visibility=View.GONE
             category_updownarrow.visibility=View.GONE
@@ -254,6 +253,7 @@ class CreateListActivity : AppCompatActivity(), CategoryAdapter.CategoryClickLis
 
                     }
                     initAdapter()
+                    listNoteAdapter.updateEnabled(false)
                 }
             }
         }else{initAdapter()}
@@ -1020,7 +1020,7 @@ class CreateListActivity : AppCompatActivity(), CategoryAdapter.CategoryClickLis
         }
     }
     private fun initAdapter() {
-        listNoteAdapter =ListNoteAdapter(items_list,recyclerView)
+        listNoteAdapter =ListNoteAdapter(items_list,recyclerView,true)
         val ll = GridLayoutManager(this, 1)
         recyclerView.layoutManager = ll
         recyclerView.adapter = listNoteAdapter

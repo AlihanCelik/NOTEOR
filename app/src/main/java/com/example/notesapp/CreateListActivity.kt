@@ -97,14 +97,14 @@ class CreateListActivity : AppCompatActivity(), CategoryAdapter.CategoryClickLis
         recyclerView = findViewById(R.id.recycler_view_itemlist)
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager= StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
-        listNoteAdapter = ListNoteAdapter(items_list,recyclerView)
+        listNoteAdapter = ListNoteAdapter(items_list,recyclerView,true)
         noteId = intent.getIntExtra("itemid",-1)
         tvDateTime.text=currentDate
         saveButton.setOnClickListener {
             saveNote()
         }
         readNote.setOnClickListener {
-            disableDragAndDrop()
+            listNoteAdapter.updateEnabled(false)
             readNote.visibility=View.GONE
             listNoteAdapter.notifyDataSetChanged()
             editNote.visibility=View.VISIBLE
@@ -118,7 +118,7 @@ class CreateListActivity : AppCompatActivity(), CategoryAdapter.CategoryClickLis
             addItem_button.visibility=View.GONE
         }
         editNote.setOnClickListener {
-            enableDragAndDrop()
+            listNoteAdapter.updateEnabled(true)
             readNote.visibility=View.VISIBLE
             addItem_button.visibility=View.VISIBLE
             notes_title.isEnabled=true
@@ -161,7 +161,7 @@ class CreateListActivity : AppCompatActivity(), CategoryAdapter.CategoryClickLis
         }
 
         if(noteId!=-1){
-            disableDragAndDrop()
+            listNoteAdapter.updateEnabled(false)
             readNote.visibility=View.GONE
             listNoteAdapter.notifyDataSetChanged()
             editNote.visibility=View.VISIBLE
@@ -1048,19 +1048,6 @@ class CreateListActivity : AppCompatActivity(), CategoryAdapter.CategoryClickLis
                 WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS
             )
         }
-    }
-    private fun disableDragAndDrop() {
-        // Set isItemMoveEnabled to false to disable drag-and-drop
-        listNoteAdapter.disableItemMove()
-        println("shbkhvajhbvjkhbsjkh "+listNoteAdapter.isItemMoveEnabled)
-        listNoteAdapter.notifyDataSetChanged()
-    }
-
-    private fun enableDragAndDrop() {
-        // Set isItemMoveEnabled to true to enable drag-and-drop
-        listNoteAdapter.enableItemMove()
-        println("shbkhvajhbvjkhbsjkh "+listNoteAdapter.isItemMoveEnabled)
-        listNoteAdapter.notifyDataSetChanged()
     }
 
 }

@@ -19,33 +19,16 @@ import java.util.*
 
 class ListNoteAdapter constructor(
    var items: MutableList<Item>,
-   var rcw:RecyclerView
+   var rcw:RecyclerView,var isItemMoveEnabled:Boolean=true
 ) : RecyclerView.Adapter<ListNoteAdapter.ViewHolder>() {
 
-    private var _isItemMoveEnabled = true
-    var isItemMoveEnabled: Boolean
-        get() = _isItemMoveEnabled
-        private set(value) {
-            _isItemMoveEnabled = value
-            notifyDataSetChanged()
-        }
-
-
-    // Change the function name to avoid the clash
-    fun enableItemMove() {
-        isItemMoveEnabled = true
-        itemTouchHelper.attachToRecyclerView(rcw)
-        notifyDataSetChanged()
-    }
-
-    // Change the function name to avoid the clash
-    fun disableItemMove() {
-        isItemMoveEnabled = false
-        itemTouchHelper.attachToRecyclerView(null)
+    fun updateEnabled(isItemEnabled: Boolean){
+        isItemMoveEnabled=isItemEnabled
         notifyDataSetChanged()
     }
 
     fun updateData(newList: List<Item>) {
+
         items.clear()
         items.addAll(newList)
         notifyDataSetChanged()
@@ -165,6 +148,16 @@ class ListNoteAdapter constructor(
 
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+
+        if (isItemMoveEnabled) {
+            holder.itemView.item_delete.visibility = View.VISIBLE
+            holder.itemView.EditText_item.isEnabled = true
+            holder.itemView.item_sort.visibility = View.VISIBLE
+        } else {
+            holder.itemView.item_delete.visibility = View.GONE
+            holder.itemView.EditText_item.isEnabled = false
+            holder.itemView.item_sort.visibility = View.GONE
+        }
 
         holder.itemView.checkBox_item.isChecked=items[position].isChecked
         holder.itemView.EditText_item.setText(items[position].text)

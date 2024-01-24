@@ -65,27 +65,7 @@ class FavoritesActivtity : AppCompatActivity() {
             }
 
         }
-        val sharedViewModel: SharedViewModel by viewModels()
 
-        sharedViewModel.refreshList.observe(this) { shouldRefresh ->
-            if (shouldRefresh) {
-                GlobalScope.launch(Dispatchers.Main) {
-                    val notes =
-                        NotesDatabase.getDatabase(this@FavoritesActivtity).noteDao().getAllNotes()
-                    arrNotes.clear()
-                    FavArr.clear()
-
-                    for (arr in notes) {
-                        if (arr.favorite == true) {
-                            FavArr.add(arr)
-                        }
-                    }
-
-                    notesAdapter.setData(FavArr)
-                    notesAdapter.notifyDataSetChanged()
-                }
-            }
-        }
         searchFavorites.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(p0: String?): Boolean {
                 return true

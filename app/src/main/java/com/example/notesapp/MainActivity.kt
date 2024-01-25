@@ -31,6 +31,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var viewPagerAdapter: VpAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         val backgroundWhite = resources.getColor(R.color.white)
+        val statusColor= resources.getColor(R.color.colorStatus)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
@@ -42,7 +43,7 @@ class MainActivity : AppCompatActivity() {
         viewPager.adapter = viewPagerAdapter
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            window.statusBarColor = backgroundWhite
+            window.statusBarColor = statusColor
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             window.navigationBarColor = backgroundWhite

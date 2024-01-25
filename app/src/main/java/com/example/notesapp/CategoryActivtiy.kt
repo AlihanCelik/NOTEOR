@@ -76,7 +76,7 @@ class CategoryActivtiy : AppCompatActivity() {
 
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            window.statusBarColor = Color.WHITE
+            window.statusBarColor = resources.getColor(R.color.colorStatus)
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             window.navigationBarColor = Color.WHITE

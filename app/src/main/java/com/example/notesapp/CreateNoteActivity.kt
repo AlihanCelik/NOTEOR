@@ -221,11 +221,11 @@ class CreateNoteActivity : AppCompatActivity(),CategoryAdapter.CategoryClickList
                     }else{
                         reminderlayout.visibility=View.GONE
                     }
-
+                    /*
                     items= notes.imgPath as MutableList<Uri>
                     if(items.isNotEmpty()){
                         layout_img_preview.visibility = View.VISIBLE
-                    }
+                    }*/
                     items_link= notes.webLink as MutableList<String>
                     if(items_link.isNotEmpty()){
                         layout_link_preview.visibility = View.VISIBLE
@@ -1112,9 +1112,6 @@ class CreateNoteActivity : AppCompatActivity(),CategoryAdapter.CategoryClickList
     private fun saveNote(){
         if(notes_title.text.toString().isNullOrEmpty()){
             Toast.makeText(this,"Note Title is Required", Toast.LENGTH_SHORT).show()
-        }
-        else if(notes_sub_title.text.toString().isNullOrEmpty()){
-            Toast.makeText(this,"Note Sub Title is Required",Toast.LENGTH_SHORT).show()
         }
         else if(notes_desc.text.toString().isNullOrEmpty()){
             Toast.makeText(this,"Note Description is Required",Toast.LENGTH_SHORT).show()

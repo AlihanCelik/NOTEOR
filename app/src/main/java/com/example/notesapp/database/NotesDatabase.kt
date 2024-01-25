@@ -9,26 +9,26 @@ import com.example.notesapp.Converters
 import com.example.notesapp.dao.NoteDao
 import com.example.notesapp.entities.Notes
 
-
-@Database(entities = [Notes::class], version = 1, exportSchema = false)
+@Database(entities = [Notes::class], version = 2, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class NotesDatabase : RoomDatabase() {
 
     companion object {
-        var notesDatabase: NotesDatabase? = null
+        private var notesDatabase: NotesDatabase? = null
 
         @Synchronized
         fun getDatabase(context: Context): NotesDatabase {
             if (notesDatabase == null) {
                 notesDatabase = Room.databaseBuilder(
-                    context
-                    , NotesDatabase::class.java
-                    , "notes.db"
-                ).build()
+                    context.applicationContext,
+                    NotesDatabase::class.java,
+                    "notes.db"
+                )
+                    .fallbackToDestructiveMigration()
+                    .build()
             }
             return notesDatabase!!
         }
-
     }
 
     abstract fun noteDao(): NoteDao

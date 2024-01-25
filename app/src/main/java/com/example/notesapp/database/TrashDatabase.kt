@@ -10,7 +10,7 @@ import com.example.notesapp.dao.TrashDao
 import com.example.notesapp.entities.Trash
 
 
-@Database(entities = [Trash::class], version = 1, exportSchema = false)
+@Database(entities = [Trash::class], version = 2, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class TrashDatabase : RoomDatabase() {
 
@@ -24,7 +24,9 @@ abstract class TrashDatabase : RoomDatabase() {
                     context
                     , TrashDatabase::class.java
                     , "trash.db"
-                ).build()
+                )
+                    .fallbackToDestructiveMigration()
+                    .build()
             }
             return trashDatabase!!
         }

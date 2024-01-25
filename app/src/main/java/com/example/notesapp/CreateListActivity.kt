@@ -358,8 +358,6 @@ class CreateListActivity : AppCompatActivity(), CategoryAdapter.CategoryClickLis
                             category.name_category = newCategoryName
                             category.order_category=existingCategories.size
                             applicationContext?.let {
-                                val insertedCategoryId =
-                                    CategoryDatabase.getDatabase(it).CategoryDao().insertCategory(category)
                                 val category2 =
                                     CategoryDatabase.getDatabase(this@CreateListActivity).CategoryDao()
                                         .getAllCategory()
@@ -903,13 +901,11 @@ class CreateListActivity : AppCompatActivity(), CategoryAdapter.CategoryClickLis
         var items_list2: MutableList<Item> = items_list.toMutableList()
         if (notes_title.text.toString().isNullOrEmpty()) {
             Toast.makeText(this, "Note Title is Required", Toast.LENGTH_SHORT).show()
-        } else if (notes_sub_title.text.toString().isNullOrEmpty()) {
-            Toast.makeText(this, "Note Sub Title is Required", Toast.LENGTH_SHORT).show()
         } else {
 
             items_list2.removeAll { it.text.isNullOrEmpty() }
 
-            if (items_list.isNullOrEmpty()) {
+            if (items_list2.isNullOrEmpty()) {
                 Toast.makeText(this, "List is Empty", Toast.LENGTH_SHORT).show()
             } else {
                 val coroutineScope = CoroutineScope(Dispatchers.Main)

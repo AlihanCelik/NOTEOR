@@ -42,10 +42,12 @@ import kotlinx.android.synthetic.main.activity_create_list.favButton
 import kotlinx.android.synthetic.main.activity_create_list.more
 import kotlinx.android.synthetic.main.activity_create_list.notes_sub_title
 import kotlinx.android.synthetic.main.activity_create_list.notes_title
+import kotlinx.android.synthetic.main.activity_create_list.readNote
 import kotlinx.android.synthetic.main.activity_create_list.reminderlayout
 import kotlinx.android.synthetic.main.activity_create_list.saveButton
 import kotlinx.android.synthetic.main.activity_create_list.tvDateTime
 import kotlinx.android.synthetic.main.activity_create_list.tvReminderTime
+import kotlinx.android.synthetic.main.activity_create_note.*
 import kotlinx.android.synthetic.main.createactivty_permi_dialog.view.*
 import kotlinx.android.synthetic.main.delete_permi_dialog.view.*
 import kotlinx.android.synthetic.main.dialog_add_category.view.*
@@ -132,30 +134,30 @@ class CreateListActivity : AppCompatActivity(), CategoryAdapter.CategoryClickLis
         }
         when (color) {
             "blue" -> {
-                setThemeColors(moonBlue,backgroundBlue)
+                setThemeColors(moonBlue,backgroundBlue,moonBlue)
             }
             "pink" -> {
-                setThemeColors(moonPink,backgroundPink)
+                setThemeColors(moonPink,backgroundPink,moonPink)
 
             }
             "purple" -> {
-                setThemeColors(moonPurple,backgroundPurple)
+                setThemeColors(moonPurple,backgroundPurple,moonPurple)
 
             }
             "yellow" -> {
-                setThemeColors(moonYellow,backgroundYellow)
+                setThemeColors(moonYellow,backgroundYellow,moonYellow)
 
             }
             "green" -> {
-                setThemeColors(moonGreen,backgroundGreen)
+                setThemeColors(moonGreen,backgroundGreen,moonGreen)
 
             }
             "red" -> {
-                setThemeColors(moonRed,backgroundRed)
+                setThemeColors(moonRed,backgroundRed,moonRed)
 
             }
             "orange" -> {
-                setThemeColors(moonOrange,backgroundOrange)
+                setThemeColors(moonOrange,backgroundOrange,moonOrange)
             }
 
         }
@@ -225,30 +227,30 @@ class CreateListActivity : AppCompatActivity(), CategoryAdapter.CategoryClickLis
                     color=notes.color.toString()
                     when (color) {
                         "blue" -> {
-                            setThemeColors(moonBlue,backgroundBlue)
+                            setThemeColors(moonBlue,backgroundBlue,moonBlue)
                         }
                         "pink" -> {
-                            setThemeColors(moonPink,backgroundPink)
+                            setThemeColors(moonPink,backgroundPink,moonPink)
 
                         }
                         "purple" -> {
-                            setThemeColors(moonPurple,backgroundPurple)
+                            setThemeColors(moonPurple,backgroundPurple,moonPurple)
 
                         }
                         "yellow" -> {
-                            setThemeColors(moonYellow,backgroundYellow)
+                            setThemeColors(moonYellow,backgroundYellow,moonYellow)
 
                         }
                         "green" -> {
-                            setThemeColors(moonGreen,backgroundGreen)
+                            setThemeColors(moonGreen,backgroundGreen,moonGreen)
 
                         }
                         "red" -> {
-                            setThemeColors(moonRed,backgroundRed)
+                            setThemeColors(moonRed,backgroundRed,moonRed)
 
                         }
                         "orange" -> {
-                            setThemeColors(moonOrange,backgroundOrange)
+                            setThemeColors(moonOrange,backgroundOrange,moonOrange)
                         }
 
                     }
@@ -423,7 +425,7 @@ class CreateListActivity : AppCompatActivity(), CategoryAdapter.CategoryClickLis
                 createNote.setBackgroundColor(backgroundBlue)
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    window.statusBarColor = backgroundBlue
+                    window.statusBarColor = moonBlue
                 }
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     window.navigationBarColor = backgroundBlue
@@ -442,7 +444,7 @@ class CreateListActivity : AppCompatActivity(), CategoryAdapter.CategoryClickLis
                 createNote.setBackgroundColor(backgroundPink)
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    window.statusBarColor = backgroundPink
+                    window.statusBarColor = moonPink
                 }
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     window.navigationBarColor = backgroundPink
@@ -461,7 +463,7 @@ class CreateListActivity : AppCompatActivity(), CategoryAdapter.CategoryClickLis
                 createNote.setBackgroundColor(backgroundPurple)
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    window.statusBarColor = backgroundPurple
+                    window.statusBarColor = moonPurple
                 }
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     window.navigationBarColor = backgroundPurple
@@ -480,7 +482,7 @@ class CreateListActivity : AppCompatActivity(), CategoryAdapter.CategoryClickLis
                 createNote.setBackgroundColor(backgroundGreen)
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    window.statusBarColor = backgroundGreen
+                    window.statusBarColor = moonGreen
                 }
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     window.navigationBarColor = backgroundGreen
@@ -499,7 +501,7 @@ class CreateListActivity : AppCompatActivity(), CategoryAdapter.CategoryClickLis
                 createNote.setBackgroundColor(backgroundYellow)
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    window.statusBarColor = backgroundYellow
+                    window.statusBarColor = moonYellow
                 }
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     window.navigationBarColor = backgroundYellow
@@ -519,7 +521,7 @@ class CreateListActivity : AppCompatActivity(), CategoryAdapter.CategoryClickLis
                 createNote.setBackgroundColor(backgroundRed)
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    window.statusBarColor = backgroundRed
+                    window.statusBarColor = moonRed
                 }
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     window.navigationBarColor = backgroundRed
@@ -539,7 +541,7 @@ class CreateListActivity : AppCompatActivity(), CategoryAdapter.CategoryClickLis
                 createNote.setBackgroundColor(backgroundOrange)
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    window.statusBarColor = backgroundOrange
+                    window.statusBarColor = moonOrange
                 }
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     window.navigationBarColor = backgroundOrange
@@ -1032,11 +1034,11 @@ class CreateListActivity : AppCompatActivity(), CategoryAdapter.CategoryClickLis
         category_name.text=category.name_category
         categoryName= category.id_category!!
     }
-    private fun setThemeColors(buttonColor: Int, backgroundColor: Int) {
+    private fun setThemeColors(buttonColor: Int, backgroundColor: Int,moonColor: Int) {
         colorView.setBackgroundColor(buttonColor)
         createNote.setBackgroundColor(backgroundColor)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            window.statusBarColor = backgroundColor
+            window.statusBarColor = moonColor
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             window.navigationBarColor = backgroundColor

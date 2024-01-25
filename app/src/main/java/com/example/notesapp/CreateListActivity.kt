@@ -14,7 +14,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowInsetsController
 import android.widget.*
-import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat

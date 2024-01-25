@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.WindowInsetsController
 import android.widget.SearchView
-import androidx.activity.viewModels
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.notesapp.Adapter.NotesAdapter
 import com.example.notesapp.database.NotesDatabase

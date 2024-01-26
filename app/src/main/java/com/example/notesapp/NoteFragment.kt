@@ -98,10 +98,12 @@ class NoteFragment : Fragment(), sortCategoryAdapter.SortCategoryClickListener{
             bottomSheetView.findViewById<LinearLayout>(R.id.writing_create).setOnClickListener {
                 val intent= Intent(requireContext(),CreateNoteActivity::class.java)
                 startActivity(intent)
+                bottomSheet.dismiss()
             }
             bottomSheetView.findViewById<LinearLayout>(R.id.list_create).setOnClickListener {
                 val intent= Intent(requireContext(),CreateListActivity::class.java)
                 startActivity(intent)
+                bottomSheet.dismiss()
             }
             bottomSheet.setContentView(bottomSheetView)
             bottomSheet.show()

@@ -1,6 +1,7 @@
 package com.example.notesapp
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -87,8 +88,24 @@ class NoteFragment : Fragment(), sortCategoryAdapter.SortCategoryClickListener{
                 recycler_view.adapter = notesAdapter
             }
         }
-        visible()
 
+        createButton.setOnClickListener {
+            val bottomSheet =
+                BottomSheetDialog(requireContext(), R.style.BottomSheetDialogTheme)
+            val bottomSheetView = LayoutInflater.from(requireContext()).inflate(
+                R.layout.bottom_sheet_create,null
+            ) as ConstraintLayout
+            bottomSheetView.findViewById<LinearLayout>(R.id.writing_create).setOnClickListener {
+                val intent= Intent(requireContext(),CreateNoteActivity::class.java)
+                startActivity(intent)
+            }
+            bottomSheetView.findViewById<LinearLayout>(R.id.list_create).setOnClickListener {
+                val intent= Intent(requireContext(),CreateListActivity::class.java)
+                startActivity(intent)
+            }
+            bottomSheet.setContentView(bottomSheetView)
+            bottomSheet.show()
+        }
 
         sortButton.setOnClickListener {
             val bottomSheet =
@@ -225,8 +242,8 @@ class NoteFragment : Fragment(), sortCategoryAdapter.SortCategoryClickListener{
                     notesAdapter.updateData(notes)
                 }
             }
+            visible()
         }
-        visible()
     }
     fun visible(){
         if(arrNotes.isNullOrEmpty()){

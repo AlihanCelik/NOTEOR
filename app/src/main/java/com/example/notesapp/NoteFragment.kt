@@ -87,6 +87,7 @@ class NoteFragment : Fragment(), sortCategoryAdapter.SortCategoryClickListener{
                 recycler_view.adapter = notesAdapter
             }
         }
+        visible()
 
 
         sortButton.setOnClickListener {
@@ -224,6 +225,16 @@ class NoteFragment : Fragment(), sortCategoryAdapter.SortCategoryClickListener{
                     notesAdapter.updateData(notes)
                 }
             }
+        }
+        visible()
+    }
+    fun visible(){
+        if(arrNotes.isNullOrEmpty()){
+            recycler_view.visibility=View.INVISIBLE
+            EmptyNote_layout.visibility=View.VISIBLE
+        }else{
+            recycler_view.visibility=View.VISIBLE
+            EmptyNote_layout.visibility=View.GONE
         }
     }
 

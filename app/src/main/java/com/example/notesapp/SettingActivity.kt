@@ -55,7 +55,7 @@ class SettingActivity : AppCompatActivity() {
             startActivity(intent)
         }
         linkedin.setOnClickListener {
-            val url = "https://www.linkedin.com/feed/update/urn:li:activity:7090282773734658048/"
+            val url = "https://www.linkedin.com/in/alihan-%C3%A7elik-081616248/"
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
             startActivity(intent)
         }

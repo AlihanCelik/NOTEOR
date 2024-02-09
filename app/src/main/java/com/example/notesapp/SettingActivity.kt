@@ -64,8 +64,13 @@ class SettingActivity : AppCompatActivity() {
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
             startActivity(intent)
         }
+        rate_noteor.setOnClickListener {
+            val url = "https://play.google.com/store/apps/details?id=com.Noteor.notesapp"
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+            startActivity(intent)
+        }
         share_noteor.setOnClickListener {
-            val url = "https://play.google.com/store/apps/details?id=com.calculationHub.calculatorapp"
+            val url = "https://play.google.com/store/apps/details?id=com.Noteor.notesapp"
 
             val shareIntent = Intent(Intent.ACTION_SEND)
             shareIntent.type = "text/plain"

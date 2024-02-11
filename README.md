@@ -1,7 +1,7 @@
 
 # NOTEOR
 
-[<img src="https://play.google.com/store/apps/details?id=com.Noteor.notesapp)
+[<img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" alt="Get it on Google Play"  height="70"/>](https://play.google.com/store/apps/details?id=com.Noteor.notesapp)
 
 Notlarınıza hatırlatıcı ekleyebilecek , alışveriş listeleri hazırlayacak, notlarınızı gizli tutmak istediğinizde parola koyabilecek, 
 Kolay not yönetimi için notlarınızı renkli arka planlarla yazabilecek ,reklamsız kullanışlı bir not uygulaması...
